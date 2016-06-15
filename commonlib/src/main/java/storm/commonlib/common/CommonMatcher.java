@@ -2,9 +2,6 @@ package storm.commonlib.common;
 
 import java.util.HashMap;
 
-/**
- * Created by gdq on 16/2/24.
- */
 public class CommonMatcher {
     public static String getRelationName(int type) {
         HashMap<Integer, String> map = new HashMap<>();
