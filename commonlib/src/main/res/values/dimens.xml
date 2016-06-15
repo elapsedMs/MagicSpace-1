@@ -1,0 +1,59 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">@dimen/px_36</dimen>
+    <dimen name="activity_vertical_margin">@dimen/px_36</dimen>
+    <dimen name="activity_base_left_margin">@dimen/px_20</dimen>
+    <dimen name="activity_base_right_margin">@dimen/px_27</dimen>
+    <dimen name="activity_base_top_margin">@dimen/px_22</dimen>
+    <dimen name="activity_base_bottom_margin">@dimen/px_22</dimen>
+    <dimen name="item_inner_margin">@dimen/px_8</dimen>
+
+    <dimen name="text_size_xxs">@dimen/text_size_24_px</dimen>
+    <dimen name="text_size_xs">@dimen/text_size_28_px</dimen>
+    <dimen name="text_size_s">@dimen/text_size_32_px</dimen>
+    <dimen name="text_size_m">@dimen/text_size_34_px</dimen>
+    <dimen name="text_size_l">@dimen/text_size_42_px</dimen>
+    <dimen name="text_size_xl">@dimen/text_size_48_px</dimen>
+    <dimen name="text_size_xxl">@dimen/text_size_58_px</dimen>
+
+    <!--列表中圆 头像大小-->
+    <dimen name="distance_s">@dimen/px_16</dimen>
+    <dimen name="photo_size_s">@dimen/px_64</dimen>
+    <dimen name="photo_size_m">@dimen/px_76</dimen>
+    <dimen name="photo_size_l">@dimen/px_92</dimen>
+    <dimen name="photo_size_xl">@dimen/px_112</dimen>
+    <dimen name="photo_size_xxl">@dimen/px_124</dimen>
+    <dimen name="my_margin_top_and_bootom">16dp</dimen>
+
+    <!--item 标准高度 -->
+    <dimen name="item_height_xl">@dimen/px_97</dimen>
+
+    <!-- title bar 高度-->
+    <dimen name="title_bar_height">@dimen/px_97</dimen>
+
+    <!-- TabHost 高度 -->
+    <dimen name="tab_host_height">@dimen/px_112</dimen>
+
+    <dimen name="personal_center_name">@dimen/text_size_34_px</dimen>
+    <dimen name="personal_center_desc">@dimen/text_size_26_px</dimen>
+    <dimen name="personal_center_padding_left_and_right">@dimen/px_20</dimen>
+    <dimen name="personal_center_padding_top_and_bottom">@dimen/px_32</dimen>
+
+    <!-- item 左右间距 -->
+    <dimen name="item_distance">@dimen/px_10</dimen>
+    <dimen name="divider_height">@dimen/px_2</dimen>
+    <dimen name="login_item_height">@dimen/px_88</dimen>
+    <dimen name="portrait_height_and_width">@dimen/px_120</dimen>
+    <dimen name="radius">@dimen/px_6</dimen>
+    <dimen name="base_padding_left_and_right">@dimen/px_20</dimen>
+
+
+    <!--间距-->
+    <dimen name="distance_m">@dimen/px_18</dimen>
+    <dimen name="distance_l">@dimen/px_20</dimen>
+    <dimen name="distance_xl">@dimen/px_22</dimen>
+    <dimen name="distance_xxl">@dimen/px_24</dimen>
+    <dimen name="distance_sl">@dimen/px_32</dimen>
+
+</resources>

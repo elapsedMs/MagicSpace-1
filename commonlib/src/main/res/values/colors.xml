@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="empty">#00000000</color>
+    <color name="light_gray">#ffe9e9e9</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#dad8d8</color>
+    <color name="text_dark_gray">#626462</color>
+    <color name="title_bar_bg">#14baf8</color>
+    <color name="main_background">#f4f4f4</color>
+    <color name="personal_center_name_color">#464646</color>
+    <color name="personal_center_item_name_color">#363a39</color>
+    <color name="color727272">#727272</color>
+    <color name="color949494">#949494</color>
+    <color name="line_color">#d9d9d9</color>
+    <color name="be_selected">#f2f2f1f1</color>
+    <color name="list_dialog_divider">#dfdcdc</color>
+    <color name="list_dialog_item_color">#2ac5af</color>
+    <color name="discount_color">#fb8115</color>
+    <color name="doctor_title_color">#24b9a3</color>
+    <color name="login_text_color">#7f8494</color>
+    <color name="color485798">#485798</color>
+    <color name="btn_blue_color">#425ba3</color>
+    <color name="btn_gray_color">#b1b8d4</color>
+    <color name="colorff7f01">#ff7f01</color>
+    <color name="color252525">#252525</color>
+    <color name="member_big_title_color_select">#14baf7</color>
+    <color name="member_big_title_color_normal">#4d4d4d</color>
+    <color name="color_nan_bg">#007aff</color>
+    <color name="member_gender_femail_bg">#ff8fb2</color>
+    <color name="orange_red">#fd5e48</color>
+    <color name="orange_yellow">#ff7712</color>
+    <color name="deep_gray">#918f8f</color>
+
+    <color name="list_dilaog_item_color">#2ac5af</color>
+    <color name="transparent">#00000000</color>
+    <color name="red">#ff0000</color>
+    <color name="contents_text">#ff000000</color>
+    <color name="color14baf7">#14baf7</color>
+    <color name="btn_orange_color">#ff7f01</color>
+    <color name="dialog_color">#f1820f</color>
+    <color name="color0d586d">#0d586d</color>
+    <color name="color99252525">#99252525</color>
+    <color name="color80252525">#80252525</color>
+    <color name="color_nv_bg">#ff8caf</color>
+</resources>

@@ -1,0 +1,64 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:style/Theme.Holo.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:colorBackground">@color/main_background</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+
+    <style name="DialogStyle" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/transparent</item>
+        <!--背景透明-->
+        <item name="android:windowNoTitle">true</item>
+        <!--无标题-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--半透明-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--模糊-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowFrame">@null</item>
+        <!--边框-->
+    </style>
+
+
+    <style name="ScrollviewStyle">
+        <item name="android:overScrollMode">never</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:scrollbars">none</item>
+    </style>
+
+    <style name="ListViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:divider">@null</item>
+        <!--<item name="android:drawSelectorOnToøLp">false</item>-->
+        <item name="android:cacheColorHint">@color/transparent</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:listSelector">@color/transparent</item>
+        <item name="android:scrollbars">none</item>
+    </style>
+
+    <style name="HorizontalLine">
+        <item name="android:background">@color/line_color</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+    </style>
+
+    <style name="Arrow">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:src">@mipmap/icon_arrow</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="RoundedPortrait">
+        <item name="android:layout_width">@dimen/portrait_height_and_width</item>
+        <item name="android:layout_height">@dimen/portrait_height_and_width</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+</resources>

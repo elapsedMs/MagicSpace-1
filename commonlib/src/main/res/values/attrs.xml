@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PersonalCenterView">
+        <attr name="style" format="integer">
+            <enum name="just_name" value="0" />
+            <enum name="normal" value="1" />
+            <enum name="no_line" value="2" />
+            <enum name="right_portrait" value="3" />
+            <enum name="left_portrait" value="4" />
+            <enum name="no_arrow_no_line" value="5" />
+            <enum name="just_name_and_line" value="6" />
+        </attr>
+        <attr name="name" format="string" />
+    </declare-styleable>
+    <!--圆角图-->
+    <declare-styleable name="RoundedImageView">
+        <attr name="corner_radius" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="mutate_background" format="boolean" />
+        <attr name="oval" format="boolean" />
+        <attr name="android:scaleType" />
+    </declare-styleable>
+    <declare-styleable name="TabView">
+        <attr name="icon2" format="reference" />
+        <attr name="text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="MemberDetailView">
+        <attr name="one" format="string" />
+        <attr name="two" format="string" />
+        <attr name="unit" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="SimpleItemView">
+        <attr name="sv_style" format="integer">
+            <enum name="style_normal" value="1" />
+            <enum name="style_without_arrow" value="2" />
+            <enum name="style_have_arrow" value="3" />
+            <enum name="style_normala_blod" value="4" />
+        </attr>
+        <attr name="sv_name" format="string" />
+    </declare-styleable>
+</resources>

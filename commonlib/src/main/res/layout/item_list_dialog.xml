@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_list_dialog_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/personal_center_padding_top_and_bottom"
+        android:text=""
+        android:textColor="@color/list_dilaog_item_color"
+        android:textSize="@dimen/personal_center_name" />
+
+</LinearLayout>

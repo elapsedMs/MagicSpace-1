@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_tab"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/title_bar_height"
+    android:orientation="horizontal"
+    android:visibility="gone">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/title_bar_bg">
+
+        <ImageView
+            android:id="@+id/iv_select_tab_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_base_left_margin"
+            android:clickable="true"
+            android:padding="@dimen/px_6"
+            android:src="@drawable/selector_back" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_66"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shaple_tab"
+            android:orientation="horizontal"
+            android:padding="@dimen/px_1">
+
+            <TextView
+                android:id="@+id/left_tab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/selector_select_tab"
+                android:gravity="center"
+                android:paddingLeft="@dimen/px_44"
+                android:paddingRight="@dimen/px_44"
+                android:text=" fdsafdsafs"
+                android:textColor="@drawable/selector_select_tab_text"
+                android:textSize="@dimen/text_size_30_px" />
+
+            <TextView
+                android:id="@+id/right_tab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/selector_select_tab"
+                android:gravity="center"
+                android:paddingLeft="@dimen/px_44"
+                android:paddingRight="@dimen/px_44"
+                android:text=" fdsafdsafs"
+                android:textColor="@drawable/selector_select_tab_text"
+                android:textSize="@dimen/text_size_30_px" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

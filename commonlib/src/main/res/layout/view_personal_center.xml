@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:makeramen="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_personal_center_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/ll_personal_center_item_father"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_item_be_selected"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/personal_center_padding_top_and_bottom"
+        android:paddingLeft="@dimen/personal_center_padding_left_and_right"
+        android:paddingRight="@dimen/personal_center_padding_left_and_right"
+        android:paddingTop="@dimen/personal_center_padding_top_and_bottom">
+
+        <RelativeLayout
+            android:id="@+id/rl_personal_center_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <cn.medtree.medtreedoctor.view.RoundedImageView
+                android:id="@+id/tv_personal_center_item_left_portrait"
+                android:layout_width="@dimen/photo_size_l"
+                android:layout_height="@dimen/photo_size_l"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:layout_marginRight="@dimen/px_10"
+                android:src="@mipmap/ic_default_portrait"
+                makeramen:border_width="0dp"
+                android:visibility="gone"
+                makeramen:corner_radius="100dip" />
+
+            <TextView
+                android:layout_toRightOf="@id/tv_personal_center_item_left_portrait"
+                android:id="@+id/tv_personal_center_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="@color/personal_center_item_name_color"
+                android:textSize="@dimen/personal_center_name" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/iv_personal_center_item_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/selector_arrow" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_personal_center_item_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:maxEms="12"
+                android:layout_marginRight="@dimen/px_10"
+                android:layout_toLeftOf="@id/iv_personal_center_item_arrow"
+                android:textColor="@color/color727272"
+                android:textSize="@dimen/text_size_26_px" />
+
+            <cn.medtree.medtreedoctor.view.RoundedImageView
+                android:id="@+id/tv_personal_center_item_right_portrait"
+                android:layout_width="@dimen/photo_size_s"
+                android:layout_height="@dimen/photo_size_s"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:layout_marginRight="@dimen/px_10"
+                android:layout_toLeftOf="@id/iv_personal_center_item_arrow"
+                android:src="@mipmap/ic_default_portrait"
+                android:visibility="gone"
+                makeramen:border_width="0dp"
+                makeramen:corner_radius="100dip" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_alignLeft="@id/rl_personal_center_item_name"
+            android:id="@+id/tv_personal_center_item_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_personal_center_item_name"
+            android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:maxEms="21"
+            android:singleLine="true"
+            android:textColor="@color/color727272"
+            android:textSize="@dimen/personal_center_desc"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line"
+        style="@style/HorizontalLine"
+        android:layout_marginLeft="@dimen/base_padding_left_and_right"
+        android:layout_marginRight="@dimen/base_padding_left_and_right"
+        android:visibility="gone" />
+</LinearLayout>

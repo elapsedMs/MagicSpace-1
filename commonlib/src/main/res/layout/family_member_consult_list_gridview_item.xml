@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gdq="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/px_30"
+    android:paddingTop="@dimen/px_10">
+
+    <cn.medtree.medtreedoctor.view.RoundedImageView
+        android:id="@+id/image"
+        gdq:border_width="0dp"
+        gdq:corner_radius="5dp"
+        android:layout_width="@dimen/px_128"
+        android:layout_height="@dimen/px_128"
+        android:layout_gravity="center"
+        android:src="@mipmap/img_default_portrait" />
+</LinearLayout>

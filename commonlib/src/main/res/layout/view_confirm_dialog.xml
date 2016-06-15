@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:id="@+id/dialog_total_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#B0000000">
+
+    <RelativeLayout
+        android:id="@+id/rl_whole_view"
+        android:layout_width="282dp"
+        android:layout_height="187dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_delivery_detail_rounded">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_base_left_margin"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_m"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/ll_whole_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/div_line"
+            android:layout_below="@id/title"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_s"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/waiting_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_fetch_delivery_dialog_waiting"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/div_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.67dp"
+            android:layout_above="@+id/button_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="2.67dp"
+            android:layout_marginRight="2.67dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:id="@+id/button_view"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/negative_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_button_selector"
+                android:text="@string/cancel"
+                android:textColor="#F89A9B"
+                android:textSize="@dimen/text_size_s"/>
+
+            <ImageView
+                android:id="@+id/split_view"
+                android:layout_width="@dimen/divider_height"
+                android:layout_height="match_parent"
+                android:background="#D8D8D8"/>
+
+            <Button
+                android:id="@+id/positive_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_button_selector"
+                android:text="@string/confirm"
+                android:textColor="#99BA2B"
+                android:textSize="@dimen/text_size_s"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

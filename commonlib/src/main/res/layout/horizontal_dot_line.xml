@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_4"
+        android:layout_marginLeft="@dimen/base_padding_left_and_right"
+        android:layout_marginRight="@dimen/base_padding_left_and_right"
+        android:background="@drawable/horizontal_dotted_line_gray" />
+</LinearLayout>
