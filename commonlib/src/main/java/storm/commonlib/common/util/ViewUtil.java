@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.lang.reflect.Field;
 
-import storm.commonlib.common.Constants;
+import storm.commonlib.common.CommonConstants;
 
 public class ViewUtil {
 
@@ -174,7 +174,7 @@ public class ViewUtil {
     }
 
     public static void call(Activity activity) {
-        activity.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Constants.LITTLE_HELPER_PHONE_NUMBER)));
+        activity.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + CommonConstants.LITTLE_HELPER_PHONE_NUMBER)));
     }
 
 }

@@ -36,7 +36,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import storm.commonlib.R;
-import storm.commonlib.common.Constants;
+import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.view.dialog.ContentDialog;
 import storm.commonlib.common.view.dialog.ListDialog;
 
@@ -85,7 +85,7 @@ public class DialogUtils {
         DialogUtils.showContentDialog(context, content, "否", "是", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Constants.LITTLE_HELPER_PHONE_NUMBER));
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + CommonConstants.LITTLE_HELPER_PHONE_NUMBER));
                 context.startActivity(intent);
                 DialogUtils.dismissContentDialog();
             }
