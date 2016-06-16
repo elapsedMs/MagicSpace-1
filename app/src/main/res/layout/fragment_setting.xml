@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/activity_base_left_margin"
+                    android:text="@string/my_product_is_visible"
+                    android:textSize="@dimen/text_size_s" />
+
+                <ToggleButton
+                    android:id="@+id/tb_isVisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/activity_base_right_margin" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_message_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_base_top_margin"
+                android:background="@drawable/item_selector"
+                android:clickable="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_base_left_margin"
+                        android:text="@string/message_notice"
+                        android:textSize="@dimen/text_size_s" />
+
+                    <TextView
+                        android:id="@+id/tv_message_notice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/activity_base_right_margin"
+                        android:drawableRight="@mipmap/ic_launcher"
+                        android:gravity="center"
+                        android:text="已开启"
+                        android:textSize="@dimen/text_size_xs" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/activity_base_left_margin"
+                    android:text="要开启或关闭XX的推送通知，请在iphone的'设置'-'通知'中找到'XX'进行设置"
+                    android:textSize="@dimen/text_size_xs"
+                    android:textColor="@color/gray"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_base_top_margin"
+                android:background="@drawable/item_selector"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/activity_base_left_margin"
+                    android:text="@string/feedback"
+                    android:textSize="@dimen/text_size_s" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/activity_base_right_margin"
+                    android:src="@mipmap/ic_launcher" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_about_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_base_top_margin"
+                android:background="@drawable/item_selector"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/activity_base_left_margin"
+                    android:text="@string/about_us"
+                    android:textSize="@dimen/text_size_s" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/activity_base_right_margin"
+                    android:src="@mipmap/ic_launcher" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/bt_loginout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_base_top_margin"
+                android:background="@drawable/item_selector"
+                android:text="@string/login_out"
+                android:textSize="@dimen/text_size_s" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
