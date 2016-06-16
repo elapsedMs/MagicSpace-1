@@ -53,18 +53,26 @@ public class HomeTabView extends BaseView implements View.OnClickListener {
         nameTv = this.findView(R.id.tab_name);
         switch (style) {
             case ALBUM:
+                picIv.setImageResource(R.drawable.selector_home_tab_album);
+                nameTv.setText("图库");
                 break;
             case EGG:
+                picIv.setImageResource(R.drawable.selector_home_tab_egg);
+                nameTv.setText("彩蛋区");
                 break;
             case MY:
+                picIv.setImageResource(R.drawable.selector_home_tab_my);
+                nameTv.setText("我的");
                 break;
             case SETTING:
+                picIv.setImageResource(R.drawable.selector_home_tab_setting);
+                nameTv.setText("设置");
                 break;
             default:
+                picIv.setImageResource(R.mipmap.ic_launcher);
+                nameTv.setText("错误");
                 break;
         }
-        picIv.setImageResource(R.mipmap.ic_launcher);
-        nameTv.setText("gdq");
     }
 
     @Override

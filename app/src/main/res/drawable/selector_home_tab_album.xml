@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item android:drawable="@mipmap/btm_bar_pic_pressed" android:state_selected="true" />
+    <item android:drawable="@mipmap/btm_bar_pic" android:state_selected="false" />
+    <item android:drawable="@mipmap/btm_bar_pic" />
 </selector>
