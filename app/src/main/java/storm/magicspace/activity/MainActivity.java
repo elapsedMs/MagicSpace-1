@@ -3,6 +3,9 @@ package storm.magicspace.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private HomeTabView eggHtv;
     private HomeTabView myHtv;
     private HomeTabView settingHtv;
+    private ImageView addIv;
 
     public MainActivity() {
         super(R.layout.activity_main);
@@ -39,7 +43,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override
     public void initView() {
+        setTitleLeftBtVisibility(View.GONE);
+        setTitleRightBtVisibility(View.GONE);
         super.initView();
+        addIv = findView(R.id.add_Btn);
         albumHtv = findView(R.id.album_tabview);
         eggHtv = findView(R.id.egg_tabview);
         myHtv = findView(R.id.my_tabview);
@@ -56,6 +63,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         eggHtv.setOnClickListener(this);
         myHtv.setOnClickListener(this);
         settingHtv.setOnClickListener(this);
+        addIv.setOnClickListener(this);
     }
 
     private void initViewPager() {
@@ -111,10 +119,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public void onLocalClicked(int resId) {
         switch (resId) {
             case R.id.album_tabview:
+                setActivityTitle("");
                 viewPager.setCurrentItem(0);
                 selectChange(true, false, false, false);
                 break;
             case R.id.egg_tabview:
+                setActivityTitle("彩蛋区");
                 albumHtv.setSelected(false);
                 eggHtv.setSelected(true);
                 myHtv.setSelected(false);
@@ -122,12 +132,17 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.my_tabview:
+                setActivityTitle("关殿清");
                 selectChange(false, false, false, true);
                 viewPager.setCurrentItem(2);
                 break;
             case R.id.setting_tabview:
+                setActivityTitle("设置");
                 selectChange(false, true, false, false);
                 viewPager.setCurrentItem(3);
+                break;
+            case R.id.add_Btn:
+                Toast.makeText(MainActivity.this, "fuck", 1).show();
                 break;
         }
     }

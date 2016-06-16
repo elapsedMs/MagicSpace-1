@@ -15,63 +15,75 @@
         android:layout_above="@+id/bottom_view" />
 
     <RelativeLayout
+        android:layout_alignParentBottom="true"
         android:id="@+id/bottom_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <ImageView
-            android:id="@+id/line"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/ADD_BTN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/line"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/px_6" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_12"
-            android:orientation="horizontal">
+            android:background="#ffffff"
+            android:orientation="vertical">
 
-            <storm.magicspace.view.HomeTabView
-                android:id="@+id/album_tabview"
+            <TextView
+                android:id="@+id/line"
+                style="@style/HorizontalLine" />
+
+            <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                homeTab:home_tab_style="album" />
+                android:orientation="horizontal">
 
-            <storm.magicspace.view.HomeTabView
-                android:id="@+id/egg_tabview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                homeTab:home_tab_style="egg" />
+                <storm.magicspace.view.HomeTabView
+                    android:id="@+id/album_tabview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    homeTab:home_tab_style="album" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:visibility="invisible" />
+                <storm.magicspace.view.HomeTabView
+                    android:id="@+id/egg_tabview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    homeTab:home_tab_style="egg" />
 
-            <storm.magicspace.view.HomeTabView
-                android:id="@+id/my_tabview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                homeTab:home_tab_style="my" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:src="@mipmap/btm_bar_found"
+                    android:visibility="invisible" />
 
-            <storm.magicspace.view.HomeTabView
-                android:id="@+id/setting_tabview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                homeTab:home_tab_style="setting" />
+                <storm.magicspace.view.HomeTabView
+                    android:id="@+id/my_tabview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    homeTab:home_tab_style="my" />
+
+                <storm.magicspace.view.HomeTabView
+                    android:id="@+id/setting_tabview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    homeTab:home_tab_style="setting" />
+            </LinearLayout>
         </LinearLayout>
+
+
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/add_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/px_24"
+        android:src="@mipmap/btm_bar_found" />
 </RelativeLayout>
