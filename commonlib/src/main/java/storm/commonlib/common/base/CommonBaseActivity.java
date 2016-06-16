@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import storm.commonlib.R;
-import storm.commonlib.common.Constants;
+import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.view.TitleBar;
 import storm.commonlib.common.view.dialog.MedtreeDialog;
 
@@ -19,7 +19,7 @@ import static storm.commonlib.common.view.dialog.MedtreeDialog.DisplayStyle.LOAD
 public class CommonBaseActivity extends FragmentActivity {
 
     private final int contentViewId;
-    private int style = Constants.ACTIVITY_STYLE_WITH_TITLE_BAR;
+    private int style = CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR;
     private TitleBar titleBar;
     private MedtreeDialog medtreeDialog;
 
@@ -96,25 +96,25 @@ public class CommonBaseActivity extends FragmentActivity {
 
     private void switchActivityType() {
         switch (style) {
-            case Constants.ACTIVITY_STYLE_EMPTY:
+            case CommonConstants.ACTIVITY_STYLE_EMPTY:
                 setTitleBarVisibility(GONE);
                 break;
 
-            case Constants.ACTIVITY_STYLE_WITH_LOADING:
+            case CommonConstants.ACTIVITY_STYLE_WITH_LOADING:
 
                 showBaseDialog(LOADING, getString(R.string.data_loading), EMPTY, true, true);
                 break;
 
-            case Constants.ACTIVITY_STYLE_WITH_TITLE_BAR:
+            case CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR:
                 titleBar.setVisibility(VISIBLE);
                 break;
 
-            case Constants.ACTIVITY_STYLE_WITH_TITLE_BAR_AND_LOADING:
+            case CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR_AND_LOADING:
                 showBaseDialog(LOADING, getString(R.string.data_loading), EMPTY, true, true);
                 titleBar.setVisibility(VISIBLE);
                 break;
 
-            case Constants.ACTIVITY_STYLE_CONSULTATION:
+            case CommonConstants.ACTIVITY_STYLE_CONSULTATION:
                 titleBar.setVisibility(VISIBLE);
                 titleBar.setRightButtonVisibility(VISIBLE);
                 titleBar.setRightSecondButtonVisibility(VISIBLE);

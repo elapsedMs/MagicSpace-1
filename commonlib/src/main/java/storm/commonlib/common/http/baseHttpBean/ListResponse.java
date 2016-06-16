@@ -8,10 +8,10 @@ public class ListResponse<T> extends BaseResponse<List<T>> {
     public long offset;
 
     public List<T> getResult() {
-        return result;
+        return data;
     }
 
-    public void setResult(List<T> result) {
-        this.result = result;
+    public void setResult(List<T> data) {
+        this.data = data;
     }
 }

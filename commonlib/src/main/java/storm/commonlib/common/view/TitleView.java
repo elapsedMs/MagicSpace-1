@@ -7,7 +7,6 @@ import android.widget.TextView;
 import storm.commonlib.R;
 import storm.commonlib.common.base.BaseView;
 
-
 public class TitleView extends BaseView {
     private TextView titleTv;
 
