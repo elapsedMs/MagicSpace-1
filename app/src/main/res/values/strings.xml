@@ -2,4 +2,18 @@
     <string name="app_name">MagicSpace</string>
     <string name="action_settings">Settings</string>
 
+    <string name="my_product_is_visible">不让他人看我的作品</string>
+    <string name="message_notice">消息通知</string>
+    <string name="about_us">关于我们</string>
+    <string name="feedback">意见反馈</string>
+    <string name="login_out">退出登录</string>
+    <string name="share">分享</string>
+    <string name="assessment">求好评</string>
+    <string name="tip_assessment">您的支持是我们坚持的动力</string>
+    <string name="tip_about_us">欢迎加入客户端反馈QQ全XXXX XXXX\n或拨打客服电话4007263385反馈您的问题或意见</string>
+    <string name="input_feed_back">在此输入反馈内容</string>
+    <string name="feedback_input_limit">最多输入50个字</string>
+    <string name="tip_feedback_contact">请留下邮箱或电话，方便我们与您联系</string>
+    <string name="left_contact">请留下您的联系方式</string>
+    <string name="finish">完成</string>
 </resources>
