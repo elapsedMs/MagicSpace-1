@@ -4,6 +4,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/title1"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/title_bar_bg"
@@ -20,7 +21,7 @@
             android:layout_marginLeft="@dimen/activity_base_left_margin"
             android:clickable="true"
             android:padding="@dimen/px_6"
-            android:src="@drawable/selector_back"/>
+            android:src="@drawable/selector_back" />
 
         <TextView
             android:id="@+id/tv_title_bar_left"
@@ -32,7 +33,7 @@
             android:layout_marginLeft="@dimen/activity_base_left_margin"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_s"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/activity_title"
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_m"/>
+            android:textSize="@dimen/text_size_m" />
 
         <ImageView
             android:id="@+id/iv_title_bar_right_second"
@@ -52,7 +53,7 @@
             android:clickable="true"
             android:padding="@dimen/px_6"
             android:src="@drawable/icon_all_status"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_title_bar_right"
@@ -63,7 +64,7 @@
             android:layout_marginRight="@dimen/activity_base_right_margin"
             android:clickable="true"
             android:padding="@dimen/px_6"
-            android:src="@drawable/selector_edit"/>
+            android:src="@drawable/selector_edit" />
 
         <TextView
             android:id="@+id/tv_title_bar_right"
@@ -76,6 +77,68 @@
             android:text="1231321"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_s"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/title2"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/title_bar_bg"
+        android:paddingBottom="@dimen/px_26"
+        android:paddingTop="@dimen/px_26"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_96"
+            android:layout_marginRight="@dimen/px_96"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:textColor="#794bc8"
+                    android:textSize="@dimen/px_34" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/px_112"
+                    android:layout_height="@dimen/px_2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="#794bc8" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:textColor="#794bc8"
+                    android:textSize="@dimen/px_34" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/px_112"
+                    android:layout_height="@dimen/px_2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="#794bc8" />
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

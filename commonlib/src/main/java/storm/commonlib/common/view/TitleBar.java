@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import storm.commonlib.R;
@@ -22,6 +23,8 @@ public class TitleBar extends LinearLayout {
     private TextView leftTv;
     private TextView rightTv;
     private ImageView rightSecondBt;
+    private RelativeLayout titleBar1;
+    private RelativeLayout titleBar2;
 
     public TitleBar(Context context) {
         super(context);
@@ -35,10 +38,16 @@ public class TitleBar extends LinearLayout {
         initUI();
     }
 
+    public void useSelectTitle() {
+        titleBar1.setVisibility(View.GONE);
+        titleBar2.setVisibility(View.VISIBLE);
+    }
+
     private void initUI() {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.view_navigation_bar, this);
-
+        titleBar1 = (RelativeLayout) findViewById(R.id.title1);
+        titleBar2 = (RelativeLayout) findViewById(R.id.title2);
         leftBt = (ImageView) findViewById(R.id.bt_title_bar_left);
         rightBt = (ImageView) findViewById(R.id.iv_title_bar_right);
         leftTv = (TextView) findViewById(R.id.tv_title_bar_left);

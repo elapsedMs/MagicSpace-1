@@ -59,6 +59,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private void initAndListener() {
         viewPager.setCurrentItem(0);
         albumHtv.setSelected(true);
+        useSelectTitle();
         albumHtv.setOnClickListener(this);
         eggHtv.setOnClickListener(this);
         myHtv.setOnClickListener(this);
@@ -119,7 +120,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public void onLocalClicked(int resId) {
         switch (resId) {
             case R.id.album_tabview:
-                setActivityTitle("");
+                useSelectTitle();
                 viewPager.setCurrentItem(0);
                 selectChange(true, false, false, false);
                 break;
