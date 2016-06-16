@@ -13,7 +13,7 @@ import java.util.Objects;
 import storm.commonlib.common.util.ClickUtil;
 import storm.commonlib.common.util.ViewUtil;
 
-public class BaseView extends LinearLayout implements View.OnClickListener, BaseOnClickListener {
+public class  BaseView extends LinearLayout implements View.OnClickListener, BaseOnClickListener {
 
     private int viewId;
     private BaseOnClickListener listener;

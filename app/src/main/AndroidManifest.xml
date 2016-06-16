@@ -27,6 +27,13 @@
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.FeedBackActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

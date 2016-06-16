@@ -15,8 +15,7 @@ import storm.magicspace.R;
 public class AlbumFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_album, container);
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_album, null);
+        return view;
     }
 }
