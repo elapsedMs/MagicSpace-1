@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+]
+    <declare-styleable name="HomeTabView">
+        <attr name="home_tab_style" format="integer">
+            <enum name="album" value="1" />
+            <enum name="egg" value="2" />
+            <enum name="my" value="3" />
+            <enum name="setting" value="4" />
+        </attr>
+    </declare-styleable>
+</resources>

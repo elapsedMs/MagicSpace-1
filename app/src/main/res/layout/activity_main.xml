@@ -1,13 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:homeTab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_view" />
+
+    <RelativeLayout
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/ADD_BTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/px_6" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_12"
+            android:orientation="horizontal">
+
+            <storm.magicspace.view.HomeTabView
+                android:id="@+id/album_tabview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                homeTab:home_tab_style="album" />
+
+            <storm.magicspace.view.HomeTabView
+                android:id="@+id/egg_tabview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                homeTab:home_tab_style="egg" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <storm.magicspace.view.HomeTabView
+                android:id="@+id/my_tabview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                homeTab:home_tab_style="my" />
+
+            <storm.magicspace.view.HomeTabView
+                android:id="@+id/setting_tabview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                homeTab:home_tab_style="setting" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
