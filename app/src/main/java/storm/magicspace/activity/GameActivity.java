@@ -1,23 +1,22 @@
 package storm.magicspace.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.http.SslError;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.RelativeLayout;
 
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
+import storm.magicspace.view.FloatView;
 
 import static storm.commonlib.common.CommonConstants.ACTIVITY_STYLE_EMPTY;
 
-/**
- * Created by gdq on 16/6/16.
- */
 public class GameActivity extends BaseActivity {
 
     private WebView mWebView;
-    private RelativeLayout mParent;
+    private FloatView mFloatView;
 
     public GameActivity() {
         super(R.layout.activity_game, ACTIVITY_STYLE_EMPTY);
@@ -26,9 +25,14 @@ public class GameActivity extends BaseActivity {
     @Override
     public void initView() {
         super.initView();
+
         mWebView = findView(R.id.webview_game);
-        mParent = findView(R.id.rl_game_container);
+        mFloatView = findView(R.id.floatview_game);
+
         initWebView();
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.surprise_egg_red);
+        mFloatView.load(bitmap);
     }
 
     private void initWebView() {
