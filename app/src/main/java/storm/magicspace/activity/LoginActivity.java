@@ -5,12 +5,10 @@ import android.os.Bundle;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 
-import static storm.commonlib.common.CommonConstants.ACTIVITY_STYLE_EMPTY;
-
 public class LoginActivity extends BaseActivity {
 
     public LoginActivity() {
-        super(R.layout.activity_login, ACTIVITY_STYLE_EMPTY);
+        super(R.layout.activity_login);
     }
 
     @Override
