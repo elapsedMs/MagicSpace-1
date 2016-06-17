@@ -46,6 +46,10 @@ public class CommonBaseActivity extends FragmentActivity {
         dismissBaseDialog();
     }
 
+    public void useSelectTitle() {
+        titleBar.useSelectTitle();
+    }
+
     private void initTitleBar() {
         titleBar = (TitleBar) findViewById(R.id.navigation_bar);
         titleBar.setVisibility(View.GONE);

@@ -5,13 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import storm.commonlib.common.base.BaseActivity;
-import storm.commonlib.common.base.BaseOnClickListener;
 import storm.magicspace.R;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
 import storm.magicspace.fragment.AlbumFragment;
@@ -58,6 +56,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private void initAndListener() {
         viewPager.setCurrentItem(0);
         albumHtv.setSelected(true);
+        useSelectTitle();
         albumHtv.setOnClickListener(this);
         eggHtv.setOnClickListener(this);
         myHtv.setOnClickListener(this);
@@ -118,7 +117,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public void onLocalClicked(int resId) {
         switch (resId) {
             case R.id.album_tabview:
-                setActivityTitle("");
+                useSelectTitle();
                 viewPager.setCurrentItem(0);
                 selectChange(true, false, false, false);
                 break;
@@ -141,7 +140,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 viewPager.setCurrentItem(3);
                 break;
             case R.id.add_Btn:
-                Toast.makeText(MainActivity.this, "fuck", 1).show();
+                goToNext(GameActivity.class);
                 break;
         }
     }
