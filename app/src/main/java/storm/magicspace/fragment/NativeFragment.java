@@ -12,12 +12,11 @@ import storm.magicspace.R;
 /**
  * Created by gdq on 16/6/16.
  */
-public class NativeFragment extends BaseFragment{
+public class NativeFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_native,container);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_native, null);
     }
 
 }

@@ -85,8 +85,6 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/title_bar_bg"
-        android:paddingBottom="@dimen/px_26"
-        android:paddingTop="@dimen/px_26"
         android:visibility="gone">
 
         <LinearLayout
@@ -97,44 +95,50 @@
             android:orientation="horizontal">
 
             <RelativeLayout
+                android:id="@+id/left_rl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/select_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:textColor="#794bc8"
                     android:textSize="@dimen/px_34" />
 
                 <LinearLayout
+                    android:id="@+id/left_line"
                     android:layout_width="@dimen/px_112"
-                    android:layout_height="@dimen/px_2"
+                    android:layout_height="@dimen/px_4"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/px_26"
                     android:background="#794bc8" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/right_rl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/select_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:textColor="#794bc8"
                     android:textSize="@dimen/px_34" />
 
                 <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/right_line"
                     android:layout_width="@dimen/px_112"
-                    android:layout_height="@dimen/px_2"
+                    android:layout_height="@dimen/px_4"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:background="#794bc8" />
