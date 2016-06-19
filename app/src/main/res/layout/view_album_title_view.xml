@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:paddingBottom="@dimen/px_20"
+    android:paddingTop="@dimen/px_20">
+
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:id="@+id/line"
+        android:layout_width="@dimen/px_10"
+        android:layout_height="@dimen/px_60"
+        android:layout_marginRight="@dimen/px_26"
+        android:background="#794acc" />
+
+    <TextView
+        android:layout_centerVertical="true"
+        android:id="@+id/title_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/line"
+        android:gravity="center"
+        android:text="gdq"
+        android:textSize="@dimen/px_32" />
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:id="@+id/arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/px_10"
+        android:src="@mipmap/arrow_right" />
+
+    <TextView
+        android:layout_centerVertical="true"
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/px_8"
+        android:layout_toLeftOf="@id/arrow"
+        android:text="20"
+        android:textColor="#666666"
+        android:textSize="@dimen/px_30" />
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:id="@+id/red_dot"
+        android:layout_width="@dimen/px_12"
+        android:layout_height="@dimen/px_12"
+        android:layout_marginRight="@dimen/px_12"
+        android:layout_toLeftOf="@id/count"
+        android:background="@drawable/shape_red_dot" />
+</RelativeLayout>

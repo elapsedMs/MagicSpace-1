@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/px_70"
+    android:background="#fafafa"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/px_24"
+    android:paddingTop="@dimen/px_24">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="已下载"
+        android:textColor="#aaaaaa"
+        android:textSize="@dimen/px_24" />
+
+    <TextView
+        android:id="@+id/have_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="1M"
+        android:textColor="#aaaaaa"
+        android:textSize="@dimen/px_24" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="/可用空间"
+        android:textColor="#aaaaaa"
+        android:textSize="@dimen/px_24" />
+
+    <TextView
+        android:id="@+id/can_user_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="20G"
+        android:textColor="#aaaaaa"
+        android:textSize="@dimen/px_24" />
+</LinearLayout>
