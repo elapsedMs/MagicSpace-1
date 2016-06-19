@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/no_net_work_ll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/no_net_work_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/network_done" />
+
+        <TextView
+            android:layout_marginTop="@dimen/px_26"
+            android:text="暂时没有网络"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#8f8f8f"
+            android:textSize="@dimen/px_34" />
+
+        <TextView
+            android:layout_marginTop="@dimen/px_26"
+            android:text="请检查网络设置"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#8f8f8f"
+            android:textSize="@dimen/px_22" />
+
+        <TextView
+            android:layout_marginTop="@dimen/px_96"
+            android:gravity="center"
+            android:textSize="@dimen/px_28"
+            android:text="刷新一下"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_116"
+            android:layout_marginRight="@dimen/px_116"
+            android:background="@drawable/shape_albun_btn"
+            android:paddingBottom="@dimen/px_24"
+            android:paddingTop="@dimen/px_24"
+            android:textColor="#ffffff" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

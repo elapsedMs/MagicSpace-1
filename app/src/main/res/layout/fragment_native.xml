@@ -3,34 +3,70 @@
     xmlns:album_title="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_bg"
-    android:orientation="vertical">
+    android:background="@color/main_bg">
 
-    <storm.magicspace.view.AlbumTitleView
-        android:id="@+id/cacheingATV"
+    <RelativeLayout
+        android:id="@+id/rl_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/px_20"
-        album_title:album_title_name="正在缓存"
-        album_title:album_title_style="have_count" />
+        android:layout_height="match_parent">
 
-    <storm.magicspace.view.AlbumTitleView
-        android:id="@+id/cachedATV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cacheingATV"
-        album_title:album_title_name="已缓存"
-        album_title:album_title_style="normal" />
+        <storm.magicspace.view.AlbumTitleView
+            android:id="@+id/cacheingATV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px_20"
+            album_title:album_title_name="正在缓存"
+            album_title:album_title_style="have_count" />
 
-    <ListView
-        android:id="@+id/cachedLv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff" />
+        <storm.magicspace.view.AlbumTitleView
+            android:id="@+id/cachedATV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cacheingATV"
+            album_title:album_title_name="已缓存"
+            album_title:album_title_style="normal" />
 
-    <include
-        layout="@layout/album_storage"
+        <ListView
+            android:id="@+id/cachedLv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff" />
+
+        <include
+            layout="@layout/album_storage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/no_download_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/content_done" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_26"
+            android:text="你还没有下载任何主题"
+            android:textColor="#8f8f8f"
+            android:textSize="@dimen/px_34" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_26"
+            android:text="快去下载更多内容吧"
+            android:textColor="#8f8f8f"
+            android:textSize="@dimen/px_22" />
+    </LinearLayout>
 </RelativeLayout>
