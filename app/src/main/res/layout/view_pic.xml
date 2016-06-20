@@ -17,9 +17,48 @@
         android:layout_marginBottom="@dimen/px_12"
         android:layout_marginRight="@dimen/px_12">
 
+        <ImageView
+            android:id="@+id/iv_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/px_6"
+            android:src="@mipmap/list_icon_mojing" />
+
+        <TextView
+            android:id="@+id/tv_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="下载"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/px_20" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/px_20" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="次，"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/px_20" />
+
+        <TextView
+            android:id="@+id/tv_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
             android:textColor="#ffffff"
             android:textSize="@dimen/px_20" />
     </LinearLayout>
