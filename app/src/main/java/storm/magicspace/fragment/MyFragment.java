@@ -41,8 +41,6 @@ public class MyFragment extends BaseFragment {
             case R.id.my_siv_collection:
                 goToNext(MyCollectionActivity.class);
                 break;
-
-
         }
     }
 }
