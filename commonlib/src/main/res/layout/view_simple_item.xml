@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/px_92"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/base_padding_left_and_right"
-    android:paddingRight="@dimen/base_padding_left_and_right">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_92"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/base_padding_left_and_right"
+                android:paddingRight="@dimen/base_padding_left_and_right">
 
     <TextView
         android:id="@+id/name"
@@ -13,8 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:textColor="#252525"
-        android:textSize="@dimen/px_32" />
+        android:textColor="#8c8b8b"
+        android:textSize="@dimen/px_32"
+        android:textStyle="normal"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,13 +30,13 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:textColor="#252525"
-            android:textSize="@dimen/px_32" />
+            android:textSize="@dimen/px_32"/>
 
         <ImageView
-            android:layout_marginLeft="@dimen/px_6"
-            android:visibility="gone"
             android:id="@+id/arrow"
             style="@style/Arrow"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/px_6"
+            android:visibility="gone"/>
     </LinearLayout>
 </RelativeLayout>
