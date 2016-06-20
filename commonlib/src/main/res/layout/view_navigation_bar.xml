@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title1"
@@ -21,7 +21,8 @@
             android:layout_marginLeft="@dimen/activity_base_left_margin"
             android:clickable="true"
             android:padding="@dimen/px_6"
-            android:src="@drawable/selector_back" />
+            android:src="@drawable/selector_back"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_title_bar_left"
@@ -33,7 +34,7 @@
             android:layout_marginLeft="@dimen/activity_base_left_margin"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_s"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/activity_title"
@@ -41,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_m" />
+            android:textSize="@dimen/text_size_m"/>
 
         <ImageView
             android:id="@+id/iv_title_bar_right_second"
@@ -53,7 +54,7 @@
             android:clickable="true"
             android:padding="@dimen/px_6"
             android:src="@drawable/icon_all_status"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/iv_title_bar_right"
@@ -64,7 +65,8 @@
             android:layout_marginRight="@dimen/activity_base_right_margin"
             android:clickable="true"
             android:padding="@dimen/px_6"
-            android:src="@drawable/selector_edit" />
+            android:src="@drawable/selector_edit"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_title_bar_right"
@@ -77,7 +79,7 @@
             android:text="1231321"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_s"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -107,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:textSize="@dimen/px_34" />
+                    android:textSize="@dimen/px_34"/>
 
                 <LinearLayout
                     android:id="@+id/left_line"
@@ -116,7 +118,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/px_26"
-                    android:background="#794bc8" />
+                    android:background="#794bc8"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -132,16 +134,16 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:textSize="@dimen/px_34" />
+                    android:textSize="@dimen/px_34"/>
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:id="@+id/right_line"
                     android:layout_width="@dimen/px_112"
                     android:layout_height="@dimen/px_4"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:background="#794bc8" />
+                    android:background="#794bc8"
+                    android:visibility="gone"/>
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>

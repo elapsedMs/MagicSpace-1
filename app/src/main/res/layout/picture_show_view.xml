@@ -5,9 +5,8 @@
               android:orientation="horizontal">
 
     <ImageView
-        android:background="@drawable/abc_btn_default_mtrl_shape"
-        android:layout_width="@dimen/px_224"
-        android:layout_height="@dimen/px_112"/>
+        android:layout_width="200dp"
+        android:layout_height="100dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

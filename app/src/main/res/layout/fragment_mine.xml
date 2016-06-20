@@ -132,6 +132,7 @@
         android:orientation="vertical">
 
         <storm.commonlib.common.view.SimpleItemView
+            android:id="@+id/my_siv_wroks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             gdq:sv_name="我的作品"
@@ -139,11 +140,12 @@
         </storm.commonlib.common.view.SimpleItemView>
 
         <View
-            android:background="@color/light_gray"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
+            android:layout_height="0.5dp"
+            android:background="@color/light_gray"/>
 
         <storm.commonlib.common.view.SimpleItemView
+            android:id="@+id/my_siv_collection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             gdq:sv_name="我的收藏"
@@ -151,12 +153,12 @@
         </storm.commonlib.common.view.SimpleItemView>
 
         <View
-            android:background="@color/light_gray"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
-
+            android:layout_height="0.5dp"
+            android:background="@color/light_gray"/>
 
         <storm.commonlib.common.view.SimpleItemView
+            android:id="@+id/my_siv_eggs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             gdq:sv_name="自制彩蛋"
@@ -165,12 +167,12 @@
 
 
         <View
-            android:background="@color/light_gray"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
-
+            android:layout_height="0.5dp"
+            android:background="@color/light_gray"/>
 
         <storm.commonlib.common.view.SimpleItemView
+            android:id="@+id/my_siv_fresh_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/distance_xxl"
@@ -179,9 +181,9 @@
         </storm.commonlib.common.view.SimpleItemView>
 
         <View
-            android:background="@color/light_gray"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
+            android:layout_height="0.5dp"
+            android:background="@color/light_gray"/>
 
 
     </LinearLayout>
