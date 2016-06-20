@@ -47,21 +47,6 @@ public class TitleBar extends LinearLayout {
         initUI();
     }
 
-    public void useSelectTitle() {
-        titleBar1.setVisibility(View.GONE);
-        titleBar2.setVisibility(View.VISIBLE);
-    }
-
-    public void useNormalTitle() {
-        titleBar1.setVisibility(View.VISIBLE);
-        titleBar2.setVisibility(View.GONE);
-    }
-
-    public void setSelectTitle(String left, String right) {
-        selectLeftTv.setText(left);
-        selectRightTv.setText(right);
-    }
-
     private void initUI() {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.view_navigation_bar, this);
@@ -109,6 +94,26 @@ public class TitleBar extends LinearLayout {
         rightLineLl.setVisibility(View.GONE);
         selectLeftTv.setTextColor(getResources().getColor(R.color.title_color));
         selectRightTv.setTextColor(getResources().getColor(android.R.color.black));
+    }
+
+    public void useSelectTitle() {
+        titleBar1.setVisibility(View.GONE);
+        titleBar2.setVisibility(View.VISIBLE);
+    }
+
+    public void useNormalTitle() {
+        titleBar1.setVisibility(View.VISIBLE);
+        titleBar2.setVisibility(View.GONE);
+    }
+
+    public void withoutTitle() {
+        titleBar1.setVisibility(View.GONE);
+        titleBar2.setVisibility(View.GONE);
+    }
+
+    public void setSelectTitle(String left, String right) {
+        selectLeftTv.setText(left);
+        selectRightTv.setText(right);
     }
 
 

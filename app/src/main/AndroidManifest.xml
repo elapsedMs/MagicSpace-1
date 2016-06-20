@@ -38,6 +38,12 @@
         <activity
             android:name=".activity.GameActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mine.MyCollectionActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.mine.MyWorksActivity"
+                  android:screenOrientation="portrait"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
