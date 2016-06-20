@@ -1,38 +1,55 @@
 package storm.magicspace.activity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.app.Activity;
 import android.net.http.SslError;
+import android.os.Bundle;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import storm.commonlib.common.base.BaseActivity;
+import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
 import storm.magicspace.view.FloatView;
 
-import static storm.commonlib.common.CommonConstants.ACTIVITY_STYLE_EMPTY;
+public class GameActivity extends Activity {
 
-public class GameActivity extends BaseActivity {
+    public static final String TAG = GameActivity.class.getSimpleName();
 
     private WebView mWebView;
     private FloatView mFloatView;
 
-    public GameActivity() {
-        super(R.layout.activity_game, ACTIVITY_STYLE_EMPTY);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
+        initView();
     }
 
-    @Override
     public void initView() {
-        super.initView();
-
-        mWebView = findView(R.id.webview_game);
-        mFloatView = findView(R.id.floatview_game);
-
+        mWebView = (WebView) findViewById(R.id.webview_game);
+        mFloatView = (FloatView) findViewById(R.id.floatview_game);
+        initFloatView();
         initWebView();
+    }
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.surprise_egg_red);
-        mFloatView.load(bitmap);
+    private void initFloatView() {
+        mFloatView.setImageResource(R.mipmap.surprise_egg_red);
+        mFloatView.setOnFloatListener(new FloatView.FloatListener() {
+            @Override
+            public void clickLeftTop() {
+                LogUtil.d(TAG, "left top transparent btn clicked");
+            }
+
+            @Override
+            public void clickRightTop() {
+                LogUtil.d(TAG, "right top rotate btn clicked");
+            }
+
+            @Override
+            public void clickRightBottom() {
+                LogUtil.d(TAG, "right bottom scale btn clicked");
+            }
+        });
     }
 
     private void initWebView() {
