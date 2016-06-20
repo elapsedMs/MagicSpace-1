@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import storm.commonlib.common.base.BaseActivity;
+import storm.commonlib.common.view.TitleBar;
 import storm.magicspace.R;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
 import storm.magicspace.fragment.GameCollectionFragment;
@@ -29,7 +30,15 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
         setActivityTitle("我的收藏");
         setTitleLeftBtVisibility(View.VISIBLE);
         initViewPager();
+        setOnSelectTitleClickedListener(new TitleBar.OnSelectTitleClickedListener() {
+            @Override
+            public void leftClicked() {
+            }
 
+            @Override
+            public void rightClicked() {
+            }
+        });
     }
 
     private void initViewPager() {
@@ -47,6 +56,8 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
         useBothTitle();
         setSecondTitleBackground(android.R.color.white);
         setSelectTitle("游戏", "主题");
+
+
     }
 
     @Override

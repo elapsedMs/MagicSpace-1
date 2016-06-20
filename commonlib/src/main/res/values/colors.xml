@@ -5,6 +5,7 @@
     <color name="white">#ffffff</color>
     <color name="gray">#dad8d8</color>
     <color name="text_dark_gray">#626462</color>
+    <!--<color name="title_bar_bg">#765a8c</color>-->
     <color name="title_bar_bg">#14baf8</color>
     <color name="main_background">#f4f4f4</color>
     <color name="personal_center_name_color">#464646</color>
