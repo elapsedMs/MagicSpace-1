@@ -46,8 +46,8 @@ public class FloatView extends ImageView {
     private int lb_Height;
     private int rb_Width;
     private FloatListener mListener;
-    private boolean mToggleScaleAction = false;
-    private boolean mToggleMoveAction;
+    private boolean mTriggerScaleAction = false;
+    private boolean mTriggerMoveAction;
     private float mRotateDegree;
     private PointF mMiddlePoint = new PointF();
     private float mToCenterDistance;
@@ -155,9 +155,9 @@ public class FloatView extends ImageView {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (mToggleScaleAction) {
+                if (mTriggerScaleAction) {
                     executeScale(event);
-                } else if (mToggleMoveAction) {
+                } else if (mTriggerMoveAction) {
                     executeMove(event);
                 }
                 break;
@@ -171,8 +171,8 @@ public class FloatView extends ImageView {
     }
 
     private void reset() {
-        mToggleScaleAction = false;
-        mToggleMoveAction = false;
+        mTriggerScaleAction = false;
+        mTriggerMoveAction = false;
     }
 
     private void executeMove(MotionEvent event) {
@@ -200,7 +200,7 @@ public class FloatView extends ImageView {
             float moveX = event.getX(0);
             float moveY = event.getY(0);
             if (!isInside(moveX, moveY, rb_Rect)) {
-                mToggleScaleAction = false;
+                mTriggerScaleAction = false;
             }
         } else {
             mToCenterDistance = getDiagonalLen(event);
@@ -210,13 +210,13 @@ public class FloatView extends ImageView {
     }
 
     private void doMove(MotionEvent event) {
-        mToggleMoveAction = true;
+        mTriggerMoveAction = true;
         mLastX = event.getX(0);
         mLastY = event.getY(0);
     }
 
     private void doScale(MotionEvent event) {
-        mToggleScaleAction = true;
+        mTriggerScaleAction = true;
         mRotateDegree = rotationToStartPoint(event);
         midPointToStartPoint(event);
         mToCenterDistance = getDiagonalLen(event);
@@ -291,16 +291,8 @@ public class FloatView extends ImageView {
         float val6 = values[4] * height + values[5];
         float val7 = values[0] * width + values[1] * height + values[2];
         float val8 = values[3] * width + values[4] * height + values[5];
-        float[] xVals = new float[4];
-        float[] yVals = new float[4];
-        xVals[0] = val1;
-        xVals[1] = val3;
-        xVals[2] = val7;
-        xVals[3] = val5;
-        yVals[0] = val2;
-        yVals[1] = val4;
-        yVals[2] = val8;
-        yVals[3] = val6;
+        float[] xVals = {val1, val3, val7, val5};
+        float[] yVals = {val2, val4, val8, val6};
         return pointInRect(xVals, yVals, event.getX(0), event.getY(0));
     }
 
