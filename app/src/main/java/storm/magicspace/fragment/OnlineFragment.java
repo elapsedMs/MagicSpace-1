@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
+import storm.magicspace.view.AlbumPicView;
 
 import static storm.magicspace.R.*;
 import static storm.magicspace.R.layout.*;
@@ -19,6 +20,7 @@ import static storm.magicspace.R.layout.*;
 public class OnlineFragment extends BaseFragment {
 
     private LinearLayout noNetWorkLl;
+    private AlbumPicView albumPicView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +32,9 @@ public class OnlineFragment extends BaseFragment {
     public void initView(View view) {
         super.initView(view);
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
+        albumPicView = (AlbumPicView) view.findViewById(id.e);
+        albumPicView.setBgRes(mipmap.ic_launcher).setSize("21M").setDownloadTimes("999");
+
     }
 
 

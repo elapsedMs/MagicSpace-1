@@ -18,10 +18,15 @@ public class AlbumCachedAdapter extends BaseAdapter {
 
     private List<Cache> cacheList;
     private Context context;
+    private boolean isScroll;
 
     public AlbumCachedAdapter(List<Cache> cacheList, Context context) {
         this.cacheList = cacheList;
         this.context = context;
+    }
+
+    public void setScrollStated(boolean isScroll) {
+        this.isScroll = isScroll;
     }
 
     @Override
@@ -50,7 +55,7 @@ public class AlbumCachedAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        return null;
+        return view;
     }
 
     private class ViewHolder {

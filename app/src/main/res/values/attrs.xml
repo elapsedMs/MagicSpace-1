@@ -16,4 +16,11 @@
         </attr>
         <attr name="album_title_name" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="AlbumPicView">
+        <attr name="album_pic_type" format="integer">
+            <enum name="pic" value="1"/>
+            <enum name="text" value="2"/>
+        </attr>
+    </declare-styleable>
 </resources>
