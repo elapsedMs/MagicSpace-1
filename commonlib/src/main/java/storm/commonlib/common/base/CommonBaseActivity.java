@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 
 import storm.commonlib.R;
@@ -46,8 +47,29 @@ public class CommonBaseActivity extends FragmentActivity {
         dismissBaseDialog();
     }
 
-    public void useSelectTitle() {
+    public void rightTitleSelected() {
+        titleBar.rightTitleSelected();
+    }
+
+    public void leftTitleSelected() {
+        titleBar.leftTitleSelected();
+    }
+
+    public void useSelectTitle(String left, String right) {
         titleBar.useSelectTitle();
+        titleBar.setSelectTitle(left, right);
+    }
+
+    public void useNormalTitle() {
+        titleBar.useNormalTitle();
+    }
+
+    public void setOnSelectTitleClickedListener(TitleBar.OnSelectTitleClickedListener listener) {
+        titleBar.setOnSelectTitleClickedListener(listener);
+    }
+
+    public void setSelectTitle(String left, String right) {
+        titleBar.setSelectTitle(left, right);
     }
 
     private void initTitleBar() {

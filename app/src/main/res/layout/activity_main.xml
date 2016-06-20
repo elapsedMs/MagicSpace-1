@@ -84,6 +84,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/px_24"
+        android:layout_marginBottom="@dimen/px_12"
         android:src="@mipmap/btm_bar_found" />
 </RelativeLayout>

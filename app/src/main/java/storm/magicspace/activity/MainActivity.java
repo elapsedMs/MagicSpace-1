@@ -1,8 +1,10 @@
 package storm.magicspace.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import storm.commonlib.common.base.BaseActivity;
+import storm.commonlib.common.view.TitleBar;
 import storm.magicspace.R;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
 import storm.magicspace.fragment.AlbumFragment;
@@ -20,6 +23,10 @@ import storm.magicspace.view.HomeTabView;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
+    private static final int ALBUM = 1;
+    private static final int EGG = 2;
+    private static final int MY = 3;
+    private static final int SETTING = 4;
     private List<Fragment> fragmentList = new ArrayList<>();
     private ViewPager viewPager;
     private HomeViewPagerAdapter homeViewPagerAdapter;
@@ -28,6 +35,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private HomeTabView myHtv;
     private HomeTabView settingHtv;
     private ImageView addIv;
+    private Handler handler;
 
     public MainActivity() {
         super(R.layout.activity_main);
@@ -53,10 +61,23 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         initViewPager();
     }
 
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
+
     private void initAndListener() {
-        viewPager.setCurrentItem(0);
-        albumHtv.setSelected(true);
-        useSelectTitle();
+        selectedTab(ALBUM);
+        setOnSelectTitleClickedListener(new TitleBar.OnSelectTitleClickedListener() {
+            @Override
+            public void leftClicked() {
+                handler.sendEmptyMessage(AlbumFragment.LEFT);
+            }
+
+            @Override
+            public void rightClicked() {
+                handler.sendEmptyMessage(AlbumFragment.RIGHT);
+            }
+        });
         albumHtv.setOnClickListener(this);
         eggHtv.setOnClickListener(this);
         myHtv.setOnClickListener(this);
@@ -76,6 +97,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(homeViewPagerAdapter);
         viewPager.setOnPageChangeListener(this);
+        viewPager.setOffscreenPageLimit(3);
     }
 
     @Override
@@ -87,16 +109,16 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public void onPageSelected(int position) {
         switch (position) {
             case 0:
-                selectChange(true, false, false, false);
+                selectedTab(ALBUM);
                 break;
             case 1:
-                selectChange(false, false, true, false);
+                selectedTab(EGG);
                 break;
             case 2:
-                selectChange(false, false, false, true);
+                selectedTab(MY);
                 break;
             case 3:
-                selectChange(false, true, false, false);
+                selectedTab(SETTING);
                 break;
         }
     }
@@ -117,30 +139,44 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public void onLocalClicked(int resId) {
         switch (resId) {
             case R.id.album_tabview:
-                useSelectTitle();
                 viewPager.setCurrentItem(0);
-                selectChange(true, false, false, false);
                 break;
             case R.id.egg_tabview:
-                setActivityTitle("彩蛋区");
-                albumHtv.setSelected(false);
-                eggHtv.setSelected(true);
-                myHtv.setSelected(false);
-                settingHtv.setSelected(false);
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.my_tabview:
-                setActivityTitle("关殿清");
-                selectChange(false, false, false, true);
                 viewPager.setCurrentItem(2);
                 break;
             case R.id.setting_tabview:
-                setActivityTitle("设置");
-                selectChange(false, true, false, false);
                 viewPager.setCurrentItem(3);
                 break;
             case R.id.add_Btn:
                 goToNext(GameActivity.class);
+                break;
+        }
+    }
+
+    private void selectedTab(int type) {
+        Log.d("gdq", "1");
+        switch (type) {
+            case ALBUM:
+                useSelectTitle("在线", "本地");
+                selectChange(true, false, false, false);
+                break;
+            case EGG:
+                useNormalTitle();
+                setActivityTitle("彩蛋区");
+                selectChange(false, false, true, false);
+                break;
+            case MY:
+                useNormalTitle();
+                setActivityTitle("关殿清");
+                selectChange(false, false, false, true);
+                break;
+            case SETTING:
+                useNormalTitle();
+                setActivityTitle("设置");
+                selectChange(false, true, false, false);
                 break;
         }
     }
