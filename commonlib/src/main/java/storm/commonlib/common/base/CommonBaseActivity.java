@@ -64,7 +64,7 @@ public class CommonBaseActivity extends FragmentActivity {
     }
 
     public void withoutTitle() {
-        titleBar.withouttitle();
+        titleBar.withoutTitle();
     }
 
     public void setOnSelectTitleClickedListener(TitleBar.OnSelectTitleClickedListener listener) {
