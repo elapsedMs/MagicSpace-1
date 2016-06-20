@@ -57,6 +57,11 @@ public class TitleBar extends LinearLayout {
         titleBar2.setVisibility(View.GONE);
     }
 
+    public void withouttitle() {
+        titleBar1.setVisibility(View.GONE);
+        titleBar2.setVisibility(View.GONE);
+    }
+
     public void setSelectTitle(String left, String right) {
         selectLeftTv.setText(left);
         selectRightTv.setText(right);

@@ -169,8 +169,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 selectChange(false, false, true, false);
                 break;
             case MY:
-                useNormalTitle();
-                setActivityTitle("关殿清");
+                withoutTitle();
                 selectChange(false, false, false, true);
                 break;
             case SETTING:
