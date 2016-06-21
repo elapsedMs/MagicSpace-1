@@ -3,14 +3,10 @@ package storm.magicspace.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import storm.commonlib.common.base.BaseView;
 import storm.magicspace.R;

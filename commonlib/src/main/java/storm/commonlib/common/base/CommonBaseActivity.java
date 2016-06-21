@@ -63,6 +63,10 @@ public class CommonBaseActivity extends FragmentActivity {
         titleBar.useNormalTitle();
     }
 
+    public void useBothTitle() {
+        titleBar.userBothTitle();
+    }
+
     public void withoutTitle() {
         titleBar.withoutTitle();
     }
@@ -184,6 +188,10 @@ public class CommonBaseActivity extends FragmentActivity {
     }
 
     public void onTitleBarRightTvClicked(View view) {
+    }
+
+    public void setSecondTitleBackground(int resId) {
+        titleBar.setSecondTitleBackground(resId);
     }
 
     public void setRightTvClickable(boolean clickable) {

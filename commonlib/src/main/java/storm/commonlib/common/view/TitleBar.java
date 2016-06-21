@@ -106,6 +106,12 @@ public class TitleBar extends LinearLayout {
         titleBar2.setVisibility(View.GONE);
     }
 
+
+    public void userBothTitle() {
+        titleBar1.setVisibility(View.VISIBLE);
+        titleBar2.setVisibility(View.VISIBLE);
+    }
+
     public void withoutTitle() {
         titleBar1.setVisibility(View.GONE);
         titleBar2.setVisibility(View.GONE);
@@ -115,7 +121,6 @@ public class TitleBar extends LinearLayout {
         selectLeftTv.setText(left);
         selectRightTv.setText(right);
     }
-
 
     public void setOnSelectTitleClickedListener(OnSelectTitleClickedListener listener) {
         selectTitleClickedListener = listener;
@@ -191,6 +196,11 @@ public class TitleBar extends LinearLayout {
     public void setRightSecondButtonVisibility(int visibility) {
         rightSecondBt.setVisibility(visibility);
     }
+
+    public void setSecondTitleBackground(int resId) {
+        titleBar2.setBackgroundResource(resId);
+    }
+
 
     public interface OnSelectTitleClickedListener {
         void leftClicked();
