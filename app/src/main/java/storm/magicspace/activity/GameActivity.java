@@ -63,6 +63,6 @@ public class GameActivity extends Activity {
 
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
-        mWebView.loadUrl("http://app.stemmind.com/3d/vryu/krpano.html?xml=vrxml.php&html5=only");
+        mWebView.loadUrl("http://app.stemmind.com/vr/a/tour.html");
     }
 }
