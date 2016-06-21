@@ -44,7 +44,7 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
     public void onLocalClicked(int resId) {
         super.onLocalClicked(resId);
         switch (resId) {
-            case R.id.cachedATV:
+            case R.id.cacheingATV:
                 goToNext(CacheingActivity.class);
                 break;
         }

@@ -32,9 +32,6 @@ public class OnlineFragment extends BaseFragment {
     public void initView(View view) {
         super.initView(view);
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
-        albumPicView = (AlbumPicView) view.findViewById(id.e);
-        albumPicView.setBgRes(mipmap.ic_launcher).setSize("21M").setDownloadTimes("999");
-
     }
 
 

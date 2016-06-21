@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/px_22"
+    android:paddingRight="@dimen/px_22">
+
+    <RelativeLayout
+        android:id="@+id/left"
+        android:layout_width="@dimen/px_262"
+        android:layout_height="@dimen/px_184"
+        android:paddingBottom="@dimen/px_22"
+        android:paddingTop="@dimen/px_22">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff0000" />
+
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="缓存中"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/px_26" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/left"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/px_22">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加勒比"
+            android:textColor="#000000"
+            android:textSize="@dimen/px_30" />
+
+        <ProgressBar
+            android:max="100"
+            android:id="@+id/progress_bar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_2"
+            android:layout_marginBottom="@dimen/px_10"
+            android:layout_marginTop="@dimen/px_44"
+            android:progressDrawable="@drawable/progress" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="385M"
+                    android:textColor="#9c9c9c"
+                    android:textSize="@dimen/px_18" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="/"
+                    android:textColor="#9c9c9c"
+                    android:textSize="@dimen/px_18" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="3850M"
+                    android:textColor="#9c9c9c"
+                    android:textSize="@dimen/px_18" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:text="3.5M/S"
+                android:textColor="#9c9c9c"
+                android:textSize="@dimen/px_18" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_1"
+        android:layout_alignLeft="@id/right"
+        android:layout_alignParentBottom="true"
+        android:background="#9c9c9c" />
+</RelativeLayout>
