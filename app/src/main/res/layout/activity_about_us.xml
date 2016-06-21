@@ -33,7 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_base_top_margin"
         android:background="@drawable/item_selector"
-        android:clickable="true">
+        android:clickable="true"
+        android:padding="@dimen/activity_base_top_margin">
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,7 +51,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/activity_base_right_margin"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/arrow_right" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -59,7 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_base_top_margin"
         android:background="@drawable/item_selector"
-        android:clickable="true">
+        android:clickable="true"
+        android:padding="@dimen/activity_base_top_margin">
 
         <TextView
             android:layout_width="wrap_content"
@@ -78,7 +80,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/activity_base_right_margin"
-            android:drawableRight="@mipmap/ic_launcher"
+            android:drawableRight="@mipmap/arrow_right"
             android:gravity="center"
             android:text="@string/tip_assessment"
             android:textSize="@dimen/text_size_xs"
@@ -90,5 +92,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_base_left_margin"
         android:text="@string/tip_about_us"
-        android:textSize="@dimen/text_size_xs"/>
+        android:textSize="@dimen/text_size_xs"
+        android:padding="@dimen/activity_base_top_margin"/>
 </LinearLayout>
