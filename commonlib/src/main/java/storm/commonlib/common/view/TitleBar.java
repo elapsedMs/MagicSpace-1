@@ -33,6 +33,7 @@ public class TitleBar extends LinearLayout {
     private LinearLayout rightLineLl;
     private RelativeLayout leftRl;
     private RelativeLayout rightRl;
+    private TextView natvieRedDotTv;
     private OnSelectTitleClickedListener selectTitleClickedListener;
 
     public TitleBar(Context context) {
@@ -64,6 +65,8 @@ public class TitleBar extends LinearLayout {
         rightLineLl = (LinearLayout) findViewById(right_line);
         leftRl = (RelativeLayout) findViewById(R.id.left_rl);
         rightRl = (RelativeLayout) findViewById(R.id.right_rl);
+        natvieRedDotTv = (TextView) findViewById(R.id.native_red_dot);
+
 
         leftRl.setOnClickListener(new OnClickListener() {
             @Override
@@ -104,6 +107,11 @@ public class TitleBar extends LinearLayout {
     public void useNormalTitle() {
         titleBar1.setVisibility(View.VISIBLE);
         titleBar2.setVisibility(View.GONE);
+    }
+
+    public void showRedDot(String count){
+        natvieRedDotTv.setVisibility(View.VISIBLE);
+        natvieRedDotTv.setText(count);
     }
 
 

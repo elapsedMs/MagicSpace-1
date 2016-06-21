@@ -38,6 +38,7 @@ public class AlbumTitleView extends BaseView {
         String name = typedArray.getString(R.styleable.AlbumTitleView_album_title_name);
         initView();
         initData(style, name);
+        typedArray.recycle();
     }
 
     private void initData(int style, String name) {

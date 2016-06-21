@@ -38,6 +38,7 @@ public class AlbumPicView extends BaseView {
         int type = typedArray.getInt(R.styleable.AlbumPicView_album_pic_type, -1);
         initView();
         switchType(type);
+        typedArray.recycle();
     }
 
     private void switchType(int type) {

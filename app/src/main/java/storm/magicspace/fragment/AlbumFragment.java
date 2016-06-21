@@ -27,7 +27,7 @@ public class AlbumFragment extends BaseFragment implements ViewPager.OnPageChang
     public static final int LEFT = 1;
     public static final int RIGHT = 2;
 
-    private MainActivity mainActivity;
+    public MainActivity mainActivity;
     private ViewPager viewPager;
     private List<Fragment> fragmentList = new ArrayList<>();
     private MyHandler myHandler;
@@ -76,7 +76,7 @@ public class AlbumFragment extends BaseFragment implements ViewPager.OnPageChang
 
     @Override
     public void initView(View view) {
-        Log.d("gdq","AlbumFragment initView");
+        Log.d("gdq", "AlbumFragment initView");
         super.initView(view);
         viewPager = (ViewPager) view.findViewById(R.id.album_viewpager);
         initViewPager();
@@ -112,6 +112,7 @@ public class AlbumFragment extends BaseFragment implements ViewPager.OnPageChang
         }
 
     }
+
 
     @Override
     public void onPageScrollStateChanged(int state) {

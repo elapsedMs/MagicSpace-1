@@ -44,6 +44,7 @@ public class HomeTabView extends BaseView implements View.OnClickListener {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HomeTabView);
         int style = typedArray.getInteger(R.styleable.HomeTabView_home_tab_style, -1);
         init(style);
+        typedArray.recycle();
     }
 
     private void init(int style) {

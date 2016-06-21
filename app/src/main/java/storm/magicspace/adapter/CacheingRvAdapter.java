@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -38,14 +40,27 @@ public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.Vi
     @Override
     public int getItemCount() {
 //        return list == null ? 0 : list.size();
-    return 10;
+        return 10;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ProgressBar progressBar;
+        private ImageView image;
+        private TextView state;
+        private TextView name;
+        private ProgressBar progressBar;
+        private TextView downloadSize;
+        private TextView total;
+        private TextView downloadSpeed;
+
         public ViewHolder(View itemView) {
             super(itemView);
+            image = (ImageView) itemView.findViewById(R.id.image);
+            state = (TextView) itemView.findViewById(R.id.state);
+            name = (TextView) itemView.findViewById(R.id.name);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress_bar);
+            downloadSize = (TextView) itemView.findViewById(R.id.download_size);
+            total = (TextView) itemView.findViewById(R.id.total);
+            downloadSpeed = (TextView) itemView.findViewById(R.id.download_speed);
         }
     }
 }
