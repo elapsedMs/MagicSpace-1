@@ -49,6 +49,9 @@
         <activity
             android:name=".activity.CacheingActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ClassifyRecommendActivity"
+            android:screenOrientation="portrait" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

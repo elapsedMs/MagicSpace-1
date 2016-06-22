@@ -1,5 +1,6 @@
 package storm.magicspace.activity;
 
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +39,7 @@ public class CacheingActivity extends BaseActivity {
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new CacheingRvAdapter(new ArrayList<>(), this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     public void showNoDownload() {
