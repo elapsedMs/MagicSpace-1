@@ -1,11 +1,16 @@
 package storm.magicspace.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 
 import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
@@ -17,11 +22,20 @@ public class GameActivity extends Activity {
 
     private WebView mWebView;
     private FloatView mFloatView;
+    private Button sure;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        sure = (Button) findViewById(R.id.sure);
+        sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mWebView.loadUrl("javascript:dropItem('1' , '1','0.5' ,'2','10')");
+            }
+        });
         initView();
     }
 
@@ -52,6 +66,7 @@ public class GameActivity extends Activity {
         });
     }
 
+    @SuppressLint("JavascriptInterface")
     private void initWebView() {
         mWebView.setWebViewClient(new WebViewClient() {
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -64,5 +79,25 @@ public class GameActivity extends Activity {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
         mWebView.loadUrl("http://app.stemmind.com/vr/a/tour.html");
+        ContainerView containerView = new ContainerView();
+        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.addJavascriptInterface(containerView, "containerView");
+    }
+
+    private class ContainerView {
+
+        @JavascriptInterface
+        public void editItem(String contentId, String sceneId, String order) {
+            Log.i("lixiaolu", "editItem used");
+        }
+
+        @JavascriptInterface
+        public void dropItemCallBack(String msg) {
+            Log.i("lixiaolu", "receive msg :" + msg);
+        }
     }
 }
+
+
+//    js 调app 用editItem('contentId','sceneId','order')
+//    app 调 js 用 dropItem('contentId' , 'itemId','trans'  ) 返回 array ('x', 'y', 'scale')
