@@ -1,4 +1,4 @@
-package storm.magicspace.util;
+package storm.magicspace.http;
 
 public class HTTPManager {
 
@@ -13,7 +13,6 @@ public class HTTPManager {
 //                "password", params.password
 //        );
 //    }
-//
-//    public static
+
 
 }
