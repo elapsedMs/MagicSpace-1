@@ -1,10 +1,11 @@
 package storm.magicspace.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +18,10 @@ import storm.magicspace.R;
 public class GridItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public GridItemDecoration(Context context) {
-        mDivider = context.getDrawable(R.mipmap.btm_bar_egg);
+//        mDivider = context.getResources(R.mipmap.btm_bar_egg);
+        mDivider = context.getResources().getDrawable(R.mipmap.btm_bar_egg);
     }
 
     @Override
@@ -46,7 +49,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         Log.d("gdq", "getItemOffsets");
-        outRect.set(0, 0, mDivider.getIntrinsicWidth()+100,
+        outRect.set(0, 0, mDivider.getIntrinsicWidth() + 100,
                 mDivider.getIntrinsicHeight());
     }
 }
