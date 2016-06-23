@@ -63,6 +63,13 @@ public class GameActivity extends Activity {
             public void clickRightBottom() {
                 LogUtil.d(TAG, "right bottom scale btn clicked");
             }
+
+            @Override
+            public void floatInfo(float x, float y, float alpha, float scale, float rotate) {
+                LogUtil.d(TAG, "x = " + x +", y = " + y + ", alpha = " + alpha + ", scale = "
+                        + scale + ", rotate = " + rotate);
+            }
+
         });
     }
 

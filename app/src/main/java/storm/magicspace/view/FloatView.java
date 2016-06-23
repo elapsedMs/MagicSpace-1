@@ -54,6 +54,10 @@ public class FloatView extends ImageView {
     private double mBitmapDiagonalLen;
     private float mLastX;
     private float mLastY;
+    private float mTotalScale;
+    private float mTotalDegree;
+    private Matrix mOriginMatrix;
+    private boolean isInit;
 
     public FloatView(Context context) {
         super(context);
@@ -102,6 +106,10 @@ public class FloatView extends ImageView {
         int bitmapHeight = mBitmap.getHeight();
         mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
         matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
+        if (!isInit) {
+            mOriginMatrix = new Matrix(matrix);
+            isInit = true;
+        }
     }
 
     private void init() {
@@ -164,6 +172,7 @@ public class FloatView extends ImageView {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 reset();
+                getLastSnapshot();
                 break;
         }
 
@@ -173,6 +182,69 @@ public class FloatView extends ImageView {
     private void reset() {
         mTriggerScaleAction = false;
         mTriggerMoveAction = false;
+    }
+
+    private void getLastSnapshot() {
+        if (mListener != null) {
+//            PointF point = new PointF();
+//            getMidPoint(point, matrix);
+//            float x = point.x;
+//            float y = point.y;
+//            mListener.dropItem(x, y, 1, mTotalScale, mTotalDegree % 360);
+
+            int width = mBitmap.getWidth();
+            int height = mBitmap.getHeight();
+            float[] curVals = new float[9];
+            matrix.getValues(curVals);
+            float curVal1 = curVals[2];
+            float curVal2 = curVals[5];
+            float curVal3 = curVals[0] * width + curVals[2];
+            float curVal4 = curVals[3] * width + curVals[5];
+            float curVal5 = curVals[1] * height + curVals[2];
+            float curVal6 = curVals[4] * height + curVals[5];
+            float curVal7 = curVals[0] * width + curVals[1] * height + curVals[2];
+            float curVal8 = curVals[3] * width + curVals[4] * height + curVals[5];
+
+            float[] oriVals = new float[9];
+            mOriginMatrix.getValues(oriVals);
+            float oriVal1 = oriVals[2];
+            float oriVal2 = oriVals[5];
+            float oriVal3 = oriVals[0] * width + oriVals[2];
+            float oriVal4 = oriVals[3] * width + oriVals[5];
+            float oriVal5 = oriVals[1] * height + oriVals[2];
+            float oriVal6 = oriVals[4] * height + oriVals[5];
+            float oriVal7 = oriVals[0] * width + oriVals[1] * height + oriVals[2];
+            float oriVal8 = oriVals[3] * width + oriVals[4] * height + oriVals[5];
+            
+            
+            float curWidth = Math.abs(curVal3-curVal1);
+            float oriWidth = Math.abs(oriVal3-oriVal1);
+            // scale
+            float scale = curWidth/oriWidth;
+
+            PointF curPoint = new PointF();
+            getMidPoint(curPoint, matrix);
+
+            PointF oriPoint = new PointF();
+            getMidPoint(oriPoint, mOriginMatrix);
+
+            // tran
+//            float tranX = curPoint.x - oriPoint.x;
+//            float tranY = curPoint.y - oriPoint.y;
+            //float tran = (float) Math.hypot(tranX, tranY);
+
+//            float tranX = curVals[Matrix.MTRANS_X]-oriVals[Matrix.MTRANS_X];
+//            float tranY = curVals[Matrix.MTRANS_Y]-oriVals[Matrix.MTRANS_Y];
+            float tranX = curVals[Matrix.MTRANS_X];
+            float tranY = curVals[Matrix.MTRANS_Y];
+
+            //degree
+            float rAngle = Math.round(Math.atan2(curVals[Matrix.MSKEW_X], curVals[Matrix.MSCALE_X]) * (180 / Math.PI));
+
+            mListener.floatInfo(tranX, tranY, 1, scale, rAngle);
+
+
+        }
     }
 
     private void executeMove(MotionEvent event) {
@@ -206,6 +278,8 @@ public class FloatView extends ImageView {
             mToCenterDistance = getDiagonalLen(event);
         }
         matrix.postScale(scale, scale, mMiddlePoint.x, mMiddlePoint.y);
+        mTotalScale = scale;
+        mTotalDegree += mRotateDegree;
         invalidate();
     }
 
@@ -227,7 +301,7 @@ public class FloatView extends ImageView {
 
     private void doRotate() {
         PointF localPointF = new PointF();
-        getMidPoint(localPointF);
+        getMidPoint(localPointF, matrix);
         matrix.preRotate(-90, localPointF.x, localPointF.y);
         invalidate();
         if (mListener != null) {
@@ -241,7 +315,7 @@ public class FloatView extends ImageView {
         }
     }
 
-    private void getMidPoint(PointF pointF) {
+    private void getMidPoint(PointF pointF, Matrix matrix) {
         float[] values = new float[9];
         matrix.getValues(values);
         int width = mBitmap.getWidth();
@@ -380,5 +454,7 @@ public class FloatView extends ImageView {
         void clickRightTop();
 
         void clickRightBottom();
+
+        void floatInfo(float x, float y, float alpha, float scale, float rotate);
     }
 }
