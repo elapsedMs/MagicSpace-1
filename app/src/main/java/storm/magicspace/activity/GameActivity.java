@@ -15,6 +15,7 @@ import android.widget.Button;
 import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
 import storm.magicspace.view.FloatView;
+import storm.magicspace.view.FloatView.FloatInfo;
 
 public class GameActivity extends Activity {
 
@@ -23,6 +24,7 @@ public class GameActivity extends Activity {
     private WebView mWebView;
     private FloatView mFloatView;
     private Button sure;
+    private FloatInfo mFloatinfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,15 @@ public class GameActivity extends Activity {
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mWebView.loadUrl("javascript:dropItem('1' , '1','0.5' ,'2','10')");
+                if (mFloatinfo != null) {
+                    float x = mFloatinfo.getX();
+                    float y = mFloatinfo.getY();
+                    float alpha = mFloatinfo.getAlpha();
+                    float scale = mFloatinfo.getScale();
+                    float rotate = mFloatinfo.getRotate();
+                    //mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'0.5' ,'2','10')");
+                    mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'"+alpha+"' ,'"+scale+"'," + "'"+rotate+"')");
+                }
             }
         });
         initView();
@@ -65,9 +75,10 @@ public class GameActivity extends Activity {
             }
 
             @Override
-            public void floatInfo(float x, float y, float alpha, float scale, float rotate) {
-                LogUtil.d(TAG, "x = " + x +", y = " + y + ", alpha = " + alpha + ", scale = "
-                        + scale + ", rotate = " + rotate);
+            public void floatInfo(FloatInfo floatInfo) {
+                LogUtil.d(TAG, "x = " + floatInfo.getX() +", y = " + floatInfo.getY() + ", alpha = " + floatInfo.getAlpha() + ", scale = "
+                        + floatInfo.getScale() + ", rotate = " + floatInfo.getRotate());
+                mFloatinfo = floatInfo;
             }
 
         });
