@@ -41,8 +41,9 @@ public class GameActivity extends Activity {
                     float alpha = mFloatinfo.getAlpha();
                     float scale = mFloatinfo.getScale();
                     float rotate = mFloatinfo.getRotate();
-                    //mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'0.5' ,'2','10')");
-                    mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'"+alpha+"' ,'"+scale+"'," + "'"+rotate+"')");
+                    // mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'0.5' ,'2','10')");
+                    mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'" + alpha + "' ,'" + scale
+                            + "'," + "'" + rotate + "')");
                 }
             }
         });
@@ -76,8 +77,6 @@ public class GameActivity extends Activity {
 
             @Override
             public void floatInfo(FloatInfo floatInfo) {
-                LogUtil.d(TAG, "x = " + floatInfo.getX() +", y = " + floatInfo.getY() + ", alpha = " + floatInfo.getAlpha() + ", scale = "
-                        + floatInfo.getScale() + ", rotate = " + floatInfo.getRotate());
                 mFloatinfo = floatInfo;
             }
 
@@ -112,6 +111,7 @@ public class GameActivity extends Activity {
         @JavascriptInterface
         public void dropItemCallBack(String msg) {
             Log.i("lixiaolu", "receive msg :" + msg);
+            // {"x":"0","y":"0","scale":"0.5","alpha":"0.5","rotate":"0"}
         }
     }
 }

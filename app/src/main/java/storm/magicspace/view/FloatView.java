@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
@@ -22,7 +23,9 @@ public class FloatView extends ImageView {
 
     private final static float SCALE_FACTOR = 1f;
     private final static float SCALE_MIN_FACTOR = 0.7f;
-    private final static float SCALE_MAX_FACTOR = 2.2f;
+    private final static float SCALE_MAX_FACTOR = 1.5f;
+
+    private static final String TAG = FloatView.class.getSimpleName();
 
     private Matrix matrix = new Matrix();
     private Paint mPaint;
@@ -54,8 +57,6 @@ public class FloatView extends ImageView {
     private double mBitmapDiagonalLen;
     private float mLastX;
     private float mLastY;
-    private Matrix mOriginMatrix;
-    private boolean isInit;
 
     public FloatView(Context context) {
         super(context);
@@ -104,10 +105,6 @@ public class FloatView extends ImageView {
         int bitmapHeight = mBitmap.getHeight();
         mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
         matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
-        if (!isInit) {
-            mOriginMatrix = new Matrix(matrix);
-            isInit = true;
-        }
     }
 
     private void init() {
@@ -184,30 +181,27 @@ public class FloatView extends ImageView {
 
     private void getLastSnapshot() {
         if (mListener != null) {
-            int width = mBitmap.getWidth();
-            float[] curVals = new float[9];
-            float[] oriVals = new float[9];
-            matrix.getValues(curVals);
-            mOriginMatrix.getValues(oriVals);
-            float curVal1 = curVals[2];
-            float curVal3 = curVals[0] * width + curVals[2];
-            float oriVal1 = oriVals[2];
-            float oriVal3 = oriVals[0] * width + oriVals[2];
-            float curWidth = Math.abs(curVal3 - curVal1);
-            float oriWidth = Math.abs(oriVal3 - oriVal1);
+            float[] vals = new float[9];
+            matrix.getValues(vals);
+
+            // tran
+            float x = vals[Matrix.MTRANS_X];
+            float y = vals[Matrix.MTRANS_Y];
 
             // scale
-            float scale = curWidth / oriWidth;
+            float scale = (float) Math.hypot(vals[Matrix.MSCALE_X], vals[Matrix.MSKEW_Y]);
 
-            //tran
-            float tranX = curVals[Matrix.MTRANS_X];
-            float tranY = curVals[Matrix.MTRANS_Y];
+            // degree
+            float degree = Math.round(Math.atan2(vals[Matrix.MSKEW_X],
+                    vals[Matrix.MSCALE_X]) * (180 / Math.PI));
 
-            //degree
-            float degree = Math.round(Math.atan2(curVals[Matrix.MSKEW_X],
-                    curVals[Matrix.MSCALE_X]) * (180 / Math.PI));
+            // alpha
+            float alpha = 1f;
 
-            mListener.floatInfo(new FloatInfo(tranX, tranY, 1, scale, degree));
+            Log.d(TAG, "x = " + x + ", y = " + y + ", scale = " + scale + ", degree = " + degree
+                    + ", alpha = " + alpha);
+
+            mListener.floatInfo(new FloatInfo(x, y, alpha, scale, degree));
 
         }
     }
