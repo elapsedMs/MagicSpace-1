@@ -15,14 +15,13 @@ import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.view.TitleBar;
 import storm.magicspace.R;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
-import storm.magicspace.fragment.AlbumFragment;
+import storm.magicspace.fragment.album.AlbumFragment;
 import storm.magicspace.fragment.EggFragment;
 import storm.magicspace.fragment.MyFragment;
 import storm.magicspace.fragment.SettingFragment;
 import storm.magicspace.view.HomeTabView;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
-
     private static final int ALBUM = 1;
     private static final int EGG = 2;
     private static final int MY = 3;

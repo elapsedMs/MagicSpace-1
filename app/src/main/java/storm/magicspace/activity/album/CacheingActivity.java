@@ -1,4 +1,4 @@
-package storm.magicspace.activity;
+package storm.magicspace.activity.album;
 
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;

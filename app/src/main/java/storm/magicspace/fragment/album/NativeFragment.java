@@ -1,7 +1,6 @@
-package storm.magicspace.fragment;
+package storm.magicspace.fragment.album;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.RelativeLayout;
 
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
-import storm.magicspace.activity.CacheingActivity;
+import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.activity.MainActivity;
 import storm.magicspace.view.AlbumTitleView;
 

@@ -5,9 +5,9 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:background="#ffffff"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_78">
+        android:layout_height="@dimen/px_78"
+        android:background="#ffffff">
 
         <RelativeLayout
             android:id="@+id/rl_one"
@@ -17,12 +17,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:text="高清频道"
                 android:id="@+id/tv_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
+                android:text="高清频道"
                 android:textSize="@dimen/px_34" />
 
             <LinearLayout
@@ -49,12 +49,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:text="风景建筑"
                 android:id="@+id/tv_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
+                android:text="风景建筑"
                 android:textSize="@dimen/px_34" />
 
             <LinearLayout
@@ -81,12 +81,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:text="炫酷游戏"
                 android:id="@+id/tv_three"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
+                android:text="炫酷游戏"
                 android:textSize="@dimen/px_34" />
 
             <LinearLayout
@@ -113,12 +113,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:text="时尚家装"
                 android:id="@+id/tv_four"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
+                android:text="时尚家装"
                 android:textSize="@dimen/px_34" />
 
             <LinearLayout
@@ -131,4 +131,9 @@
                 android:background="#794bc8" />
         </RelativeLayout>
     </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

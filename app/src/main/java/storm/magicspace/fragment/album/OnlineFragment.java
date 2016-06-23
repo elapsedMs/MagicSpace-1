@@ -1,10 +1,9 @@
-package storm.magicspace.fragment;
+package storm.magicspace.fragment.album;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +13,12 @@ import java.util.ArrayList;
 
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
-import storm.magicspace.activity.ClassifyRecommendActivity;
-import storm.magicspace.activity.GuessYouLikeActivity;
+import storm.magicspace.activity.album.ClassifyRecommendActivity;
 import storm.magicspace.adapter.OnlineRVAdapter;
-import storm.magicspace.view.AlbumPicView;
 import storm.magicspace.view.AlbumTitleView;
+import storm.magicspace.view.GridItemDecoration;
 
 import static storm.magicspace.R.*;
-import static storm.magicspace.R.layout.*;
 
 /**
  * Created by gdq on 16/6/16.
@@ -48,6 +45,7 @@ public class OnlineFragment extends BaseFragment {
         recyclerView = (RecyclerView) view.findViewById(id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(new OnlineRVAdapter(new ArrayList(), getActivity()));
+        recyclerView.addItemDecoration(new GridItemDecoration(getActivity()));
         guessULikeATV = (AlbumTitleView) view.findViewById(id.you_like);
         guessULikeATV.setCount("更多");
         guessULikeATV.setOnClickListener(this);

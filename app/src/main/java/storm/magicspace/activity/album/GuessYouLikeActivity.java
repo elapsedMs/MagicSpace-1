@@ -1,4 +1,4 @@
-package storm.magicspace.activity;
+package storm.magicspace.activity.album;
 
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;

@@ -2,6 +2,7 @@ package storm.commonlib.common;
 
 import android.app.Application;
 
+
 public class BaseApplication extends Application {
 
     private static Application application;
@@ -16,5 +17,4 @@ public class BaseApplication extends Application {
         super.onCreate();
         application = this;
     }
-
 }
