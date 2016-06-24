@@ -8,12 +8,15 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.view.TitleBar;
 import storm.magicspace.R;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
+import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.fragment.GameCollectionFragment;
 import storm.magicspace.fragment.TopicCollectionFragment;
+import storm.magicspace.http.HTTPManager;
 
 public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
@@ -29,6 +32,10 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
         super.onCreate(savedInstanceState);
         setActivityTitle("我的收藏");
         setTitleLeftBtVisibility(View.VISIBLE);
+
+        GetMyCollectionTask task = new GetMyCollectionTask();
+        task.execute();
+
         initViewPager();
         setOnSelectTitleClickedListener(new TitleBar.OnSelectTitleClickedListener() {
             @Override
@@ -80,5 +87,17 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    private class GetMyCollectionTask extends BaseASyncTask<String, MyCollectionResponse> {
+        @Override
+        public MyCollectionResponse doRequest(String param) {
+            return HTTPManager.getMyCollection("");
+        }
+
+        @Override
+        protected void onPostExecute(MyCollectionResponse myCollectionResponse) {
+            super.onPostExecute(myCollectionResponse);
+        }
     }
 }

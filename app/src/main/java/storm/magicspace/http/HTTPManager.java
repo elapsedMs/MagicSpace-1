@@ -3,17 +3,15 @@ package storm.magicspace.http;
 import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
+import storm.magicspace.bean.httpBean.AccountInfoResponse;
+import storm.magicspace.bean.httpBean.MyCollectionResponse;
+import storm.magicspace.bean.httpBean.MyWorksResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
 
 public class HTTPManager {
 
-    /**
-     * test
-     *
-     * @return
-     */
     public static AlbumResponse test() {
         return ServiceUtils.request(
                 RequestTypes.POST,
@@ -24,16 +22,52 @@ public class HTTPManager {
     }
 
     /**
-     * @return
+     * 获取账户信息
+     *
+     * @return AccountInfoResponse
      */
-    public static BaseResponse getAccountInfo() {
+    public static AccountInfoResponse getAccountInfo() {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_ACCOUNT_INFO,
                 EMPTY,
-                BaseResponse.class,
-                "userId", "123672761172619501",
-                "userinfoId", "135601920002522269"
+                AccountInfoResponse.class,
+                "userId", "3970430042189702",
+                "userInfoId", "3945313002126939"
+        );
+    }
+
+    /**
+     * 获取我的作品
+     *
+     * @param userId
+     * @param authorId
+     * @return
+     */
+    public static MyWorksResponse getMyWorks(String userId, String authorId) {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_GET_MY_WORKS,
+                EMPTY,
+                MyWorksResponse.class,
+                "userId", "3970430042189702",
+                "authorId", "3970430042189702"
+        );
+    }
+
+    /**
+     * 获取我的收藏
+     *
+     * @param userId
+     * @return
+     */
+    public static MyCollectionResponse getMyCollection(String userId) {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_GET_MY_WORKS,
+                EMPTY,
+                MyCollectionResponse.class,
+                "userId", "3970430042189702"
         );
     }
 
