@@ -22,6 +22,7 @@ import storm.magicspace.fragment.MyFragment;
 import storm.magicspace.fragment.SettingFragment;
 import storm.magicspace.fragment.album.AlbumFragment;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.view.HomeTabView;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
@@ -47,8 +48,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TestTask testTask = new TestTask();
-        testTask.execute();
     }
 
     @Override
@@ -190,19 +189,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         super.onDestroy();
     }
 
-    private class TestTask extends BaseASyncTask {
 
-        @Override
-        public BaseResponse doRequest(Object param) {
-            return HTTPManager.test();
-        }
-
-        @Override
-        protected void onPostExecute(BaseResponse baseResponse) {
-            super.onPostExecute(baseResponse);
-//            String data = (String) baseResponse.getData();
-//            Log.i("lixiaolu", data);
-        }
-    }
 }
 

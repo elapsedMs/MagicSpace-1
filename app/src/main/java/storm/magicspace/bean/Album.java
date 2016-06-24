@@ -5,7 +5,25 @@ import java.util.List;
 /**
  * Created by gdq on 16/6/19.
  */
-public class Cached {
+public class Album {
+
+    /**
+     * userId : 135601920027846561
+     * nickName : J-lin
+     * portraitImage : http://bbs.mojing.cn/uc_server/images/noavatar_big.gif
+     * contentId : 3399
+     * createTime : 1459922401451
+     * duration : 0
+     * url : http://share.moyan.mojing.cn/MEdata/file/135601920027846561/1459922399.jpg
+     * commentCount : 0
+     * appreciateCount : 0
+     * thumbImageUrl : http://share.moyan.mojing.cn/MEdata/file/135601920027846561/1459922399_thumb.jpg
+     * contentType : 2
+     * isCollected : 0
+     * isAppreciated : 0
+     * description : e6bf80e9809f
+     */
+
     private String userId;
     private String nickName;
     private String portraitImage;
@@ -133,3 +151,4 @@ public class Cached {
         this.description = description;
     }
 }
+

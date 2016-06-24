@@ -7,14 +7,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
 import storm.magicspace.activity.album.ClassifyRecommendActivity;
+import storm.magicspace.adapter.HomeViewPagerAdapter;
 import storm.magicspace.adapter.OnlineRVAdapter;
+import storm.magicspace.adapter.ViewPagerAdatper;
+import storm.magicspace.bean.Album;
+import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.view.AlbumTitleView;
 import storm.magicspace.view.GridItemDecoration;
 
@@ -30,6 +37,8 @@ public class OnlineFragment extends BaseFragment {
     private ViewPager viewPager;
     private RecyclerView recyclerView;
     private AlbumTitleView guessULikeATV;
+    private List<Album> albumList = new ArrayList<>();
+    private OnlineRVAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,18 +47,45 @@ public class OnlineFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
+        new TestTask().execute();
         super.initView(view);
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
         contentLl = (LinearLayout) view.findViewById(id.ll_content);
         viewPager = (ViewPager) view.findViewById(id.viewpager);
         recyclerView = (RecyclerView) view.findViewById(id.recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setAdapter(new OnlineRVAdapter(new ArrayList(), getActivity()));
-        recyclerView.addItemDecoration(new GridItemDecoration(getActivity()));
         guessULikeATV = (AlbumTitleView) view.findViewById(id.you_like);
         guessULikeATV.setCount("更多");
         guessULikeATV.setOnClickListener(this);
+        initViewPager();
+        initRecyclerView();
         showContent();
+    }
+
+    private void initRecyclerView() {
+        adapter = new OnlineRVAdapter(albumList, getActivity());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.addItemDecoration(new GridItemDecoration(getActivity()));
+    }
+
+    private void initViewPager() {
+        List<ImageView> imageViews = new ArrayList<>();
+        ImageView imageView = new ImageView(getActivity());
+        ImageView imageView2 = new ImageView(getActivity());
+        ImageView imageView3 = new ImageView(getActivity());
+        ImageView imageView4 = new ImageView(getActivity());
+        ImageView imageView5 = new ImageView(getActivity());
+        imageView.setImageResource(R.mipmap.arrow_left);
+        imageView2.setImageResource(R.mipmap.arrow_left);
+        imageView3.setImageResource(R.mipmap.arrow_left);
+        imageView4.setImageResource(R.mipmap.arrow_left);
+        imageView5.setImageResource(R.mipmap.arrow_left);
+        imageViews.add(imageView);
+        imageViews.add(imageView2);
+        imageViews.add(imageView3);
+        imageViews.add(imageView4);
+        imageViews.add(imageView5);
+        viewPager.setAdapter(new ViewPagerAdatper(imageViews));
     }
 
     @Override
@@ -76,4 +112,20 @@ public class OnlineFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
     }
+
+    private class TestTask extends BaseASyncTask<Void, AlbumResponse> {
+        @Override
+        public AlbumResponse doRequest(Void param) {
+            return super.doRequest(param);
+        }
+
+        @Override
+        public void onSuccess(AlbumResponse albumResponse) {
+            super.onSuccess(albumResponse);
+            albumList.clear();
+            albumList.addAll(albumResponse.data);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 }

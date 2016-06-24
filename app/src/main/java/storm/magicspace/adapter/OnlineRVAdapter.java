@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import storm.magicspace.R;
+import storm.magicspace.bean.Album;
 import storm.magicspace.view.AlbumPicView;
 
 /**
@@ -18,7 +21,7 @@ import storm.magicspace.view.AlbumPicView;
  */
 public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHolder> {
 
-    private List list;
+    private List<Album> list;
     private Context context;
 
     public OnlineRVAdapter(List list, Context context) {
@@ -35,14 +38,14 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        Album item = list.get(position);
+        Picasso.with(context).load(item.getThumbImageUrl()).into(holder.downloadIv);
     }
 
 
     @Override
     public int getItemCount() {
-        return 7;
-//        return list == null ? 0 : list.size();
+        return list == null ? 0 : list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

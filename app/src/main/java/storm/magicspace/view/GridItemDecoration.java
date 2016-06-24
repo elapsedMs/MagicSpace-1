@@ -21,7 +21,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public GridItemDecoration(Context context) {
 //        mDivider = context.getResources(R.mipmap.btm_bar_egg);
-        mDivider = context.getResources().getDrawable(R.mipmap.btm_bar_egg);
+        mDivider = context.getResources().getDrawable(R.drawable.shape_recyecle_decorator);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         Log.d("gdq", "getItemOffsets");
-        outRect.set(0, 0, mDivider.getIntrinsicWidth() + 100,
+        outRect.set(0, 0, mDivider.getIntrinsicWidth(),
                 mDivider.getIntrinsicHeight());
     }
 }
