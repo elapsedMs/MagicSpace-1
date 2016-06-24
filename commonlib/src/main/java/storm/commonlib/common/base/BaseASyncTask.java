@@ -40,7 +40,7 @@ public class BaseASyncTask<T, V extends BaseResponse> extends AsyncTask<T, Void,
             return;
         }
 
-        if (!(v.status == 1)) {
+        if (v.status != 0) {
             MessageUtil.showMessage(v.data == null ? BaseApplication.getApplication().getString(R.string.error_network) : v.status_msg);
             onFailed();
         } else {
