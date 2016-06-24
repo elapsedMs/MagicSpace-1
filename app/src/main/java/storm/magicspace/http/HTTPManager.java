@@ -49,7 +49,8 @@ public class HTTPManager {
                 URLConstant.URL_GET_MY_WORKS,
                 EMPTY,
                 MyWorksResponse.class,
-                "userId", "3970430042189702"
+                "userId", "3970430042189702",
+                "authorId", "3970430042189702"
         );
     }
 
@@ -59,7 +60,7 @@ public class HTTPManager {
      * @param userId
      * @return
      */
-    public static MyCollectionResponse getMycollection(String userId) {
+    public static MyCollectionResponse getMyCollection(String userId) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_MY_WORKS,
