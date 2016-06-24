@@ -40,4 +40,7 @@ public class URLConstant {
 
     //获取我的收藏
     public static final String URL_GET_MY_COLLECTION = "getCollectUGCContentList";
+
+    //获取主页轮播
+    public static final String URL_GET_FOCUS_CONTENT_LIST = "getFocusContentList";
 }
