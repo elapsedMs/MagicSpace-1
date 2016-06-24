@@ -7,20 +7,6 @@ import storm.commonlib.common.util.StringUtil;
 
 public class HTTPManager {
 
-//    public static void login(LoginRequestParams params) {
-//        return ServiceUtils.request(
-//                RequestTypes.POST,
-//                URL_USER_LOGIN,
-//                EMPTY,
-//                LoginResponse.class,
-//                "user_name", params.userName,
-//                "login_type", params.loginType,
-//                "password", params.password
-//        );
-//    }
-//
-
-
     public static TestObject test() {
         return ServiceUtils.request(
                 RequestTypes.POST,
