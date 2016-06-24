@@ -10,6 +10,8 @@ import storm.commonlib.common.BaseApplication;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.commonlib.common.util.MessageUtil;
 
+import static storm.commonlib.common.util.StringUtil.EMPTY;
+
 public class BaseASyncTask<T, V extends BaseResponse> extends AsyncTask<T, Void, V> {
 
     private ProgressDialog medtreeDialog = null;
@@ -41,7 +43,7 @@ public class BaseASyncTask<T, V extends BaseResponse> extends AsyncTask<T, Void,
         }
 
         if (v.status != 0) {
-            MessageUtil.showMessage(v.data == null ? BaseApplication.getApplication().getString(R.string.error_network) : v.status_msg);
+            MessageUtil.showMessage(v.status_msg == null || v.status_msg.equals(EMPTY) ? BaseApplication.getApplication().getString(R.string.error_network) : v.status_msg);
             onFailed();
         } else {
             if (v.getData() != null) {

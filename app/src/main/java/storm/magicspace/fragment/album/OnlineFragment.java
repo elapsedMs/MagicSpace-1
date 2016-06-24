@@ -10,17 +10,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
+import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.activity.album.ClassifyRecommendActivity;
-import storm.magicspace.adapter.HomeViewPagerAdapter;
+import storm.magicspace.activity.album.WebActivity;
 import storm.magicspace.adapter.OnlineRVAdapter;
 import storm.magicspace.adapter.ViewPagerAdatper;
 import storm.magicspace.bean.Album;
+import storm.magicspace.event.UrlEvent;
+import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.view.AlbumTitleView;
 import storm.magicspace.view.GridItemDecoration;
@@ -66,6 +71,20 @@ public class OnlineFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.addItemDecoration(new GridItemDecoration(getActivity()));
+        adapter.setOnRecyclerViewClickListener(new OnlineRVAdapter.OnRecyclerViewClickListener() {
+            @Override
+            public void onItemClick(int position, Album item) {
+                goToNext(WebActivity.class);
+                UrlEvent urlEvent = new UrlEvent();
+                urlEvent.url = item.getUrl();
+                EventBus.getDefault().post(urlEvent);
+            }
+
+            @Override
+            public void onBtnClick(int position, Album item) {
+                goToNext(CacheingActivity.class);
+            }
+        });
     }
 
     private void initViewPager() {
@@ -116,7 +135,7 @@ public class OnlineFragment extends BaseFragment {
     private class TestTask extends BaseASyncTask<Void, AlbumResponse> {
         @Override
         public AlbumResponse doRequest(Void param) {
-            return super.doRequest(param);
+            return HTTPManager.test();
         }
 
         @Override

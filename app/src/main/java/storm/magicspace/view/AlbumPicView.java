@@ -74,6 +74,10 @@ public class AlbumPicView extends BaseView {
         return this;
     }
 
+    public ImageView getBgIv() {
+        return bgIv;
+    }
+
     private void initView() {
         bgIv = (ImageView) findViewById(R.id.imageView);
         downloadIv = (ImageView) findViewById(R.id.iv_download);

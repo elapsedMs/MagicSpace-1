@@ -52,6 +52,9 @@
         <activity
             android:name=".activity.album.ClassifyRecommendActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.album.WebActivity"
+            android:screenOrientation="portrait" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
