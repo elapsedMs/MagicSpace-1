@@ -11,6 +11,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.SeekBar;
 
 import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
@@ -25,6 +26,8 @@ public class GameActivity extends Activity {
     private FloatView mFloatView;
     private Button sure;
     private FloatInfo mFloatinfo;
+    private SeekBar mAlphaController;
+    private float mAlphaVal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class GameActivity extends Activity {
                     float scale = mFloatinfo.getScale();
                     float rotate = mFloatinfo.getRotate();
                     // mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'0.5' ,'2','10')");
-                    mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'" + alpha + "' ,'" + scale
+                    mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'" + mAlphaVal + "' ,'" + scale
                             + "'," + "'" + rotate + "')");
                 }
             }
@@ -53,8 +56,33 @@ public class GameActivity extends Activity {
     public void initView() {
         mWebView = (WebView) findViewById(R.id.webview_game);
         mFloatView = (FloatView) findViewById(R.id.floatview_game);
+        mAlphaController = (SeekBar) findViewById(R.id.alpha);
         initFloatView();
         initWebView();
+        initAlphaController();
+
+    }
+
+    private void initAlphaController() {
+        mAlphaController.setProgress(100);
+        mAlphaController.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mAlphaVal = progress * 1f / 100;
+                mFloatView.setAlpha(mAlphaVal);
+                Log.d(TAG, "alpha = " + mAlphaVal);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     private void initFloatView() {

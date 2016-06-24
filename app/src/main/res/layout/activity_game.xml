@@ -12,13 +12,22 @@
         android:layout_centerHorizontal="true"
         android:text="Sure"/>
 
+    <SeekBar
+        android:layout_margin="@dimen/px_10"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/alpha"/>
+
     <WebView
+        android:layout_above="@+id/alpha"
         android:layout_below="@+id/sure"
         android:id="@+id/webview_game"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <storm.magicspace.view.FloatView
+        android:layout_above="@+id/alpha"
         android:id="@+id/floatview_game"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
