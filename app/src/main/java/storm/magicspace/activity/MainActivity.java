@@ -11,14 +11,17 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
+import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.commonlib.common.view.TitleBar;
 import storm.magicspace.R;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
-import storm.magicspace.fragment.album.AlbumFragment;
 import storm.magicspace.fragment.EggFragment;
 import storm.magicspace.fragment.MyFragment;
 import storm.magicspace.fragment.SettingFragment;
+import storm.magicspace.fragment.album.AlbumFragment;
+import storm.magicspace.http.HTTPManager;
 import storm.magicspace.view.HomeTabView;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
@@ -43,6 +46,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TestTask testTask = new TestTask();
+        testTask.execute();
     }
 
     @Override
@@ -182,6 +188,19 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private class TestTask extends BaseASyncTask {
+
+        @Override
+        public BaseResponse doRequest(Object param) {
+            return HTTPManager.test();
+        }
+
+        @Override
+        protected void onPostExecute(BaseResponse baseResponse) {
+            super.onPostExecute(baseResponse);
+        }
     }
 }
 
