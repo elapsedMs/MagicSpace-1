@@ -200,6 +200,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         @Override
         protected void onPostExecute(BaseResponse baseResponse) {
             super.onPostExecute(baseResponse);
+//            String data = (String) baseResponse.getData();
+//            Log.i("lixiaolu", data);
         }
     }
 }

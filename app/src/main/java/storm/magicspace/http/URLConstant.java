@@ -5,6 +5,6 @@ package storm.magicspace.http;
  */
 public class URLConstant {
 
-    //获取主页数据
+    //获取主页数据(图库数据)
     public static final String URL_GET_MATERIAL_LIST = "getMaterialList";
 }
