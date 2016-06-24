@@ -14,9 +14,6 @@ public class HttpConstants {
     public static final String CONTENT_TYPE = "Content-Type";
     public static final String APPLICATION_JSON = "application/json;charset=UTF-8";
 
-    public static final String FILE_HOST = "http://st.medtree.cn";
     public static final String DEV_FILE_HOST = "http://test.st.medtree.cn";
 
-    //用户登录
-    public static final String URL_USER_LOGIN = "user/login";
 }

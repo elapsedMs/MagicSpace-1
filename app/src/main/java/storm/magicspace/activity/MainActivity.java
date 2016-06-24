@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         super.onCreate(savedInstanceState);
 
         TestTask testTask = new TestTask();
-        testTask.execute();
+//        testTask.execute();
     }
 
     @Override

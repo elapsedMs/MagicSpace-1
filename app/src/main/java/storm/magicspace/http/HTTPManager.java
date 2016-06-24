@@ -3,7 +3,6 @@ package storm.magicspace.http;
 import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
-import storm.magicspace.bean.AccountInfoResponse;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
 
@@ -26,14 +25,14 @@ public class HTTPManager {
     /**
      * @return
      */
-    public static AccountInfoResponse getAccountInfo() {
+    public static BaseResponse getAccountInfo() {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_ACCOUNT_INFO,
                 EMPTY,
-                AccountInfoResponse.class,
+                BaseResponse.class,
                 "userId", "123672761172619501",
-                "userInfoId", "135601920002522269"
+                "userinfoId", "135601920002522269"
         );
     }
 

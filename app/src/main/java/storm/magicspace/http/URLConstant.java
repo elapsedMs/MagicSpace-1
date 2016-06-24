@@ -10,5 +10,4 @@ public class URLConstant {
 
     //获取个人信息（我的）
     public static final String URL_GET_ACCOUNT_INFO = "getAccountInfo";
-
 }

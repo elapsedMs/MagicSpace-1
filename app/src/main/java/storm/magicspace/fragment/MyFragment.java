@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
+import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.magicspace.R;
 import storm.magicspace.activity.mine.MyCollectionActivity;
 import storm.magicspace.activity.mine.MyWorksActivity;
-import storm.magicspace.bean.AccountInfoResponse;
 import storm.magicspace.http.HTTPManager;
 
 public class MyFragment extends BaseFragment {
@@ -23,8 +23,9 @@ public class MyFragment extends BaseFragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void initData() {
+        super.initData();
+
         GetAccountInfoTask task = new GetAccountInfoTask();
         task.execute();
     }
@@ -54,15 +55,15 @@ public class MyFragment extends BaseFragment {
         }
     }
 
-    private class GetAccountInfoTask extends BaseASyncTask<Void, AccountInfoResponse> {
+    private class GetAccountInfoTask extends BaseASyncTask<Void, BaseResponse> {
         @Override
-        public AccountInfoResponse doRequest(Void param) {
+        public BaseResponse doRequest(Void param) {
             return HTTPManager.getAccountInfo();
         }
 
         @Override
-        protected void onPostExecute(AccountInfoResponse accountInfoResponse) {
-            super.onPostExecute(accountInfoResponse);
+        protected void onPostExecute(BaseResponse baseResponse) {
+            super.onPostExecute(baseResponse);
         }
     }
 }
