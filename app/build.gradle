@@ -37,5 +37,6 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
+    compile 'org.greenrobot:eventbus:3.0.0'
     compile project(':commonlib')
 }
