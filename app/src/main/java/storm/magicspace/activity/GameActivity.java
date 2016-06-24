@@ -95,7 +95,7 @@ public class GameActivity extends Activity {
 
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
-        mWebView.loadUrl("http://app.stemmind.com/vr/a/tourplay.html");
+        mWebView.loadUrl("http://app.stemmind.com/vr/a/tour.html");
         ContainerView containerView = new ContainerView();
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.addJavascriptInterface(containerView, "containerView");
