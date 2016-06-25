@@ -3,6 +3,7 @@ package storm.magicspace.http;
 import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
+import storm.magicspace.http.reponse.EggHttpResponse;
 import storm.magicspace.bean.httpBean.AccountInfoResponse;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
@@ -72,5 +73,14 @@ public class HTTPManager {
     }
 
     public static class TestObject extends BaseResponse {
+    }
+
+    public static EggHttpResponse getEggList() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_GET_EGG_LIST,
+                EMPTY,
+                EggHttpResponse.class
+        );
     }
 }
