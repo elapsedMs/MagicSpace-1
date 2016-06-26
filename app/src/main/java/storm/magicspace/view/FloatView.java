@@ -101,10 +101,12 @@ public class FloatView extends ImageView {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
-        int bitmapWidth = mBitmap.getWidth();
-        int bitmapHeight = mBitmap.getHeight();
-        mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
-        matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
+        if (mBitmap != null) {
+            int bitmapWidth = mBitmap.getWidth();
+            int bitmapHeight = mBitmap.getHeight();
+            mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
+            matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
+        }
     }
 
     private void init() {
@@ -161,7 +163,7 @@ public class FloatView extends ImageView {
                 if (mTriggerScaleAction) {
                     executeScale(event);
                 } else if (mTriggerMoveAction) {
-                    executeMove(event);
+                    // executeMove(event);
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
@@ -191,15 +193,14 @@ public class FloatView extends ImageView {
             // scale
             float scale = (float) Math.hypot(vals[Matrix.MSCALE_X], vals[Matrix.MSKEW_Y]);
 
-            // degree
+            // rotate
             float degree = Math.round(Math.atan2(vals[Matrix.MSKEW_X],
                     vals[Matrix.MSCALE_X]) * (180 / Math.PI));
 
             // alpha
             float alpha = 1f;
 
-            Log.d(TAG, "x = " + x + ", y = " + y + ", scale = " + scale + ", degree = " + degree
-                    + ", alpha = " + alpha);
+            Log.d(TAG, "x = " + x + ", y = " + y + ", scale = " + scale + ", rotate = " + degree);
 
             mListener.floatInfo(new FloatInfo(x, y, alpha, scale, degree));
 

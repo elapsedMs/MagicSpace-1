@@ -12,12 +12,12 @@
         <View
             android:layout_width="@dimen/px_10"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/egg_name"
-            android:layout_alignParentTop="@+id/egg_name"
+            android:layout_alignBottom="@+id/tv_egg_name"
+            android:layout_alignParentTop="@+id/tv_egg_name"
             android:background="#af26af" />
 
         <TextView
-            android:id="@+id/egg_name"
+            android:id="@+id/tv_egg_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -25,6 +25,7 @@
             android:text="活火山蹦极" />
 
         <TextView
+            android:id="@+id/tv_egg_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -33,6 +34,7 @@
     </RelativeLayout>
 
     <ImageView
+        android:id="@+id/iv_egg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -56,6 +58,7 @@
                 android:src="@mipmap/works_mojing" />
 
             <TextView
+                android:id="@+id/tv_egg_works_mojing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -76,6 +79,7 @@
                 android:src="@mipmap/works_egg" />
 
             <TextView
+                android:id="@+id/tv_egg_works_egg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -96,6 +100,7 @@
                 android:src="@mipmap/works_gold" />
 
             <TextView
+                android:id="@+id/tv_egg_works_gold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -116,6 +121,7 @@
                 android:src="@mipmap/works_time" />
 
             <TextView
+                android:id="@+id/tv_egg_works_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
