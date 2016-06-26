@@ -46,4 +46,7 @@ public class URLConstant {
 
     //获取彩蛋区列表
     public static final String URL_GET_EGG_LIST = "getUGCContentList";
+
+    //获取彩蛋列表
+    public static final String URL_GET_EGG_IMAGE_LIST = "getDefaultObjectList";
 }

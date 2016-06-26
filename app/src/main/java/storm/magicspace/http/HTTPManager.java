@@ -3,11 +3,12 @@ package storm.magicspace.http;
 import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
-import storm.magicspace.http.reponse.EggHttpResponse;
 import storm.magicspace.bean.httpBean.AccountInfoResponse;
+import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
+import storm.magicspace.http.reponse.EggHttpResponse;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
 
@@ -70,6 +71,19 @@ public class HTTPManager {
                 MyCollectionResponse.class,
                 "userId", "3970430042189702"
         );
+    }
+
+    /**
+     * 获取彩蛋图片列表
+     */
+    public static EggImageListResponse getEggImageList() {
+        return ServiceUtils.request(
+                RequestTypes.GET,
+                URLConstant.URL_GET_EGG_IMAGE_LIST,
+                EMPTY,
+                EggImageListResponse.class
+        );
+
     }
 
     public static class TestObject extends BaseResponse {

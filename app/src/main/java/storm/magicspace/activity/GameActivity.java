@@ -3,7 +3,7 @@ package storm.magicspace.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
+import storm.magicspace.adapter.EggsAdapter;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
 
@@ -41,6 +42,7 @@ public class GameActivity extends Activity {
     private RecyclerView mEggsLayout;
     private TextView mShowEggBtn;
     private boolean isAlphaControllerShowing = false;
+    private TextView mEggsLoadingHint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +62,19 @@ public class GameActivity extends Activity {
         mShowEggBtn = (TextView) findViewById(R.id.tv_game_egg);
         mEggsContainer = (RelativeLayout) findViewById(R.id.rl_game_eggs_container);
         mEggsLayout = (RecyclerView) findViewById(R.id.rv_game_eggs);
+        mEggsLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
 
         initFloatView();
         initWebView();
         initAlphaController();
         initEggs();
-        configSeekBarParams(ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM);
+
     }
 
     private void initEggs() {
-        mEggsLayout.setLayoutManager(new LinearLayoutManager(this, OrientationHelper.HORIZONTAL,
-                false));
+        //mEggsLayout.setLayoutManager(new LinearLayoutManager(this, OrientationHelper.HORIZONTAL,false));
+        mEggsLayout.setLayoutManager(new GridLayoutManager(this, 1, OrientationHelper.HORIZONTAL, false));
+        mEggsLayout.setAdapter(new EggsAdapter(null));
     }
 
     private void createEgg() {
@@ -106,12 +110,13 @@ public class GameActivity extends Activity {
             @Override
             public void onClick(View v) {
                 mEggsContainer.setVisibility(View.VISIBLE);
-                configSeekBarParams(ALPHA_CONTROLLER_POSITION_ABOVE_EGGS);
+                positionAlphaController(ALPHA_CONTROLLER_POSITION_ABOVE_EGGS);
             }
         });
     }
 
     private void initAlphaController() {
+        positionAlphaController(ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM);
         mAlphaController.setProgress(100);
         mAlphaController.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -175,10 +180,10 @@ public class GameActivity extends Activity {
     private void clearMask() {
         if (mGuide.getVisibility() == View.VISIBLE) mGuide.setVisibility(View.GONE);
         if (mEggsContainer.getVisibility() == View.VISIBLE) mEggsContainer.setVisibility(View.GONE);
-        configSeekBarParams(ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM);
+        positionAlphaController(ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM);
     }
 
-    private void configSeekBarParams(String type) {
+    private void positionAlphaController(String type) {
         RelativeLayout.LayoutParams layoutParams =
                 (RelativeLayout.LayoutParams) mAlphaController.getLayoutParams();
         if (ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM.equals(type)) {
