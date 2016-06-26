@@ -2,12 +2,10 @@ package storm.magicspace.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.net.http.SslError;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -25,9 +23,9 @@ public class GameActivity extends Activity {
     private WebView mWebView;
     private FloatView mFloatView;
     private Button sure;
-    private FloatInfo mFloatinfo;
+    private FloatInfo mFloatInfo;
     private SeekBar mAlphaController;
-    private float mAlphaVal;
+    private float mAlphaVal = 1.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +36,23 @@ public class GameActivity extends Activity {
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFloatinfo != null) {
-                    float x = mFloatinfo.getX();
-                    float y = mFloatinfo.getY();
-                    float alpha = mFloatinfo.getAlpha();
-                    float scale = mFloatinfo.getScale();
-                    float rotate = mFloatinfo.getRotate();
-                    // mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'0.5' ,'2','10')");
-                    mWebView.loadUrl("javascript:dropItem('1' ,'1' ,'" + mAlphaVal + "' ,'" + scale
-                            + "'," + "'" + rotate + "')");
+                if (mFloatInfo != null) {
+                    String contentId = "1";
+                    int itemId = 1;
+                    String url = "http://app.stemmind.com/vr/objs/25.png";
+                    float alpha = mAlphaVal;
+                    float scale = mFloatInfo.getScale();
+                    float rotate = mFloatInfo.getRotate();
+                    // dropItem('contentId' , 'itemId', 'url' ,'alpha'  ,"scale","rotate")
+                    LogUtil.d(TAG, "alpha = " + alpha + ", scale = " + scale + ", rotate = "
+                            + rotate);
+                    mWebView.loadUrl("javascript:dropItem('"
+                            + contentId + "' ,'"
+                            + itemId + "' ,'"
+                            + url + "' ,'"
+                            + alpha + "' ,'"
+                            + scale + "' ,'"
+                            + rotate + "')");
                 }
             }
         });
@@ -105,7 +111,7 @@ public class GameActivity extends Activity {
 
             @Override
             public void floatInfo(FloatInfo floatInfo) {
-                mFloatinfo = floatInfo;
+                mFloatInfo = floatInfo;
             }
 
         });
@@ -113,14 +119,6 @@ public class GameActivity extends Activity {
 
     @SuppressLint("JavascriptInterface")
     private void initWebView() {
-        mWebView.setWebViewClient(new WebViewClient() {
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                //handler.cancel(); // Android默认的处理方式
-                handler.proceed();  // 接受所有网站的证书
-                //handleMessage(Message msg); // 进行其他处理
-            }
-        });
-
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
         mWebView.loadUrl("http://app.stemmind.com/vr/a/tour.html");
@@ -133,12 +131,12 @@ public class GameActivity extends Activity {
 
         @JavascriptInterface
         public void editItem(String contentId, String sceneId, String order) {
-            Log.i("lixiaolu", "editItem used");
+            LogUtil.d(TAG, "editItem used");
         }
 
         @JavascriptInterface
         public void dropItemCallBack(String msg) {
-            Log.i("lixiaolu", "receive msg :" + msg);
+            LogUtil.d(TAG, "receive msg :" + msg);
             // {"x":"0","y":"0","scale":"0.5","alpha":"0.5","rotate":"0"}
         }
     }
