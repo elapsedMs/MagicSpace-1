@@ -19,6 +19,7 @@
         android:layout_marginRight="@dimen/px_12">
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/iv_download"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:text="下载"
+            android:text="收藏"
             android:textColor="#ffffff"
             android:textSize="@dimen/px_20" />
 
@@ -55,7 +56,23 @@
             android:textSize="@dimen/px_20" />
 
         <TextView
+            android:text="赞"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/px_20" />
+        <TextView
             android:id="@+id/tv_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/px_20" />
+        <TextView
+            android:text="次"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

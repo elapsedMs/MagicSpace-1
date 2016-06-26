@@ -26,16 +26,31 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
     private List<Album> list;
     private Context context;
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
+    private boolean isLimit = false;
 
-    public OnlineRVAdapter(List list, Context context) {
+    public OnlineRVAdapter(List list, Context context, boolean isLimit) {
         this.list = list;
         this.context = context;
+        this.isLimit = isLimit;
     }
 
     @Override
     public OnlineRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_album_online, parent, false);
-        ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRecyclerViewClickListener.onItemClick(holder.getPosition());
+            }
+        });
+
+        holder.downloadIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRecyclerViewClickListener.onBtnClick(holder.getPosition());
+            }
+        });
         return holder;
     }
 
@@ -43,25 +58,16 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Album item = list.get(position);
         Picasso.with(context).load(item.getThumbImageUrl()).into(holder.albumPicView.getBgIv());
-        holder.father.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRecyclerViewClickListener.onItemClick(position,item);
-            }
-        });
-
-        holder.downloadIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRecyclerViewClickListener.onBtnClick(position,item);
-            }
-        });
+        holder.descTv.setText(list.get(position).getDescription());
+        holder.nameTv.setText("没字段");
+        holder.albumPicView.setSupportTimes(item.getAppreciateCount());
+        holder.albumPicView.setCollectTimes(item.getCommentCount());
     }
 
 
     @Override
     public int getItemCount() {
-        return list == null ? 0 : list.size();
+        return list == null ? 0 : isLimit ? list.size() <= 6 ? list.size() : 6 : list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -77,7 +83,7 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
             albumPicView = (AlbumPicView) itemView.findViewById(R.id.picview);
             nameTv = (TextView) itemView.findViewById(R.id.name);
             descTv = (TextView) itemView.findViewById(R.id.desc);
-            downloadIv = (ImageView) itemView.findViewById(R.id.iv_download);
+            downloadIv = (ImageView) itemView.findViewById(R.id.iv_down_load);
             father = (LinearLayout) itemView.findViewById(R.id.father);
         }
     }
@@ -87,9 +93,9 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
     }
 
     public interface OnRecyclerViewClickListener {
-        void onItemClick(int position, Album item);
+        void onItemClick(int position);
 
-        void onBtnClick(int position, Album item);
+        void onBtnClick(int position);
     }
 }
 

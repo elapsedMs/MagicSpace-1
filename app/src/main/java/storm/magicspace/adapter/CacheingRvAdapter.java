@@ -12,15 +12,16 @@ import android.widget.TextView;
 import java.util.List;
 
 import storm.magicspace.R;
+import storm.magicspace.download.FileInfo;
 
 /**
  * Created by gdq on 16/6/21.
  */
 public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.ViewHolder> {
-    private List list;
+    private List<FileInfo> list;
     private Context context;
 
-    public CacheingRvAdapter(List list, Context context) {
+    public CacheingRvAdapter(List<FileInfo> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -34,13 +35,14 @@ public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         //TODO赛数据
+        FileInfo fileInfo = list.get(position);
         holder.progressBar.setProgress(50);
+        holder.name.setText(fileInfo.fileName);
     }
 
     @Override
     public int getItemCount() {
-//        return list == null ? 0 : list.size();
-        return 10;
+        return list == null ? 0 : list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -37,7 +37,6 @@ public class AlbumPicView extends BaseView {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AlbumPicView);
         int type = typedArray.getInt(R.styleable.AlbumPicView_album_pic_type, -1);
         initView();
-        switchType(type);
         typedArray.recycle();
     }
 
@@ -64,13 +63,13 @@ public class AlbumPicView extends BaseView {
         return this;
     }
 
-    public AlbumPicView setDownloadTimes(String times) {
+    public AlbumPicView setCollectTimes(String times) {
         downTimeTv.setText(times);
         return this;
     }
 
-    public AlbumPicView setSize(String size) {
-        downSizeTv.setText(size);
+    public AlbumPicView setSupportTimes(String times) {
+        downSizeTv.setText(times);
         return this;
     }
 

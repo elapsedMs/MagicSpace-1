@@ -4,6 +4,7 @@ import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.magicspace.bean.httpBean.AccountInfoResponse;
+import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
@@ -12,12 +13,13 @@ import static storm.commonlib.common.util.StringUtil.EMPTY;
 
 public class HTTPManager {
 
-    public static AlbumResponse test() {
+    public static AlbumResponse test(String contentListType) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_MATERIAL_LIST,
                 EMPTY,
-                AlbumResponse.class
+                AlbumResponse.class,
+                "contentListType", contentListType
         );
     }
 
@@ -72,5 +74,14 @@ public class HTTPManager {
     }
 
     public static class TestObject extends BaseResponse {
+    }
+
+    public static CirclePicResponse getAlbumCirclePic() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_GET_FOCUS_CONTENT_LIST,
+                EMPTY,
+                CirclePicResponse.class
+        );
     }
 }
