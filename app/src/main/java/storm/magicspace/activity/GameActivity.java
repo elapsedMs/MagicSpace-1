@@ -2,10 +2,12 @@ package storm.magicspace.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,10 +19,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.List;
+
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
 import storm.magicspace.adapter.EggsAdapter;
+import storm.magicspace.bean.httpBean.EggImage;
+import storm.magicspace.bean.httpBean.EggImageListResponse;
+import storm.magicspace.http.HTTPManager;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
 
@@ -43,6 +52,9 @@ public class GameActivity extends Activity {
     private TextView mShowEggBtn;
     private boolean isAlphaControllerShowing = false;
     private TextView mEggsLoadingHint;
+    private EggsAdapter mEggsAdapter;
+    private ImageView mPositionEgg;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +75,7 @@ public class GameActivity extends Activity {
         mEggsContainer = (RelativeLayout) findViewById(R.id.rl_game_eggs_container);
         mEggsLayout = (RecyclerView) findViewById(R.id.rv_game_eggs);
         mEggsLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
+        mPositionEgg = (ImageView) findViewById(R.id.iv_game_confirm);
 
         initFloatView();
         initWebView();
@@ -74,14 +87,44 @@ public class GameActivity extends Activity {
     private void initEggs() {
         //mEggsLayout.setLayoutManager(new LinearLayoutManager(this, OrientationHelper.HORIZONTAL,false));
         mEggsLayout.setLayoutManager(new GridLayoutManager(this, 1, OrientationHelper.HORIZONTAL, false));
-        mEggsLayout.setAdapter(new EggsAdapter(null));
+        new GetEggImageListTask().execute();
+
+    }
+
+    private class GetEggImageListTask extends BaseASyncTask<Void, EggImageListResponse> {
+        @Override
+        public EggImageListResponse doRequest(Void param) {
+            return HTTPManager.getEggImageList();
+        }
+
+        @Override
+        protected void onPostExecute(EggImageListResponse eggImageListResponse) {
+            if (eggImageListResponse != null) {
+                mEggsLoadingHint.setVisibility(View.INVISIBLE);
+                mEggsLayout.setVisibility(View.VISIBLE);
+                List<EggImage> data = eggImageListResponse.getData();
+                EggImage eggImage = data.get(0);
+                mEggsAdapter = new EggsAdapter(GameActivity.this, eggImage);
+                mEggsLayout.setAdapter(mEggsAdapter);
+                mEggsAdapter.setOnClickListener(new EggsAdapter.ClickInterface() {
+                    @Override
+                    public void onClick(int position, String url, Bitmap bitmap) {
+                        LogUtil.d(TAG, "position = " + position + ", url = " + url);
+                        mFloatView.setImageBitmap(bitmap);
+                        GameActivity.this.url = url;
+                        initFloatView();
+                    }
+                });
+            } else {
+                mEggsLoadingHint.setText("数据加载失败");
+            }
+        }
     }
 
     private void createEgg() {
         if (mFloatInfo != null) {
             String contentId = "1";
             int itemId = mItemId++;
-            String url = "http://app.stemmind.com/vr/objs/25.png";
             float alpha = mAlphaVal;
             float scale = mFloatInfo.getScale();
             float rotate = -mFloatInfo.getRotate();
@@ -96,13 +139,18 @@ public class GameActivity extends Activity {
                     + alpha + "' ,'"
                     + scale + "' ,'"
                     + rotate + "')");
+            mFloatInfo = null;
         }
     }
 
     private void initEvent() {
-        mConfirmBtn.setOnClickListener(new View.OnClickListener() {
+        mPositionEgg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(url)) {
+                    Toast.makeText(GameActivity.this, "清先选择彩蛋", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 createEgg();
             }
         });
@@ -139,7 +187,7 @@ public class GameActivity extends Activity {
     }
 
     private void initFloatView() {
-        mFloatView.setImageResource(R.mipmap.surprise_egg_red);
+        // mFloatView.setImageResource(R.mipmap.surprise_egg_red);
         mFloatView.setOnFloatListener(new FloatView.FloatListener() {
             @Override
             public void clickLeftTop() {

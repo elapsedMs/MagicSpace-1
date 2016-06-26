@@ -35,6 +35,7 @@
         android:src="@mipmap/game_back" />
 
     <ImageView
+        android:id="@+id/iv_game_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -72,6 +73,7 @@
         android:textSize="20sp" />
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/iv_game_guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentBottom="true"
-        android:background="#88ffffff"
+        android:background="#88000000"
         android:visibility="gone"
         tools:visibility="visible">
 

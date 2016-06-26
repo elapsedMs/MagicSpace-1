@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
-import storm.magicspace.adapter.EggsAdapter;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
 
@@ -74,7 +73,7 @@ public class EggGamePreviewActivity extends Activity {
     private void initEggs() {
         //mEggsLayout.setLayoutManager(new LinearLayoutManager(this, OrientationHelper.HORIZONTAL,false));
         mEggsLayout.setLayoutManager(new GridLayoutManager(this, 1, OrientationHelper.HORIZONTAL, false));
-        mEggsLayout.setAdapter(new EggsAdapter(null));
+        //mEggsLayout.setAdapter(new EggsAdapter(null));
     }
 
     private void createEgg() {

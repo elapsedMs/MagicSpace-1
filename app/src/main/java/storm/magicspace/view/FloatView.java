@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -27,7 +28,7 @@ public class FloatView extends ImageView {
 
     private static final String TAG = FloatView.class.getSimpleName();
 
-    private Matrix matrix = new Matrix();
+    private Matrix matrix;
     private Paint mPaint;
     private int mWidth;
     private int mHeight;
@@ -57,6 +58,7 @@ public class FloatView extends ImageView {
     private double mBitmapDiagonalLen;
     private float mLastX;
     private float mLastY;
+    private float mDensity;
 
     public FloatView(Context context) {
         super(context);
@@ -80,13 +82,17 @@ public class FloatView extends ImageView {
     @Override
     public void setImageResource(int resId) {
         mBitmap = BitmapFactory.decodeResource(getResources(), resId);
+        matrix = new Matrix();
         invalidate();
+        requestLayout();
     }
 
     @Override
     public void setImageBitmap(Bitmap bm) {
         mBitmap = bm;
+        matrix = new Matrix();
         invalidate();
+        requestLayout();
     }
 
     @Override
@@ -99,17 +105,34 @@ public class FloatView extends ImageView {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mWidth = w;
-        mHeight = h;
+//        mWidth = w;
+//        mHeight = h;
+//        if (mBitmap != null) {
+//            int bitmapWidth = mBitmap.getWidth();
+//            int bitmapHeight = mBitmap.getHeight();
+//            mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
+//            matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
+//        }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        mWidth = getMeasuredWidth();
+        mHeight = getMeasuredHeight();
         if (mBitmap != null) {
             int bitmapWidth = mBitmap.getWidth();
             int bitmapHeight = mBitmap.getHeight();
             mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
             matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
+            matrix.postScale(mDensity, mDensity, mWidth/2, mHeight/2);
         }
     }
 
     private void init() {
+
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        mDensity = displayMetrics.density / 2;
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -140,7 +163,7 @@ public class FloatView extends ImageView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
+        if (mBitmap == null) return false;
         int action = event.getAction();
         boolean result = true;
         switch (action) {
@@ -191,7 +214,7 @@ public class FloatView extends ImageView {
             float y = vals[Matrix.MTRANS_Y];
 
             // scale
-            float scale = (float) Math.hypot(vals[Matrix.MSCALE_X], vals[Matrix.MSKEW_Y]);
+            float scale = (float) Math.hypot(vals[Matrix.MSCALE_X], vals[Matrix.MSKEW_Y])/mDensity;
 
             // rotate
             float degree = Math.round(Math.atan2(vals[Matrix.MSKEW_X],
@@ -202,7 +225,8 @@ public class FloatView extends ImageView {
 
             Log.d(TAG, "x = " + x + ", y = " + y + ", scale = " + scale + ", rotate = " + degree);
 
-            mListener.floatInfo(new FloatInfo(x, y, alpha, scale, degree));
+            FloatInfo floatInfo = new FloatInfo(x, y, alpha, scale, degree);
+            mListener.floatInfo(floatInfo);
 
         }
     }
