@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_game_container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,27 +10,95 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Sure"/>
-
-    <SeekBar
-        android:layout_margin="@dimen/px_10"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/alpha"/>
+        android:text="Sure"
+        android:visibility="gone" />
 
     <WebView
-        android:layout_above="@+id/alpha"
-        android:layout_below="@+id/sure"
         android:id="@+id/webview_game"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/sure" />
 
     <storm.magicspace.view.FloatView
-        android:layout_above="@+id/alpha"
         android:id="@+id/floatview_game"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/sure"/>
+        android:layout_below="@+id/sure" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:src="@mipmap/game_back" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:src="@mipmap/game_share" />
+
+    <TextView
+        android:id="@+id/tv_game_egg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="20dp"
+        android:drawableLeft="@mipmap/game_egg"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:text="X 10"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_game_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:drawableLeft="@mipmap/game_time"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:text="12:00"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/iv_game_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/game_back_guide" />
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rl_game_eggs_container"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:background="#22ffffff">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_game_eggs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+    <SeekBar
+        android:layout_alignParentStart="true"
+        android:id="@+id/alpha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:visibility="gone" />
 
 </RelativeLayout>

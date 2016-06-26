@@ -101,10 +101,12 @@ public class FloatView extends ImageView {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
-        int bitmapWidth = mBitmap.getWidth();
-        int bitmapHeight = mBitmap.getHeight();
-        mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
-        matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
+        if (mBitmap != null) {
+            int bitmapWidth = mBitmap.getWidth();
+            int bitmapHeight = mBitmap.getHeight();
+            mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
+            matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
+        }
     }
 
     private void init() {
