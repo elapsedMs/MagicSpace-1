@@ -54,7 +54,7 @@
         android:drawableLeft="@mipmap/game_egg"
         android:drawablePadding="@dimen/px_10"
         android:gravity="center"
-        android:text="X 10"
+        android:text="@string/eggs_count"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_40_px" />
 

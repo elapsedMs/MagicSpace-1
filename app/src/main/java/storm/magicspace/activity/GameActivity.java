@@ -38,6 +38,7 @@ public class GameActivity extends Activity {
     public static final String TAG = GameActivity.class.getSimpleName();
     public static final String ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM = "bottom";
     public static final String ALPHA_CONTROLLER_POSITION_ABOVE_EGGS = "above_eggs";
+    public static final int EGG_INIT_COUNT = 5;
 
     private WebView mWebView;
     private FloatView mFloatView;
@@ -45,7 +46,7 @@ public class GameActivity extends Activity {
     private FloatInfo mFloatInfo;
     private SeekBar mAlphaController;
     private float mAlphaVal = 1.0f;
-    private int mItemId = 1;
+    private int mEggsCount = 1;
     private ImageView mGuide;
     private RelativeLayout mEggsContainer;
     private RecyclerView mEggsLayout;
@@ -86,6 +87,7 @@ public class GameActivity extends Activity {
 
     private void initEggs() {
         //mEggsLayout.setLayoutManager(new LinearLayoutManager(this, OrientationHelper.HORIZONTAL,false));
+        updateEggsCountHint(EGG_INIT_COUNT);
         mEggsLayout.setLayoutManager(new GridLayoutManager(this, 1, OrientationHelper.HORIZONTAL, false));
         new GetEggImageListTask().execute();
 
@@ -125,7 +127,7 @@ public class GameActivity extends Activity {
     private void createEgg() {
         if (mFloatInfo != null) {
             String contentId = "1";
-            int itemId = mItemId++;
+            int itemId = mEggsCount++;
             float alpha = mAlphaVal;
             float scale = mFloatInfo.getScale();
             float rotate = -mFloatInfo.getRotate();
@@ -142,7 +144,7 @@ public class GameActivity extends Activity {
                     + rotate + "')");
         } else {
             String contentId = "1";
-            int itemId = mItemId++;
+            int itemId = mEggsCount++;
             float alpha = mAlphaVal;
             float scale = 1.0f;
             float rotate = 0.0f;
@@ -164,6 +166,11 @@ public class GameActivity extends Activity {
                     Toast.makeText(GameActivity.this, R.string.add_egg_hint, Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (mEggsCount > EGG_INIT_COUNT) {
+                    Toast.makeText(GameActivity.this, R.string.add_egg_over_hint, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                updateEggsCountHint(EGG_INIT_COUNT - mEggsCount);
                 createEgg();
             }
         });
@@ -174,6 +181,10 @@ public class GameActivity extends Activity {
                 positionAlphaController(ALPHA_CONTROLLER_POSITION_ABOVE_EGGS);
             }
         });
+    }
+
+    private void updateEggsCountHint(int count) {
+        mShowEggBtn.setText(String.format(getResources().getString(R.string.eggs_count), count));
     }
 
     private void initAlphaController() {
