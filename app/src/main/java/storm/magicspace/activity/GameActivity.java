@@ -111,6 +111,7 @@ public class GameActivity extends Activity {
                     public void onClick(int position, String url, Bitmap bitmap) {
                         LogUtil.d(TAG, "position = " + position + ", url = " + url);
                         mFloatView.setImageBitmap(bitmap);
+                        mFloatInfo = null;
                         mUrl = url;
                         initFloatView();
                     }
@@ -139,7 +140,6 @@ public class GameActivity extends Activity {
                     + alpha + "' ,'"
                     + scale + "' ,'"
                     + rotate + "')");
-            mFloatInfo = null;
         } else {
             String contentId = "1";
             int itemId = mItemId++;

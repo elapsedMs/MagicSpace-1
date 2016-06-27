@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/px_40"
         android:gravity="center"
         android:src="@mipmap/game_back" />
 
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/px_40"
         android:gravity="center"
         android:src="@mipmap/game_share" />
 
@@ -50,13 +50,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/px_40"
         android:drawableLeft="@mipmap/game_egg"
-        android:drawablePadding="5dp"
+        android:drawablePadding="@dimen/px_10"
         android:gravity="center"
         android:text="X 10"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="@dimen/text_size_40_px" />
 
     <TextView
         android:id="@+id/tv_game_time"
@@ -64,13 +64,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/px_40"
         android:drawableLeft="@mipmap/game_time"
-        android:drawablePadding="5dp"
+        android:drawablePadding="@dimen/px_10"
         android:gravity="center"
         android:text="12:00"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="@dimen/text_size_40_px" />
 
     <ImageView
         android:visibility="visible"
@@ -83,7 +83,7 @@
     <RelativeLayout
         android:id="@+id/rl_game_eggs_container"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="@dimen/px_300"
         android:layout_alignParentBottom="true"
         android:background="#88000000"
         android:visibility="gone"
@@ -102,7 +102,7 @@
             android:layout_centerInParent="true"
             android:text="数据加载中..."
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_40_px"
             android:visibility="visible" />
 
     </RelativeLayout>
@@ -112,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/px_20"
         android:visibility="gone" />
 
 </RelativeLayout>
