@@ -12,7 +12,7 @@ public class MagicApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
 
         HttpUtils.setAppModel(true);
     }

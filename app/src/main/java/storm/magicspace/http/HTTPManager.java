@@ -3,6 +3,7 @@ package storm.magicspace.http;
 import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
 import storm.magicspace.bean.httpBean.AccountInfoResponse;
+import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
@@ -13,12 +14,13 @@ import static storm.commonlib.common.util.StringUtil.EMPTY;
 
 public class HTTPManager {
 
-    public static AlbumResponse test() {
+    public static AlbumResponse test(String contentListType) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_MATERIAL_LIST,
                 EMPTY,
-                AlbumResponse.class
+                AlbumResponse.class,
+                "contentListType", contentListType
         );
     }
 
@@ -83,6 +85,15 @@ public class HTTPManager {
                 EggImageListResponse.class
         );
 
+    }
+
+    public static CirclePicResponse getAlbumCirclePic() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_GET_FOCUS_CONTENT_LIST,
+                EMPTY,
+                CirclePicResponse.class
+        );
     }
 
     public static EggHttpResponse getEggList() {

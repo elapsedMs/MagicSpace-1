@@ -1,5 +1,6 @@
 package storm.magicspace.fragment.album;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,13 +18,19 @@ import java.util.List;
 
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
+import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.magicspace.R;
 import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.activity.album.ClassifyRecommendActivity;
+import storm.magicspace.activity.album.GuessYouLikeActivity;
+import storm.magicspace.activity.album.HeatActivity;
 import storm.magicspace.activity.album.WebActivity;
 import storm.magicspace.adapter.OnlineRVAdapter;
 import storm.magicspace.adapter.ViewPagerAdatper;
 import storm.magicspace.bean.Album;
+import storm.magicspace.bean.httpBean.CirclePicResponse;
+import storm.magicspace.download.DownloadService;
+import storm.magicspace.download.FileInfo;
 import storm.magicspace.event.UrlEvent;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AlbumResponse;
@@ -53,6 +60,7 @@ public class OnlineFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         new TestTask().execute();
+        new CirclePicTask().execute();
         super.initView(view);
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
         contentLl = (LinearLayout) view.findViewById(id.ll_content);
@@ -67,22 +75,24 @@ public class OnlineFragment extends BaseFragment {
     }
 
     private void initRecyclerView() {
-        adapter = new OnlineRVAdapter(albumList, getActivity());
+        adapter = new OnlineRVAdapter(albumList, getActivity(), true);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.addItemDecoration(new GridItemDecoration(getActivity()));
         adapter.setOnRecyclerViewClickListener(new OnlineRVAdapter.OnRecyclerViewClickListener() {
             @Override
-            public void onItemClick(int position, Album item) {
-                goToNext(WebActivity.class);
-                UrlEvent urlEvent = new UrlEvent();
-                urlEvent.url = item.getUrl();
-                EventBus.getDefault().post(urlEvent);
+            public void onItemClick(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("url", albumList.get(position).getUrl());
+                goToNext(WebActivity.class, bundle);
             }
 
             @Override
-            public void onBtnClick(int position, Album item) {
-                goToNext(CacheingActivity.class);
+            public void onBtnClick(int position) {
+                FileInfo fileInfo = new FileInfo(0, albumList.get(position).getUrl(), 0, albumList.get(position).getNickName(), 0);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("file_info", fileInfo);
+                goToNext(CacheingActivity.class, bundle);
             }
         });
     }
@@ -112,7 +122,7 @@ public class OnlineFragment extends BaseFragment {
         super.onLocalClicked(resId);
         switch (resId) {
             case id.you_like:
-                goToNext(ClassifyRecommendActivity.class);
+                goToNext(GuessYouLikeActivity.class);
                 break;
         }
     }
@@ -135,7 +145,8 @@ public class OnlineFragment extends BaseFragment {
     private class TestTask extends BaseASyncTask<Void, AlbumResponse> {
         @Override
         public AlbumResponse doRequest(Void param) {
-            return HTTPManager.test();
+            return HTTPManager.test("");
+
         }
 
         @Override
@@ -144,6 +155,18 @@ public class OnlineFragment extends BaseFragment {
             albumList.clear();
             albumList.addAll(albumResponse.data);
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    private class CirclePicTask extends BaseASyncTask<Void, CirclePicResponse> {
+        @Override
+        public CirclePicResponse doRequest(Void param) {
+            return HTTPManager.getAlbumCirclePic();
+        }
+
+        @Override
+        public void onSuccess(CirclePicResponse albumResponse) {
+            super.onSuccess(albumResponse);
         }
     }
 

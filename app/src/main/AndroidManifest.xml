@@ -55,6 +55,14 @@
         <activity
             android:name=".activity.album.WebActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.album.GuessYouLikeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.album.HeatActivity"
+            android:screenOrientation="portrait" />
+
+        <service android:name=".download.DownloadService" />
 
         <activity
             android:name=".activity.EggGamePreviewActivity"
@@ -68,5 +76,8 @@
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <!--往sdcard中写入数据的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!--在sdcard中创建/删除文件的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
 </manifest>

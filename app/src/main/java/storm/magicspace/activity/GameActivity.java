@@ -53,7 +53,7 @@ public class GameActivity extends Activity {
     private boolean isAlphaControllerShowing = false;
     private TextView mEggsLoadingHint;
     private EggsAdapter mEggsAdapter;
-    private ImageView mPositionEgg;
+    private ImageView mCreateEggBtn;
     private String mUrl;
 
     @Override
@@ -75,7 +75,7 @@ public class GameActivity extends Activity {
         mEggsContainer = (RelativeLayout) findViewById(R.id.rl_game_eggs_container);
         mEggsLayout = (RecyclerView) findViewById(R.id.rv_game_eggs);
         mEggsLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
-        mPositionEgg = (ImageView) findViewById(R.id.iv_game_confirm);
+        mCreateEggBtn = (ImageView) findViewById(R.id.iv_game_confirm);
 
         initFloatView();
         initWebView();
@@ -140,11 +140,24 @@ public class GameActivity extends Activity {
                     + scale + "' ,'"
                     + rotate + "')");
             mFloatInfo = null;
+        } else {
+            String contentId = "1";
+            int itemId = mItemId++;
+            float alpha = mAlphaVal;
+            float scale = 1.0f;
+            float rotate = 0.0f;
+            mWebView.loadUrl("javascript:dropItem('"
+                    + contentId + "' ,'"
+                    + itemId + "' ,'"
+                    + mUrl + "' ,'"
+                    + alpha + "' ,'"
+                    + scale + "' ,'"
+                    + rotate + "')");
         }
     }
 
     private void initEvent() {
-        mPositionEgg.setOnClickListener(new View.OnClickListener() {
+        mCreateEggBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(mUrl)) {

@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class Album {
 
+
     /**
      * userId : 135601920027846561
      * nickName : J-lin

@@ -25,7 +25,6 @@ public class WebActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        EventBus.getDefault().register(this);
     }
 
     private WebView mWebView;
@@ -38,6 +37,8 @@ public class WebActivity extends BaseActivity {
     public void initView() {
         super.initView();
         mWebView = (WebView) findViewById(R.id.webview);
+        initWebView();
+        mWebView.loadUrl(getIntent().getStringExtra("url"));
     }
 
     private void initWebView() {
@@ -54,16 +55,9 @@ public class WebActivity extends BaseActivity {
         mWebView.setWebViewClient(new WebViewClient());
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING)
-    public void onUserEvent(UrlEvent urlEvent) {
-        Log.d("gdq",urlEvent.url);
-        mWebView.loadUrl(urlEvent.url);
-    }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }
