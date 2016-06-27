@@ -28,6 +28,7 @@ public class DownloadService extends BaseService {
     public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/magic/download/";
     private FileInfo fileInfo;
     private DownloadTask downloadTask;
+    private int threadCount = 1;
 
     @Override
     public void onCreate() {
@@ -50,12 +51,12 @@ public class DownloadService extends BaseService {
         fileInfo.fileName = "imooc.apk";
         fileInfo.url = "http://www.imooc.com/mobile/imooc.apk";
         if (action.equals(ACTION_START)) {
-            Log.d("gdq","ACTION_START");
+            Log.d("gdq", "ACTION_START");
             new LengthThread(fileInfo).start();
         } else if (action.equals(ACTION_STOP)) {
-            Log.d("gdq","ACTION_STOP");
+            Log.d("gdq", "ACTION_STOP");
             if (downloadTask != null) {
-                Log.d("gdq","downloadTask.isPause = true");
+                Log.d("gdq", "downloadTask.isPause = true");
                 downloadTask.isPause = true;
             }
         }
@@ -81,11 +82,11 @@ public class DownloadService extends BaseService {
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.setRequestMethod("GET");
                 int len = 0;
-                Log.d("gdq","获取文件长度返回值:"+httpURLConnection.getResponseCode());
+                Log.d("gdq", "获取文件长度返回值:" + httpURLConnection.getResponseCode());
                 if (httpURLConnection.getResponseCode() == HttpStatus.SC_OK) {
                     //获取文件changdu
                     len = httpURLConnection.getContentLength();
-                    Log.d("gdq","长度:"+len);
+                    Log.d("gdq", "长度:" + len);
                 }
                 if (len <= 0) return;
 
@@ -97,7 +98,7 @@ public class DownloadService extends BaseService {
                     isMk = dir.mkdirs();
                 }
                 if (!isMk) return;
-                Log.d("gdq","创建文件");
+                Log.d("gdq", "创建文件");
                 //本地创建文件
                 File file = new File(dir, fileInfo.fileName);
                 randomAccessFile = new RandomAccessFile(file, "rwd");
