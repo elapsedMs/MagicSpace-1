@@ -109,7 +109,7 @@ public class TitleBar extends LinearLayout {
         titleBar2.setVisibility(View.GONE);
     }
 
-    public void showRedDot(String count){
+    public void showRedDot(String count) {
         natvieRedDotTv.setVisibility(View.VISIBLE);
         natvieRedDotTv.setText(count);
     }
@@ -207,6 +207,14 @@ public class TitleBar extends LinearLayout {
 
     public void setSecondTitleBackground(int resId) {
         titleBar2.setBackgroundResource(resId);
+    }
+
+    public void setTitleColor(int color) {
+        titleBar1.setBackgroundResource(color);
+    }
+
+    public void setCenterTextColor(int textColor) {
+        activityTitle.setTextColor(textColor);
     }
 
 

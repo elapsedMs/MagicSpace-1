@@ -62,6 +62,9 @@
         <activity
             android:name=".activity.EggGameInfoActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.RegisterActivity"
+                  android:screenOrientation="portrait"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
