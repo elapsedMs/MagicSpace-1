@@ -38,7 +38,7 @@ public class DownloadService extends BaseService {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(FileInfoEvent fileInfoEvent) {
         Log.d("gdq", "接受文件长度");
-        downloadTask = new DownloadTask(this, fileInfoEvent.fileInfo);
+        downloadTask = new DownloadTask(this, fileInfoEvent.fileInfo, threadCount);
         downloadTask.download();
     }
 
@@ -50,10 +50,14 @@ public class DownloadService extends BaseService {
         fileInfo.fileName = "imooc.apk";
         fileInfo.url = "http://www.imooc.com/mobile/imooc.apk";
         if (action.equals(ACTION_START)) {
+            Log.d("gdq","ACTION_START");
             new LengthThread(fileInfo).start();
         } else if (action.equals(ACTION_STOP)) {
-            if (downloadTask != null)
+            Log.d("gdq","ACTION_STOP");
+            if (downloadTask != null) {
+                Log.d("gdq","downloadTask.isPause = true");
                 downloadTask.isPause = true;
+            }
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -77,9 +81,11 @@ public class DownloadService extends BaseService {
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.setRequestMethod("GET");
                 int len = 0;
+                Log.d("gdq","获取文件长度返回值:"+httpURLConnection.getResponseCode());
                 if (httpURLConnection.getResponseCode() == HttpStatus.SC_OK) {
                     //获取文件changdu
                     len = httpURLConnection.getContentLength();
+                    Log.d("gdq","长度:"+len);
                 }
                 if (len <= 0) return;
 
@@ -91,11 +97,13 @@ public class DownloadService extends BaseService {
                     isMk = dir.mkdirs();
                 }
                 if (!isMk) return;
+                Log.d("gdq","创建文件");
                 //本地创建文件
                 File file = new File(dir, fileInfo.fileName);
                 randomAccessFile = new RandomAccessFile(file, "rwd");
                 //设置文件长度
                 randomAccessFile.setLength(len);
+                Log.d("gdq", "准备返回");
                 //返回长度
                 fileInfo.length = len;
                 FileInfoEvent fileInfoEvent = new FileInfoEvent();

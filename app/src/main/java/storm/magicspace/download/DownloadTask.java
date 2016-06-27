@@ -16,6 +16,7 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import storm.magicspace.download.db.ThreadDAO;
@@ -31,23 +32,34 @@ public class DownloadTask extends Thread {
     private ThreadDAO threadDAO;
     private int mFinished;
     public boolean isPause = false;
+    private int threadCount;
+    private List<DownloadThread> downloadThreadList = new ArrayList<>();
 
-    public DownloadTask(Context context, FileInfo fileInfo) {
+    public DownloadTask(Context context, FileInfo fileInfo, int threadCount) {
         this.context = context;
         this.fileInfo = fileInfo;
+        this.threadCount = threadCount;
         threadDAO = new ThreadDaoImpl(context);
     }
 
     public void download() {
         //读取数据库信息
+        Log.d("gdq", "读数据库");
         List<ThreadInfo> list = threadDAO.getThreads(fileInfo.url);
-        ThreadInfo threadInfo;
         if (list.size() == 0) {
-            threadInfo = new ThreadInfo(0, fileInfo.url, 0, fileInfo.length, 0);
-        } else {
-            threadInfo = list.get(0);
+            int length = fileInfo.length / threadCount;
+            for (int i = 0; i < threadCount; i++) {
+                ThreadInfo threadInfo = new ThreadInfo(i, fileInfo.url, i * length, (i + 1) * length - 1, 0);
+                if (i == threadCount - 1)
+                    threadInfo.end = fileInfo.length;
+                list.add(threadInfo);
+            }
         }
-        new DownloadThread(threadInfo).start();
+        for (ThreadInfo info : list) {
+            DownloadThread downloadThread = new DownloadThread(info);
+            downloadThread.start();
+            downloadThreadList.add(downloadThread);
+        }
     }
 
     private class DownloadThread extends Thread {
@@ -74,7 +86,6 @@ public class DownloadTask extends Thread {
                 int start = threadInfo.start + threadInfo.finished;
                 Log.d("gdq", "下载起始位置:" + start);
                 httpURLConnection.setRequestProperty("Range", "bytes=" + start + "- " + threadInfo.end);
-                Log.d("gdq", "1");
                 //设置文件写入位置
                 File file = new File(DownloadService.DOWNLOAD_PATH, fileInfo.fileName);
                 randomAccessFile = new RandomAccessFile(file, "rwd");
@@ -82,8 +93,10 @@ public class DownloadTask extends Thread {
                 //开始下载
                 mFinished += threadInfo.finished;
                 long time = System.currentTimeMillis();
-                if (httpURLConnection.getResponseCode() == HttpStatus.SC_OK) {
-                    //读取数据
+                Log.d("gdq", "" + httpURLConnection.getResponseCode());
+                if (httpURLConnection.getResponseCode() == HttpStatus.SC_OK || httpURLConnection.getResponseCode() == HttpStatus.SC_PARTIAL_CONTENT) {
+                    Log.d("gdq", "状态吗正确");
+//读取数据
                     inputStream = httpURLConnection.getInputStream();
                     byte[] bytes = new byte[1024 * 4];
                     int len = -1;
@@ -91,7 +104,7 @@ public class DownloadTask extends Thread {
                         //写入文件
                         randomAccessFile.write(bytes, 0, len);
                         mFinished += len;
-                        Log.d("gdq", "" + mFinished);
+                        Log.d("hkh", "" + mFinished);
 //                        if (System.currentTimeMillis() - time > 5000) {
 //                            time = System.currentTimeMillis();
                         //更新界面进度
@@ -111,7 +124,6 @@ public class DownloadTask extends Thread {
                             return;
                         }
                     }
-                    Log.d("gdq", "5");
                     threadDAO.delete(threadInfo.url, threadInfo.id);
                 }
             } catch (IOException e) {
