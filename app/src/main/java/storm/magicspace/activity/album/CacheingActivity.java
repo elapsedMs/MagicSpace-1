@@ -40,6 +40,7 @@ public class CacheingActivity extends BaseActivity {
     private CacheingRvAdapter adapter;
     private boolean a;
     private int position;
+    FileInfo fileInfo;
 
     public CacheingActivity() {
         super(R.layout.activity_cacheing);
@@ -68,16 +69,21 @@ public class CacheingActivity extends BaseActivity {
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
         initRecyclerView(layoutManager);
 
-
+        fileInfo = (FileInfo) getIntent().getSerializableExtra("file_info");
+        if (fileInfo != null) {
+            fileInfoList.add(fileInfo);
+            adapter.notifyDataSetChanged();
+        }
         // 注册广播接收器
         IntentFilter filter = new IntentFilter();
         filter.addAction(DownloadService.ACTION_UPDATE);
         registerReceiver(mReceiver, filter);
 
+
+
     }
 
     private void initRecyclerView(LinearLayoutManager layoutManager) {
-        fileInfoList.add(new FileInfo(0, "", 0, "", 0));
         adapter = new CacheingRvAdapter(fileInfoList, this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -86,7 +92,6 @@ public class CacheingActivity extends BaseActivity {
             @Override
             public void click(int position) {
                 CacheingActivity.this.position = position;
-                FileInfo fileInfo = (FileInfo) getIntent().getSerializableExtra("file_info");
                 Intent intent = new Intent(CacheingActivity.this, DownloadService.class);
                 if (a) {//暂时
                     a = false;
