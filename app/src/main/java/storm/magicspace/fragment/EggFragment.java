@@ -1,21 +1,20 @@
 package storm.magicspace.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
-import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
+import storm.magicspace.activity.EggGameInfoActivity;
+import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.adapter.EggAdapter;
 import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.HTTPManager;
@@ -49,6 +48,7 @@ public class EggFragment extends BaseFragment {
     @Override
     public void onLocalItemClicked(AdapterView<?> parent, View view, int position, long id) {
         super.onLocalItemClicked(parent, view, position, id);
+        goToNext(EggGameInfoActivity.class);
     }
     private class getEggTask extends BaseASyncTask<Void, EggHttpResponse> {
         @Override

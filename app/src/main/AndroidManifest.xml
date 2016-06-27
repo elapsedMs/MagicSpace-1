@@ -63,6 +63,13 @@
             android:screenOrientation="portrait" />
 
         <service android:name=".download.DownloadService" />
+
+        <activity
+            android:name=".activity.EggGamePreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.EggGameInfoActivity"
+            android:screenOrientation="portrait" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
