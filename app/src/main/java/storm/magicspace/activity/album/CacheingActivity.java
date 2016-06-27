@@ -80,7 +80,6 @@ public class CacheingActivity extends BaseActivity {
         registerReceiver(mReceiver, filter);
 
 
-
     }
 
     private void initRecyclerView(LinearLayoutManager layoutManager) {
@@ -91,6 +90,7 @@ public class CacheingActivity extends BaseActivity {
         adapter.setOnRecyclerClickListener(new CacheingRvAdapter.OnClickListener() {
             @Override
             public void click(int position) {
+                Log.d("gdq", "onClick d= " + a);
                 CacheingActivity.this.position = position;
                 Intent intent = new Intent(CacheingActivity.this, DownloadService.class);
                 if (a) {//暂时
@@ -135,10 +135,11 @@ public class CacheingActivity extends BaseActivity {
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d("hkh", "onReceive");
             if (DownloadService.ACTION_UPDATE.equals(intent.getAction())) {
                 int finised = intent.getIntExtra("finished", 0);
                 fileInfoList.get(0).finished = finised;
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemChanged(0);
             }
         }
     };

@@ -3,6 +3,7 @@ package storm.magicspace.adapter;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,37 +37,43 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
 
     @Override
     public OnlineRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d("gdq","onCreateViewHolder");
         View view = LayoutInflater.from(context).inflate(R.layout.view_album_online, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRecyclerViewClickListener.onItemClick(holder.getPosition());
-            }
-        });
 
-        holder.downloadIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRecyclerViewClickListener.onBtnClick(holder.getPosition());
-            }
-        });
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+        Log.d("gdq","onBindViewHolder");
         final Album item = list.get(position);
         Picasso.with(context).load(item.getThumbImageUrl()).into(holder.albumPicView.getBgIv());
         holder.descTv.setText(list.get(position).getDescription());
         holder.nameTv.setText("没字段");
         holder.albumPicView.setSupportTimes(item.getAppreciateCount());
         holder.albumPicView.setCollectTimes(item.getCommentCount());
-    }
+        holder.father.setOnClickListener(n ew View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("gdq","father onClick ");
+                onRecyclerViewClickListener.onItemClick(position);
+            }
+        });
+
+        holder.downloadIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("gdq","downloadIv onClick ");
+
+                onRecyclerViewClickListener.onBtnClick(position);
+            }
+        });  }
 
 
     @Override
     public int getItemCount() {
+        Log.d("gdq","getItemCount");
         return list == null ? 0 : isLimit ? list.size() <= 6 ? list.size() : 6 : list.size();
     }
 
@@ -80,6 +87,7 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
+            Log.d("gdq", "ViewHolder");
             albumPicView = (AlbumPicView) itemView.findViewById(R.id.picview);
             nameTv = (TextView) itemView.findViewById(R.id.name);
             descTv = (TextView) itemView.findViewById(R.id.desc);
