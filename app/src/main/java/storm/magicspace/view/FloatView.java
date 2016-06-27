@@ -52,6 +52,7 @@ public class FloatView extends ImageView {
     private FloatListener mListener;
     private boolean mTriggerScaleAction = false;
     private boolean mTriggerMoveAction;
+    private boolean mTriggerRotateAction;
     private float mRotateDegree;
     private PointF mMiddlePoint = new PointF();
     private float mToCenterDistance;
@@ -173,7 +174,7 @@ public class FloatView extends ImageView {
                 if (isInside(downX, downY, lt_Rect)) {// transparent
                     doHyalinize();
                 } else if (isInside(downX, downY, rt_Rect)) {// rotate
-                    doRotate();
+                    doRotate(event);
                 } else if (isInside(downX, downY, rb_Rect)) {// scale
                     doScale(event);
                 } else if (isInBitmap(event)) {
@@ -185,6 +186,8 @@ public class FloatView extends ImageView {
             case MotionEvent.ACTION_MOVE:
                 if (mTriggerScaleAction) {
                     executeScale(event);
+                } else if (mTriggerRotateAction) {
+                    executeRotate(event);
                 } else if (mTriggerMoveAction) {
                     // executeMove(event);
                 }
@@ -202,6 +205,7 @@ public class FloatView extends ImageView {
     private void reset() {
         mTriggerScaleAction = false;
         mTriggerMoveAction = false;
+        mTriggerRotateAction = false;
     }
 
     private void getLastSnapshot() {
@@ -243,9 +247,10 @@ public class FloatView extends ImageView {
 
     private void executeScale(MotionEvent event) {
         // rotate
-        matrix.postRotate((rotationToStartPoint(event) - mRotateDegree) * 2, mMiddlePoint.x,
-                mMiddlePoint.y);
-        mRotateDegree = rotationToStartPoint(event);
+//        matrix.postRotate((rotationToStartPoint(event) - mRotateDegree) * 2, mMiddlePoint.x,
+//                mMiddlePoint.y);
+//        mRotateDegree = rotationToStartPoint(event);
+
         // scale
         float scale = getDiagonalLen(event) / mToCenterDistance;
 
@@ -265,6 +270,14 @@ public class FloatView extends ImageView {
         invalidate();
     }
 
+    private void executeRotate(MotionEvent event) {
+        // rotate
+        matrix.postRotate((rotationToStartPoint(event) - mRotateDegree) * 2, mMiddlePoint.x,
+                mMiddlePoint.y);
+        mRotateDegree = rotationToStartPoint(event);
+        invalidate();
+    }
+
     private void doMove(MotionEvent event) {
         mTriggerMoveAction = true;
         mLastX = event.getX(0);
@@ -273,7 +286,7 @@ public class FloatView extends ImageView {
 
     private void doScale(MotionEvent event) {
         mTriggerScaleAction = true;
-        mRotateDegree = rotationToStartPoint(event);
+//        mRotateDegree = rotationToStartPoint(event);
         midPointToStartPoint(event);
         mToCenterDistance = getDiagonalLen(event);
         if (mListener != null) {
@@ -281,11 +294,13 @@ public class FloatView extends ImageView {
         }
     }
 
-    private void doRotate() {
-        PointF localPointF = new PointF();
-        getMidPoint(localPointF, matrix);
-        matrix.preRotate(-90, localPointF.x, localPointF.y);
-        invalidate();
+    private void doRotate(MotionEvent event) {
+        mTriggerRotateAction = true;
+        mRotateDegree = rotationToStartPoint(event);
+//        PointF localPointF = new PointF();
+//        getMidPoint(localPointF, matrix);
+//        matrix.preRotate(-90, localPointF.x, localPointF.y);
+//        invalidate();
         if (mListener != null) {
             mListener.clickRightTop();
         }
