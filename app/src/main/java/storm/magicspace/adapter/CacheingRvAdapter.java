@@ -20,6 +20,7 @@ import storm.magicspace.download.FileInfo;
 public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.ViewHolder> {
     private List<FileInfo> list;
     private Context context;
+    private OnClickListener onClickListener;
 
     public CacheingRvAdapter(List<FileInfo> list, Context context) {
         this.list = list;
@@ -27,8 +28,9 @@ public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.Vi
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_cacheing, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -36,13 +38,14 @@ public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         //TODO赛数据
         FileInfo fileInfo = list.get(position);
-        holder.progressBar.setProgress(50);
+        holder.progressBar.setProgress(fileInfo.finished);
         holder.name.setText(fileInfo.fileName);
     }
 
     @Override
     public int getItemCount() {
-        return list == null ? 0 : list.size();
+//        return list == null ? 0 : list.size();
+        return 1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -63,6 +66,30 @@ public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.Vi
             downloadSize = (TextView) itemView.findViewById(R.id.download_size);
             total = (TextView) itemView.findViewById(R.id.total);
             downloadSpeed = (TextView) itemView.findViewById(R.id.download_speed);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickListener.click(getPosition());
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onClickListener.longClick(getPosition());
+                    return false;
+                }
+            });
         }
+    }
+
+    public void setOnRecyclerClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public interface OnClickListener {
+        void click(int position);
+
+        void longClick(int position);
     }
 }

@@ -89,11 +89,10 @@ public class OnlineFragment extends BaseFragment {
 
             @Override
             public void onBtnClick(int position) {
-                Intent intent = new Intent(getActivity(), DownloadService.class);
-                intent.setAction(DownloadService.ACTION_START);
-                intent.putExtra("file_info", new FileInfo(0, albumList.get(position).getUrl(), 0, "abc", 0));
-                getActivity().startService(intent);
-                goToNext(CacheingActivity.class);
+                FileInfo fileInfo = new FileInfo(0, albumList.get(position).getUrl(), 0, albumList.get(position).getNickName(), 0);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("file_info", fileInfo);
+                goToNext(CacheingActivity.class, bundle);
             }
         });
     }

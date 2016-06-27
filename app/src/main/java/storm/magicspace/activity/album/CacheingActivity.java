@@ -1,5 +1,9 @@
 package storm.magicspace.activity.album;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -21,6 +25,7 @@ import java.util.List;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 import storm.magicspace.adapter.CacheingRvAdapter;
+import storm.magicspace.download.DownloadService;
 import storm.magicspace.download.FileInfo;
 import storm.magicspace.event.LengthEvent;
 
@@ -32,6 +37,9 @@ public class CacheingActivity extends BaseActivity {
     private RelativeLayout contentRl;
     private RecyclerView recyclerView;
     private List<FileInfo> fileInfoList = new ArrayList<>();
+    private CacheingRvAdapter adapter;
+    private boolean a;
+    private int position;
 
     public CacheingActivity() {
         super(R.layout.activity_cacheing);
@@ -45,7 +53,7 @@ public class CacheingActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LengthEvent lengthEvent) {
-        Log.d("gdq", "更新UI");
+        Log.d("gdq", "更新UI:" + lengthEvent.len);
     }
 
     @Override
@@ -58,9 +66,45 @@ public class CacheingActivity extends BaseActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
+        initRecyclerView(layoutManager);
+
+
+        // 注册广播接收器
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(DownloadService.ACTION_UPDATE);
+        registerReceiver(mReceiver, filter);
+
+    }
+
+    private void initRecyclerView(LinearLayoutManager layoutManager) {
+        fileInfoList.add(new FileInfo(0, "", 0, "", 0));
+        adapter = new CacheingRvAdapter(fileInfoList, this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new CacheingRvAdapter(fileInfoList, this));
+        recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        adapter.setOnRecyclerClickListener(new CacheingRvAdapter.OnClickListener() {
+            @Override
+            public void click(int position) {
+                CacheingActivity.this.position = position;
+                FileInfo fileInfo = (FileInfo) getIntent().getSerializableExtra("file_info");
+                Intent intent = new Intent(CacheingActivity.this, DownloadService.class);
+                if (a) {//暂时
+                    a = false;
+                    intent.setAction(DownloadService.ACTION_STOP);
+                    intent.putExtra("file_info", new FileInfo(0, fileInfo.url, 0, fileInfo.fileName, 0));
+                } else {//开始
+                    a = true;
+                    intent.setAction(DownloadService.ACTION_START);
+                    intent.putExtra("file_info", new FileInfo(0, fileInfo.url, 0, fileInfo.fileName, 0));
+                }
+                startService(intent);
+            }
+
+            @Override
+            public void longClick(int position) {
+
+            }
+        });
     }
 
     public void showNoDownload() {
@@ -77,5 +121,22 @@ public class CacheingActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        unregisterReceiver(mReceiver);
     }
+
+    /**
+     * 更新UI的广播接收器
+     */
+    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (DownloadService.ACTION_UPDATE.equals(intent.getAction())) {
+                int finised = intent.getIntExtra("finished", 0);
+                fileInfoList.get(0).finished = finised;
+                adapter.notifyDataSetChanged();
+            }
+        }
+    };
+
+
 }

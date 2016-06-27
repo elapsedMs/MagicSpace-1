@@ -32,7 +32,7 @@ public class ThreadDaoImpl implements ThreadDAO {
     @Override
     public void delete(String url, int id) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        database.execSQL("delete from thread_info where url = ? and thread_id = ?)", new Object[]{
+        database.execSQL("delete from thread_info where url = ? and thread_id = ?", new Object[]{
                 url, id
         });
         database.close();
@@ -41,7 +41,7 @@ public class ThreadDaoImpl implements ThreadDAO {
     @Override
     public void update(String url, int id, int finished) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        database.execSQL("update thread_info set finished = ? where url = ? and thread_id = ?)", new Object[]{
+        database.execSQL("update thread_info set finished = ? where url = ? and thread_id = ?", new Object[]{
                 finished, url, id
         });
         database.close();
@@ -70,7 +70,7 @@ public class ThreadDaoImpl implements ThreadDAO {
     public boolean isExists(String url, int id) {
         boolean isExists = false;
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        Cursor cursor = database.rawQuery("select * from thread_info where url = ? and thread_id = id", new String[]{url, "" + id});
+        Cursor cursor = database.rawQuery("select * from thread_info where url = ? and thread_id = ?", new String[]{url, "" + id});
         isExists = cursor.moveToNext();
         database.close();
         cursor.close();

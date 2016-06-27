@@ -24,14 +24,15 @@ import storm.magicspace.event.FileInfoEvent;
 public class DownloadService extends BaseService {
     public static final String ACTION_START = "ACTION_START";
     public static final String ACTION_STOP = "ACTION_STOP";
+    public static final String ACTION_UPDATE = "ACTION_UPDATE";
     public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/magic/download/";
     private FileInfo fileInfo;
     private DownloadTask downloadTask;
 
     @Override
     public void onCreate() {
-        super.onCreate();
         EventBus.getDefault().register(this);
+        super.onCreate();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -46,6 +47,8 @@ public class DownloadService extends BaseService {
         Log.d("gdq", "onStartCommand");
         String action = intent.getAction();
         fileInfo = (FileInfo) intent.getSerializableExtra("file_info");
+        fileInfo.fileName = "imooc.apk";
+        fileInfo.url = "http://www.imooc.com/mobile/imooc.apk";
         if (action.equals(ACTION_START)) {
             new LengthThread(fileInfo).start();
         } else if (action.equals(ACTION_STOP)) {
@@ -95,7 +98,9 @@ public class DownloadService extends BaseService {
                 randomAccessFile.setLength(len);
                 //返回长度
                 fileInfo.length = len;
-                EventBus.getDefault().post(fileInfo);
+                FileInfoEvent fileInfoEvent = new FileInfoEvent();
+                fileInfoEvent.fileInfo = fileInfo;
+                EventBus.getDefault().post(fileInfoEvent);
 
             } catch (Exception e) {
                 e.printStackTrace();

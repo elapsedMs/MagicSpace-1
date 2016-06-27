@@ -1,7 +1,9 @@
 package storm.magicspace.download;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
+import android.util.Log;
 
 import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.HttpStatus;
@@ -70,7 +72,9 @@ public class DownloadTask extends Thread {
                 httpURLConnection.setRequestMethod("GET");
                 //设置下载位置
                 int start = threadInfo.start + threadInfo.finished;
-                httpURLConnection.setRequestProperty("Range", "bytes=" + start + "-" + threadInfo.end);
+                Log.d("gdq", "下载起始位置:" + start);
+                httpURLConnection.setRequestProperty("Range", "bytes=" + start + "- " + threadInfo.end);
+                Log.d("gdq", "1");
                 //设置文件写入位置
                 File file = new File(DownloadService.DOWNLOAD_PATH, fileInfo.fileName);
                 randomAccessFile = new RandomAccessFile(file, "rwd");
@@ -78,7 +82,7 @@ public class DownloadTask extends Thread {
                 //开始下载
                 mFinished += threadInfo.finished;
                 long time = System.currentTimeMillis();
-                if (httpURLConnection.getResponseCode() == HttpStatus.SC_PARTIAL_CONTENT) {
+                if (httpURLConnection.getResponseCode() == HttpStatus.SC_OK) {
                     //读取数据
                     inputStream = httpURLConnection.getInputStream();
                     byte[] bytes = new byte[1024 * 4];
@@ -87,19 +91,27 @@ public class DownloadTask extends Thread {
                         //写入文件
                         randomAccessFile.write(bytes, 0, len);
                         mFinished += len;
-                        if (System.currentTimeMillis() - time > 5000) {
-                            time = System.currentTimeMillis();
-                            //更新界面进度
-                            LengthEvent lengthEvent = new LengthEvent();
-                            lengthEvent.len = mFinished;
-                            EventBus.getDefault().post(lengthEvent);
-                        }
+                        Log.d("gdq", "" + mFinished);
+//                        if (System.currentTimeMillis() - time > 5000) {
+//                            time = System.currentTimeMillis();
+                        //更新界面进度
+//                        LengthEvent lengthEvent = new LengthEvent();
+//                        lengthEvent.len = mFinished * 100 / fileInfo.length;
+//                        EventBus.getDefault().post(lengthEvent);
+//                        }
+
+                        Intent intent = new Intent();
+                        intent.setAction(DownloadService.ACTION_UPDATE);
+                        intent.putExtra("finished", mFinished * 100 / threadInfo.end);
+                        context.sendBroadcast(intent);
+
                         //暂停，保存进度
                         if (isPause) {
                             threadDAO.update(threadInfo.url, threadInfo.id, mFinished);
                             return;
                         }
                     }
+                    Log.d("gdq", "5");
                     threadDAO.delete(threadInfo.url, threadInfo.id);
                 }
             } catch (IOException e) {
