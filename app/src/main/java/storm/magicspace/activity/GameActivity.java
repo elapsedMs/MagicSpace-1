@@ -54,7 +54,7 @@ public class GameActivity extends Activity {
     private TextView mEggsLoadingHint;
     private EggsAdapter mEggsAdapter;
     private ImageView mPositionEgg;
-    private String url;
+    private String mUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,12 +111,12 @@ public class GameActivity extends Activity {
                     public void onClick(int position, String url, Bitmap bitmap) {
                         LogUtil.d(TAG, "position = " + position + ", url = " + url);
                         mFloatView.setImageBitmap(bitmap);
-                        GameActivity.this.url = url;
+                        mUrl = url;
                         initFloatView();
                     }
                 });
             } else {
-                mEggsLoadingHint.setText("数据加载失败");
+                mEggsLoadingHint.setText(R.string.loading_failed);
             }
         }
     }
@@ -135,7 +135,7 @@ public class GameActivity extends Activity {
             mWebView.loadUrl("javascript:dropItem('"
                     + contentId + "' ,'"
                     + itemId + "' ,'"
-                    + url + "' ,'"
+                    + mUrl + "' ,'"
                     + alpha + "' ,'"
                     + scale + "' ,'"
                     + rotate + "')");
@@ -147,8 +147,8 @@ public class GameActivity extends Activity {
         mPositionEgg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(url)) {
-                    Toast.makeText(GameActivity.this, "清先选择彩蛋", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(mUrl)) {
+                    Toast.makeText(GameActivity.this, R.string.add_egg_hint, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 createEgg();

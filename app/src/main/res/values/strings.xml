@@ -16,4 +16,6 @@
     <string name="tip_feedback_contact">请留下邮箱或电话，方便我们与您联系</string>
     <string name="left_contact">请留下您的联系方式</string>
     <string name="finish">完成</string>
+    <string name="loading_failed">数据加载失败</string>
+    <string name="add_egg_hint">清先选择彩蛋</string>
 </resources>
