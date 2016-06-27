@@ -2,7 +2,6 @@ package storm.magicspace.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,8 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
-import com.squareup.picasso.Target;
 
+import java.io.IOException;
 import java.util.List;
 
 import storm.magicspace.R;
@@ -45,34 +44,26 @@ public class EggsAdapter extends RecyclerView.Adapter<EggsAdapter.ViewHolder> {
         holder.egg.setImageResource(R.mipmap.surprise_egg_red);
         EggImage.ObjectsBean eggImage = mImages.get(position);
         final String url = eggImage.getUrl();
-        RequestCreator load = Picasso.with(mContext).load(url);
+        final RequestCreator load = Picasso.with(mContext).load(url);
         load.into(holder.egg);
-        load.into(new Target() {
+        new Thread(new Runnable() {
             @Override
-            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                holder.egg.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mListener != null) {
-                            mListener.onClick(position, url, bitmap);
+            public void run() {
+                try {
+                    final Bitmap bitmap = load.get();
+                    holder.egg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mListener != null) {
+                                mListener.onClick(position, url, bitmap);
+                            }
                         }
-                    }
-                });
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        });
-
-
-
+        }).start();
     }
 
     @Override
