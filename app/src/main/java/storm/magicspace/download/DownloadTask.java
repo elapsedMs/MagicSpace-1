@@ -18,6 +18,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import storm.magicspace.download.db.ThreadDAO;
 import storm.magicspace.download.db.ThreadDaoImpl;
@@ -34,12 +36,32 @@ public class DownloadTask extends Thread {
     public boolean isPause = false;
     private int threadCount;
     private List<DownloadThread> downloadThreadList = new ArrayList<>();
+    public static ExecutorService sExecutorService = Executors.newCachedThreadPool();
 
     public DownloadTask(Context context, FileInfo fileInfo, int threadCount) {
         this.context = context;
         this.fileInfo = fileInfo;
         this.threadCount = threadCount;
         threadDAO = new ThreadDaoImpl(context);
+    }
+
+    private synchronized void checkAllThreadFinish() {
+        Log.d("gdq", "checkAllThreadFinish");
+        boolean allFinish = true;
+        for (DownloadThread downloadThread : downloadThreadList) {
+            if (!downloadThread.isFinish) {
+                allFinish = false;
+                break;
+            }
+        }
+        if (allFinish) {
+            Log.d("gdq", "全部结束");
+            //删除从数据库
+            threadDAO.delete(fileInfo.url);// 发送广播知道UI下载任务结束
+            Intent intent = new Intent(DownloadService.ACTION_FINISH);
+            intent.putExtra("fileInfo", fileInfo);
+            context.sendBroadcast(intent);
+        }
     }
 
     public void download() {
@@ -53,17 +75,20 @@ public class DownloadTask extends Thread {
                 if (i == threadCount - 1)
                     threadInfo.end = fileInfo.length;
                 list.add(threadInfo);
+                threadDAO.insert(threadInfo);
             }
         }
         for (ThreadInfo info : list) {
             DownloadThread downloadThread = new DownloadThread(info);
-            downloadThread.start();
+//            downloadThread.start();
+            DownloadTask.sExecutorService.execute(downloadThread);
             downloadThreadList.add(downloadThread);
         }
     }
 
     private class DownloadThread extends Thread {
         private ThreadInfo threadInfo;
+        private boolean isFinish = false;
 
         public DownloadThread(ThreadInfo threadInfo) {
             this.threadInfo = threadInfo;
@@ -76,8 +101,7 @@ public class DownloadTask extends Thread {
             InputStream inputStream = null;
             RandomAccessFile randomAccessFile = null;
             //想数据库插入县城信息
-            if (!threadDAO.isExists(threadInfo.url, threadInfo.id))
-                threadDAO.insert(threadInfo);
+
             try {
                 httpURLConnection = (HttpURLConnection) new URL(threadInfo.url).openConnection();
                 httpURLConnection.setConnectTimeout(5000);
@@ -91,7 +115,9 @@ public class DownloadTask extends Thread {
                 randomAccessFile = new RandomAccessFile(file, "rwd");
                 randomAccessFile.seek(threadInfo.finished);
                 //开始下载
+                //累加整个进度
                 mFinished += threadInfo.finished;
+
                 long time = System.currentTimeMillis();
                 Log.d("gdq", "" + httpURLConnection.getResponseCode());
                 if (httpURLConnection.getResponseCode() == HttpStatus.SC_OK || httpURLConnection.getResponseCode() == HttpStatus.SC_PARTIAL_CONTENT) {
@@ -104,28 +130,39 @@ public class DownloadTask extends Thread {
                         //写入文件
                         randomAccessFile.write(bytes, 0, len);
                         mFinished += len;
+                        //累加每个县城进度
+                        threadInfo.finished = threadInfo.finished + len;
                         Log.d("hkh", "" + mFinished);
-//                        if (System.currentTimeMillis() - time > 5000) {
-//                            time = System.currentTimeMillis();
-                        //更新界面进度
-//                        LengthEvent lengthEvent = new LengthEvent();
-//                        lengthEvent.len = mFinished * 100 / fileInfo.length;
-//                        EventBus.getDefault().post(lengthEvent);
-//                        }
+                        if (System.currentTimeMillis() - time > 1000) {
+                            time = System.currentTimeMillis();
+                            //更新界面进度mei
+                            //LengthEvent lengthEvent = new LengthEvent();
+                            //lengthEvent.len = mFinished * 100 / fileInfo.length;
+                            //EventBus.getDefault().post(lengthEvent);
+                            Intent intent = new Intent();
+                            intent.setAction(DownloadService.ACTION_UPDATE);
+                            int f = mFinished * 100 / fileInfo.length;
+                            if (f > fileInfo.finished) {
+                                intent.putExtra("finished", f);
+                                intent.putExtra("id", fileInfo.id);
+                                context.sendBroadcast(intent);
+                            }
 
-                        Intent intent = new Intent();
-                        intent.setAction(DownloadService.ACTION_UPDATE);
-                        intent.putExtra("finished", mFinished * 100 / threadInfo.end);
-                        context.sendBroadcast(intent);
+
+                        }
 
                         //暂停，保存进度
                         if (isPause) {
-                            threadDAO.update(threadInfo.url, threadInfo.id, mFinished);
+                            threadDAO.update(threadInfo.url, threadInfo.id, threadInfo.finished);
                             return;
                         }
                     }
-                    threadDAO.delete(threadInfo.url, threadInfo.id);
                 }
+                //执行完成标记
+                isFinish = true;
+
+                //检查是否都完成
+                checkAllThreadFinish();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

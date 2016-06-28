@@ -53,7 +53,7 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
         holder.nameTv.setText("没字段");
         holder.albumPicView.setSupportTimes(item.getAppreciateCount());
         holder.albumPicView.setCollectTimes(item.getCommentCount());
-        holder.father.setOnClickListener(n ew View.OnClickListener() {
+        holder.father.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("gdq","father onClick ");

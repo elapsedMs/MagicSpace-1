@@ -14,9 +14,17 @@ public class DBHelper extends SQLiteOpenHelper {
     private final String CREATE_TABLE = "create table thread_info(_id integer primary key autoincrement,thread_id integer," +
             "url text ,start integer,end integer ,finished integer)";
     private final String DROP_TABLE = "drop table if exists thread_info";
+    private static DBHelper dbHelper;
 
-    public DBHelper(Context context) {
+    private DBHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
+    }
+
+    public static DBHelper getInstance(Context context) {
+        if (dbHelper == null) {
+            dbHelper = new DBHelper(context);
+        }
+        return dbHelper;
     }
 
     @Override

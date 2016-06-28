@@ -10,7 +10,7 @@ import storm.magicspace.download.ThreadInfo;
 public interface ThreadDAO {
     public void insert(ThreadInfo threadInfo);
 
-    public void delete(String url, int id);
+    public void delete(String url);
 
     public void update(String url, int id,int finished);
 
