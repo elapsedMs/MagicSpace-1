@@ -34,20 +34,10 @@ public class HttpUtils {
         if (paramObject != null) postBody = JsonProvider.toJson(paramObject);
         String result = httpRequest(localHostUrl + path, postBody, requestType);
 
-//        public int status;          //状态码， 0 成功，其他为失败
-//        public String status_msg;   //状态码的表述信息
-//        public String version;      //当前返回结果的cms版本
-//        public int channel;         //当前返回结果的cms渠道
-//        public long date;           //服务器返回结果时的时间戳
-//        public String language;     //当前返回结果的语言
-//        public int data_type;       //0为横版，1为竖版
-//        public String action;
-//        public T data;              //消息体
-
         tClass = tClass == null ? (Class<T>) Object.class : tClass;
         return JsonProvider.toObject(result, tClass);
     }
-//    {"status":false,"msg":"\u53c2\u6570\u4e3a\u7a7a"}
+
     private static String httpRequest(String url, String postBody, RequestTypes requestType) throws Exception {
         HttpClient client = buildClient();
         HttpMethodBase method = BuildMethodBase(url, postBody, requestType);

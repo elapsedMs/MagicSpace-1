@@ -1,5 +1,7 @@
 package storm.magicspace.http;
 
+import com.google.gson.reflect.TypeToken;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -11,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import storm.commonlib.common.util.BaseUtil;
+import storm.commonlib.common.util.JsonUtil;
+import storm.magicspace.http.reponse.LoginResponse;
 
 import static storm.commonlib.common.http.HttpConstants.ACCOUNT_HOST_URL;
 
@@ -19,12 +23,12 @@ import static storm.commonlib.common.http.HttpConstants.ACCOUNT_HOST_URL;
  */
 public class AccountHttpManager {
 
-    public static String doLogin(String name, String password) {
+    public static LoginResponse doLogin(String name, String password) {
         //debug.info("UGCServer getMJUserInfo is start......");
         String result = "";
         String url = ACCOUNT_HOST_URL + "apilogin";
         Map<String, Object> params = new HashMap<>();
-        String open_verify = BaseUtil.MD5(name + "&" + password + URLConstant.MJ_KEY + URLConstant.MJ_USER_CENTER_KEY);
+        String open_verify = BaseUtil.MD5(name + "&" + password + URLConstant.MJ_USER_CENTER_KEY + URLConstant.MJ_USER_CENTER_KEY);
         CustomJSONObject obj = null;
         try {
             obj = new CustomJSONObject();
@@ -49,11 +53,10 @@ public class AccountHttpManager {
             result = doObjectPost(url, params);
         } catch (Exception ignored) {
         }
-        return result;
+        return JsonUtil.convertJsonToObject(result, TypeToken.get(LoginResponse.class));
     }
 
     public static String doObjectPost(String urlString, Map<String, Object> nameValuePairs) throws Exception {
-        String result;
         URL url = new URL(urlString);
         URLConnection connection = url.openConnection();
         connection.setDoOutput(true);
@@ -81,7 +84,8 @@ public class AccountHttpManager {
             buffer.write(buff, 0, len);
         }
         in.close();
-        return new String(buffer.toByteArray());
+        String result = new String(buffer.toByteArray());
+        return result;
     }
 
 }
