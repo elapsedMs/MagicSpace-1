@@ -47,7 +47,7 @@ public class HttpUtils {
         tClass = tClass == null ? (Class<T>) Object.class : tClass;
         return JsonProvider.toObject(result, tClass);
     }
-
+//    {"status":false,"msg":"\u53c2\u6570\u4e3a\u7a7a"}
     private static String httpRequest(String url, String postBody, RequestTypes requestType) throws Exception {
         HttpClient client = buildClient();
         HttpMethodBase method = BuildMethodBase(url, postBody, requestType);

@@ -1,12 +1,16 @@
 package storm.magicspace.activity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
+import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.magicspace.R;
+import storm.magicspace.http.AccountHttpManager;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
 
@@ -62,6 +66,19 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void doLogin(String name, String password) {
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                return AccountHttpManager.doLogin("18601324008", "52001120a");
+            }
+        }.execute();
+    }
 
+    private class LoginTask extends BaseASyncTask {
+        @Override
+        public BaseResponse doRequest(Object param) {
+//            return AccountHttpManager.doLogin("18601324008", "52001120a");
+            return null;
+        }
     }
 }
