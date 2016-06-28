@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,7 +41,6 @@ public class CacheingActivity extends BaseActivity {
     private CacheingRvAdapter adapter;
     private boolean a;
     private int position;
-    FileInfo fileInfo;
 
     public CacheingActivity() {
         super(R.layout.activity_cacheing);
@@ -69,20 +69,20 @@ public class CacheingActivity extends BaseActivity {
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
         initRecyclerView(layoutManager);
 
-        fileInfo = (FileInfo) getIntent().getSerializableExtra("file_info");
-        if (fileInfo != null) {
-            fileInfoList.add(fileInfo);
-            adapter.notifyDataSetChanged();
-        }
+
         // 注册广播接收器
         IntentFilter filter = new IntentFilter();
         filter.addAction(DownloadService.ACTION_UPDATE);
+        filter.addAction(DownloadService.ACTION_FINISH);
         registerReceiver(mReceiver, filter);
 
 
     }
 
     private void initRecyclerView(LinearLayoutManager layoutManager) {
+        for (int i = 0; i < 5; i++) {
+            fileInfoList.add(new FileInfo(i, "http://www.imooc.com/mobile/imooc.apk", 0, "imooc" + i + ".apk", 0));
+        }
         adapter = new CacheingRvAdapter(fileInfoList, this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -90,19 +90,7 @@ public class CacheingActivity extends BaseActivity {
         adapter.setOnRecyclerClickListener(new CacheingRvAdapter.OnClickListener() {
             @Override
             public void click(int position) {
-                Log.d("gdq", "onClick d= " + a);
-                CacheingActivity.this.position = position;
-                Intent intent = new Intent(CacheingActivity.this, DownloadService.class);
-                if (a) {//暂时
-                    a = false;
-                    intent.setAction(DownloadService.ACTION_STOP);
-                    intent.putExtra("file_info", new FileInfo(0, fileInfo.url, 0, fileInfo.fileName, 0));
-                } else {//开始
-                    a = true;
-                    intent.setAction(DownloadService.ACTION_START);
-                    intent.putExtra("file_info", new FileInfo(0, fileInfo.url, 0, fileInfo.fileName, 0));
-                }
-                startService(intent);
+
             }
 
             @Override
@@ -137,12 +125,16 @@ public class CacheingActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             Log.d("hkh", "onReceive");
             if (DownloadService.ACTION_UPDATE.equals(intent.getAction())) {
+                Log.d("hkh", "onReceive ACTION_UPDATE");
                 int finised = intent.getIntExtra("finished", 0);
-                fileInfoList.get(0).finished = finised;
-                adapter.notifyItemChanged(0);
+                int id = intent.getIntExtra("id", 0);
+                adapter.updateProgress(id, finised);
+            } else if (DownloadService.ACTION_FINISH.equals(intent.getAction())) {
+                Log.d("hkh", "onReceive ACTION_FINISH");
+                FileInfo fileInfo = (FileInfo) intent.getSerializableExtra("fileInfo");
+                adapter.notifyItemMoved(fileInfo.id, fileInfo.id);
+                Toast.makeText(CacheingActivity.this, "下载完成" + fileInfo.fileName, 1).show();
             }
         }
     };
-
-
 }
