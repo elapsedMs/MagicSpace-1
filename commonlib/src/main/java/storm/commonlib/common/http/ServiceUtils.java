@@ -38,29 +38,15 @@ public abstract class ServiceUtils {
      * @return 返回结果
      */
     public static <T extends BaseResponse> T request(RequestTypes requestType, String path, String errorTip, Class<T> tClass, Object... keyValueList) {
-        return request(requestType, path, errorTip, true, tClass, keyValueList);
+        return baseRequest(false, true, requestType, path, errorTip, true, tClass, Arrays.asList(keyValueList));
     }
 
-    /**
-     * 请求远程服务
-     *
-     * @param requestType  请求类型
-     * @param path         访问路径
-     * @param errorTip     错误提示信息
-     * @param checkResult  是否检查错误（默认为true）
-     * @param tClass       返回类的类型
-     * @param keyValueList 参数名及参数值列表
-     * @return 返回结果
-     */
-    public static <T extends BaseResponse> T request(RequestTypes requestType, String path, String errorTip, boolean checkResult, Class<T> tClass, Object... keyValueList) {
-        return request(true, requestType, path, errorTip, checkResult, tClass, keyValueList);
+
+    public static <T extends BaseResponse> T accountRequest(RequestTypes requestType, String path, String errorTip, Class<T> tClass, Object... keyValueList) {
+        return baseRequest(true, true, requestType, path, errorTip, true, tClass, Arrays.asList(keyValueList));
     }
 
-    public static <T extends BaseResponse> T request(boolean isShowMessage, RequestTypes requestType, String path, String errorTip, boolean checkResult, Class<T> tClass, Object... keyValueList) {
-        return request(isShowMessage, requestType, path, errorTip, checkResult, tClass, Arrays.asList(keyValueList));
-    }
-
-    public static <T extends BaseResponse> T request(boolean isShowMessage, RequestTypes requestType, String path, String errorTip, boolean checkResult, Class<T> tClass, java.util.List<Object> keyValueList) {
+    private static <T extends BaseResponse> T baseRequest(boolean isAccountRequest, boolean isShowMessage, RequestTypes requestType, String path, String errorTip, boolean checkResult, Class<T> tClass, java.util.List<Object> keyValueList) {
         // 远程同步
         RemotingSyncProvider.remotingSync(path);
 
@@ -98,7 +84,7 @@ public abstract class ServiceUtils {
 
         T result = null;
         try {
-            result = HttpUtils.request(requestType, path, params, tClass);
+            result = HttpUtils.request(isAccountRequest,requestType, path, params, tClass);
         } catch (Exception e) {
             handleException(errorTip, e, isShowMessage);
         }

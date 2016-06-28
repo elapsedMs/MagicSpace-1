@@ -27,10 +27,12 @@ public class HttpUtils {
     static String hostUri;
     static String token;
 
-    public static <T> T request(RequestTypes requestType, String path, Object paramObject, Class<T> tClass) throws Exception {
+    public static <T> T request(boolean isAccountRequest, RequestTypes requestType, String path, Object paramObject, Class<T> tClass) throws Exception {
         String postBody = null;
+        String localHostUrl = isAccountRequest ? HttpConstants.ACCOUNT_HOST_URL : hostUri;
+
         if (paramObject != null) postBody = JsonProvider.toJson(paramObject);
-        String result = httpRequest(hostUri + path, postBody, requestType);
+        String result = httpRequest(localHostUrl + path, postBody, requestType);
 
 //        public int status;          //状态码， 0 成功，其他为失败
 //        public String status_msg;   //状态码的表述信息

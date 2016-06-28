@@ -49,4 +49,13 @@ public class URLConstant {
 
     //获取彩蛋列表
     public static final String URL_GET_EGG_IMAGE_LIST = "getDefaultObjectList";
+
+    //登录
+    public static final String LOGIN = "apilogin";
+
+    //注册
+    public static final String REGIESTER = "apiregist";
+
+    //获取验证码
+    public static final String GET_VERIFY_CODE = "sendsmscode";
 }

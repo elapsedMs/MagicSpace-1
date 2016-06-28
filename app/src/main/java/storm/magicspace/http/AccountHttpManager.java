@@ -12,12 +12,12 @@ import static storm.commonlib.common.util.StringUtil.EMPTY;
 public class AccountHttpManager {
 
     public static EggImageListResponse doLogin() {
-        return ServiceUtils.request(
-                RequestTypes.GET,
-                "http://sso.mojing.cn/user/api/apilogin",
+        return ServiceUtils.accountRequest(
+                RequestTypes.POST,
+                URLConstant.LOGIN,
                 EMPTY,
-                EggImageListResponse.class
+                EggImageListResponse.class,
+                "contentListType", ""
         );
-
     }
 }
