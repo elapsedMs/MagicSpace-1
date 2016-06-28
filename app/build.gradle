@@ -28,7 +28,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:recyclerview-v7:21.0.0'
     compile 'com.android.support:appcompat-v7:22.2.1'
@@ -39,4 +39,13 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile project(':commonlib')
+    compile files('src/main/libs/MobCommons-2016.0623.1641.jar')
+    compile files('src/main/libs/MobTools-2016.0623.1641.jar')
+    compile files('src/main/libs/ShareSDK-Core-2.7.3.jar')
+    compile files('src/main/libs/ShareSDK-QQ-2.7.3.jar')
+    compile files('src/main/libs/ShareSDK-QZone-2.7.3.jar')
+    compile files('src/main/libs/ShareSDK-SinaWeibo-2.7.3.jar')
+    compile files('src/main/libs/ShareSDK-Wechat-2.7.3.jar')
+    compile files('src/main/libs/ShareSDK-Wechat-Core-2.7.3.jar')
+    compile files('src/main/libs/ShareSDK-Wechat-Moments-2.7.3.jar')
 }

@@ -281,6 +281,11 @@ public class CommonBaseActivity extends FragmentActivity {
             medtreeDialog.dismiss();
     }
 
+    public void setActivityTitleAndTextColor(int color, int textColor) {
+        titleBar.setTitleColor(color);
+        titleBar.setCenterTextColor(textColor);
+    }
+
     public void setTitleBarVisible(int visible) {
         titleBar.setVisibility(visible);
     }

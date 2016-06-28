@@ -10,6 +10,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
@@ -26,6 +28,7 @@ import storm.magicspace.http.reponse.EggHttpResponse;
 public class EggFragment extends BaseFragment {
     private ListView lv_egg;
     private List<EggInfo> egginfoList = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_egg, null);
@@ -50,6 +53,7 @@ public class EggFragment extends BaseFragment {
         super.onLocalItemClicked(parent, view, position, id);
         goToNext(EggGameInfoActivity.class);
     }
+
     private class getEggTask extends BaseASyncTask<Void, EggHttpResponse> {
         @Override
         public EggHttpResponse doRequest(Void param) {
@@ -61,7 +65,7 @@ public class EggFragment extends BaseFragment {
             super.onSuccess(response);
             egginfoList.clear();
             egginfoList.addAll(response.data);
-            EggAdapter adapter = new EggAdapter(getActivity(),egginfoList);
+            EggAdapter adapter = new EggAdapter(getActivity(), egginfoList);
             lv_egg.setAdapter(adapter);
         }
 
@@ -69,5 +73,7 @@ public class EggFragment extends BaseFragment {
         public void onFailed() {
             super.onFailed();
         }
-        }
+    }
+
+
 }

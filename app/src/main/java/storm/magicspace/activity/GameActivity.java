@@ -110,12 +110,17 @@ public class GameActivity extends Activity {
                 mEggsLayout.setAdapter(mEggsAdapter);
                 mEggsAdapter.setOnClickListener(new EggsAdapter.ClickInterface() {
                     @Override
-                    public void onClick(int position, String url, Bitmap bitmap) {
-                        LogUtil.d(TAG, "position = " + position + ", url = " + url);
-                        mFloatView.setImageBitmap(bitmap);
-                        mFloatInfo = null;
-                        mUrl = url;
-                        initFloatView();
+                    public void onClick(final int position, final String url, final Bitmap bitmap) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                LogUtil.d(TAG, "position = " + position + ", url = " + url);
+                                mFloatView.setImageBitmap(bitmap);
+                                mFloatInfo = null;
+                                mUrl = url;
+                                initFloatView();
+                            }
+                        });
                     }
                 });
             } else {
