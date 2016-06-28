@@ -1,7 +1,9 @@
 package storm.magicspace.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import retrofit.http.POST;
 import storm.magicspace.R;
+import storm.magicspace.download.DownloadService;
 import storm.magicspace.download.FileInfo;
 
 /**
@@ -21,6 +25,7 @@ public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.Vi
     private List<FileInfo> list;
     private Context context;
     private OnClickListener onClickListener;
+    private boolean goStart;
 
     public CacheingRvAdapter(List<FileInfo> list, Context context) {
         this.list = list;
@@ -35,11 +40,47 @@ public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         //TODO赛数据
-        FileInfo fileInfo = list.get(position);
+        final FileInfo fileInfo = list.get(position);
+
         holder.progressBar.setProgress(fileInfo.finished);
+
         holder.name.setText(fileInfo.fileName);
+        holder.itemView.setTag( true);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                               @Override
+                                               public void onClick(View v) {
+                                                   Log.d("gdq", "onClick d= " + goStart);
+                                                   boolean goStart = (boolean) holder.itemView.getTag();
+                                                   Intent intent = new Intent(context, DownloadService.class);
+                                                   if (!goStart) {//暂时
+                                                       holder.itemView.setTag(true);
+                                                       intent.setAction(DownloadService.ACTION_STOP);
+                                                       intent.putExtra("file_info", list.get(position));
+                                                   } else {//开始
+                                                       holder.itemView.setTag(false);
+                                                       intent.setAction(DownloadService.ACTION_START);
+                                                       intent.putExtra("file_info", list.get(position));
+                                                   }
+
+                                                   context.startService(intent);
+                                                   holder.itemView.setClickable(false);
+                                               }
+                                           }
+
+        );
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
+
+                                               {
+                                                   @Override
+                                                   public boolean onLongClick(View v) {
+                                                       onClickListener.longClick(position);
+                                                       return false;
+                                                   }
+                                               }
+
+        );
     }
 
     @Override
@@ -56,8 +97,9 @@ public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.Vi
         private TextView total;
         private TextView downloadSpeed;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
+
             image = (ImageView) itemView.findViewById(R.id.image);
             state = (TextView) itemView.findViewById(R.id.state);
             name = (TextView) itemView.findViewById(R.id.name);
@@ -66,19 +108,6 @@ public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.Vi
             total = (TextView) itemView.findViewById(R.id.total);
             downloadSpeed = (TextView) itemView.findViewById(R.id.download_speed);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickListener.click(getPosition());
-                }
-            });
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    onClickListener.longClick(getPosition());
-                    return false;
-                }
-            });
         }
     }
 
@@ -90,5 +119,12 @@ public class CacheingRvAdapter extends RecyclerView.Adapter<CacheingRvAdapter.Vi
         void click(int position);
 
         void longClick(int position);
+
     }
+
+    public synchronized void updateProgress(int id, int finished) {
+        list.get(id).finished = finished;
+        notifyDataSetChanged();
+    }
+
 }

@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import storm.magicspace.base.BaseService;
 import storm.magicspace.event.FileInfoEvent;
@@ -26,9 +28,9 @@ public class DownloadService extends BaseService {
     public static final String ACTION_STOP = "ACTION_STOP";
     public static final String ACTION_UPDATE = "ACTION_UPDATE";
     public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/magic/download/";
+    public static final String ACTION_FINISH = "ACTION_FINISH";
     private FileInfo fileInfo;
-    private DownloadTask downloadTask;
-    private int threadCount = 1;
+    private Map<Integer, DownloadTask> downloadTaskMap = new LinkedHashMap<>();
 
     @Override
     public void onCreate() {
@@ -39,8 +41,9 @@ public class DownloadService extends BaseService {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(FileInfoEvent fileInfoEvent) {
         Log.d("gdq", "接受文件长度");
-        downloadTask = new DownloadTask(this, fileInfoEvent.fileInfo, threadCount);
+        DownloadTask downloadTask = new DownloadTask(this, fileInfoEvent.fileInfo, 3);
         downloadTask.download();
+        downloadTaskMap.put(fileInfo.id, downloadTask);
     }
 
     @Override
@@ -48,16 +51,16 @@ public class DownloadService extends BaseService {
         Log.d("gdq", "onStartCommand");
         String action = intent.getAction();
         fileInfo = (FileInfo) intent.getSerializableExtra("file_info");
-        fileInfo.fileName = "imooc.apk";
-        fileInfo.url = "http://www.imooc.com/mobile/imooc.apk";
+
         if (action.equals(ACTION_START)) {
             Log.d("gdq", "ACTION_START");
-            new LengthThread(fileInfo).start();
+//            new LengthThread(fileInfo).start();
+            DownloadTask.sExecutorService.execute(new LengthThread(fileInfo));
         } else if (action.equals(ACTION_STOP)) {
             Log.d("gdq", "ACTION_STOP");
-            if (downloadTask != null) {
-                Log.d("gdq", "downloadTask.isPause = true");
-                downloadTask.isPause = true;
+            DownloadTask task = downloadTaskMap.get(fileInfo.id);
+            if (task != null) {
+                task.isPause = true;
             }
         }
         return super.onStartCommand(intent, flags, startId);
