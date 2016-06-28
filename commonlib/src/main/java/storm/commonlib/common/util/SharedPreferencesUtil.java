@@ -16,43 +16,43 @@ public class SharedPreferencesUtil {
     public SharedPreferencesUtil() {
     }
 
-    private static Editor getEditor(Context applicationContext, String preferencesName) {
+    public static Editor getEditor(Context applicationContext, String preferencesName) {
         SharedPreferences preferences = applicationContext.getSharedPreferences(preferencesName, MODE_PRIVATE);
         return preferences.edit();
     }
 
-    private static SharedPreferences getPreferences(Context applicationContext, String preferencesName) {
+    public static SharedPreferences getPreferences(Context applicationContext, String preferencesName) {
         return applicationContext.getSharedPreferences(preferencesName, MODE_PRIVATE);
     }
 
-    private static void saveObject(Context context, Object object) {
+    public static void saveObject(Context context, Object object) {
         String json = JsonUtil.convertObjectToJson(object);
         String key = getKeyFromClass(object.getClass());
         saveJsonInSharedPreferences(context, key, json);
     }
 
-    private static void deleteAll() {
+    public static void deleteAll() {
         SharedPreferences preferences = getPreferences(getApplication(), getLoginAccountId().toString());
         preferences.edit().clear().apply();
     }
 
-    private synchronized static <T> T getObject(Context context, Class<T> clazz) {
+    public synchronized static <T> T getObject(Context context, Class<T> clazz) {
         String json = getJsonFromSharedPreferences(context, getKeyFromClass(clazz));
         return JsonUtil.convertJsonToObject(json, TypeToken.get(clazz));
     }
 
-    private static String getJsonFromSharedPreferences(Context context, String key) {
+    public static String getJsonFromSharedPreferences(Context context, String key) {
         SharedPreferences preferences = getPreferences(context, getLoginAccountId());
         return preferences.getString(key, StringUtil.EMPTY);
     }
 
-    private static void saveJsonInSharedPreferences(Context context, String key, String json) {
+    public static void saveJsonInSharedPreferences(Context context, String key, String json) {
         Editor editor = getEditor(context, getLoginAccountId());
         editor.putString(key, json);
         editor.commit();
     }
 
-    private static String getKeyFromClass(Class<?> aClass) {
+    public static String getKeyFromClass(Class<?> aClass) {
         return aClass.getName().toUpperCase();
     }
 

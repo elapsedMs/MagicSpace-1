@@ -10,6 +10,7 @@ import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 import storm.magicspace.http.AccountHttpManager;
 import storm.magicspace.http.reponse.LoginResponse;
+import storm.magicspace.util.LocalSPUtil;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
 
@@ -82,6 +83,8 @@ public class LoginActivity extends BaseActivity {
                 return;
             }
 
+            LocalSPUtil.saveLoginAccountId(loginResponse.getData().getUser_no());
+            LocalSPUtil.saveAccountInfo(loginResponse.getData());
             goToNext(MainActivity.class);
 
         }

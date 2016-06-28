@@ -1,5 +1,6 @@
 package storm.magicspace.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
 import storm.magicspace.activity.mine.MyCollectionActivity;
 import storm.magicspace.activity.mine.MyWorksActivity;
-import storm.magicspace.bean.httpBean.AccountInfoResponse;
+import storm.magicspace.bean.httpBean.UserInfoResponse;
 import storm.magicspace.http.HTTPManager;
 
 public class MyFragment extends BaseFragment {
@@ -26,7 +27,7 @@ public class MyFragment extends BaseFragment {
     public void initData() {
         super.initData();
 
-        GetAccountInfoTask task = new GetAccountInfoTask();
+        GetAccountInfoTask task = new GetAccountInfoTask(getActivity());
         task.execute();
     }
 
@@ -55,15 +56,20 @@ public class MyFragment extends BaseFragment {
         }
     }
 
-    private class GetAccountInfoTask extends BaseASyncTask<Void, AccountInfoResponse> {
+    private class GetAccountInfoTask extends BaseASyncTask<Void, UserInfoResponse> {
+
+        public GetAccountInfoTask(Context context) {
+            super(context, true);
+        }
+
         @Override
-        public AccountInfoResponse doRequest(Void param) {
+        public UserInfoResponse doRequest(Void param) {
             return HTTPManager.getAccountInfo();
         }
 
         @Override
-        protected void onPostExecute(AccountInfoResponse accountInfoResponse) {
-            super.onPostExecute(accountInfoResponse);
+        protected void onPostExecute(UserInfoResponse userInfoResponse) {
+            super.onPostExecute(userInfoResponse);
         }
     }
 }

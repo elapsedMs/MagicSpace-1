@@ -2,15 +2,16 @@ package storm.magicspace.http;
 
 import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
-import storm.magicspace.bean.httpBean.AccountInfoResponse;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
+import storm.magicspace.bean.httpBean.UserInfoResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.http.reponse.EggHttpResponse;
+import storm.magicspace.util.LocalSPUtil;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
 
@@ -31,14 +32,14 @@ public class HTTPManager {
      *
      * @return AccountInfoResponse
      */
-    public static AccountInfoResponse getAccountInfo() {
+    public static UserInfoResponse getAccountInfo() {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_ACCOUNT_INFO,
                 EMPTY,
-                AccountInfoResponse.class,
-                "userId", "3970430042189702",
-                "userInfoId", "3945313002126939"
+                UserInfoResponse.class,
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
+                "userInfoId", LocalSPUtil.getAccountInfo().getUser_no()
         );
     }
 
