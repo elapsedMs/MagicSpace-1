@@ -3,27 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_game_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
 
     <Button
         android:id="@+id/sure"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Sure"
-        android:visibility="gone" />
+        android:layout_margin="@dimen/px_40"
+        android:text="@string/submit"
+        android:visibility="visible" />
 
     <WebView
         android:id="@+id/webview_game"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/sure" />
+        android:layout_height="match_parent" />
 
     <storm.magicspace.view.FloatView
         android:id="@+id/floatview_game"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/sure" />
+        android:layout_height="match_parent" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -73,12 +74,12 @@
         android:textSize="@dimen/text_size_40_px" />
 
     <ImageView
-        android:visibility="visible"
         android:id="@+id/iv_game_guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@mipmap/game_egg_guide" />
+        android:src="@mipmap/game_egg_guide"
+        android:visibility="visible" />
 
     <RelativeLayout
         android:id="@+id/rl_game_eggs_container"
@@ -114,5 +115,4 @@
         android:layout_alignParentStart="true"
         android:layout_margin="@dimen/px_20"
         android:visibility="gone" />
-
 </RelativeLayout>

@@ -60,6 +60,7 @@ public class FloatView extends ImageView {
     private float mLastX;
     private float mLastY;
     private float mDensity;
+    private Matrix tMatrix = new Matrix();
 
     public FloatView(Context context) {
         super(context);
@@ -127,6 +128,7 @@ public class FloatView extends ImageView {
             mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
             matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
             matrix.postScale(mDensity, mDensity, mWidth/2, mHeight/2);
+            tMatrix.set(matrix);
         }
     }
 
@@ -272,9 +274,12 @@ public class FloatView extends ImageView {
 
     private void executeRotate(MotionEvent event) {
         // rotate
-        matrix.postRotate((rotationToStartPoint(event) - mRotateDegree) * 2, mMiddlePoint.x,
-                mMiddlePoint.y);
+        PointF pointF = new PointF();
+        getMidPoint(pointF, tMatrix);
+        matrix.postRotate((rotationToStartPoint(event) - mRotateDegree) * 2, pointF.x, pointF.y);
         mRotateDegree = rotationToStartPoint(event);
+        //getDiagonalLen(event);
+        //matrix.postScale(1, 1, mMiddlePoint.x, mMiddlePoint.y);
         invalidate();
     }
 
@@ -297,6 +302,8 @@ public class FloatView extends ImageView {
     private void doRotate(MotionEvent event) {
         mTriggerRotateAction = true;
         mRotateDegree = rotationToStartPoint(event);
+//        midPointToStartPoint(event);
+//        mToCenterDistance = getDiagonalLen(event);
 //        PointF localPointF = new PointF();
 //        getMidPoint(localPointF, matrix);
 //        matrix.preRotate(-90, localPointF.x, localPointF.y);
@@ -321,7 +328,7 @@ public class FloatView extends ImageView {
         float val2 = values[5];
         float val7 = values[0] * width + values[1] * height + values[2];
         float val8 = values[3] * width + values[4] * height + values[5];
-        pointF.set(Math.abs(val1 - val7) / 2, Math.abs(val2 - val8) / 2);
+        pointF.set(Math.abs(val1 - val7) / 2 + val1, Math.abs(val2 - val8) / 2 + val2);
     }
 
     private float getDiagonalLen(MotionEvent event) {
@@ -333,7 +340,9 @@ public class FloatView extends ImageView {
         matrix.getValues(values);
         float f1 = values[2];
         float f2 = values[5];
-        mMiddlePoint.set((f1 + event.getX(0)) / 2, (f2 + event.getY(0)) / 2);
+        float eventX = event.getX(0);
+        float eventY = event.getY(0);
+        mMiddlePoint.set((f1 + eventX) / 2, (f2 + eventY) / 2);
     }
 
     private float rotationToStartPoint(MotionEvent event) {
