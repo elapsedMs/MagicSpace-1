@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,6 +31,7 @@ import storm.magicspace.activity.album.WebActivity;
 import storm.magicspace.adapter.OnlineRVAdapter;
 import storm.magicspace.adapter.ViewPagerAdatper;
 import storm.magicspace.bean.Album;
+import storm.magicspace.bean.CirclePic;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.download.DownloadService;
 import storm.magicspace.download.FileInfo;
@@ -42,7 +46,7 @@ import static storm.magicspace.R.*;
 /**
  * Created by gdq on 16/6/16.
  */
-public class OnlineFragment extends BaseFragment {
+public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
     private LinearLayout noNetWorkLl;
     private LinearLayout contentLl;
@@ -51,6 +55,10 @@ public class OnlineFragment extends BaseFragment {
     private AlbumTitleView guessULikeATV;
     private List<Album> albumList = new ArrayList<>();
     private OnlineRVAdapter adapter;
+    private TextView title;
+    private TextView desc;
+    private List<CirclePic> circlePicList = new ArrayList<>();
+    private List<ImageView> imageViews = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,11 +73,13 @@ public class OnlineFragment extends BaseFragment {
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
         contentLl = (LinearLayout) view.findViewById(id.ll_content);
         viewPager = (ViewPager) view.findViewById(id.viewpager);
+        viewPager.setOnPageChangeListener(this);
         recyclerView = (RecyclerView) view.findViewById(id.recycler_view);
+        title = (TextView) view.findViewById(id.title);
+        desc = (TextView) view.findViewById(id.desc);
         guessULikeATV = (AlbumTitleView) view.findViewById(id.you_like);
         guessULikeATV.setCount("更多");
         guessULikeATV.setOnClickListener(this);
-        initViewPager();
         initRecyclerView();
         showContent();
     }
@@ -97,26 +107,6 @@ public class OnlineFragment extends BaseFragment {
         });
     }
 
-    private void initViewPager() {
-        List<ImageView> imageViews = new ArrayList<>();
-        ImageView imageView = new ImageView(getActivity());
-        ImageView imageView2 = new ImageView(getActivity());
-        ImageView imageView3 = new ImageView(getActivity());
-        ImageView imageView4 = new ImageView(getActivity());
-        ImageView imageView5 = new ImageView(getActivity());
-        imageView.setImageResource(R.mipmap.arrow_left);
-        imageView2.setImageResource(R.mipmap.arrow_left);
-        imageView3.setImageResource(R.mipmap.arrow_left);
-        imageView4.setImageResource(R.mipmap.arrow_left);
-        imageView5.setImageResource(R.mipmap.arrow_left);
-        imageViews.add(imageView);
-        imageViews.add(imageView2);
-        imageViews.add(imageView3);
-        imageViews.add(imageView4);
-        imageViews.add(imageView5);
-        viewPager.setAdapter(new ViewPagerAdatper(imageViews));
-    }
-
     @Override
     public void onLocalClicked(int resId) {
         super.onLocalClicked(resId);
@@ -140,6 +130,20 @@ public class OnlineFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        title.setText(circlePicList.get(position).getTitle());
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
     private class TestTask extends BaseASyncTask<Void, AlbumResponse> {
@@ -167,6 +171,17 @@ public class OnlineFragment extends BaseFragment {
         @Override
         public void onSuccess(CirclePicResponse albumResponse) {
             super.onSuccess(albumResponse);
+            circlePicList = albumResponse.data;
+            imageViews.clear();
+            title.setText(circlePicList.get(0).getTitle());
+            desc.setText("没字段");
+            for (int i = 0; i < circlePicList.size(); i++) {
+                ImageView imageView = new ImageView(getActivity());
+                Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
+                imageViews.add(imageView);
+            }
+            viewPager.setAdapter(new ViewPagerAdatper(imageViews));
+
         }
     }
 
