@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -56,6 +58,7 @@ public class GameActivity extends Activity {
     private EggsAdapter mEggsAdapter;
     private ImageView mCreateEggBtn;
     private String mUrl;
+    private Button sureBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +80,6 @@ public class GameActivity extends Activity {
         mEggsLayout = (RecyclerView) findViewById(R.id.rv_game_eggs);
         mEggsLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
         mCreateEggBtn = (ImageView) findViewById(R.id.iv_game_confirm);
-
         initFloatView();
         initWebView();
         initAlphaController();
@@ -181,6 +183,24 @@ public class GameActivity extends Activity {
 
             }
         });
+
+        mConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(mUrl)) {
+                    Toast.makeText(GameActivity.this, R.string.add_egg_hint, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (mEggsCount > EGG_INIT_COUNT) {
+                    Toast.makeText(GameActivity.this, R.string.add_egg_over_hint, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                updateEggsCountHint(EGG_INIT_COUNT - mEggsCount);
+                createEgg();
+
+            }
+        });
+
         mShowEggBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
