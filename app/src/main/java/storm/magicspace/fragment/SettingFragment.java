@@ -11,9 +11,11 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import storm.commonlib.common.base.BaseFragment;
+import storm.commonlib.common.util.ActivityCollector;
 import storm.magicspace.R;
 import storm.magicspace.activity.AboutUsActivity;
 import storm.magicspace.activity.FeedBackActivity;
+import storm.magicspace.activity.LoginActivity;
 
 /**
  * Created by gdq on 16/6/15.
@@ -61,6 +63,8 @@ public class SettingFragment extends BaseFragment {
                 break;
 
             case R.id.bt_loginout:
+                ActivityCollector.getInstance().exit();
+                goToNext(LoginActivity.class);
                 break;
 
             default:
