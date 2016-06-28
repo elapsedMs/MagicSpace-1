@@ -31,6 +31,8 @@ import storm.magicspace.R;
 import storm.magicspace.adapter.EggsAdapter;
 import storm.magicspace.bean.httpBean.EggImage;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
+import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
+import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
@@ -92,7 +94,44 @@ public class GameActivity extends Activity {
         updateEggsCountHint(EGG_INIT_COUNT);
         mEggsLayout.setLayoutManager(new GridLayoutManager(this, 1, OrientationHelper.HORIZONTAL, false));
         new GetEggImageListTask().execute();
+        new IssueUGCContentTask().execute();
+        new UpdateUGCContentTask().execute();
+    }
 
+    private class IssueUGCContentTask extends BaseASyncTask<Void, IssueUCGContentResponse> {
+
+        @Override
+        public IssueUCGContentResponse doRequest(Void param) {
+            return HTTPManager.issueUCCContent("", "", "");
+        }
+
+        @Override
+        public void onSuccess(IssueUCGContentResponse issueUCGContentResponse) {
+            super.onSuccess(issueUCGContentResponse);
+        }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+        }
+    }
+
+    private class UpdateUGCContentTask extends BaseASyncTask<Void, UpdateUGCContentScenesResponse> {
+
+        @Override
+        public UpdateUGCContentScenesResponse doRequest(Void param) {
+            return HTTPManager.updateUGCContentScenes("", "", "");
+        }
+
+        @Override
+        public void onSuccess(UpdateUGCContentScenesResponse updateUGCContentScenesResponse) {
+            super.onSuccess(updateUGCContentScenesResponse);
+        }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+        }
     }
 
     private class GetEggImageListTask extends BaseASyncTask<Void, EggImageListResponse> {

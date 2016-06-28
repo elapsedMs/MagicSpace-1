@@ -5,8 +5,10 @@ import storm.commonlib.common.http.ServiceUtils;
 import storm.magicspace.bean.httpBean.AccountInfoResponse;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
+import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
+import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.http.reponse.EggHttpResponse;
 
@@ -85,6 +87,40 @@ public class HTTPManager {
                 EggImageListResponse.class
         );
 
+    }
+
+    /**
+     * 发表UGC主题
+     */
+    public static IssueUCGContentResponse issueUCCContent(String userId,
+                                                          String description,
+                                                          String url) {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_ISSUE_UGC_CONTENT,
+                EMPTY,
+                IssueUCGContentResponse.class,
+                "userId", "3970430042189702",
+                "description", description,
+                "url", url
+        );
+    }
+
+    /**
+     * 更新UGC主题
+     */
+    public static UpdateUGCContentScenesResponse updateUGCContentScenes(String userId,
+                                                                        String contendId,
+                                                                        String data) {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_UPDATE_UGC_CONTENT_SCENES,
+                EMPTY,
+                UpdateUGCContentScenesResponse.class,
+                "userId", "3970430042189702",
+                "contendId", contendId,
+                "data", data
+        );
     }
 
     public static CirclePicResponse getAlbumCirclePic() {

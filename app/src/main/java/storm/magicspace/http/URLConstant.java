@@ -50,6 +50,12 @@ public class URLConstant {
     //获取彩蛋列表
     public static final String URL_GET_EGG_IMAGE_LIST = "getDefaultObjectList";
 
+    //发表UGC主题
+    public static final String URL_ISSUE_UGC_CONTENT = "issueUGCContent";
+
+    //更新UGC主题
+    public static final String URL_UPDATE_UGC_CONTENT_SCENES = "updateUGCContentScenes";
+
     //登录
     public static final String LOGIN = "apilogin";
 
