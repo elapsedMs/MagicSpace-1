@@ -13,7 +13,6 @@ public class AccountHttpManager {
 
     public static EggImageListResponse doLogin() {
         return ServiceUtils.request(
-                1,
                 RequestTypes.GET,
                 "http://sso.mojing.cn/user/api/apilogin",
                 EMPTY,
