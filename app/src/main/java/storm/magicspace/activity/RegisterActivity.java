@@ -1,6 +1,7 @@
 package storm.magicspace.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
@@ -17,5 +18,9 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setActivityTitle("注册");
+        setActivityTitleAndTextColor(R.color.title_color_gray, R.color.title_color);
+        setTitleLeftBtVisibility(View.VISIBLE);
     }
 }
