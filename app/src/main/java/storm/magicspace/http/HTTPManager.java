@@ -37,8 +37,7 @@ public class HTTPManager {
                 URLConstant.URL_GET_ACCOUNT_INFO,
                 EMPTY,
                 UserInfoResponse.class,
-                "userId", "3970430042189702",
-                "userInfoId", "3945313002126939"
+                "userId", "1"
         );
     }
 
@@ -51,7 +50,7 @@ public class HTTPManager {
      */
     public static MyWorksResponse getMyWorks(String userId, String authorId) {
         return ServiceUtils.request(
-                RequestTypes.POST,
+                RequestTypes.GET,
                 URLConstant.URL_GET_MY_WORKS,
                 EMPTY,
                 MyWorksResponse.class,
@@ -68,7 +67,7 @@ public class HTTPManager {
      */
     public static MyCollectionResponse getMyCollection(String userId) {
         return ServiceUtils.request(
-                RequestTypes.POST,
+                RequestTypes.GET,
                 URLConstant.URL_GET_MY_WORKS,
                 EMPTY,
                 MyCollectionResponse.class,
@@ -137,7 +136,10 @@ public class HTTPManager {
                 RequestTypes.POST,
                 URLConstant.URL_GET_EGG_LIST,
                 EMPTY,
-                EggHttpResponse.class
+                EggHttpResponse.class,
+                "userId", "0",
+                "page", "1",
+                "pageSize", "2"
         );
     }
 }

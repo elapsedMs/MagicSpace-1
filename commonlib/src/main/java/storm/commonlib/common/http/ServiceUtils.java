@@ -9,7 +9,6 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import storm.commonlib.R;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
@@ -38,23 +37,23 @@ public abstract class ServiceUtils {
      * @return 返回结果
      */
     public static <T extends BaseResponse> T request(RequestTypes requestType, String path, String errorTip, Class<T> tClass, Object... keyValueList) {
-        return baseRequest(false, true, requestType, path, errorTip, true, tClass, Arrays.asList(keyValueList));
+        return baseRequest(true, requestType, path, errorTip, true, tClass, Arrays.asList(keyValueList));
     }
 
 
     public static <T extends BaseResponse> T accountRequest(RequestTypes requestType, String path, String errorTip, Class<T> tClass, Object... keyValueList) {
-        return baseRequest(true, true, requestType, path, errorTip, true, tClass, Arrays.asList(keyValueList));
+        return baseRequest(true, requestType, path, errorTip, true, tClass, Arrays.asList(keyValueList));
     }
 
-    private static <T extends BaseResponse> T baseRequest(boolean isAccountRequest, boolean isShowMessage, RequestTypes requestType, String path, String errorTip, boolean checkResult, Class<T> tClass, java.util.List<Object> keyValueList) {
+    private static <T extends BaseResponse> T baseRequest(boolean isShowMessage, RequestTypes requestType, String path, String errorTip, boolean checkResult, Class<T> tClass, java.util.List<Object> keyValueList) {
         // 远程同步
         RemotingSyncProvider.remotingSync(path);
 
         Object params;
         // 处理参数
-        Map<String, Object> paramsMap = null;
+        HashMap<String, Object> paramsMap = null;
         if (keyValueList != null && keyValueList.size() >= 2) {
-            paramsMap = new HashMap<String, Object>();
+            paramsMap = new HashMap<>();
             int count = keyValueList.size() / 2;
             for (int i = 0; i < count; i++) {
                 paramsMap.put(keyValueList.get(i * 2).toString(), keyValueList.get(i * 2 + 1));
@@ -82,9 +81,17 @@ public abstract class ServiceUtils {
             params = null;
         }
 
+//        if (requestType == RequestTypes.POST && paramsMap != null) {
+//            for (String key : paramsMap.keySet()) {
+//
+//            }
+//        }
+
         T result = null;
         try {
-            result = HttpUtils.request(isAccountRequest,requestType, path, params, tClass);
+            if (requestType == RequestTypes.POST)
+                result = HttpUtils.request(requestType, path, paramsMap, tClass);
+            result = HttpUtils.request(requestType, path, paramsMap, tClass);
         } catch (Exception e) {
             handleException(errorTip, e, isShowMessage);
         }

@@ -86,7 +86,6 @@ public class LoginActivity extends BaseActivity {
             LocalSPUtil.saveLoginAccountId(loginResponse.getData().getUser_no());
             LocalSPUtil.saveAccountInfo(loginResponse.getData());
             goToNext(MainActivity.class);
-
         }
 
     }

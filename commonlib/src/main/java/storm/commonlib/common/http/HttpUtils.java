@@ -11,7 +11,11 @@ import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
+import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.LogUtil;
 
 import static org.apache.commons.httpclient.HttpStatus.SC_INTERNAL_SERVER_ERROR;
@@ -27,20 +31,20 @@ public class HttpUtils {
     static String hostUri;
     static String token;
 
-    public static <T> T request(boolean isAccountRequest, RequestTypes requestType, String path, Object paramObject, Class<T> tClass) throws Exception {
+    public static <T> T request(RequestTypes requestType, String path, HashMap paramObject, Class<T> tClass) throws Exception {
         String postBody = null;
-        String localHostUrl = isAccountRequest ? HttpConstants.ACCOUNT_HOST_URL : hostUri;
+        String localHostUrl = hostUri;
 
         if (paramObject != null) postBody = JsonProvider.toJson(paramObject);
-        String result = httpRequest(localHostUrl + path, postBody, requestType);
+        String result = httpRequest(localHostUrl + path, paramObject, requestType);
 
         tClass = tClass == null ? (Class<T>) Object.class : tClass;
         return JsonProvider.toObject(result, tClass);
     }
 
-    private static String httpRequest(String url, String postBody, RequestTypes requestType) throws Exception {
+    private static String httpRequest(String url, HashMap paramObject, RequestTypes requestType) throws Exception {
         HttpClient client = buildClient();
-        HttpMethodBase method = BuildMethodBase(url, postBody, requestType);
+        HttpMethodBase method = BuildMethodBase(url, paramObject, requestType);
         setHeader(requestType, method);
 
         int statusCode = client.executeMethod(method);//状态，一般200为OK状态，其他情况会抛出如404,500,403等错误
@@ -50,12 +54,14 @@ public class HttpUtils {
         }
         String result = method.getResponseBodyAsString();
         client.getHttpConnectionManager().closeIdleConnections(1);
-        LogUtil.i("HttpUtils", "requestType: " + requestType + "         path: " + url + "\n postBody : " + postBody + "\n" + result);
+        LogUtil.i("HttpUtils", "\n Result :" + result);
         return result;
     }
 
-    private static HttpMethodBase BuildMethodBase(String url, String postBody, RequestTypes requestType) {
+    private static HttpMethodBase BuildMethodBase(String url, HashMap params, RequestTypes requestType) {
         HttpMethodBase method = null;
+        String postBody = EMPTY;
+        if (params != null) postBody = JsonUtil.convertObjectToJson(params);
         switch (requestType) {
             case GET:
                 method = new GetMethod(url);
@@ -63,8 +69,31 @@ public class HttpUtils {
 
             case POST:
                 PostMethod m = new PostMethod(url);
-                m.setRequestBody(postBody);
+//                m.setRequestBody(postBody);
+                Iterator iter = params.entrySet().iterator();
+                String currentBody = EMPTY;
+                while (iter.hasNext()) {
+                    HashMap.Entry entry = (Map.Entry) iter.next();
+                    String key = entry.getKey().toString();
+                    String val = entry.getValue().toString();
+                    currentBody = currentBody + "" + key + "=" + val + ";";
+                }
+                m.setRequestBody(currentBody);
+                LogUtil.i("HttpUtils", "requestType: " + requestType + "         path: " + url + "\n currentBody : " + currentBody + "\n");
+
                 method = m;
+//                PostMethod m = new PostMethod(url);
+//                assert params != null;
+//                Set keys = params.keySet();
+//                Iterator<String> iterator = keys.iterator();
+//                List<NameValuePair> pairList = new ArrayList<>();
+//                while (iterator.hasNext()) {
+//                    String k = iterator.next();
+//                    pairList.add(new NameValuePair(k, params.get(k).toString()));
+//                }
+//                m.setRequestBody((NameValuePair[]) pairList.toArray());
+//                method = m;
+
                 break;
 
             case PUT:
