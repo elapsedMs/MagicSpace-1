@@ -32,10 +32,8 @@ public class HttpUtils {
     static String token;
 
     public static <T> T request(RequestTypes requestType, String path, HashMap paramObject, Class<T> tClass) throws Exception {
-        String postBody = null;
         String localHostUrl = hostUri;
 
-        if (paramObject != null) postBody = JsonProvider.toJson(paramObject);
         String result = httpRequest(localHostUrl + path, paramObject, requestType);
 
         tClass = tClass == null ? (Class<T>) Object.class : tClass;
@@ -69,14 +67,13 @@ public class HttpUtils {
 
             case POST:
                 PostMethod m = new PostMethod(url);
-//                m.setRequestBody(postBody);
                 Iterator iter = params.entrySet().iterator();
                 String currentBody = EMPTY;
                 while (iter.hasNext()) {
                     HashMap.Entry entry = (Map.Entry) iter.next();
                     String key = entry.getKey().toString();
                     String val = entry.getValue().toString();
-                    currentBody = currentBody + "" + key + "=" + val + ";";
+                    currentBody = currentBody + "" + key + "=" + val + (iter.hasNext() ? ";" : "");
                 }
                 m.setRequestBody(currentBody);
                 LogUtil.i("HttpUtils", "requestType: " + requestType + "         path: " + url + "\n currentBody : " + currentBody + "\n");
