@@ -54,7 +54,7 @@ public class HttpUtils {
         }
         String result = method.getResponseBodyAsString();
         client.getHttpConnectionManager().closeIdleConnections(1);
-        LogUtil.i("HttpUtils", "\n Result :" + result);
+        LogUtil.i("HttpUtils", "Result :" + result);
         return result;
     }
 
