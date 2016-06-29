@@ -11,7 +11,6 @@ import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.http.reponse.EggHttpResponse;
-import storm.magicspace.util.LocalSPUtil;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
 
@@ -38,8 +37,8 @@ public class HTTPManager {
                 URLConstant.URL_GET_ACCOUNT_INFO,
                 EMPTY,
                 UserInfoResponse.class,
-                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
-                "userInfoId", LocalSPUtil.getAccountInfo().getUser_no()
+                "userId", "3970430042189702",
+                "userInfoId", "3945313002126939"
         );
     }
 
