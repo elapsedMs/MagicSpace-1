@@ -71,4 +71,6 @@ public class URLConstant {
     //魔镜API的Key
     public static String MJ_KEY = "Bf@)(*$s1&2^3XVF#Mj";
     public static final String MJ_USER_CENTER_KEY = "0p9o8i7u";
+
+    public static final String SHARED_URL = "http://app.stemmind.com/vr/a/player.php?contentId=3403";
 }
