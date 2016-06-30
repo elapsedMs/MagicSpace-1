@@ -30,7 +30,10 @@
             android:id="@+id/cachedLv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff" />
+            android:layout_below="@id/cachedATV"
+            android:background="#ffffff"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
 
         <include
             layout="@layout/album_storage"
@@ -40,13 +43,13 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/no_download_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"

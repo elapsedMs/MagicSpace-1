@@ -47,12 +47,15 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
-        if (threadDAO.getAllFinishFile() != null)
+        if (threadDAO.getAllFinishFile() != null) {
             if (threadDAO.getAllFinishFile().size() > 0) {
                 fileInfoList.clear();
                 fileInfoList.addAll(threadDAO.getAllFinishFile());
-            }
-        adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
+            } else
+                noCached();
+        } else
+            noCached();
     }
 
     @Override
@@ -62,20 +65,18 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
         albumTitleView = (AlbumTitleView) view.findViewById(R.id.cacheingATV);
         albumTitleView.setCount("20");
         albumTitleView.setOnClickListener(this);
-        albumTitleView.showDot();
+//        albumTitleView.showDot();
         cachedListView = (ListView) view.findViewById(R.id.cachedLv);
         adapter = new CachedAdapter(fileInfoList, getActivity());
         cachedListView.setAdapter(adapter);
         noDownloadLl = (LinearLayout) view.findViewById(R.id.no_download_ll);
         contentRl = (RelativeLayout) view.findViewById(R.id.rl_content);
-        if (fileInfoList.size() == 0)
-            noCached();
     }
 
     @Override
     public void initData() {
         super.initData();
-        showRedDot("20");
+//        showRedDot("20");
     }
 
     @Override

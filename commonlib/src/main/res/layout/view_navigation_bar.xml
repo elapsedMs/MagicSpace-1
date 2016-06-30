@@ -151,12 +151,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignRight="@id/select_right"
                     android:layout_alignTop="@id/select_right"
-                    android:layout_marginTop="-3dp"
                     android:layout_marginRight="-20dp"
+                    android:layout_marginTop="-3dp"
                     android:background="@drawable/shape_native_message_red_dot"
                     android:gravity="center"
                     android:textColor="#ffffff"
-                    android:textSize="@dimen/px_14" />
+                    android:textSize="@dimen/px_14"
+                    android:visibility="gone" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
