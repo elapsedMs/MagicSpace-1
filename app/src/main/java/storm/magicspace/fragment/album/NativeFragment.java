@@ -52,10 +52,27 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
                 fileInfoList.clear();
                 fileInfoList.addAll(threadDAO.getAllFinishFile());
                 adapter.notifyDataSetChanged();
-            } else
-                noCached();
-        } else
-            noCached();
+            } else {
+                haveNotAnyContent();
+            }
+        } else {
+            haveNotAnyContent();
+        }
+
+        if (threadDAO.getAllUnFinishFile() != null) {
+            if (threadDAO.getAllUnFinishFile().size() > 0) {
+                cachedATV.setCount(threadDAO.getAllUnFinishFile().size() + "");
+            }
+        }
+    }
+
+    private void haveNotAnyContent() {
+        noCached();
+        if (threadDAO.getAllUnFinishFile() != null) {
+            if (threadDAO.getAllUnFinishFile().size() > 0) {
+                showNoDownload();
+            }
+        }
     }
 
     @Override

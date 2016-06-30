@@ -38,6 +38,7 @@ import storm.magicspace.download.FileInfo;
 import storm.magicspace.event.UrlEvent;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AlbumResponse;
+import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumTitleView;
 import storm.magicspace.view.GridItemDecoration;
 
@@ -156,6 +157,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         @Override
         public void onSuccess(AlbumResponse albumResponse) {
             super.onSuccess(albumResponse);
+            LocalSPUtil.saveAlbum(albumResponse.data);
             albumList.clear();
             albumList.addAll(albumResponse.data);
             adapter.notifyDataSetChanged();

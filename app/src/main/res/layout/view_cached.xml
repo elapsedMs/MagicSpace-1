@@ -11,7 +11,7 @@
     <storm.magicspace.view.AlbumPicView
         android:id="@+id/left"
         android:layout_width="@dimen/px_262"
-        android:layout_height="@dimen/px_148"
+        android:layout_height="@dimen/px_154"
         android:paddingBottom="@dimen/px_16"
         android:paddingTop="@dimen/px_16" />
 
@@ -52,6 +52,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
