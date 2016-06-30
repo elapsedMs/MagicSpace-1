@@ -142,7 +142,8 @@ public class HTTPManager {
                 RequestTypes.POST,
                 URLConstant.URL_GET_FOCUS_CONTENT_LIST,
                 EMPTY,
-                CirclePicResponse.class
+                CirclePicResponse.class,
+                "", ""
         );
     }
 
