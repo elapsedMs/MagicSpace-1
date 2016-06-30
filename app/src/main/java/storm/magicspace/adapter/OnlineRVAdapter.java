@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import storm.commonlib.common.util.JsonUtil;
+import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.R;
 import storm.magicspace.bean.Album;
 import storm.magicspace.view.AlbumPicView;
@@ -32,6 +35,7 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
         this.list = list;
         this.context = context;
         this.isLimit = isLimit;
+        saveContentIds(list);
     }
 
     @Override
@@ -93,6 +97,30 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
             downloadIv = (ImageView) itemView.findViewById(R.id.iv_down_load);
             father = (LinearLayout) itemView.findViewById(R.id.father);
         }
+    }
+
+    public void update(List<Album> albumList) {
+        list.clear();
+        list.addAll(albumList);
+        saveContentIds(albumList);
+        notifyDataSetChanged();
+    }
+
+    private void saveContentIds(List<Album> albumList) {
+        if (albumList != null && albumList.size() > 0) {
+            ArrayList<String> contentIds = new ArrayList<>();
+            int size = albumList.size();
+            for (int i = 0; i < size; i++) {
+                Album album = albumList.get(i);
+                String contentId = album.getContentId();
+                contentIds.add(contentId);
+            }
+            if (contentIds.size() > 0) {
+                SharedPreferencesUtil.saveJsonInSharedPreferences(context, "contendId",
+                        JsonUtil.toJson(contentIds));
+            }
+        }
+
     }
 
     public void setOnRecyclerViewClickListener(OnRecyclerViewClickListener onRecyclerViewClickListener) {
