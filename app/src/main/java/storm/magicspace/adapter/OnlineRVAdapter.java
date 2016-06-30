@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.R;
@@ -116,8 +117,8 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
                 contentIds.add(contentId);
             }
             if (contentIds.size() > 0) {
-                SharedPreferencesUtil.saveJsonInSharedPreferences(context, "contendId",
-                        JsonUtil.toJson(contentIds));
+                SharedPreferencesUtil.saveJsonInSharedPreferences(context,
+                        CommonConstants.CONTEND_IDS, JsonUtil.toJson(contentIds));
             }
         }
 

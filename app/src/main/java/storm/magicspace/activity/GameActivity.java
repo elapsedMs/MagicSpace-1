@@ -21,12 +21,17 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
+import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.LogUtil;
+import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.R;
 import storm.magicspace.adapter.EggsAdapter;
 import storm.magicspace.bean.httpBean.EggImage;
@@ -103,7 +108,8 @@ public class GameActivity extends Activity {
 
         @Override
         public IssueUCGContentResponse doRequest(Void param) {
-            return HTTPManager.issueUCCContent("", "", "", "");
+            String contentId = getRandomContentId();
+            return HTTPManager.issueUCCContent("", "", "", contentId);
         }
 
         @Override
@@ -115,6 +121,15 @@ public class GameActivity extends Activity {
         public void onFailed() {
             super.onFailed();
         }
+    }
+
+    private String getRandomContentId() {
+        String contentJson = SharedPreferencesUtil.getJsonFromSharedPreferences(this,
+                CommonConstants.CONTEND_IDS);
+        ArrayList contentList = JsonUtil.fromJson(contentJson, ArrayList.class);
+        Random random = new Random();
+        int id = random.nextInt(contentList.size());
+        return (String) contentList.get(id);
     }
 
     private class UpdateUGCContentTask extends BaseASyncTask<Void, UpdateUGCContentScenesResponse> {
