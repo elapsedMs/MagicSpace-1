@@ -9,11 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_above="@+id/bottom"
-            android:id="@+id/recycler_view"
+        <ListView
+            android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom"
+            android:divider="@null"
+            android:dividerHeight="@dimen/px_1" />
 
         <include
             android:id="@+id/bottom"

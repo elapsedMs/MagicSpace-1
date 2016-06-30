@@ -5,14 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -25,9 +24,11 @@ import java.util.List;
 
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
-import storm.magicspace.adapter.CacheingRvAdapter;
+import storm.magicspace.adapter.FileListAdapter;
 import storm.magicspace.download.DownloadService;
 import storm.magicspace.download.FileInfo;
+import storm.magicspace.download.db.ThreadDAO;
+import storm.magicspace.download.db.ThreadDaoImpl;
 import storm.magicspace.event.LengthEvent;
 
 /**
@@ -36,25 +37,25 @@ import storm.magicspace.event.LengthEvent;
 public class CacheingActivity extends BaseActivity {
     private LinearLayout noDownloadLl;
     private RelativeLayout contentRl;
-    private RecyclerView recyclerView;
+    private ListView listView;
     private List<FileInfo> fileInfoList = new ArrayList<>();
-    private CacheingRvAdapter adapter;
-    private boolean a;
-    private int position;
+    private FileListAdapter adapter;
+    private ThreadDAO threadDAO;
 
     public CacheingActivity() {
         super(R.layout.activity_cacheing);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
+        threadDAO = new ThreadDaoImpl(this);
+        super.onCreate(savedInstanceState);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LengthEvent lengthEvent) {
-        Log.d("gdq", "更新UI:" + lengthEvent.len);
+        Log.d("zzz", "更新UI:" + lengthEvent.len);
     }
 
     @Override
@@ -64,38 +65,53 @@ public class CacheingActivity extends BaseActivity {
         setTitleLeftBtVisibility(View.VISIBLE);
         noDownloadLl = (LinearLayout) findViewById(R.id.no_download_ll);
         contentRl = (RelativeLayout) findViewById(R.id.rl_content);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        listView = (ListView) findViewById(R.id.listview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
-        initRecyclerView(layoutManager);
-
-
+        initListView(layoutManager);
+        initMyData();
         // 注册广播接收器
         IntentFilter filter = new IntentFilter();
         filter.addAction(DownloadService.ACTION_UPDATE);
         filter.addAction(DownloadService.ACTION_FINISH);
         registerReceiver(mReceiver, filter);
-
-
     }
 
-    private void initRecyclerView(LinearLayoutManager layoutManager) {
-        for (int i = 0; i < 5; i++) {
-            fileInfoList.add(new FileInfo(i, "http://www.imooc.com/mobile/imooc.apk", 0, "imooc" + i + ".apk", 0));
+    private void initMyData() {
+        if (getIntent().getSerializableExtra("file_info") != null) {
+            FileInfo fileInfo = (FileInfo) getIntent().getSerializableExtra("file_info");
+            fileInfoList.add(fileInfo);
         }
-        adapter = new CacheingRvAdapter(fileInfoList, this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter.setOnRecyclerClickListener(new CacheingRvAdapter.OnClickListener() {
+        if (threadDAO.getAllUnFinishFile() != null) {
+            if (threadDAO.getAllUnFinishFile().size() != 0)
+                fileInfoList.addAll(threadDAO.getAllUnFinishFile());
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void initListView(LinearLayoutManager layoutManager) {
+        adapter = new FileListAdapter(this, fileInfoList);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void click(int position) {
-
-            }
-
-            @Override
-            public void longClick(int position) {
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                boolean isStart = fileInfoList.get(position).isStart;
+                Intent intent = new Intent(CacheingActivity.this, DownloadService.class);
+                if (isStart) {//暂时
+                    Log.d("gdq", "暂停");
+                    fileInfoList.get(position).isStart = false;
+                    intent.setAction(DownloadService.ACTION_STOP);
+                    intent.putExtra("file_info", fileInfoList.get(position));
+                } else {//开始
+                    Log.d("gdq", "开始");
+                    fileInfoList.get(position).isStart = true;
+                    threadDAO.insertUnFinishFileifNotExists(fileInfoList.get(position));
+                    intent.setAction(DownloadService.ACTION_START);
+                    FileInfo fileInfo = fileInfoList.get(position);
+                    fileInfo.position = position;
+                    intent.putExtra("file_info", fileInfo);
+                }
+                startService(intent);
             }
         });
     }
@@ -132,8 +148,8 @@ public class CacheingActivity extends BaseActivity {
             } else if (DownloadService.ACTION_FINISH.equals(intent.getAction())) {
                 Log.d("hkh", "onReceive ACTION_FINISH");
                 FileInfo fileInfo = (FileInfo) intent.getSerializableExtra("fileInfo");
-                adapter.notifyItemMoved(fileInfo.id, fileInfo.id);
-                Toast.makeText(CacheingActivity.this, "下载完成" + fileInfo.fileName, 1).show();
+                Toast.makeText(CacheingActivity.this, "下载完成" + fileInfo.fileName, Toast.LENGTH_LONG).show();
+                adapter.finished(fileInfo.position);
             }
         }
     };

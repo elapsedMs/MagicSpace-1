@@ -30,7 +30,7 @@ public class DownloadService extends BaseService {
     public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/magic/download/";
     public static final String ACTION_FINISH = "ACTION_FINISH";
     private FileInfo fileInfo;
-    private Map<Integer, DownloadTask> downloadTaskMap = new LinkedHashMap<>();
+    private Map<String, DownloadTask> downloadTaskMap = new LinkedHashMap<>();
 
     @Override
     public void onCreate() {
@@ -42,22 +42,19 @@ public class DownloadService extends BaseService {
     public void onEvent(FileInfoEvent fileInfoEvent) {
         Log.d("gdq", "接受文件长度");
         DownloadTask downloadTask = new DownloadTask(this, fileInfoEvent.fileInfo, 3);
-        downloadTask.download();
+        downloadTask.downLoad();
         downloadTaskMap.put(fileInfo.id, downloadTask);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("gdq", "onStartCommand");
         String action = intent.getAction();
+        Log.d("gdq", "onStartCommand     Action :" + action);
         fileInfo = (FileInfo) intent.getSerializableExtra("file_info");
 
         if (action.equals(ACTION_START)) {
-            Log.d("gdq", "ACTION_START");
-//            new LengthThread(fileInfo).start();
             DownloadTask.sExecutorService.execute(new LengthThread(fileInfo));
         } else if (action.equals(ACTION_STOP)) {
-            Log.d("gdq", "ACTION_STOP");
             DownloadTask task = downloadTaskMap.get(fileInfo.id);
             if (task != null) {
                 task.isPause = true;
@@ -103,7 +100,7 @@ public class DownloadService extends BaseService {
                 if (!isMk) return;
                 Log.d("gdq", "创建文件");
                 //本地创建文件
-                File file = new File(dir, fileInfo.fileName);
+                File file = new File(dir, fileInfo.fileName );
                 randomAccessFile = new RandomAccessFile(file, "rwd");
                 //设置文件长度
                 randomAccessFile.setLength(len);
