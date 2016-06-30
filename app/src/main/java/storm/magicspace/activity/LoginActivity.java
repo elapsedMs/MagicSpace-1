@@ -29,8 +29,8 @@ public class LoginActivity extends BaseActivity {
 
         setActivityTitle("登录");
         setActivityTitleAndTextColor(R.color.title_color_gray, R.color.title_color);
-        setRightText(R.string.register);
-        setTitleBarRightTvVisibility(View.VISIBLE);
+//        setRightText(R.string.register);
+        setTitleBarRightTvVisibility(View.GONE);
 
         findEventView(R.id.bt_login);
         nameEt = findView(R.id.et_login_name);
