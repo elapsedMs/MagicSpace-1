@@ -55,7 +55,8 @@ public class HttpUtils {
         LogUtil.i("HttpUtils", "Result :" + result);
         return result;
     }
-//    {"status":0,"status_msg":"success","version":"1.0","channel":0,"date":1467244088,"data_type":1,"language":"chinese","action":"","data":[{"userId":"3970430042189702","nickName":"\u4e00\u5668\u5165\u9b42","portraitImage":"http:\/\/sso.mojing.cn\/assets\/web\/images\/usercenter\/noavatar_big.jpg","contentId":"3416","createTime":"1465867750000","duration":"0","url":"http:\/\/share.moyan.mojing.cn\/MEdata\/file\/3970430042189702\/1463845159508.jpg","commentCount":"0","appreciateCount":"0","thumbImageUrl":"http:\/\/share.moyan.mojing.cn\/MEdata\/file\/3970430042189702\/1463845159508_thumb.jpg","contentType":"2","playCount":null,"creditEarned":null,"isCollected":"0","isAppreciated":"0","description":"\u8fd9\u662f\u5565\u5b50\u561b\uff1f"},{"userId":"3970430042189702","nickName":"\u4e00\u5668\u5165\u9b42","portraitImage":"http:\/\/sso.mojing.cn\/assets\/web\/images\/usercenter\/noavatar_big.jpg","contentId":"3404","createTime":"1463845159953","duration":"0","url":"http:\/\/share.moyan.mojing.cn\/MEdata\/file\/3970430042189702\/1463845159508.jpg","commentCount":"0","appreciateCount":"0","thumbImageUrl":"http:\/\/share.moyan.mojing.cn\/MEdata\/file\/3970430042189702\/1463845159508_thumb.jpg","contentType":"2","playCount":null,"creditEarned":null,"isCollected":"0","isAppreciated":"0","description":"\u8fd9\u662f\u5565\u5b50\u561b\uff1f"}]}
+
+    //    {"status":0,"status_msg":"success","version":"1.0","channel":0,"date":1467244088,"data_type":1,"language":"chinese","action":"","data":[{"userId":"3970430042189702","nickName":"\u4e00\u5668\u5165\u9b42","portraitImage":"http:\/\/sso.mojing.cn\/assets\/web\/images\/usercenter\/noavatar_big.jpg","contentId":"3416","createTime":"1465867750000","duration":"0","url":"http:\/\/share.moyan.mojing.cn\/MEdata\/file\/3970430042189702\/1463845159508.jpg","commentCount":"0","appreciateCount":"0","thumbImageUrl":"http:\/\/share.moyan.mojing.cn\/MEdata\/file\/3970430042189702\/1463845159508_thumb.jpg","contentType":"2","playCount":null,"creditEarned":null,"isCollected":"0","isAppreciated":"0","description":"\u8fd9\u662f\u5565\u5b50\u561b\uff1f"},{"userId":"3970430042189702","nickName":"\u4e00\u5668\u5165\u9b42","portraitImage":"http:\/\/sso.mojing.cn\/assets\/web\/images\/usercenter\/noavatar_big.jpg","contentId":"3404","createTime":"1463845159953","duration":"0","url":"http:\/\/share.moyan.mojing.cn\/MEdata\/file\/3970430042189702\/1463845159508.jpg","commentCount":"0","appreciateCount":"0","thumbImageUrl":"http:\/\/share.moyan.mojing.cn\/MEdata\/file\/3970430042189702\/1463845159508_thumb.jpg","contentType":"2","playCount":null,"creditEarned":null,"isCollected":"0","isAppreciated":"0","description":"\u8fd9\u662f\u5565\u5b50\u561b\uff1f"}]}
     private static HttpMethodBase BuildMethodBase(String url, HashMap params, RequestTypes requestType) {
         HttpMethodBase method = null;
         String postBody = EMPTY;
@@ -79,18 +80,6 @@ public class HttpUtils {
                 LogUtil.i("HttpUtils", "requestType: " + requestType + "         path: " + url + "\n currentBody : " + currentBody + "\n");
 
                 method = m;
-//                PostMethod m = new PostMethod(url);
-//                assert params != null;
-//                Set keys = params.keySet();
-//                Iterator<String> iterator = keys.iterator();
-//                List<NameValuePair> pairList = new ArrayList<>();
-//                while (iterator.hasNext()) {
-//                    String k = iterator.next();
-//                    pairList.add(new NameValuePair(k, params.get(k).toString()));
-//                }
-//                m.setRequestBody((NameValuePair[]) pairList.toArray());
-//                method = m;
-
                 break;
 
             case PUT:
