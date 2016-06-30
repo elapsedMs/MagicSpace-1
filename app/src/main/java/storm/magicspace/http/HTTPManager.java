@@ -7,6 +7,7 @@ import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
+import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
@@ -93,7 +94,8 @@ public class HTTPManager {
      */
     public static IssueUCGContentResponse issueUCCContent(String userId,
                                                           String description,
-                                                          String url) {
+                                                          String url,
+                                                          String sourceId) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_ISSUE_UGC_CONTENT,
@@ -101,7 +103,8 @@ public class HTTPManager {
                 IssueUCGContentResponse.class,
                 "userId", "3970430042189702",
                 "description", description,
-                "url", url
+                "url", url,
+                "sourceId", sourceId
         );
     }
 
@@ -121,6 +124,18 @@ public class HTTPManager {
                 "data", data
         );
     }
+
+    public static SyncAccountResponse syncAccount(String userId, String data) {
+        return ServiceUtils.request(
+            RequestTypes.POST,
+                    URLConstant.URL_SYNC_ACCOUNT,
+                    EMPTY,
+                    SyncAccountResponse.class,
+                    "userId", userId,
+                    "data", data
+        );
+    }
+
 
     public static CirclePicResponse getAlbumCirclePic() {
         return ServiceUtils.request(

@@ -56,6 +56,9 @@ public class URLConstant {
     //更新UGC主题
     public static final String URL_UPDATE_UGC_CONTENT_SCENES = "updateUGCContentScenes";
 
+    //同步账户信息
+    public static final String URL_SYNC_ACCOUNT = "syncAccount";
+
     //登录
     public static final String LOGIN = "apilogin";
 

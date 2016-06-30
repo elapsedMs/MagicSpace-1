@@ -102,7 +102,7 @@ public class GameActivity extends Activity {
 
         @Override
         public IssueUCGContentResponse doRequest(Void param) {
-            return HTTPManager.issueUCCContent("", "", "");
+            return HTTPManager.issueUCCContent("", "", "", "");
         }
 
         @Override
