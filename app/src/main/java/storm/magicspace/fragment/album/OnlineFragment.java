@@ -99,7 +99,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
 
             @Override
             public void onBtnClick(int position) {
-                FileInfo fileInfo = new FileInfo(0, albumList.get(position).getUrl(), 0, albumList.get(position).getNickName(), 0);
+                FileInfo fileInfo = new FileInfo(albumList.get(position).getContentId(), "http://www.imooc.com/mobile/imooc.apk", 0, albumList.get(position).getNickName() + ".apk", 0, false, false);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("file_info", fileInfo);
                 goToNext(CacheingActivity.class, bundle);

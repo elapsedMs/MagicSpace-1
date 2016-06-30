@@ -8,10 +8,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
 import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.activity.MainActivity;
+import storm.magicspace.adapter.CachedAdapter;
+import storm.magicspace.download.FileInfo;
+import storm.magicspace.download.db.ThreadDAO;
+import storm.magicspace.download.db.ThreadDaoImpl;
 import storm.magicspace.view.AlbumTitleView;
 
 /**
@@ -25,11 +32,27 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
     private LinearLayout noDownloadLl;
     private RelativeLayout contentRl;
     private MainActivity mainActivity;
+    private CachedAdapter adapter;
+    private ThreadDAO threadDAO;
+    private List<FileInfo> fileInfoList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainActivity = (MainActivity) getActivity();
+        threadDAO = new ThreadDaoImpl(getActivity());
+
         return inflater.inflate(R.layout.fragment_native, null);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (threadDAO.getAllFinishFile() != null)
+            if (threadDAO.getAllFinishFile().size() > 0) {
+                fileInfoList.clear();
+                fileInfoList.addAll(threadDAO.getAllFinishFile());
+            }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -41,8 +64,12 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
         albumTitleView.setOnClickListener(this);
         albumTitleView.showDot();
         cachedListView = (ListView) view.findViewById(R.id.cachedLv);
+        adapter = new CachedAdapter(fileInfoList, getActivity());
+        cachedListView.setAdapter(adapter);
         noDownloadLl = (LinearLayout) view.findViewById(R.id.no_download_ll);
         contentRl = (RelativeLayout) view.findViewById(R.id.rl_content);
+        if (fileInfoList.size() == 0)
+            noCached();
     }
 
     @Override
