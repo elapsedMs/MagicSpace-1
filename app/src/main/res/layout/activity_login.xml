@@ -27,6 +27,7 @@
             android:background="@color/white"
             android:hint="请输入账户名"
             android:padding="@dimen/distance_l"
+            android:text="18601324008"
             android:textColorHint="@color/gray"
             android:textSize="@dimen/text_size_xs"/>
     </LinearLayout>
