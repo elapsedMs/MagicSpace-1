@@ -27,7 +27,6 @@
             android:background="@color/white"
             android:hint="请输入账户名"
             android:padding="@dimen/distance_l"
-            android:text="18601324008"
             android:textColorHint="@color/gray"
             android:textSize="@dimen/text_size_xs"/>
     </LinearLayout>
@@ -64,7 +63,6 @@
 
     </LinearLayout>
 
-
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"/>
@@ -72,7 +70,7 @@
     <Button
         android:id="@+id/bt_login"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/px_100"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/distance_xxl"
         android:background="@drawable/btn_bg_login"

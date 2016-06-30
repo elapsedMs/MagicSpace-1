@@ -6,16 +6,23 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import storm.commonlib.common.BaseApplication;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
 import storm.magicspace.activity.mine.MyCollectionActivity;
 import storm.magicspace.activity.mine.MyWorksActivity;
+import storm.magicspace.bean.UserInfo;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.util.LocalSPUtil;
 
 public class MyFragment extends BaseFragment {
+
+    private TextView nameTv;
 
     @Nullable
     @Override
@@ -39,6 +46,7 @@ public class MyFragment extends BaseFragment {
         findEventView(view, R.id.my_siv_collection);
         findEventView(view, R.id.my_siv_eggs);
         findEventView(view, R.id.my_siv_fresh_help);
+        nameTv = (TextView) findView(view, R.id.mine_tv_name);
     }
 
     @Override
@@ -70,6 +78,14 @@ public class MyFragment extends BaseFragment {
         @Override
         protected void onPostExecute(UserInfoResponse userInfoResponse) {
             super.onPostExecute(userInfoResponse);
+
+            UserInfo data = userInfoResponse.data;
+            if (data == null) {
+                Toast.makeText(BaseApplication.getApplication(), "参数返回错误！", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            nameTv.setText(LocalSPUtil.getAccountInfo().getUser_name());
         }
     }
 }
