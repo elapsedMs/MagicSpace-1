@@ -47,6 +47,7 @@ public class CachedAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
         return convertView;
     }
 

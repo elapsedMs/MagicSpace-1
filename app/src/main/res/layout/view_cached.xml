@@ -36,7 +36,7 @@
             android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_16"
+            android:layout_marginTop="@dimen/px_8"
             android:text="风景"
             android:textColor="#000000"
             android:textSize="@dimen/px_22" />
@@ -45,7 +45,7 @@
             android:id="@+id/download_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:layout_marginTop="@dimen/px_16"
+             android:layout_marginTop="@dimen/px_8"
             android:text="下载次数"
             android:textColor="#000000"
             android:textSize="@dimen/px_18" />

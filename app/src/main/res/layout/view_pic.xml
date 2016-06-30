@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <ImageView
+        android:background="#ff0000"
         android:scaleType="centerCrop"
         android:id="@+id/imageView"
         android:layout_width="match_parent"
