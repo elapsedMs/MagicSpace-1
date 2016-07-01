@@ -31,7 +31,6 @@ public class RegisterActivity extends BaseActivity {
     private EditText verifyCodeEt;
     private EditText pwdEt;
 
-
     public RegisterActivity() {
         super(R.layout.activity_register);
     }
@@ -43,6 +42,9 @@ public class RegisterActivity extends BaseActivity {
         setActivityTitle("注册");
         setActivityTitleAndTextColor(R.color.title_color_gray, R.color.title_color);
         setTitleLeftBtVisibility(View.VISIBLE);
+
+        setRightText(R.string.login);
+        setTitleBarRightTvVisibility(View.VISIBLE);
 
         getVerifyCode = findEventView(R.id.bt_get_verify_code);
         findEventView(R.id.bt_register);
@@ -68,8 +70,16 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        timer.cancel();
-        task.cancel();
+        if (timer != null)
+            timer.cancel();
+        if (task != null)
+            task.cancel();
+    }
+
+    @Override
+    public void onTitleBarRightTvClicked(View view) {
+        super.onTitleBarRightTvClicked(view);
+        this.finish();
     }
 
     @Override
@@ -86,7 +96,6 @@ public class RegisterActivity extends BaseActivity {
                     return;
                 }
 
-                statCountTime();
                 new VerifyCodeTask().execute(EMPTY, phone);
                 break;
 
@@ -135,6 +144,7 @@ public class RegisterActivity extends BaseActivity {
 
         @Override
         protected GetVerifyCodeResponse doInBackground(String... params) {
+            statCountTime();
             return AccountHttpManager.getVerifyCode(params[0], params[1]);
         }
     }
