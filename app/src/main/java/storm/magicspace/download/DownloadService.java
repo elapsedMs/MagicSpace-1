@@ -3,6 +3,7 @@ package storm.magicspace.download;
 import android.content.Intent;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.greenrobot.eventbus.EventBus;
@@ -53,7 +54,13 @@ public class DownloadService extends BaseService {
         fileInfo = (FileInfo) intent.getSerializableExtra("file_info");
 
         if (action.equals(ACTION_START)) {
-            DownloadTask.sExecutorService.execute(new LengthThread(fileInfo));
+            if (fileInfo.length == 0) {
+                DownloadTask.sExecutorService.execute(new LengthThread(fileInfo));
+            } else {
+                DownloadTask downloadTask = new DownloadTask(this, fileInfo, 3);
+                downloadTask.downLoad();
+                downloadTaskMap.put(fileInfo.id, downloadTask);
+            }
         } else if (action.equals(ACTION_STOP)) {
             DownloadTask task = downloadTaskMap.get(fileInfo.id);
             if (task != null) {
@@ -88,7 +95,10 @@ public class DownloadService extends BaseService {
                     len = httpURLConnection.getContentLength();
                     Log.d("gdq", "长度:" + len);
                 }
-                if (len <= 0) return;
+                if (len <= 0) {
+                    Toast.makeText(DownloadService.this, "获取文件长度失败", 1).show();
+                    return;
+                }
 
                 boolean isMk = false;
                 File dir = new File(DOWNLOAD_PATH);
@@ -100,7 +110,7 @@ public class DownloadService extends BaseService {
                 if (!isMk) return;
                 Log.d("gdq", "创建文件");
                 //本地创建文件
-                File file = new File(dir, fileInfo.fileName );
+                File file = new File(dir, fileInfo.fileName);
                 randomAccessFile = new RandomAccessFile(file, "rwd");
                 //设置文件长度
                 randomAccessFile.setLength(len);

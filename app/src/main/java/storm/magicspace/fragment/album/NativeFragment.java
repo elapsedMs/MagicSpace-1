@@ -59,29 +59,22 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
                 albumList.clear();
                 albumList.addAll(LocalSPUtil.getFinishAlbum(MagicApplication.getApplication()));
                 Log.d("zzz", "list vie size" + albumList.size());
-                adapter = new CachedAdapter(albumList, getActivity());
+                adapter.notifyDataSetChanged();
             } else {
                 Log.d("zzz", "4");
                 haveNotAnyContent();
             }
         } else {
-            Log.d("zzz", "5");
             haveNotAnyContent();
         }
-        Log.d("zzz", "6");
 
         if (threadDAO.getAllUnFinishFile() != null) {
-            Log.d("zzz", "7");
             if (threadDAO.getAllUnFinishFile().size() > 0) {
-                Log.d("zzz", "8");
                 albumTitleView.setCount(threadDAO.getAllUnFinishFile().size() + "");
             } else
-                Log.d("zzz", "9");
-            albumTitleView.setCount(0 + "");
+                albumTitleView.setCount(0 + "");
         } else
-            Log.d("zzz", "10");
-        albumTitleView.setCount(0 + "");
-        Log.d("zzz", "11");
+            albumTitleView.setCount(0 + "");
     }
 
     private void haveNotAnyContent() {
@@ -102,6 +95,7 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
 //        albumTitleView.showDot();
         cachedListView = (ListView) view.findViewById(R.id.cachedLv);
 //        adapter = new CachedAdapter(albumList, getActivity());
+        adapter = new CachedAdapter(albumList, getActivity());
         cachedListView.setAdapter(adapter);
         noDownloadLl = (LinearLayout) view.findViewById(R.id.no_download_ll);
         contentRl = (RelativeLayout) view.findViewById(R.id.rl_content);

@@ -1,5 +1,6 @@
 package storm.magicspace.fragment.album;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -60,8 +61,8 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
 
     @Override
     public void initView(View view) {
-        new TestTask().execute();
-        new CirclePicTask().execute();
+        new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new CirclePicTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         super.initView(view);
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
         contentLl = (LinearLayout) view.findViewById(id.ll_content);

@@ -11,7 +11,6 @@ import com.squareup.picasso.Picasso;
 
 import storm.commonlib.common.base.BaseView;
 import storm.commonlib.common.util.ImageSize;
-import storm.commonlib.common.util.ImageUtils;
 import storm.magicspace.R;
 import storm.magicspace.bean.EggInfo;
 
