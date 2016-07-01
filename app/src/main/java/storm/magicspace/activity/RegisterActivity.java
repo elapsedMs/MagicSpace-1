@@ -2,7 +2,13 @@ package storm.magicspace.activity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
+import android.widget.Button;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
@@ -10,10 +16,15 @@ import storm.magicspace.http.AccountHttpManager;
 import storm.magicspace.http.reponse.GetVerifyCodeResponse;
 import storm.magicspace.http.reponse.RegisterResponse;
 
-/**
- * Created by lixiaolu on 16/6/27.
- */
+import static storm.commonlib.common.util.StringUtil.EMPTY;
+
 public class RegisterActivity extends BaseActivity {
+
+    private Button getVerifyCode;
+    private Handler mHandler;
+    private TimerTask task;
+    private Timer timer;
+
 
     public RegisterActivity() {
         super(R.layout.activity_register);
@@ -28,9 +39,30 @@ public class RegisterActivity extends BaseActivity {
         setTitleLeftBtVisibility(View.VISIBLE);
 
 
-        findEventView(R.id.bt_get_verify_code);
+        getVerifyCode = findEventView(R.id.bt_get_verify_code);
         findEventView(R.id.bt_register);
 
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if (msg.what == 0) {
+                    getVerifyCode.setClickable(true);
+                    getVerifyCode.setText("获取验证码");
+                    return;
+                }
+
+                getVerifyCode.setClickable(false);
+                getVerifyCode.setText(String.format("%d%s", msg.what, EMPTY));
+            }
+        };
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timer.cancel();
+        task.cancel();
     }
 
     @Override
@@ -38,6 +70,25 @@ public class RegisterActivity extends BaseActivity {
         super.onLocalClicked(resId);
         switch (resId) {
             case R.id.bt_get_verify_code:
+
+                task = new TimerTask() {
+                    int second = 10;
+
+                    @Override
+                    public void run() {
+                        if (second == 0) {
+                            this.cancel();
+                            return;
+                        }
+
+                        second--;
+                        mHandler.sendEmptyMessage(second);
+                    }
+                };
+
+                timer = new Timer();
+                timer.schedule(task, 1, 1000);
+
                 new VerifyCodeTask().execute("", "18612965139");
                 break;
 
