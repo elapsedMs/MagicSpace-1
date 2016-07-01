@@ -17,6 +17,7 @@ import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.commonlib.common.view.RoundedImageView;
 import storm.magicspace.R;
+import storm.magicspace.activity.FreshHelpActivity;
 import storm.magicspace.activity.mine.MyCollectionActivity;
 import storm.magicspace.activity.mine.MyWorksActivity;
 import storm.magicspace.bean.UserInfo;
@@ -78,6 +79,9 @@ public class MyFragment extends BaseFragment {
                 nameEt.setEnabled(true);
                 break;
 
+            case R.id.my_siv_fresh_help:
+                goToNext(FreshHelpActivity.class);
+                break;
         }
     }
 

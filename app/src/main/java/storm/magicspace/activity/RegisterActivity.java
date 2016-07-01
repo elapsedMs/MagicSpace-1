@@ -62,7 +62,7 @@ public class RegisterActivity extends BaseActivity {
                 }
 
                 getVerifyCode.setClickable(false);
-                getVerifyCode.setText(String.format("%d%s", msg.what, "秒以后再次获取"));
+                getVerifyCode.setText(String.format("%d%s", msg.what, "秒后再次获取"));
             }
         };
     }
