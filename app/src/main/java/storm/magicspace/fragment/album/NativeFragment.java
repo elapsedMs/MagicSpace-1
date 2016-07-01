@@ -1,6 +1,7 @@
 package storm.magicspace.fragment.album;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,12 @@ import storm.magicspace.R;
 import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.activity.MainActivity;
 import storm.magicspace.adapter.CachedAdapter;
+import storm.magicspace.base.MagicApplication;
+import storm.magicspace.bean.Album;
 import storm.magicspace.download.FileInfo;
 import storm.magicspace.download.db.ThreadDAO;
 import storm.magicspace.download.db.ThreadDaoImpl;
+import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumTitleView;
 
 /**
@@ -34,7 +38,7 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
     private MainActivity mainActivity;
     private CachedAdapter adapter;
     private ThreadDAO threadDAO;
-    private List<FileInfo> fileInfoList = new ArrayList<>();
+    private List<Album> albumList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,23 +51,37 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("zzz", "1");
         if (threadDAO.getAllFinishFile() != null) {
+            Log.d("zzz", "2");
             if (threadDAO.getAllFinishFile().size() > 0) {
-                fileInfoList.clear();
-                fileInfoList.addAll(threadDAO.getAllFinishFile());
-                adapter.notifyDataSetChanged();
+                Log.d("zzz", "3");
+                albumList.clear();
+                albumList.addAll(LocalSPUtil.getFinishAlbum(MagicApplication.getApplication()));
+                Log.d("zzz", "list vie size" + albumList.size());
+                adapter = new CachedAdapter(albumList, getActivity());
             } else {
+                Log.d("zzz", "4");
                 haveNotAnyContent();
             }
         } else {
+            Log.d("zzz", "5");
             haveNotAnyContent();
         }
+        Log.d("zzz", "6");
 
         if (threadDAO.getAllUnFinishFile() != null) {
+            Log.d("zzz", "7");
             if (threadDAO.getAllUnFinishFile().size() > 0) {
-                cachedATV.setCount(threadDAO.getAllUnFinishFile().size() + "");
-            }
-        }
+                Log.d("zzz", "8");
+                albumTitleView.setCount(threadDAO.getAllUnFinishFile().size() + "");
+            } else
+                Log.d("zzz", "9");
+            albumTitleView.setCount(0 + "");
+        } else
+            Log.d("zzz", "10");
+        albumTitleView.setCount(0 + "");
+        Log.d("zzz", "11");
     }
 
     private void haveNotAnyContent() {
@@ -80,11 +98,10 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
         super.initView(view);
         cachedATV = (AlbumTitleView) view.findViewById(R.id.cachedATV);
         albumTitleView = (AlbumTitleView) view.findViewById(R.id.cacheingATV);
-        albumTitleView.setCount("20");
         albumTitleView.setOnClickListener(this);
 //        albumTitleView.showDot();
         cachedListView = (ListView) view.findViewById(R.id.cachedLv);
-        adapter = new CachedAdapter(fileInfoList, getActivity());
+//        adapter = new CachedAdapter(albumList, getActivity());
         cachedListView.setAdapter(adapter);
         noDownloadLl = (LinearLayout) view.findViewById(R.id.no_download_ll);
         contentRl = (RelativeLayout) view.findViewById(R.id.rl_content);

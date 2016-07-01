@@ -68,14 +68,15 @@ public class HttpUtils {
 
             case POST:
                 PostMethod m = new PostMethod(url);
-                Iterator iter = params.entrySet().iterator();
+                Iterator iter = params != null ? params.entrySet().iterator() : null;
                 String currentBody = EMPTY;
-                while (iter.hasNext()) {
-                    HashMap.Entry entry = (Map.Entry) iter.next();
-                    String key = entry.getKey().toString();
-                    String val = entry.getValue().toString();
-                    currentBody = currentBody + "" + key + "=" + val + (iter.hasNext() ? ";" : "");
-                }
+                if (iter != null)
+                    while (iter.hasNext()) {
+                        HashMap.Entry entry = (Map.Entry) iter.next();
+                        String key = entry.getKey().toString();
+                        String val = entry.getValue().toString();
+                        currentBody = currentBody + "" + key + "=" + val + (iter.hasNext() ? ";" : "");
+                    }
                 m.setRequestBody(currentBody);
                 LogUtil.i("HttpUtils", "requestType: " + requestType + "         path: " + url + "\n currentBody : " + currentBody + "\n");
 

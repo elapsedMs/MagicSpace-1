@@ -1,11 +1,12 @@
 package storm.magicspace.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by gdq on 16/6/19.
  */
-public class Album {
+public class Album implements Serializable{
 
 
     /**

@@ -103,6 +103,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
                 FileInfo fileInfo = new FileInfo(albumList.get(position).getContentId(), "http://www.imooc.com/mobile/imooc.apk", 0, albumList.get(position).getNickName() + ".apk", 0, false, false);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("file_info", fileInfo);
+                bundle.putSerializable("album", albumList.get(position));
                 goToNext(CacheingActivity.class, bundle);
             }
         });

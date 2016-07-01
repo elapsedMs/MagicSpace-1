@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -25,11 +26,13 @@ import java.util.List;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 import storm.magicspace.adapter.FileListAdapter;
+import storm.magicspace.bean.Album;
 import storm.magicspace.download.DownloadService;
 import storm.magicspace.download.FileInfo;
 import storm.magicspace.download.db.ThreadDAO;
 import storm.magicspace.download.db.ThreadDaoImpl;
 import storm.magicspace.event.LengthEvent;
+import storm.magicspace.util.LocalSPUtil;
 
 /**
  * Created by gdq on 16/6/16.
@@ -81,6 +84,14 @@ public class CacheingActivity extends BaseActivity {
         if (getIntent().getSerializableExtra("file_info") != null) {
             FileInfo fileInfo = (FileInfo) getIntent().getSerializableExtra("file_info");
             fileInfoList.add(fileInfo);
+//            Intent intent = new Intent(CacheingActivity.this, DownloadService.class);
+//            intent.setAction(DownloadService.ACTION_START);
+//            fileInfo.position = fileInfoList.size() - 1;
+//            intent.putExtra("file_info", fileInfo);
+//            startService(intent);
+            if (getIntent().getSerializableExtra("album") != null) {
+                LocalSPUtil.saveUnFinishAlbum(getApplicationContext(), (Album) getIntent().getSerializableExtra("album"));
+            }
         }
         if (threadDAO.getAllUnFinishFile() != null) {
             if (threadDAO.getAllUnFinishFile().size() != 0)
@@ -150,6 +161,8 @@ public class CacheingActivity extends BaseActivity {
                 FileInfo fileInfo = (FileInfo) intent.getSerializableExtra("fileInfo");
                 Toast.makeText(CacheingActivity.this, "下载完成" + fileInfo.fileName, Toast.LENGTH_LONG).show();
                 adapter.finished(fileInfo.position);
+                LocalSPUtil.saveFinishAlbum(getApplicationContext(), LocalSPUtil.getUnFinishAlbum(getApplicationContext(), fileInfo.id));
+                LocalSPUtil.deleteUnFinishAlbum(getApplicationContext(), fileInfo.id);
             }
         }
     };
