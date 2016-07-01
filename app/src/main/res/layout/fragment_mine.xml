@@ -20,8 +20,8 @@
             android:layout_marginRight="@dimen/px_18"
             android:layout_marginTop="@dimen/px_46"
             android:text="修改昵称"
-            android:visibility="gone"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/mine_tv_name"
@@ -107,10 +107,15 @@
 
     <RelativeLayout
         android:id="@+id/mine_rl_advance"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/mine_rl_title"
         android:background="@color/white">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/show_view_page"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_200"/>
 
     </RelativeLayout>
 

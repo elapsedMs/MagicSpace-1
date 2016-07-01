@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_egg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_200" />
+        android:layout_height="@dimen/px_200"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,13 +22,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px_40"
             android:text="性感女团奇幻探险"
-            android:textSize="@dimen/text_size_36_px" />
+            android:textSize="@dimen/text_size_36_px"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="@dimen/px_40"
-            android:background="@color/gray" />
+            android:background="@color/gray"/>
 
         <TextView
             android:id="@+id/tv_egg_game_zan"
@@ -36,21 +36,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px_40"
             android:text="有7283人点赞"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_egg_game_person_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_egg_game_title"
-            android:text="69人/273MB   免费" />
+            android:text="69人/273MB   免费"/>
 
         <TextView
             android:id="@+id/tv_egg_game_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_egg_game_title"
-            android:text="平均通关时长：10 总时长： 12：00" />
+            android:text="平均通关时长：10 总时长： 12：00"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,14 +58,14 @@
             android:layout_below="@+id/tv_egg_game_title"
             android:layout_marginTop="@dimen/px_40"
             android:text="简介："
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_egg_game_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_egg_game_title"
-            android:text="四位靓丽的少女............" />
+            android:text="四位靓丽的少女............"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -83,24 +83,24 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_egg_game_title"
                     android:text="我最好的时间"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_egg_game_title"
-                    android:text="00:00" />
+                    android:text="00:00"/>
             </LinearLayout>
 
             <Button
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center"
                 android:background="@color/white"
                 android:text="排行榜"
-                android:textSize="@dimen/text_size_24_px" />
+                android:textSize="@dimen/text_size_24_px"
+                android:visibility="gone"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -115,32 +115,32 @@
             android:id="@+id/bt_egg_game_info_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/distance_xxl"
-            android:background="@drawable/btn_bg_login"
+            android:background="@drawable/btn_bg"
             android:gravity="center"
             android:paddingLeft="80dp"
             android:paddingRight="80dp"
             android:text="@string/preview"
-            android:layout_centerHorizontal="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_s" />
+            android:textSize="@dimen/text_size_s"/>
 
         <Button
-            android:visibility="gone"
             android:id="@+id/bt_egg_game_info_download"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/distance_xxl"
-            android:background="@drawable/btn_bg_login"
+            android:background="@drawable/btn_bg"
             android:gravity="center"
             android:paddingLeft="80dp"
             android:paddingRight="80dp"
             android:text="@string/download"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_s" />
+            android:textSize="@dimen/text_size_s"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </RelativeLayout>
