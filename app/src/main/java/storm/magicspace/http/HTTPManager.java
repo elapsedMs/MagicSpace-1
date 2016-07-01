@@ -161,4 +161,17 @@ public class HTTPManager {
                 "pageSize", "2"
         );
     }
+
+    public static EggHttpResponse addReport() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.ADDREPORT,
+                EMPTY,
+                EggHttpResponse.class,
+                "userId", "0",
+                "versionCode", "1",
+                "content", "1",
+                "contact", "1"
+        );
+    }
 }

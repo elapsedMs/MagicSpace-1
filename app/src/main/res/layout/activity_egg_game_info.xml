@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
+<!--    <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_egg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_200" />
+        android:layout_height="@dimen/px_200"
+        android:visibility="gone"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
