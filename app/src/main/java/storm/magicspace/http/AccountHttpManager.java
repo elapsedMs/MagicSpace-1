@@ -208,6 +208,7 @@ public class AccountHttpManager {
     }
 
     public static RegisterResponse doRegist(String phoneNum, String password, String captchaMsg) {
+        final RegisterResponse[] response = {new RegisterResponse()};
         try {
             Log.i(TAG, "userReg");
             String url = "http://sso.mojing.cn/user/api/apiregist";
@@ -222,8 +223,9 @@ public class AccountHttpManager {
             obj.put("open_verify", open_verify);
             Log.i(TAG, "phoneNum=" + phoneNum + ",login_pwd=" + password
                     + ",msg=" + captchaMsg);
-            String openid = URLEncoder.encode(obj.toString(), "utf-8");
-            params.put("open_id", openid);
+            final String[] openid = {URLEncoder.encode(obj.toString(), "utf-8")};
+            params.put("open_id", openid[0]);
+
             AQuery aQuery = new AQuery(BaseApplication.getApplication());
             aQuery.ajax(url, params, JSONObject.class,
                     new AjaxCallback<JSONObject>() {
@@ -233,6 +235,7 @@ public class AccountHttpManager {
                             Log.i("AccountManager",
                                     "userReg callBack json = "
                                             + String.valueOf(json));
+                             response[0] = JsonUtil.convertJsonToObject(String.valueOf(json), TypeToken.get(RegisterResponse.class));
                         }
                     });
 
@@ -240,6 +243,6 @@ public class AccountHttpManager {
             e.printStackTrace();
             Log.i(TAG, "", e);
         }
-        return new RegisterResponse();
+        return response[0];
     }
 }
