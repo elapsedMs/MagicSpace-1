@@ -9,9 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import storm.commonlib.common.BaseApplication;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
+import storm.commonlib.common.view.RoundedImageView;
 import storm.magicspace.R;
 import storm.magicspace.activity.mine.MyCollectionActivity;
 import storm.magicspace.activity.mine.MyWorksActivity;
@@ -23,6 +26,9 @@ import storm.magicspace.util.LocalSPUtil;
 public class MyFragment extends BaseFragment {
 
     private TextView nameTv;
+    private RoundedImageView advator;
+    private TextView money;
+    private TextView level;
 
     @Nullable
     @Override
@@ -46,6 +52,9 @@ public class MyFragment extends BaseFragment {
         findEventView(view, R.id.my_siv_collection);
         findEventView(view, R.id.my_siv_fresh_help);
         nameTv = (TextView) findView(view, R.id.mine_tv_name);
+        advator = (RoundedImageView) findView(view, R.id.mine_ri_avatar);
+        money = (TextView) findView(view, R.id.money);
+        level = (TextView) findView(view, R.id.level);
     }
 
     @Override
@@ -84,7 +93,12 @@ public class MyFragment extends BaseFragment {
                 return;
             }
 
+            money.setText(data.getTotalCredit());
+            level.setText(data.getTotalCredit());
+
+            Picasso.with(getActivity()).load(data.getPortraitImage()).into(advator);
             nameTv.setText(LocalSPUtil.getAccountInfo().getUser_name());
         }
     }
+
 }

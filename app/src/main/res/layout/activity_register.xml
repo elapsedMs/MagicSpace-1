@@ -91,12 +91,13 @@
             android:textColorHint="@color/gray"
             android:textSize="@dimen/text_size_xs"/>
 
-        <Button
+        <TextView
             android:id="@+id/bt_get_verify_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="获取验证码"/>
+            android:text="获取验证码"
+            android:textColor="@color/title_color"/>
     </LinearLayout>
 
     <View

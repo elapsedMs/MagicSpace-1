@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Timer;
@@ -23,7 +23,7 @@ import static storm.commonlib.common.util.StringUtil.EMPTY;
 
 public class RegisterActivity extends BaseActivity {
 
-    private Button getVerifyCode;
+    private TextView getVerifyCode;
     private Handler mHandler;
     private TimerTask task;
     private Timer timer;
@@ -40,7 +40,7 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setActivityTitle("注册");
-        setActivityTitleAndTextColor(R.color.title_color_gray, R.color.title_color);
+//        setActivityTitleAndTextColor(R.color.title_color_gray, R.color.title_color);
         setTitleLeftBtVisibility(View.VISIBLE);
 
         setRightText(R.string.login);
