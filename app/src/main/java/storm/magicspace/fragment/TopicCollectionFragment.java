@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +45,16 @@ public class TopicCollectionFragment extends BaseFragment {
     private class GetMyCollectionTask extends BaseASyncTask<String, MyCollectionResponse> {
         @Override
         public MyCollectionResponse doRequest(String param) {
-            return HTTPManager.getMyCollection("");
+            return HTTPManager.getMyCollection("topic");
         }
 
         @Override
         protected void onPostExecute(MyCollectionResponse myCollectionResponse) {
             super.onPostExecute(myCollectionResponse);
+            if (myCollectionResponse == null || myCollectionResponse.data == null) {
+                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             list.clear();
             list.addAll(myCollectionResponse.data);
             adapter.notifyDataSetChanged();
