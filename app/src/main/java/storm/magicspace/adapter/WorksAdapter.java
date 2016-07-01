@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,10 @@ public class WorksAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.view_work, null);
             holder = new ViewHolder();
+            holder.divider = (LinearLayout) convertView.findViewById(R.id.view_divider);
+            if (list.size() == 1)
+                holder.divider.setVisibility(View.GONE);
+
             holder.albumPicView = (AlbumPicView) convertView.findViewById(R.id.apv_left);
             holder.nameTv = (TextView) convertView.findViewById(R.id.name);
             holder.descTv = (TextView) convertView.findViewById(R.id.desc);
@@ -83,5 +88,6 @@ public class WorksAdapter extends BaseAdapter {
         public TextView descTv;
         public TextView countTv;
         public TextView btnTv;
+        public LinearLayout divider;
     }
 }
