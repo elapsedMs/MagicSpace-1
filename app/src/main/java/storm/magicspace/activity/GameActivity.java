@@ -2,6 +2,7 @@ package storm.magicspace.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -155,6 +156,10 @@ public class GameActivity extends Activity {
 
     private class UpdateUGCContentTask extends BaseASyncTask<Void, UpdateUGCContentScenesResponse> {
 
+        public UpdateUGCContentTask(Context context, boolean hasLoadingDialog) {
+            super(context, hasLoadingDialog);
+        }
+
         @Override
         public UpdateUGCContentScenesResponse doRequest(Void param) {
             if (mScenes != null) {
@@ -176,22 +181,44 @@ public class GameActivity extends Activity {
                 updateData.setItems(items);
                 HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(updateData));
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
         @Override
-        public void onSuccess(UpdateUGCContentScenesResponse updateUGCContentScenesResponse) {
-            super.onSuccess(updateUGCContentScenesResponse);
-            // TODO :
+        public void onSuccess(UpdateUGCContentScenesResponse response) {
+            super.onSuccess(response);
+            Toast.makeText(GameActivity.this, "彩蛋放置成功", Toast.LENGTH_SHORT).show();
+            createEgg();
+            updateEggsCountHint(mEggsCount); // TODO : when request available this method should be move to success callback.
+            resetFloatView();
         }
+
 
         @Override
         public void onFailed() {
             super.onFailed();
+            Toast.makeText(GameActivity.this, "彩蛋放置失败", Toast.LENGTH_SHORT).show();
+            createEgg();
+            updateEggsCountHint(mEggsCount); // TODO : when request available this method should be move to success callback.
+            resetFloatView();
+            resetAlphaController();
         }
+
+
+    }
+
+    private void resetAlphaController() {
+        mAlphaController.setProgress(100);
+        mAlphaVal = 1.0f;
     }
 
     private class GetEggImageListTask extends BaseASyncTask<Void, EggImageListResponse> {
+
         @Override
         public EggImageListResponse doRequest(Void param) {
             return HTTPManager.getEggImageList();
@@ -217,6 +244,7 @@ public class GameActivity extends Activity {
                                 mFloatInfo = null;
                                 mUrl = url;
                                 initFloatView();
+
                             }
                         });
                     }
@@ -268,10 +296,7 @@ public class GameActivity extends Activity {
                     Toast.makeText(GameActivity.this, R.string.add_egg_over_hint, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                createEgg();
-                updateEggsCountHint(mEggsCount); // TODO : when request available this method should be move to success callback.
-                new UpdateUGCContentTask().execute();
-
+                new UpdateUGCContentTask(GameActivity.this, true).execute();
             }
         });
 
@@ -289,6 +314,10 @@ public class GameActivity extends Activity {
                 GameActivity.this.finish();
             }
         });
+    }
+
+    private void resetFloatView() {
+        mFloatView.setVisibility(View.INVISIBLE);
     }
 
     private void updateEggsCountHint(int count) {
@@ -320,6 +349,7 @@ public class GameActivity extends Activity {
 
     private void initFloatView() {
         // mFloatView.setImageResource(R.mipmap.surprise_egg_red);
+        mFloatView.setVisibility(View.VISIBLE);
         mFloatView.setOnFloatListener(new FloatView.FloatListener() {
             @Override
             public void clickLeftTop() {
