@@ -157,13 +157,13 @@
             android:layout_height="0.5dp"
             android:background="@color/light_gray"/>
 
-        <storm.commonlib.common.view.SimpleItemView
-            android:id="@+id/my_siv_eggs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            gdq:sv_name="自制彩蛋"
-            gdq:sv_style="style_have_arrow">
-        </storm.commonlib.common.view.SimpleItemView>
+        <!--<storm.commonlib.common.view.SimpleItemView-->
+            <!--android:id="@+id/my_siv_eggs"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--gdq:sv_name="自制彩蛋"-->
+            <!--gdq:sv_style="style_have_arrow">-->
+        <!--</storm.commonlib.common.view.SimpleItemView>-->
 
 
         <View

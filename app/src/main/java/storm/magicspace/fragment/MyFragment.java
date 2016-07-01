@@ -44,7 +44,6 @@ public class MyFragment extends BaseFragment {
 
         findEventView(view, R.id.my_siv_wroks);
         findEventView(view, R.id.my_siv_collection);
-        findEventView(view, R.id.my_siv_eggs);
         findEventView(view, R.id.my_siv_fresh_help);
         nameTv = (TextView) findView(view, R.id.mine_tv_name);
     }
