@@ -120,7 +120,7 @@ public class HTTPManager {
                 URLConstant.URL_UPDATE_UGC_CONTENT_SCENES,
                 EMPTY,
                 UpdateUGCContentScenesResponse.class,
-                "userId", "3970430042189702",
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "contentId", contendId,
                 "data", data
         );

@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -76,6 +78,7 @@ public class GameActivity extends Activity {
     private List<ScenesBean> mScenes;
     private String mContentId;
     private ImageView mBackBtn;
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +87,19 @@ public class GameActivity extends Activity {
         initData();
         initView();
         initEvent();
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                mFloatView.setVisibility(View.VISIBLE);
+            }
+        };
     }
 
     private void initData() {
         mContentId = getRandomContentId();
+
+
     }
 
     public void initView() {
@@ -192,7 +204,7 @@ public class GameActivity extends Activity {
         @Override
         public void onSuccess(UpdateUGCContentScenesResponse response) {
             super.onSuccess(response);
-            Toast.makeText(GameActivity.this, "彩蛋放置成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GameActivity.this, "彩蛋放置上传成功", Toast.LENGTH_SHORT).show();
             createEgg();
             updateEggsCountHint(mEggsCount); // TODO : when request available this method should be move to success callback.
             resetFloatView();
@@ -202,7 +214,7 @@ public class GameActivity extends Activity {
         @Override
         public void onFailed() {
             super.onFailed();
-            Toast.makeText(GameActivity.this, "", Toast.LENGTH_SHORT).show();//// TODO: 16/7/2 I found it toast when success. by li.
+            Toast.makeText(GameActivity.this, "彩蛋放置上传失败", Toast.LENGTH_SHORT).show();//// TODO: 16/7/2 I found it toast when success. by li.
             createEgg();
             updateEggsCountHint(mEggsCount); // TODO : when request available this method should be move to success callback.
             resetFloatView();
@@ -215,7 +227,7 @@ public class GameActivity extends Activity {
     private void resetAlphaController() {
         mAlphaController.setProgress(100);
         mAlphaVal = 1.0f;
-        mAlphaController.setVisibility(View.INVISIBLE);
+        mAlphaController.setVisibility(View.GONE);
     }
 
     private class GetEggImageListTask extends BaseASyncTask<Void, EggImageListResponse> {
@@ -282,7 +294,7 @@ public class GameActivity extends Activity {
         mSharedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // showShare();
+                showShare();
             }
         });
 
@@ -390,7 +402,8 @@ public class GameActivity extends Activity {
 
     private void clearMask() {
         if (mGuide.getVisibility() == View.VISIBLE) mGuide.setVisibility(View.GONE);
-        if (mEggsContainer.getVisibility() == View.VISIBLE) mEggsContainer.setVisibility(View.INVISIBLE);
+        if (mEggsContainer.getVisibility() == View.VISIBLE)
+            mEggsContainer.setVisibility(View.INVISIBLE);
         positionAlphaController(ALPHA_CONTROLLER_POSITION_ABOVE_EGGS);
     }
 
@@ -411,7 +424,7 @@ public class GameActivity extends Activity {
     private void initWebView() {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
-        mWebView.loadUrl("http://app.stemmind.com/vr/a/vreditor.php?c="+mContentId);
+        mWebView.loadUrl("http://app.stemmind.com/vr/a/vreditor.php?c=" + mContentId);
         ContainerView containerView = new ContainerView();
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.addJavascriptInterface(containerView, "containerView");
@@ -422,6 +435,8 @@ public class GameActivity extends Activity {
         @JavascriptInterface
         public void editItem(String contentId, String sceneId, String order) {
             LogUtil.d(TAG, "editItem used");
+            mHandler.sendEmptyMessage(0);
+
         }
 
         @JavascriptInterface
