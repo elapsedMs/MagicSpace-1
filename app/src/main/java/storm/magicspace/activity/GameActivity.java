@@ -51,7 +51,8 @@ public class GameActivity extends Activity {
     public static final String TAG = GameActivity.class.getSimpleName();
     public static final String ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM = "bottom";
     public static final String ALPHA_CONTROLLER_POSITION_ABOVE_EGGS = "above_eggs";
-    public static final int EGG_INIT_COUNT = 5;
+    public static final int EGG_INIT_COUNT = 0;
+    public static final int EGG_MAX_COUNT = 5;
     public static final String DEFAULT_CONTENT_ID = "3403";
 
     private WebView mWebView;
@@ -79,12 +80,24 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        mContentId = getRandomContentId();
+        initData();
         initView();
         initEvent();
     }
 
+    private void initData() {
+        mContentId = getRandomContentId();
+    }
+
     public void initView() {
+        findView();
+        initFloatView();
+        initWebView();
+        initAlphaController();
+        initEggs();
+    }
+
+    private void findView() {
         mWebView = (WebView) findViewById(R.id.webview_game);
         mFloatView = (FloatView) findViewById(R.id.floatview_game);
         mAlphaController = (SeekBar) findViewById(R.id.alpha);
@@ -96,16 +109,11 @@ public class GameActivity extends Activity {
         mEggsLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
         mSharedBtn = (ImageView) findViewById(R.id.iv_game_confirm);
         mBackBtn = (ImageView) findViewById(R.id.iv_game_back);
-
-        initFloatView();
-        initWebView();
-        initAlphaController();
-        initEggs();
     }
 
     private void initEggs() {
         //mEggsLayout.setLayoutManager(new LinearLayoutManager(this, OrientationHelper.HORIZONTAL,false));
-        updateEggsCountHint(EGG_INIT_COUNT);
+        updateEggsCountHint(mEggsCount = EGG_INIT_COUNT);
         mEggsLayout.setLayoutManager(new GridLayoutManager(this, 1, OrientationHelper.HORIZONTAL, false));
         new GetEggImageListTask().execute();
         new IssueUGCContentTask().execute();
@@ -174,6 +182,7 @@ public class GameActivity extends Activity {
         @Override
         public void onSuccess(UpdateUGCContentScenesResponse updateUGCContentScenesResponse) {
             super.onSuccess(updateUGCContentScenesResponse);
+            // TODO :
         }
 
         @Override
@@ -219,37 +228,25 @@ public class GameActivity extends Activity {
     }
 
     private void createEgg() {
-        if (mFloatInfo != null) {
-            String contentId = "1";
-            int itemId = mEggsCount++;
-            float alpha = mAlphaVal;
-            float scale = mFloatInfo.getScale();
-            float rotate = -mFloatInfo.getRotate();
-            // dropItem('contentId' , 'itemId', 'url' ,'alpha'  ,"scale","rotate")
-            LogUtil.d(TAG, "contentId = " + contentId + ", itemId = " + itemId
-                    + ", alpha = " + alpha + ", scale = " + scale
-                    + ", rotate = " + rotate);
-            mWebView.loadUrl("javascript:dropItem('"
-                    + contentId + "' ,'"
-                    + itemId + "' ,'"
-                    + mUrl + "' ,'"
-                    + alpha + "' ,'"
-                    + scale + "' ,'"
-                    + rotate + "')");
-        } else {
-            String contentId = "1";
-            int itemId = mEggsCount++;
-            float alpha = mAlphaVal;
-            float scale = 1.0f;
-            float rotate = 0.0f;
-            mWebView.loadUrl("javascript:dropItem('"
-                    + contentId + "' ,'"
-                    + itemId + "' ,'"
-                    + mUrl + "' ,'"
-                    + alpha + "' ,'"
-                    + scale + "' ,'"
-                    + rotate + "')");
-        }
+        String contentId = "1";
+        int itemId = mEggsCount++;
+        float alpha = mAlphaVal;
+        float scale = mFloatInfo != null ? mFloatInfo.getScale() : 1.0f;
+        float rotate = mFloatInfo != null ? -mFloatInfo.getRotate() : 0.0f;
+        LogUtil.d(TAG, "contentId = " + contentId
+                + ", itemId = " + itemId
+                + ", url = " + mUrl
+                + ", alpha = " + alpha
+                + ", scale = " + scale
+                + ", rotate = " + rotate);
+        // dropItem('contentId', 'itemId', 'url', 'alpha', 'scale', "rotate")
+        mWebView.loadUrl("javascript:dropItem('"
+                + contentId + "' ,'"
+                + itemId + "' ,'"
+                + mUrl + "' ,'"
+                + alpha + "' ,'"
+                + scale + "' ,'"
+                + rotate + "')");
     }
 
     private void initEvent() {
@@ -267,12 +264,12 @@ public class GameActivity extends Activity {
                     Toast.makeText(GameActivity.this, R.string.add_egg_hint, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (mEggsCount > EGG_INIT_COUNT) {
+                if (mEggsCount >= EGG_MAX_COUNT) {
                     Toast.makeText(GameActivity.this, R.string.add_egg_over_hint, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                updateEggsCountHint(EGG_INIT_COUNT - mEggsCount);
                 createEgg();
+                updateEggsCountHint(mEggsCount); // TODO : when request available this method should be move to success callback.
                 new UpdateUGCContentTask().execute();
 
             }
