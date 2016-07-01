@@ -16,4 +16,5 @@ public class LocalSPUtil extends SharedPreferencesUtil {
     public static LoginResponse.AccountInfo getAccountInfo() {
         return getObject(BaseApplication.getApplication(), LoginResponse.AccountInfo.class);
     }
+
 }

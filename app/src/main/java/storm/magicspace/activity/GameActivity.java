@@ -381,7 +381,7 @@ public class GameActivity extends Activity {
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://app.stemmind.com/vr/a/tour.html");
+        oks.setSiteUrl("http://app.stemmind.com/vr/a/player.php?contentId=3403");
 
 // 启动分享GUI
         oks.show(GameActivity.this);
