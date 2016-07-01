@@ -35,6 +35,7 @@ import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.R;
 import storm.magicspace.adapter.EggsAdapter;
 import storm.magicspace.bean.IssueUCGContent;
+import storm.magicspace.bean.IssueUCGContent.ScenesBean;
 import storm.magicspace.bean.UpdateData;
 import storm.magicspace.bean.httpBean.EggImage;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
@@ -56,28 +57,28 @@ public class GameActivity extends Activity {
     private WebView mWebView;
     private FloatView mFloatView;
     private Button mConfirmBtn;
-    private FloatInfo mFloatInfo;
     private SeekBar mAlphaController;
-    private float mAlphaVal = 1.0f;
-    private int mEggsCount = 1;
-    private ImageView mGuide;
     private RelativeLayout mEggsContainer;
     private RecyclerView mEggsLayout;
+    private ImageView mGuide;
     private TextView mShowEggBtn;
-    private boolean isAlphaControllerShowing = false;
     private TextView mEggsLoadingHint;
+    private ImageView mSharedBtn;
+
+    private float mAlphaVal = 1.0f;
+    private int mEggsCount = 1;
+    private FloatInfo mFloatInfo;
+    private boolean isAlphaControllerShowing = false;
     private EggsAdapter mEggsAdapter;
-    private ImageView mCreateEggBtn;
     private String mUrl;
-    private Button sureBtn;
-    private List<IssueUCGContent.ScenesBean> mScenes;
+    private List<ScenesBean> mScenes;
     private String mContentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        mContentId = getRandomContentId();
         initView();
         initEvent();
     }
@@ -92,12 +93,11 @@ public class GameActivity extends Activity {
         mEggsContainer = (RelativeLayout) findViewById(R.id.rl_game_eggs_container);
         mEggsLayout = (RecyclerView) findViewById(R.id.rv_game_eggs);
         mEggsLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
-        mCreateEggBtn = (ImageView) findViewById(R.id.iv_game_confirm);
+        mSharedBtn = (ImageView) findViewById(R.id.iv_game_confirm);
         initFloatView();
         initWebView();
         initAlphaController();
         initEggs();
-
     }
 
     private void initEggs() {
@@ -106,14 +106,12 @@ public class GameActivity extends Activity {
         mEggsLayout.setLayoutManager(new GridLayoutManager(this, 1, OrientationHelper.HORIZONTAL, false));
         new GetEggImageListTask().execute();
         new IssueUGCContentTask().execute();
-
     }
 
     private class IssueUGCContentTask extends BaseASyncTask<Void, IssueUCGContentResponse> {
 
         @Override
         public IssueUCGContentResponse doRequest(Void param) {
-            mContentId = getRandomContentId();
             return HTTPManager.issueUCCContent("", "", "", mContentId);
         }
 
@@ -121,7 +119,7 @@ public class GameActivity extends Activity {
         public void onSuccess(IssueUCGContentResponse issueUCGContentResponse) {
             super.onSuccess(issueUCGContentResponse);
             IssueUCGContent data = issueUCGContentResponse.getData();
-            List<IssueUCGContent.ScenesBean> scenes = data.getScenes();
+            List<ScenesBean> scenes = data.getScenes();
             if (scenes != null) {
                 mScenes = scenes;
             }
@@ -165,8 +163,7 @@ public class GameActivity extends Activity {
                 items.setTransparency("0.5");
                 items.setEnabled("1");
                 updateData.setItems(items);
-                HTTPManager.updateUGCContentScenes("", mContentId,
-                        JsonUtil.toJson(updateData));
+                HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(updateData));
             }
             return null;
         }
@@ -253,21 +250,10 @@ public class GameActivity extends Activity {
     }
 
     private void initEvent() {
-        mCreateEggBtn.setOnClickListener(new View.OnClickListener() {
+        mSharedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showShare();
-//                if (TextUtils.isEmpty(mUrl)) {
-//                    Toast.makeText(GameActivity.this, R.string.add_egg_hint, Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                if (mEggsCount > EGG_INIT_COUNT) {
-//                    Toast.makeText(GameActivity.this, R.string.add_egg_over_hint, Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                updateEggsCountHint(EGG_INIT_COUNT - mEggsCount);
-//                createEgg();
-
             }
         });
 
@@ -387,7 +373,7 @@ public class GameActivity extends Activity {
     private void initWebView() {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
-        mWebView.loadUrl("http://app.stemmind.com/vr/a/tour.html");
+        mWebView.loadUrl("http://app.stemmind.com/vr/a/vreditor.php?c="+mContentId);
         ContainerView containerView = new ContainerView();
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.addJavascriptInterface(containerView, "containerView");
