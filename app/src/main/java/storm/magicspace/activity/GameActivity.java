@@ -215,6 +215,7 @@ public class GameActivity extends Activity {
     private void resetAlphaController() {
         mAlphaController.setProgress(100);
         mAlphaVal = 1.0f;
+        mAlphaController.setVisibility(View.INVISIBLE);
     }
 
     private class GetEggImageListTask extends BaseASyncTask<Void, EggImageListResponse> {
@@ -325,7 +326,7 @@ public class GameActivity extends Activity {
     }
 
     private void initAlphaController() {
-        positionAlphaController(ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM);
+        positionAlphaController(ALPHA_CONTROLLER_POSITION_ABOVE_EGGS);
         mAlphaController.setProgress(100);
         mAlphaController.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -389,8 +390,8 @@ public class GameActivity extends Activity {
 
     private void clearMask() {
         if (mGuide.getVisibility() == View.VISIBLE) mGuide.setVisibility(View.GONE);
-        if (mEggsContainer.getVisibility() == View.VISIBLE) mEggsContainer.setVisibility(View.GONE);
-        positionAlphaController(ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM);
+        if (mEggsContainer.getVisibility() == View.VISIBLE) mEggsContainer.setVisibility(View.INVISIBLE);
+        positionAlphaController(ALPHA_CONTROLLER_POSITION_ABOVE_EGGS);
     }
 
     private void positionAlphaController(String type) {
