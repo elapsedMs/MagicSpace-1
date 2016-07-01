@@ -112,8 +112,8 @@
         android:layout_marginTop="@dimen/px_96"
         android:background="@mipmap/btn_bg"
         android:gravity="center"
-        android:textSize="@dimen/px_32"
         android:text="@string/register"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="@dimen/px_32"/>
 
 </LinearLayout>
