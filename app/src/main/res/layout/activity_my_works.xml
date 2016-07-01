@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <ListView
-        android:divider="@null"
-        android:dividerHeight="0dp"
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_build_works"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/bt_works_build_my_works"
+            android:layout_width="@dimen/px_310"
+            android:layout_height="@dimen/px_80"
+            android:background="@mipmap/btn_bg"
+            android:text="制作我的作品"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

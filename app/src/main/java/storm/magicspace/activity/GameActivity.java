@@ -202,7 +202,7 @@ public class GameActivity extends Activity {
         @Override
         public void onFailed() {
             super.onFailed();
-            Toast.makeText(GameActivity.this, "彩蛋放置失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GameActivity.this, "", Toast.LENGTH_SHORT).show();//// TODO: 16/7/2 I found it toast when success. by li.
             createEgg();
             updateEggsCountHint(mEggsCount); // TODO : when request available this method should be move to success callback.
             resetFloatView();
