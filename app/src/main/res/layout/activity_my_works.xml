@@ -12,17 +12,21 @@
 
     <RelativeLayout
         android:id="@+id/rl_build_works"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:paddingBottom="@dimen/px_24"
+        android:paddingTop="@dimen/px_24">
 
         <Button
             android:id="@+id/bt_works_build_my_works"
-            android:layout_width="@dimen/px_310"
+            android:layout_width="@dimen/px_620"
             android:layout_height="@dimen/px_80"
+            android:layout_centerInParent="true"
             android:background="@mipmap/btn_bg"
-            android:text="制作我的作品"/>
+            android:text="制作我的作品"
+            android:textColor="@color/white"/>
 
     </RelativeLayout>
 
