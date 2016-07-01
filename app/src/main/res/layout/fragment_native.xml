@@ -27,6 +27,7 @@
             album_title:album_title_style="normal" />
 
         <ListView
+            android:layout_above="@+id/bottom"
             android:id="@+id/cachedLv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,6 +37,7 @@
             android:dividerHeight="0dp" />
 
         <include
+            android:id="@+id/bottom"
             layout="@layout/album_storage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

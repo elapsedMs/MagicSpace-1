@@ -2,16 +2,17 @@ package storm.magicspace.view;
 
 
 import android.content.Context;
-import android.media.Image;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import storm.commonlib.common.base.BaseView;
 import storm.commonlib.common.util.ImageSize;
-import storm.commonlib.common.util.ImageUtils;
 import storm.magicspace.R;
 import storm.magicspace.bean.EggInfo;
 
@@ -41,10 +42,21 @@ public class EggItem extends BaseView {
     public void bindData(Object object) {
         super.bindData(object);
         EggInfo info = (EggInfo) object;
-        tv_egg_name.setText(info.nickName == null ? "" : info.nickName);
-        Picasso.with(mContext).load(info.thumbImageUrl).into(iv_egg);
-        tv_egg_date.setText(info.createTime == null ? "" : info.createTime);
+        if (info != null) {
+            tv_egg_name.setText(info.nickName == null ? "" : info.nickName);
+            Picasso.with(mContext).load(info.thumbImageUrl).into(iv_egg);
+            tv_egg_date.setText(info.createTime == null ? "" : info.createTime);
+            String time_str = "";
+            if (info.createTime != null) {
+                time_str = timestamp2Date(info.createTime);
+            }
 
+            if (time_str.length() > 16) {
+                tv_egg_date.setText(time_str.substring(0, 10));
+                tv_egg_works_time.setText(time_str.substring(10, 16));
+            }
+
+        }
     }
 
     @Override
@@ -59,5 +71,17 @@ public class EggItem extends BaseView {
         iv_egg = (ImageView) findViewById(R.id.iv_egg);
     }
 
-
+    /* 将10 or 13 位时间戳转为时间字符串
+    * convert the number 1407449951 1407499055617 to date/time format timestamp
+    */
+    public static String timestamp2Date(String str_num) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (str_num.length() == 13) {
+            String date = sdf.format(new Date(Long.valueOf(str_num)));
+            return date;
+        } else {
+            String date = sdf.format(new Date(Integer.valueOf(str_num) * 1000L));
+            return date;
+        }
+    }
 }

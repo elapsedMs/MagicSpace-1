@@ -14,18 +14,16 @@ import java.util.List;
 
 import storm.magicspace.R;
 import storm.magicspace.bean.Album;
-import storm.magicspace.download.FileInfo;
-import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumPicView;
 
 /**
  * Created by gdq on 16/6/29.
  */
-public class CachedAdapter extends BaseAdapter {
+public class WorksAdapter extends BaseAdapter {
     List<Album> list;
     Context context;
 
-    public CachedAdapter(List<Album> list, Context context) {
+    public WorksAdapter(List<Album> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -50,12 +48,12 @@ public class CachedAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.view_cached, null);
+            convertView = View.inflate(context, R.layout.view_work, null);
             holder = new ViewHolder();
             holder.albumPicView = (AlbumPicView) convertView.findViewById(R.id.apv_left);
             holder.nameTv = (TextView) convertView.findViewById(R.id.name);
             holder.descTv = (TextView) convertView.findViewById(R.id.desc);
-            holder.countTv = (TextView) convertView.findViewById(R.id.download_cgiount);
+            holder.countTv = (TextView) convertView.findViewById(R.id.download_count);
             holder.btnTv = (TextView) convertView.findViewById(R.id.btn);
             convertView.setTag(holder);
         } else {

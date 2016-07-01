@@ -13,6 +13,7 @@ import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 import storm.magicspace.adapter.OnlineRVAdapter;
 import storm.magicspace.bean.Album;
+import storm.magicspace.download.FileInfo;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.view.GridItemDecoration;
@@ -55,7 +56,11 @@ public class GuessYouLikeActivity extends BaseActivity {
 
             @Override
             public void onBtnClick(int position) {
-                goToNext(CacheingActivity.class);
+                FileInfo fileInfo = new FileInfo(albumList.get(position).getContentId(), "http://www.imooc.com/mobile/imooc.apk", 0, albumList.get(position).getNickName() + ".apk", 0, false, false);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("file_info", fileInfo);
+                bundle.putSerializable("album", albumList.get(position));
+                goToNext(CacheingActivity.class, bundle);
             }
         });
     }

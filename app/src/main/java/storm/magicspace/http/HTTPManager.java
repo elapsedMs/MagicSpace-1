@@ -64,11 +64,9 @@ public class HTTPManager {
     /**
      * 获取我的收藏
      *
-     * @param userId
-     * @param s
      * @return
      */
-    public static MyCollectionResponse getMyCollection(String userId, String type) {
+    public static MyCollectionResponse getMyCollection(String type) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_MY_COLLECTION,
@@ -159,6 +157,19 @@ public class HTTPManager {
                 "userId", "0",
                 "page", "1",
                 "pageSize", "2"
+        );
+    }
+
+    public static EggHttpResponse addReport() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.ADDREPORT,
+                EMPTY,
+                EggHttpResponse.class,
+                "userId", "0",
+                "versionCode", "1",
+                "content", "1",
+                "contact", "1"
         );
     }
 }

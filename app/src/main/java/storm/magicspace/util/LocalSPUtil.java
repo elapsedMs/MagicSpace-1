@@ -2,6 +2,7 @@ package storm.magicspace.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -38,7 +39,7 @@ public class LocalSPUtil extends SharedPreferencesUtil {
 
     public static void saveAlbum(List<Album> list) {
         SharedPreferences.Editor editor = getEditor(MagicApplication.getApplication(), ALBUM);
-        String album = new Gson().toJson(list);
+        String album = JsonUtil.toJson(list);
         editor.putString(ALBUM, album);
         editor.commit();
     }
@@ -51,25 +52,29 @@ public class LocalSPUtil extends SharedPreferencesUtil {
 
 
     public static void saveFinishAlbum(Context context, Album album) {
+        Log.d("sss", "saveFinishAlbum");
         String albumString = "";
         SharedPreferences.Editor editor = getEditor(MagicApplication.getApplication(), ALBUM);
         List<Album> list = new ArrayList<>();
         WeakReference<List<Album>> weakReference = new WeakReference<>(list);
         weakReference.get().add(album);
-        if (getFinishAlbum(context) != null)
-            albumString = new Gson().toJson(getFinishAlbum(context).addAll(weakReference.get()));
-        else
-            albumString = new Gson().toJson((weakReference.get()));
+        if (getFinishAlbum(context) != null) {
+            List<Album> list1 = getFinishAlbum(context);
+            list1.addAll(weakReference.get());
+            albumString = JsonUtil.toJson(list1);
+        } else {
+            albumString = JsonUtil.toJson((weakReference.get()));
+        }
         editor.putString(FINISH_ALBUM, albumString);
         editor.commit();
         weakReference.get().clear();
         weakReference.clear();
     }
 
-    public static void saveFinishAlbum(List<Album> list) {
+    private static void saveFinishAlbum(List<Album> list) {
         SharedPreferences.Editor editor = getEditor(MagicApplication.getApplication(), ALBUM);
         WeakReference<List<Album>> weakReference = new WeakReference<>(list);
-        String albumString = new Gson().toJson(weakReference.get());
+        String albumString = JsonUtil.toJson(weakReference.get());
         editor.putString(FINISH_ALBUM, albumString);
         editor.commit();
         weakReference.get().clear();
@@ -77,12 +82,14 @@ public class LocalSPUtil extends SharedPreferencesUtil {
     }
 
     public static void deleteFinishAlbum(Context context, Album album) {
+        Log.d("sss", "deleteFinishAlbum");
         List<Album> list = getFinishAlbum(context);
         list.remove(album);
         saveFinishAlbum(list);
     }
 
     public static List<Album> getFinishAlbum(Context context) {
+        Log.d("sss", "getFinishAlbum");
         SharedPreferences sharedPreferences = context.getSharedPreferences(ALBUM, MODE_PRIVATE);
         if (JsonUtil.convertObjectListFromJson(sharedPreferences.getString(FINISH_ALBUM, ""), new TypeToken<List<Album>>() {
         }) == null)
@@ -93,25 +100,30 @@ public class LocalSPUtil extends SharedPreferencesUtil {
 
 
     public static void saveUnFinishAlbum(Context context, Album album) {
+        Log.d("sss", "saveUnFinishAlbum");
+
         String albumString = "";
         SharedPreferences.Editor editor = getEditor(MagicApplication.getApplication(), ALBUM);
         List<Album> list = new ArrayList<>();
         WeakReference<List<Album>> weakReference = new WeakReference<>(list);
         weakReference.get().add(album);
-        if (getFinishAlbum(context) != null)
-            albumString = new Gson().toJson(getUnFinishAlbum(context).addAll(weakReference.get()));
-        else
-            albumString = new Gson().toJson(weakReference.get());
+        if (getFinishAlbum(context) != null) {
+            List<Album> list1 = getUnFinishAlbum(context);
+            list1.addAll(weakReference.get());
+            albumString = JsonUtil.toJson(list1);
+        } else {
+            albumString = JsonUtil.toJson(weakReference.get());
+        }
         editor.putString(UNFINISH_ALBUM, albumString);
         editor.commit();
         weakReference.get().clear();
         weakReference.clear();
     }
 
-    public static void saveUnFinishAlbum(List<Album> list) {
+    private static void saveUnFinishAlbum(List<Album> list) {
         SharedPreferences.Editor editor = getEditor(MagicApplication.getApplication(), ALBUM);
         WeakReference<List<Album>> weakReference = new WeakReference<>(list);
-        String albumString = new Gson().toJson(weakReference.get());
+        String albumString = JsonUtil.toJson(weakReference.get());
         editor.putString(UNFINISH_ALBUM, albumString);
         editor.commit();
         weakReference.get().clear();
@@ -119,28 +131,35 @@ public class LocalSPUtil extends SharedPreferencesUtil {
     }
 
     public static void deleteUnFinishAlbum(Context context, String contentId) {
-        List<Album> list = getFinishAlbum(context);
-        for (Album album : list) {
-            if (album.getContentId().equals(contentId))
-                list.remove(album);
+        Log.d("sss", "deleteUnFinishAlbum");
+        List<Album> list = getUnFinishAlbum(context);
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getContentId().equals(contentId)) {
+                list.remove(i);
+                break;
+            }
+
         }
-        saveFinishAlbum(list);
+        saveUnFinishAlbum(list);
     }
 
-    public static List<Album> getUnFinishAlbum(Context context) {
+    private static List<Album> getUnFinishAlbum(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(ALBUM, MODE_PRIVATE);
         if (JsonUtil.convertObjectListFromJson(sharedPreferences.getString(UNFINISH_ALBUM, ""), new TypeToken<List<Album>>() {
         }) == null)
             return new ArrayList<Album>();
-        return JsonUtil.convertObjectListFromJson(sharedPreferences.getString(UNFINISH_ALBUM, ""), new TypeToken<List<Album>>() {
+        List<Album> list = JsonUtil.convertObjectListFromJson(sharedPreferences.getString(UNFINISH_ALBUM, ""), new TypeToken<List<Album>>() {
         });
+        return list;
     }
 
     public static Album getUnFinishAlbum(Context context, String contentId) {
+        Log.d("sss", "getUnFinishAlbum");
         List<Album> list = getUnFinishAlbum(context);
-        for (Album album : list) {
-            if (album.getContentId().equals(contentId))
-                return album;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getContentId().equals(contentId))
+                return list.get(i);
         }
         return null;
     }

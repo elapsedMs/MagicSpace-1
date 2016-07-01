@@ -110,11 +110,15 @@ public class CacheingActivity extends BaseActivity {
                 Intent intent = new Intent(CacheingActivity.this, DownloadService.class);
                 if (isStart) {//暂时
                     Log.d("gdq", "暂停");
+                    Log.d("kkk", "暂停     position :" + position + "    istart :" + fileInfoList.get(position).isStart + "-------->" + !fileInfoList.get(position).isStart);
                     fileInfoList.get(position).isStart = false;
                     intent.setAction(DownloadService.ACTION_STOP);
-                    intent.putExtra("file_info", fileInfoList.get(position));
+                    FileInfo fileInfo = fileInfoList.get(position);
+                    fileInfo.position = position;
+                    intent.putExtra("file_info", fileInfo);
                 } else {//开始
                     Log.d("gdq", "开始");
+                    Log.d("kkk", "开始     position :" + position + "    istart :" + fileInfoList.get(position).isStart + "-------->" + !fileInfoList.get(position).isStart);
                     fileInfoList.get(position).isStart = true;
                     threadDAO.insertUnFinishFileifNotExists(fileInfoList.get(position));
                     intent.setAction(DownloadService.ACTION_START);
@@ -154,8 +158,9 @@ public class CacheingActivity extends BaseActivity {
             if (DownloadService.ACTION_UPDATE.equals(intent.getAction())) {
                 Log.d("hkh", "onReceive ACTION_UPDATE");
                 int finised = intent.getIntExtra("finished", 0);
-                int id = intent.getIntExtra("id", 0);
-                adapter.updateProgress(id, finised);
+                int position = intent.getIntExtra("id", 0);
+                Log.d("hhh", "postion:" + position);
+                adapter.updateProgress(position, finised);
             } else if (DownloadService.ACTION_FINISH.equals(intent.getAction())) {
                 Log.d("hkh", "onReceive ACTION_FINISH");
                 FileInfo fileInfo = (FileInfo) intent.getSerializableExtra("fileInfo");

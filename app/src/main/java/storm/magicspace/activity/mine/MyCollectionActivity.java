@@ -33,9 +33,6 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
         setActivityTitle("我的收藏");
         setTitleLeftBtVisibility(View.VISIBLE);
 
-        GetMyCollectionTask task = new GetMyCollectionTask();
-        task.execute();
-
         initViewPager();
         setOnSelectTitleClickedListener(new TitleBar.OnSelectTitleClickedListener() {
             @Override
@@ -87,17 +84,5 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
     @Override
     public void onPageScrollStateChanged(int state) {
 
-    }
-
-    private class GetMyCollectionTask extends BaseASyncTask<String, MyCollectionResponse> {
-        @Override
-        public MyCollectionResponse doRequest(String param) {
-            return HTTPManager.getMyCollection("", "game");
-        }
-
-        @Override
-        protected void onPostExecute(MyCollectionResponse myCollectionResponse) {
-            super.onPostExecute(myCollectionResponse);
-        }
     }
 }

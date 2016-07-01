@@ -147,7 +147,7 @@ public class DownloadTask {
                             Log.d("gzq", f + "");
                             if (f > mFileInfo.finished) {
                                 intent.putExtra("finished", f);
-                                intent.putExtra("id", mFileInfo.id);
+                                intent.putExtra("id", mFileInfo.position);
                                 mContext.sendBroadcast(intent);
                                 EventBus.getDefault().post(new LengthEvent());
                             }
@@ -156,6 +156,8 @@ public class DownloadTask {
                         // 在下载暂停时，保存下载进度
                         if (isPause) {
                             mFileInfo.finished = mFinised * 100 / mFileInfo.length;
+                            mFileInfo.isDownLoadFinish = false;
+                            mFileInfo.isStart = false;
                             mDao.updateUnFinishFileByContentId(mFileInfo);
                             mDao.updateThread(mThreadInfo.url,
                                     mThreadInfo.id,

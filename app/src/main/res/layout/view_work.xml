@@ -45,7 +45,7 @@
             android:textSize="@dimen/px_22" />
 
         <TextView
-            android:id="@+id/download_cgiount"
+            android:id="@+id/download_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px_8"
@@ -63,7 +63,7 @@
         android:layout_marginRight="@dimen/px_16"
         android:background="@drawable/shape_cached_btn"
         android:gravity="center"
-        android:text="制作游戏"
+        android:text="分享"
         android:textColor="#7849cb"
         android:textSize="@dimen/px_26" />
 
