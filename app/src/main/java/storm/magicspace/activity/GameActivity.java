@@ -73,6 +73,7 @@ public class GameActivity extends Activity {
     private String mUrl;
     private List<ScenesBean> mScenes;
     private String mContentId;
+    private ImageView mBackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,8 @@ public class GameActivity extends Activity {
         mEggsLayout = (RecyclerView) findViewById(R.id.rv_game_eggs);
         mEggsLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
         mSharedBtn = (ImageView) findViewById(R.id.iv_game_confirm);
+        mBackBtn = (ImageView) findViewById(R.id.iv_game_back);
+
         initFloatView();
         initWebView();
         initAlphaController();
@@ -280,6 +283,13 @@ public class GameActivity extends Activity {
             public void onClick(View v) {
                 mEggsContainer.setVisibility(View.VISIBLE);
                 positionAlphaController(ALPHA_CONTROLLER_POSITION_ABOVE_EGGS);
+            }
+        });
+
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameActivity.this.finish();
             }
         });
     }
