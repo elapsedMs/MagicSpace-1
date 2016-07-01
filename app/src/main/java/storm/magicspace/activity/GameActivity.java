@@ -34,6 +34,8 @@ import storm.commonlib.common.util.LogUtil;
 import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.R;
 import storm.magicspace.adapter.EggsAdapter;
+import storm.magicspace.bean.IssueUCGContent;
+import storm.magicspace.bean.UpdateData;
 import storm.magicspace.bean.httpBean.EggImage;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
@@ -67,6 +69,8 @@ public class GameActivity extends Activity {
     private ImageView mCreateEggBtn;
     private String mUrl;
     private Button sureBtn;
+    private List<IssueUCGContent.ScenesBean> mScenes;
+    private String mContentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,20 +105,25 @@ public class GameActivity extends Activity {
         mEggsLayout.setLayoutManager(new GridLayoutManager(this, 1, OrientationHelper.HORIZONTAL, false));
         new GetEggImageListTask().execute();
         new IssueUGCContentTask().execute();
-        new UpdateUGCContentTask().execute();
+
     }
 
     private class IssueUGCContentTask extends BaseASyncTask<Void, IssueUCGContentResponse> {
 
         @Override
         public IssueUCGContentResponse doRequest(Void param) {
-            String contentId = getRandomContentId();
-            return HTTPManager.issueUCCContent("", "", "", contentId);
+            mContentId = getRandomContentId();
+            return HTTPManager.issueUCCContent("", "", "", mContentId);
         }
 
         @Override
         public void onSuccess(IssueUCGContentResponse issueUCGContentResponse) {
             super.onSuccess(issueUCGContentResponse);
+            IssueUCGContent data = issueUCGContentResponse.getData();
+            List<IssueUCGContent.ScenesBean> scenes = data.getScenes();
+            if (scenes != null) {
+                mScenes = scenes;
+            }
         }
 
         @Override
@@ -136,7 +145,27 @@ public class GameActivity extends Activity {
 
         @Override
         public UpdateUGCContentScenesResponse doRequest(Void param) {
-            return HTTPManager.updateUGCContentScenes("", "", "");
+            if (mScenes != null) {
+                UpdateData updateData = new UpdateData();
+                updateData.setBgimageUrl(mContentId);
+                updateData.setItemsCount(mEggsCount);
+                updateData.setOrder(mEggsCount);
+                updateData.setTimeLimit(120);
+                updateData.setTips("");
+                UpdateData.ItemsBean items = new UpdateData.ItemsBean();
+                items.setItemId("");//
+                items.setX("1");
+                items.setY("2");
+                items.setItemMediaUrl("http://app.stemmind.com/vr/objs/08.png");
+                items.setScalex("1.0");
+                items.setRotatez("20");
+                items.setTransparency("0.5");
+                items.setEnabled("1");
+                updateData.setItems(items);
+                HTTPManager.updateUGCContentScenes("", mContentId,
+                        JsonUtil.toJson(updateData));
+            }
+            return null;
         }
 
         @Override
@@ -252,6 +281,7 @@ public class GameActivity extends Activity {
                 }
                 updateEggsCountHint(EGG_INIT_COUNT - mEggsCount);
                 createEgg();
+                new UpdateUGCContentTask().execute();
 
             }
         });

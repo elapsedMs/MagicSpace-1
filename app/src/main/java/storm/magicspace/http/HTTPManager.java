@@ -120,7 +120,7 @@ public class HTTPManager {
                 EMPTY,
                 UpdateUGCContentScenesResponse.class,
                 "userId", "3970430042189702",
-                "contendId", contendId,
+                "contentId", contendId,
                 "data", data
         );
     }
