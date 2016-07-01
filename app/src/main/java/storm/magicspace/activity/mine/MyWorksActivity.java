@@ -10,7 +10,6 @@ import java.util.List;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
-import storm.magicspace.adapter.CachedAdapter;
 import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
