@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +26,11 @@ import storm.magicspace.util.LocalSPUtil;
 
 public class MyFragment extends BaseFragment {
 
-    private TextView nameTv;
+    private EditText nameEt;
     private RoundedImageView advator;
     private TextView money;
     private TextView level;
+    private TextView editNickNameTv;
 
     @Nullable
     @Override
@@ -44,14 +46,16 @@ public class MyFragment extends BaseFragment {
         task.execute();
     }
 
+
     @Override
     public void initView(View view) {
         super.initView(view);
 
+        editNickNameTv = (TextView) findEventView(view, R.id.edit_my_account);
         findEventView(view, R.id.my_siv_wroks);
         findEventView(view, R.id.my_siv_collection);
         findEventView(view, R.id.my_siv_fresh_help);
-        nameTv = (TextView) findView(view, R.id.mine_tv_name);
+        nameEt = (EditText) findView(view, R.id.mine_tv_name);
         advator = (RoundedImageView) findView(view, R.id.mine_ri_avatar);
         money = (TextView) findView(view, R.id.money);
         level = (TextView) findView(view, R.id.level);
@@ -69,6 +73,11 @@ public class MyFragment extends BaseFragment {
             case R.id.my_siv_collection:
                 goToNext(MyCollectionActivity.class);
                 break;
+
+            case R.id.edit_my_account:
+                nameEt.setEnabled(true);
+                break;
+
         }
     }
 
@@ -97,7 +106,7 @@ public class MyFragment extends BaseFragment {
             level.setText(data.getTotalCredit());
 
             Picasso.with(getActivity()).load(data.getPortraitImage()).into(advator);
-            nameTv.setText(LocalSPUtil.getAccountInfo().getUser_name());
+            nameEt.setText(LocalSPUtil.getAccountInfo().getUser_name());
         }
     }
 
