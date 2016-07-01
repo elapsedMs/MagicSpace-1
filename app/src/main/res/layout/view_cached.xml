@@ -9,9 +9,9 @@
     android:paddingRight="@dimen/px_22">
 
     <storm.magicspace.view.AlbumPicView
-        android:id="@+id/left"
-        android:layout_width="@dimen/px_262"
-        android:layout_height="@dimen/px_148"
+        android:id="@+id/apv_left"
+        android:layout_width="@dimen/px_252"
+        android:layout_height="@dimen/px_164"
         android:paddingBottom="@dimen/px_16"
         android:paddingTop="@dimen/px_16" />
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/left"
+        android:layout_toRightOf="@id/apv_left"
         android:orientation="vertical"
         android:paddingLeft="@dimen/px_22">
 
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="加勒比"
-            android:textColor="#828282"
+            android:textColor="#000000"
             android:textSize="@dimen/px_30" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px_8"
             android:text="风景"
-            android:textColor="#000000"
+            android:textColor="#828282"
             android:textSize="@dimen/px_22" />
 
         <TextView
@@ -47,11 +47,12 @@
             android:layout_height="wrap_content"
              android:layout_marginTop="@dimen/px_8"
             android:text="下载次数"
-            android:textColor="#000000"
+            android:textColor="#828282"
             android:textSize="@dimen/px_18" />
     </LinearLayout>
 
     <TextView
+        android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

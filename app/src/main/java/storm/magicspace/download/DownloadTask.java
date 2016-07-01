@@ -155,6 +155,7 @@ public class DownloadTask {
 
                         // 在下载暂停时，保存下载进度
                         if (isPause) {
+                            mFileInfo.finished = mFinised * 100 / mFileInfo.length;
                             mDao.updateUnFinishFileByContentId(mFileInfo);
                             mDao.updateThread(mThreadInfo.url,
                                     mThreadInfo.id,
@@ -212,6 +213,9 @@ public class DownloadTask {
             // 删除下载记录
             mDao.deleteThread(mFileInfo.url);
             mDao.deleteUnFinishFileByContentId(mFileInfo.id);
+            mFileInfo.finished = 100;
+            mFileInfo.isStart = false;
+            mFileInfo.isDownLoadFinish = true;
             mDao.insertFinishFileifNotExists(mFileInfo);
             // 发送广播知道UI下载任务结束
             Intent intent = new Intent(DownloadService.ACTION_FINISH);

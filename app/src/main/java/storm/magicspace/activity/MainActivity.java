@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -189,6 +190,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         super.onDestroy();
     }
 
-
+    // 改写物理按键——返回的逻辑
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            tryExit();
+        }
+        return false;
+    }
 }
 

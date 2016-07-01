@@ -30,6 +30,7 @@ import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.download.FileInfo;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AlbumResponse;
+import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumTitleView;
 import storm.magicspace.view.GridItemDecoration;
 
@@ -94,6 +95,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
                 FileInfo fileInfo = new FileInfo(albumList.get(position).getContentId(), "http://www.imooc.com/mobile/imooc.apk", 0, albumList.get(position).getNickName() + ".apk", 0, false, false);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("file_info", fileInfo);
+                bundle.putSerializable("album", albumList.get(position));
                 goToNext(CacheingActivity.class, bundle);
             }
         });
@@ -148,6 +150,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         @Override
         public void onSuccess(AlbumResponse albumResponse) {
             super.onSuccess(albumResponse);
+            LocalSPUtil.saveAlbum(albumResponse.data);
             albumList.clear();
             albumList.addAll(albumResponse.data);
             adapter.update(albumResponse.data);
