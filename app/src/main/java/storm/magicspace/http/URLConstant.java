@@ -56,6 +56,9 @@ public class URLConstant {
     //更新UGC主题
     public static final String URL_UPDATE_UGC_CONTENT_SCENES = "updateUGCContentScenes";
 
+    //同步账户信息
+    public static final String URL_SYNC_ACCOUNT = "syncAccount";
+
     //登录
     public static final String LOGIN = "apilogin";
 
@@ -68,4 +71,6 @@ public class URLConstant {
     //魔镜API的Key
     public static String MJ_KEY = "Bf@)(*$s1&2^3XVF#Mj";
     public static final String MJ_USER_CENTER_KEY = "0p9o8i7u";
+
+    public static final String SHARED_URL = "http://app.stemmind.com/vr/a/player.php?contentId=3403";
 }

@@ -21,19 +21,27 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
+import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.LogUtil;
+import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.R;
 import storm.magicspace.adapter.EggsAdapter;
+import storm.magicspace.bean.IssueUCGContent;
+import storm.magicspace.bean.UpdateData;
 import storm.magicspace.bean.httpBean.EggImage;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.URLConstant;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
 
@@ -61,6 +69,8 @@ public class GameActivity extends Activity {
     private ImageView mCreateEggBtn;
     private String mUrl;
     private Button sureBtn;
+    private List<IssueUCGContent.ScenesBean> mScenes;
+    private String mContentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,19 +105,25 @@ public class GameActivity extends Activity {
         mEggsLayout.setLayoutManager(new GridLayoutManager(this, 1, OrientationHelper.HORIZONTAL, false));
         new GetEggImageListTask().execute();
         new IssueUGCContentTask().execute();
-        new UpdateUGCContentTask().execute();
+
     }
 
     private class IssueUGCContentTask extends BaseASyncTask<Void, IssueUCGContentResponse> {
 
         @Override
         public IssueUCGContentResponse doRequest(Void param) {
-            return HTTPManager.issueUCCContent("", "", "");
+            mContentId = getRandomContentId();
+            return HTTPManager.issueUCCContent("", "", "", mContentId);
         }
 
         @Override
         public void onSuccess(IssueUCGContentResponse issueUCGContentResponse) {
             super.onSuccess(issueUCGContentResponse);
+            IssueUCGContent data = issueUCGContentResponse.getData();
+            List<IssueUCGContent.ScenesBean> scenes = data.getScenes();
+            if (scenes != null) {
+                mScenes = scenes;
+            }
         }
 
         @Override
@@ -116,11 +132,40 @@ public class GameActivity extends Activity {
         }
     }
 
+    private String getRandomContentId() {
+        String contentJson = SharedPreferencesUtil.getJsonFromSharedPreferences(this,
+                CommonConstants.CONTEND_IDS);
+        ArrayList contentList = JsonUtil.fromJson(contentJson, ArrayList.class);
+        Random random = new Random();
+        int id = random.nextInt(contentList.size());
+        return (String) contentList.get(id);
+    }
+
     private class UpdateUGCContentTask extends BaseASyncTask<Void, UpdateUGCContentScenesResponse> {
 
         @Override
         public UpdateUGCContentScenesResponse doRequest(Void param) {
-            return HTTPManager.updateUGCContentScenes("", "", "");
+            if (mScenes != null) {
+                UpdateData updateData = new UpdateData();
+                updateData.setBgimageUrl(mContentId);
+                updateData.setItemsCount(mEggsCount);
+                updateData.setOrder(mEggsCount);
+                updateData.setTimeLimit(120);
+                updateData.setTips("");
+                UpdateData.ItemsBean items = new UpdateData.ItemsBean();
+                items.setItemId("");//
+                items.setX("1");
+                items.setY("2");
+                items.setItemMediaUrl("http://app.stemmind.com/vr/objs/08.png");
+                items.setScalex("1.0");
+                items.setRotatez("20");
+                items.setTransparency("0.5");
+                items.setEnabled("1");
+                updateData.setItems(items);
+                HTTPManager.updateUGCContentScenes("", mContentId,
+                        JsonUtil.toJson(updateData));
+            }
+            return null;
         }
 
         @Override
@@ -236,6 +281,7 @@ public class GameActivity extends Activity {
                 }
                 updateEggsCountHint(EGG_INIT_COUNT - mEggsCount);
                 createEgg();
+                new UpdateUGCContentTask().execute();
 
             }
         });
@@ -369,7 +415,7 @@ public class GameActivity extends Activity {
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(getString(R.string.share));
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://app.stemmind.com/vr/a/tour.html");
+        oks.setTitleUrl(URLConstant.SHARED_URL);
         // text是分享文本，所有平台都需要这个字段
         oks.setText("我是分享文本");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
@@ -381,7 +427,7 @@ public class GameActivity extends Activity {
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://app.stemmind.com/vr/a/tour.html");
+        oks.setSiteUrl(URLConstant.SHARED_URL);
 
 // 启动分享GUI
         oks.show(GameActivity.this);

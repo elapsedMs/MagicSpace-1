@@ -77,6 +77,7 @@ public class HttpUtils {
                         String val = entry.getValue().toString();
                         currentBody = currentBody + "" + key + "=" + val + (iter.hasNext() ? ";" : "");
                     }
+
                 m.setRequestBody(currentBody);
                 LogUtil.i("HttpUtils", "requestType: " + requestType + "         path: " + url + "\n currentBody : " + currentBody + "\n");
 

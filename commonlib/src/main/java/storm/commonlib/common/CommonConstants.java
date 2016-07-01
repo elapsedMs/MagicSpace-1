@@ -13,4 +13,5 @@ public class CommonConstants {
     public static final int ACTIVITY_STYLE_WITH_TITLE_BAR = 3;
     public static final int ACTIVITY_STYLE_WITH_TITLE_BAR_AND_LOADING = 4;
 
+    public static final String CONTEND_IDS = "contend_ids";
 }

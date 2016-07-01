@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -32,6 +30,7 @@ import storm.magicspace.adapter.EggsAdapter;
 import storm.magicspace.bean.httpBean.EggImage;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.URLConstant;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
 
@@ -296,7 +295,7 @@ public class EggGamePreviewActivity extends Activity {
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(getString(R.string.share));
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://app.stemmind.com/vr/a/tour.html");
+        oks.setTitleUrl(URLConstant.SHARED_URL);
         // text是分享文本，所有平台都需要这个字段
         oks.setText("我是分享文本");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
@@ -308,7 +307,7 @@ public class EggGamePreviewActivity extends Activity {
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://app.stemmind.com/vr/a/tour.html");
+        oks.setSiteUrl(URLConstant.SHARED_URL);
 
 // 启动分享GUI
         oks.show(EggGamePreviewActivity.this);

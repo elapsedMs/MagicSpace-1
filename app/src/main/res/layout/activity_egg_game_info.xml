@@ -6,7 +6,7 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_egg"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/px_200" />
 
     <LinearLayout
@@ -61,6 +61,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tv_egg_game_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_egg_game_title"
@@ -92,6 +93,7 @@
             </LinearLayout>
 
             <Button
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -113,7 +115,6 @@
             android:id="@+id/bt_egg_game_info_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/distance_xxl"
             android:background="@drawable/btn_bg_login"
@@ -121,10 +122,12 @@
             android:paddingLeft="80dp"
             android:paddingRight="80dp"
             android:text="@string/preview"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_s" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/bt_egg_game_info_download"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

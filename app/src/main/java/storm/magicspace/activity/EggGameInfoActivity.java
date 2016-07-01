@@ -1,9 +1,11 @@
 package storm.magicspace.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -16,6 +18,7 @@ import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 import storm.magicspace.adapter.ViewPagerAdatper;
 import storm.magicspace.bean.CirclePic;
+import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 
@@ -23,6 +26,9 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
     private ViewPager viewPager;
     private List<CirclePic> circlePicList = new ArrayList<>();
     private List<ImageView> imageViews = new ArrayList<>();
+    private EggInfo info;
+    private TextView tv_egg_game_zan, tv_egg_game_des;
+
     public EggGameInfoActivity() {
         super(R.layout.activity_egg_game_info, CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR);
     }
@@ -30,13 +36,22 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
     @Override
     public void initView() {
         super.initView();
-        viewPager = (ViewPager)findViewById(R.id.viewpager_egg);
+        viewPager = (ViewPager) findViewById(R.id.viewpager_egg);
         viewPager.setOnPageChangeListener(EggGameInfoActivity.this);
         findEventView(R.id.bt_egg_game_info_preview);
-        findEventView(R.id.bt_egg_game_info_download);
+        tv_egg_game_zan = findView(R.id.tv_egg_game_zan);
+        tv_egg_game_des = findView(R.id.tv_egg_game_des);
         setActivityTitle(getString(R.string.game_info));
         setTitleRightBtVisibility(View.GONE);
         setTitleLeftBtVisibility(View.VISIBLE);
+        Intent intent = this.getIntent();
+        info = (EggInfo) intent.getSerializableExtra("game_info");
+        if (info != null) {
+            tv_egg_game_zan.setText("有" + info.appreciateCount == null ? "" : info.appreciateCount + "人点赞");
+            tv_egg_game_des.setText(info.description == null ? "" : info.description);
+
+        }
+
     }
 
     @Override
@@ -76,7 +91,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
 
     }
 
-    private class CirclePicTask extends BaseASyncTask<Void,CirclePicResponse> {
+    private class CirclePicTask extends BaseASyncTask<Void, CirclePicResponse> {
         @Override
         public CirclePicResponse doRequest(Void param) {
             return HTTPManager.getAlbumCirclePic();

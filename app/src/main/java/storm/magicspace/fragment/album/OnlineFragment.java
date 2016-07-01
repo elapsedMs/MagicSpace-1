@@ -1,6 +1,5 @@
 package storm.magicspace.fragment.album;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,35 +13,28 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
-import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.magicspace.R;
 import storm.magicspace.activity.album.CacheingActivity;
-import storm.magicspace.activity.album.ClassifyRecommendActivity;
 import storm.magicspace.activity.album.GuessYouLikeActivity;
-import storm.magicspace.activity.album.HeatActivity;
 import storm.magicspace.activity.album.WebActivity;
 import storm.magicspace.adapter.OnlineRVAdapter;
 import storm.magicspace.adapter.ViewPagerAdatper;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.CirclePic;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
-import storm.magicspace.download.DownloadService;
 import storm.magicspace.download.FileInfo;
-import storm.magicspace.event.UrlEvent;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumTitleView;
 import storm.magicspace.view.GridItemDecoration;
 
-import static storm.magicspace.R.*;
+import static storm.magicspace.R.id;
 
 /**
  * Created by gdq on 16/6/16.
@@ -161,7 +153,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
             LocalSPUtil.saveAlbum(albumResponse.data);
             albumList.clear();
             albumList.addAll(albumResponse.data);
-            adapter.notifyDataSetChanged();
+            adapter.update(albumResponse.data);
         }
     }
 
