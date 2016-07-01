@@ -75,7 +75,7 @@ public class HttpUtils {
                         HashMap.Entry entry = (Map.Entry) iter.next();
                         String key = entry.getKey().toString();
                         String val = entry.getValue().toString();
-                        currentBody = currentBody + "" + key + "=" + val + (iter.hasNext() ? ";" : "");
+                        currentBody = currentBody + "" + key + "=" + val + (iter.hasNext() ? "&" : "");
                     }
 
                 m.setRequestBody(currentBody);

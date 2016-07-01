@@ -92,7 +92,7 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
     private class GetMyCollectionTask extends BaseASyncTask<String, MyCollectionResponse> {
         @Override
         public MyCollectionResponse doRequest(String param) {
-            return HTTPManager.getMyCollection("");
+            return HTTPManager.getMyCollection("", "game");
         }
 
         @Override
