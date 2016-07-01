@@ -51,6 +51,7 @@ public class GameActivity extends Activity {
     public static final String ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM = "bottom";
     public static final String ALPHA_CONTROLLER_POSITION_ABOVE_EGGS = "above_eggs";
     public static final int EGG_INIT_COUNT = 5;
+    public static final String DEFAULT_CONTENT_ID = "3403";
 
     private WebView mWebView;
     private FloatView mFloatView;
@@ -135,7 +136,9 @@ public class GameActivity extends Activity {
     private String getRandomContentId() {
         String contentJson = SharedPreferencesUtil.getJsonFromSharedPreferences(this,
                 CommonConstants.CONTEND_IDS);
+        if (contentJson == null) return DEFAULT_CONTENT_ID;
         ArrayList contentList = JsonUtil.fromJson(contentJson, ArrayList.class);
+        if (contentList == null || contentList.size() == 0) return DEFAULT_CONTENT_ID;
         Random random = new Random();
         int id = random.nextInt(contentList.size());
         return (String) contentList.get(id);
