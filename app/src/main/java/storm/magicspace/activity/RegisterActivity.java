@@ -62,7 +62,7 @@ public class RegisterActivity extends BaseActivity {
                 }
 
                 getVerifyCode.setClickable(false);
-                getVerifyCode.setText(String.format("%d%s", msg.what, EMPTY));
+                getVerifyCode.setText(String.format("%d%s", msg.what, "秒以后再次获取"));
             }
         };
     }
@@ -122,7 +122,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void statCountTime() {
         task = new TimerTask() {
-            int second = 10;
+            int second = 60;
 
             @Override
             public void run() {
