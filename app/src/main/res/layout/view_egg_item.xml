@@ -36,14 +36,16 @@
     <ImageView
         android:id="@+id/iv_egg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/px_414"
         android:layout_gravity="center"
+        android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/px_6">
 
         <LinearLayout
             android:layout_width="0dp"

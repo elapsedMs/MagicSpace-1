@@ -6,9 +6,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
+import storm.commonlib.common.util.JsonUtil;
+import storm.commonlib.common.util.JsonUtil;
 import storm.magicspace.R;
+import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.http.AccountHttpManager;
+import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.LoginResponse;
 import storm.magicspace.util.LocalSPUtil;
 
@@ -68,6 +73,28 @@ public class LoginActivity extends BaseActivity {
         new LoginTask().execute(name, password);
     }
 
+    private class SyncTask extends BaseASyncTask<String[], SyncAccountResponse> {
+
+        @Override
+        public SyncAccountResponse doRequest(String[] param) {
+            return HTTPManager.syncAccount(param[0], param[1]);
+        }
+
+        @Override
+        public void onSuccess(SyncAccountResponse syncAccountResponse) {
+            super.onSuccess(syncAccountResponse);
+            Toast.makeText(LoginActivity.this, "sync success", Toast.LENGTH_SHORT).show();
+            goToNext(MainActivity.class);
+        }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+            Toast.makeText(LoginActivity.this, "sync failed", Toast.LENGTH_SHORT).show();
+            goToNext(MainActivity.class);
+        }
+    }
+
     private class LoginTask extends AsyncTask<String, Void, LoginResponse> {
 
         @Override
@@ -78,18 +105,23 @@ public class LoginActivity extends BaseActivity {
         @Override
         protected void onPostExecute(LoginResponse loginResponse) {
             super.onPostExecute(loginResponse);
+
+            if (loginResponse == null) {
+                Toast.makeText(LoginActivity.this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (loginResponse == null) return;
 
             if (!loginResponse.isStatus()) {
                 Toast.makeText(LoginActivity.this, loginResponse.getMsg(), Toast.LENGTH_SHORT).show();
                 return;
             }
-
+            new SyncTask().execute(new String[]{loginResponse.getData().getUser_no(),
+                    JsonUtil.convertObjectToJson(loginResponse)});
             LocalSPUtil.saveLoginAccountId(loginResponse.getData().getUser_no());
             LocalSPUtil.saveAccountInfo(loginResponse.getData());
-            goToNext(MainActivity.class);
         }
 
     }
-
 }
