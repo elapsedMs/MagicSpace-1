@@ -12,6 +12,7 @@ import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.http.reponse.EggHttpResponse;
+import storm.magicspace.util.LocalSPUtil;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
 
@@ -51,28 +52,28 @@ public class HTTPManager {
      */
     public static MyWorksResponse getMyWorks(String userId, String authorId) {
         return ServiceUtils.request(
-                RequestTypes.GET,
+                RequestTypes.POST,
                 URLConstant.URL_GET_MY_WORKS,
                 EMPTY,
                 MyWorksResponse.class,
-                "userId", "3970430042189702",
-                "authorId", "3970430042189702"
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
+                "authorId", LocalSPUtil.getAccountInfo().getUser_no()
         );
     }
 
     /**
      * 获取我的收藏
      *
-     * @param userId
      * @return
      */
-    public static MyCollectionResponse getMyCollection(String userId) {
+    public static MyCollectionResponse getMyCollection(String type) {
         return ServiceUtils.request(
-                RequestTypes.GET,
-                URLConstant.URL_GET_MY_WORKS,
+                RequestTypes.POST,
+                URLConstant.URL_GET_MY_COLLECTION,
                 EMPTY,
                 MyCollectionResponse.class,
-                "userId", "3970430042189702"
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
+                "contentTypeId", type
         );
     }
 
@@ -127,12 +128,12 @@ public class HTTPManager {
 
     public static SyncAccountResponse syncAccount(String userId, String data) {
         return ServiceUtils.request(
-            RequestTypes.POST,
-                    URLConstant.URL_SYNC_ACCOUNT,
-                    EMPTY,
-                    SyncAccountResponse.class,
-                    "userId", userId,
-                    "data", data
+                RequestTypes.POST,
+                URLConstant.URL_SYNC_ACCOUNT,
+                EMPTY,
+                SyncAccountResponse.class,
+                "userId", userId,
+                "data", data
         );
     }
 
@@ -156,6 +157,19 @@ public class HTTPManager {
                 "userId", "0",
                 "page", "1",
                 "pageSize", "2"
+        );
+    }
+
+    public static EggHttpResponse addReport() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.ADDREPORT,
+                EMPTY,
+                EggHttpResponse.class,
+                "userId", "0",
+                "versionCode", "1",
+                "content", "1",
+                "contact", "1"
         );
     }
 }

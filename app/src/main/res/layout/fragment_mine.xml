@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:gdq="http://schemas.android.com/apk/res-auto"
+                xmlns:makeramen="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/light_gray">
@@ -9,34 +10,47 @@
         android:id="@+id/mine_rl_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#765a8c">
+        android:background="@mipmap/mine_hand_bg">
 
         <TextView
+            android:id="@+id/edit_my_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/px_18"
+            android:layout_marginTop="@dimen/px_46"
+            android:text="修改昵称"
+            android:visibility="gone"
+            android:textColor="@color/white"/>
+
+        <EditText
             android:id="@+id/mine_tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/px_40"
+            android:background="#00000000"
+            android:enabled="false"
             android:text="笑笑"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_s"/>
 
-
         <storm.commonlib.common.view.RoundedImageView
             android:id="@+id/mine_ri_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/px_176"
+            android:layout_height="@dimen/px_176"
             android:layout_below="@+id/mine_tv_name"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:background="@drawable/icon_all_status"/>
+            makeramen:border_width="0dp"
+            makeramen:corner_radius="88dip"/>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/mine_ri_avatar"
-            android:layout_marginBottom="@dimen/distance_xxl"
+            android:layout_marginBottom="@dimen/distance_xxxl"
             android:layout_marginTop="@dimen/distance_xxl"
             android:orientation="horizontal">
 
@@ -52,14 +66,15 @@
                     android:layout_height="wrap_content"
                     android:text="等级"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_xs"/>
+                    android:textSize="@dimen/text_size_s"/>
 
                 <TextView
+                    android:id="@+id/level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="9"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_xs"/>
+                    android:textSize="@dimen/text_size_s"/>
 
             </LinearLayout>
 
@@ -75,42 +90,17 @@
                     android:layout_height="wrap_content"
                     android:text="金币"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_xs"/>
+                    android:textSize="@dimen/text_size_s"/>
 
                 <TextView
+                    android:id="@+id/money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="9999"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_xs"/>
+                    android:textSize="@dimen/text_size_s"/>
 
             </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="关注"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_xs"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="9999"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_xs"/>
-
-            </LinearLayout>
-
-
         </LinearLayout>
 
     </RelativeLayout>
@@ -157,13 +147,13 @@
             android:layout_height="0.5dp"
             android:background="@color/light_gray"/>
 
-        <storm.commonlib.common.view.SimpleItemView
-            android:id="@+id/my_siv_eggs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            gdq:sv_name="自制彩蛋"
-            gdq:sv_style="style_have_arrow">
-        </storm.commonlib.common.view.SimpleItemView>
+        <!--<storm.commonlib.common.view.SimpleItemView-->
+        <!--android:id="@+id/my_siv_eggs"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--gdq:sv_name="自制彩蛋"-->
+        <!--gdq:sv_style="style_have_arrow">-->
+        <!--</storm.commonlib.common.view.SimpleItemView>-->
 
 
         <View
@@ -184,8 +174,6 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/light_gray"/>
-
-
     </LinearLayout>
 
 </RelativeLayout>

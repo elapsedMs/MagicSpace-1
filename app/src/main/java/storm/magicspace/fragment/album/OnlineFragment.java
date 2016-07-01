@@ -87,7 +87,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
             @Override
             public void onItemClick(int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString("url", albumList.get(position).getUrl());
+                bundle.putString("url", "http://app.stemmind.com/vr/a/preview.php?c=" + albumList.get(position).getContentId());
                 goToNext(WebActivity.class, bundle);
             }
 

@@ -55,5 +55,6 @@
     <dimen name="distance_xl">@dimen/px_22</dimen>
     <dimen name="distance_xxl">@dimen/px_24</dimen>
     <dimen name="distance_sl">@dimen/px_32</dimen>
+    <dimen name="distance_xxxl">@dimen/px_36</dimen>
 
 </resources>

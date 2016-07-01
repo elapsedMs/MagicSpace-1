@@ -70,14 +70,12 @@
 
     <Button
         android:id="@+id/bt_login"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/px_100"
+        android:layout_width="@dimen/px_620"
+        android:layout_height="@dimen/px_80"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/distance_xxl"
-        android:background="@drawable/btn_bg_login"
+        android:layout_marginTop="@dimen/px_96"
+        android:background="@drawable/btn_bg"
         android:gravity="center"
-        android:paddingLeft="80dp"
-        android:paddingRight="80dp"
         android:text="登 录"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_s"/>

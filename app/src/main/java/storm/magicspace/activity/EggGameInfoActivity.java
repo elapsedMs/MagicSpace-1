@@ -23,7 +23,7 @@ import storm.magicspace.http.HTTPManager;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 
 public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
-    private ViewPager viewPager;
+//    private ViewPager viewPager;
     private List<CirclePic> circlePicList = new ArrayList<>();
     private List<ImageView> imageViews = new ArrayList<>();
     private EggInfo info;
@@ -36,8 +36,8 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
     @Override
     public void initView() {
         super.initView();
-        viewPager = (ViewPager) findViewById(R.id.viewpager_egg);
-        viewPager.setOnPageChangeListener(EggGameInfoActivity.this);
+//        viewPager = (ViewPager) findViewById(R.id.viewpager_egg);
+//        viewPager.setOnPageChangeListener(EggGameInfoActivity.this);
         findEventView(R.id.bt_egg_game_info_preview);
         tv_egg_game_zan = findView(R.id.tv_egg_game_zan);
         tv_egg_game_des = findView(R.id.tv_egg_game_des);
@@ -57,7 +57,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
     @Override
     public void initData() {
         super.initData();
-        new CirclePicTask().execute();
+//        new CirclePicTask().execute();
     }
 
     @Override
@@ -65,7 +65,12 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
         super.onLocalClicked(resId);
         switch (resId) {
             case R.id.bt_egg_game_info_preview:
-                goToNext(EggGamePreviewActivity.class);
+//                goToNext(EggGamePreviewActivity.class);
+                Intent intent = new Intent(EggGameInfoActivity.this,EggGamePreviewActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("game_info", info);
+                intent.putExtras(bundle);
+                this.startActivity(intent);
                 break;
 
             case R.id.bt_egg_game_info_download:
@@ -91,26 +96,26 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
 
     }
 
-    private class CirclePicTask extends BaseASyncTask<Void, CirclePicResponse> {
-        @Override
-        public CirclePicResponse doRequest(Void param) {
-            return HTTPManager.getAlbumCirclePic();
-        }
-
-        @Override
-        public void onSuccess(CirclePicResponse albumResponse) {
-            super.onSuccess(albumResponse);
-            circlePicList = albumResponse.data;
-            imageViews.clear();
-//            title.setText(circlePicList.get(0).getTitle());
-//            desc.setText("没字段");
-            for (int i = 0; i < circlePicList.size(); i++) {
-                ImageView imageView = new ImageView(EggGameInfoActivity.this);
-                Picasso.with(EggGameInfoActivity.this).load(circlePicList.get(i).getUrl()).into(imageView);
-                imageViews.add(imageView);
-            }
-            viewPager.setAdapter(new ViewPagerAdatper(imageViews));
-
-        }
-    }
+//    private class CirclePicTask extends BaseASyncTask<Void, CirclePicResponse> {
+//        @Override
+//        public CirclePicResponse doRequest(Void param) {
+//            return HTTPManager.getAlbumCirclePic();
+//        }
+//
+//        @Override
+//        public void onSuccess(CirclePicResponse albumResponse) {
+//            super.onSuccess(albumResponse);
+//            circlePicList = albumResponse.data;
+//            imageViews.clear();
+////            title.setText(circlePicList.get(0).getTitle());
+////            desc.setText("没字段");
+//            for (int i = 0; i < circlePicList.size(); i++) {
+//                ImageView imageView = new ImageView(EggGameInfoActivity.this);
+//                Picasso.with(EggGameInfoActivity.this).load(circlePicList.get(i).getUrl()).into(imageView);
+//                imageViews.add(imageView);
+//            }
+//            viewPager.setAdapter(new ViewPagerAdatper(imageViews));
+//
+//        }
+//    }
 }

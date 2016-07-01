@@ -9,7 +9,6 @@ import android.widget.Toast;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.util.JsonUtil;
-import storm.commonlib.common.util.JsonUtil;
 import storm.magicspace.R;
 import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.http.AccountHttpManager;
@@ -33,7 +32,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setActivityTitle("登录");
-        setActivityTitleAndTextColor(R.color.title_color_gray, R.color.title_color);
+//        setActivityTitleAndTextColor(R.color.title_color_gray, R.color.title_color);
         setRightText(R.string.register);
         setTitleBarRightTvVisibility(View.VISIBLE);
 

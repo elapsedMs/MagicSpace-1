@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by pengyong on 2016/6/25.
  */
-public class EggInfo implements Serializable{
+public class EggInfo implements Serializable {
     public String userId;
     public String nickName;
     public String portraitImage;
@@ -20,4 +20,7 @@ public class EggInfo implements Serializable{
     public String isCollected;
     public String isAppreciated;
     public String description;
+
+
+    //// TODO: 16/7/1 需要加一个字段 isAudit
 }

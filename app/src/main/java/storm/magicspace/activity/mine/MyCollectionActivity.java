@@ -85,6 +85,4 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
     public void onPageScrollStateChanged(int state) {
 
     }
-
-
 }

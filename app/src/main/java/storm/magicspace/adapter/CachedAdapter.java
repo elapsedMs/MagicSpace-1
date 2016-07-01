@@ -55,7 +55,7 @@ public class CachedAdapter extends BaseAdapter {
             holder.albumPicView = (AlbumPicView) convertView.findViewById(R.id.apv_left);
             holder.nameTv = (TextView) convertView.findViewById(R.id.name);
             holder.descTv = (TextView) convertView.findViewById(R.id.desc);
-            holder.countTv = (TextView) convertView.findViewById(R.id.download_count);
+            holder.countTv = (TextView) convertView.findViewById(R.id.download_cgiount);
             holder.btnTv = (TextView) convertView.findViewById(R.id.btn);
             convertView.setTag(holder);
         } else {
