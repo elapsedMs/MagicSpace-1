@@ -41,7 +41,7 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
 
     @Override
     public OnlineRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d("gdq","onCreateViewHolder");
+        Log.d("gdq", "onCreateViewHolder");
         View view = LayoutInflater.from(context).inflate(R.layout.view_album_online, parent, false);
         final ViewHolder holder = new ViewHolder(view);
 
@@ -50,17 +50,17 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Log.d("gdq","onBindViewHolder");
+        Log.d("gdq", "onBindViewHolder");
         final Album item = list.get(position);
         Picasso.with(context).load(item.getThumbImageUrl()).into(holder.albumPicView.getBgIv());
         holder.descTv.setText(list.get(position).getDescription());
-        holder.nameTv.setText("没字段");
+        holder.nameTv.setText(list.get(position).getTitle());
         holder.albumPicView.setSupportTimes(item.getAppreciateCount());
         holder.albumPicView.setCollectTimes(item.getCommentCount());
         holder.father.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("gdq","father onClick ");
+                Log.d("gdq", "father onClick ");
                 onRecyclerViewClickListener.onItemClick(position);
             }
         });
@@ -68,16 +68,17 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
         holder.downloadIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("gdq","downloadIv onClick ");
+                Log.d("gdq", "downloadIv onClick ");
 
                 onRecyclerViewClickListener.onBtnClick(position);
             }
-        });  }
+        });
+    }
 
 
     @Override
     public int getItemCount() {
-        Log.d("gdq","getItemCount");
+        Log.d("gdq", "getItemCount");
         return list == null ? 0 : isLimit ? list.size() <= 6 ? list.size() : 6 : list.size();
     }
 

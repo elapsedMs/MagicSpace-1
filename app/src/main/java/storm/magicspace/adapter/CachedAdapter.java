@@ -72,7 +72,7 @@ public class CachedAdapter extends BaseAdapter {
             holder.btnTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "猴塞雷", 1).show();
+                    Toast.makeText(context, "跳转开发中", 1).show();
                 }
             });
         }

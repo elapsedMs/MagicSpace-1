@@ -1,12 +1,11 @@
 package storm.magicspace.bean;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by gdq on 16/6/19.
  */
-public class Album implements Serializable{
+public class Album implements Serializable {
 
 
     /**
@@ -40,6 +39,16 @@ public class Album implements Serializable{
     private String isCollected;
     private String isAppreciated;
     private String description;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    private String title;
 
     public String getUserId() {
         return userId;
