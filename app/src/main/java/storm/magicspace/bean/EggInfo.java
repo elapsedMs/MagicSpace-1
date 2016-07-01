@@ -21,6 +21,11 @@ public class EggInfo implements Serializable {
     public String isAppreciated;
     public String description;
 
+    public String playCount;
+    public String avgtime;
+    public String creditEarned;
+    public String itemCount;
+
 
     //// TODO: 16/7/1 需要加一个字段 isAudit
 }

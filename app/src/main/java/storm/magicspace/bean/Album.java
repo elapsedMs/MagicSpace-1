@@ -39,6 +39,7 @@ public class Album implements Serializable {
     private String isCollected;
     private String isAppreciated;
     private String description;
+    private String title;
 
     public String getTitle() {
         return title;
@@ -47,8 +48,6 @@ public class Album implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    private String title;
 
     public String getUserId() {
         return userId;

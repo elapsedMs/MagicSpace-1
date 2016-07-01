@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import storm.commonlib.common.base.BaseView;
-import storm.commonlib.common.util.ImageSize;
 import storm.magicspace.R;
 import storm.magicspace.bean.EggInfo;
 
@@ -39,27 +38,6 @@ public class EggItem extends BaseView {
     }
 
     @Override
-    public void bindData(Object object) {
-        super.bindData(object);
-        EggInfo info = (EggInfo) object;
-        if (info != null) {
-            tv_egg_name.setText(info.nickName == null ? "" : info.nickName);
-            Picasso.with(mContext).load(info.thumbImageUrl).into(iv_egg);
-            tv_egg_date.setText(info.createTime == null ? "" : info.createTime);
-            String time_str = "";
-            if (info.createTime != null) {
-                time_str = timestamp2Date(info.createTime);
-            }
-
-            if (time_str.length() > 16) {
-                tv_egg_date.setText(time_str.substring(0, 10));
-                tv_egg_works_time.setText(time_str.substring(10, 16));
-            }
-
-        }
-    }
-
-    @Override
     public void initView(Context context) {
         super.initView(context);
         tv_egg_name = (TextView) findViewById(R.id.tv_egg_name);
@@ -69,6 +47,31 @@ public class EggItem extends BaseView {
         tv_egg_works_gold = (TextView) findViewById(R.id.tv_egg_works_gold);
         tv_egg_works_time = (TextView) findViewById(R.id.tv_egg_works_time);
         iv_egg = (ImageView) findViewById(R.id.iv_egg);
+    }
+
+    @Override
+    public void bindData(Object object) {
+        super.bindData(object);
+        EggInfo info = (EggInfo) object;
+        if (info != null) {
+            tv_egg_works_mojing.setText(info.playCount == null ? "" : info.playCount);
+            tv_egg_works_gold.setText(info.creditEarned == null ? "" : info.creditEarned);
+            tv_egg_works_egg.setText(info.itemCount == null ? "" : info.itemCount);
+            tv_egg_name.setText(info.nickName == null ? "" : info.nickName);
+            Picasso.with(mContext).load(info.thumbImageUrl).into(iv_egg);
+            tv_egg_date.setText(info.createTime == null ? "" : info.createTime);
+            tv_egg_works_time.setText(info.avgtime == null ? "" : info.avgtime);
+            String time_str = "";
+
+            if (info.createTime != null) {
+                time_str = timestamp2Date(info.createTime);
+            }
+
+            if (time_str.length() > 16) {
+                tv_egg_date.setText(time_str.substring(0, 10));
+            }
+
+        }
     }
 
     /* 将10 or 13 位时间戳转为时间字符串
