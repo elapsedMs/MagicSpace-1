@@ -344,7 +344,7 @@ public class GameActivity extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mAlphaVal = progress * 1f / 100;
-                mFloatView.setAlpha(mAlphaVal);
+                mFloatView.setLocalAlpha(mAlphaVal);
                 Log.d(TAG, "alpha = " + mAlphaVal);
             }
 

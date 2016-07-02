@@ -4,9 +4,6 @@ public class HttpConstants {
     //    http://app.stemmind.com/3d/api/tp/index.php/getMaterialList
 
 
-    public static final int TIME_OUT = 3 * 1000;
-
-
     private static final String SERVER_DOMAIN_URL = "http://app.stemmind.com/";
     private static final String SERVER_SECOND_URL = "3d/api/tp/index.php/";
     private static final String SERVER_TEST_URL = "3d/api/do.php";

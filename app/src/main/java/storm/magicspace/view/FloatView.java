@@ -125,9 +125,9 @@ public class FloatView extends ImageView {
         if (mBitmap != null) {
             int bitmapWidth = mBitmap.getWidth();
             int bitmapHeight = mBitmap.getHeight();
-            mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
+            mBitmapDiagonalLen = Math.hypot(bitmapWidth, bitmapHeight);
             matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
-            matrix.postScale(mDensity, mDensity, mWidth/2, mHeight/2);
+            matrix.postScale(mDensity, mDensity, mWidth / 2, mHeight / 2);
             tMatrix.set(matrix);
         }
     }
@@ -220,7 +220,7 @@ public class FloatView extends ImageView {
             float y = vals[Matrix.MTRANS_Y];
 
             // scale
-            float scale = (float) Math.hypot(vals[Matrix.MSCALE_X], vals[Matrix.MSKEW_Y])/mDensity;
+            float scale = (float) Math.hypot(vals[Matrix.MSCALE_X], vals[Matrix.MSKEW_Y]) / mDensity;
 
             // rotate
             float degree = Math.round(Math.atan2(vals[Matrix.MSKEW_X],
@@ -409,7 +409,7 @@ public class FloatView extends ImageView {
             canvas.save();
 
             canvas.drawBitmap(mBitmap, matrix, mPaint);
-
+/////;.LKL.;/.LK,JMHNBG,./
             float val1 = values[2];
             float val2 = values[5];
             float val3 = values[0] * width + values[2];
@@ -452,6 +452,10 @@ public class FloatView extends ImageView {
         canvas.drawLine(val3, val4, val7, val8, mPaint);
         canvas.drawLine(val7, val8, val5, val6, mPaint);
         canvas.drawLine(val5, val6, val1, val2, mPaint);
+    }
+
+    public void setLocalAlpha(float mAlphaVal) {
+
     }
 
     public interface FloatListener {

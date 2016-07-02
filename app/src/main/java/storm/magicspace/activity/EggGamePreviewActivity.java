@@ -14,7 +14,6 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -32,7 +31,6 @@ import storm.magicspace.bean.EggInfo;
 import storm.magicspace.bean.httpBean.EggImage;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.http.HTTPManager;
-import storm.magicspace.http.URLConstant;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
 
@@ -45,7 +43,7 @@ public class EggGamePreviewActivity extends Activity {
 
     private WebView mWebView;
     private FloatView mFloatView;
-    private Button mConfirmBtn;
+    private ImageView mConfirmBtn;
     private FloatInfo mFloatInfo;
     private SeekBar mAlphaController;
     private float mAlphaVal = 1.0f;
@@ -74,7 +72,7 @@ public class EggGamePreviewActivity extends Activity {
         mWebView = (WebView) findViewById(R.id.webview_game);
         mFloatView = (FloatView) findViewById(R.id.floatview_game);
         mAlphaController = (SeekBar) findViewById(R.id.alpha);
-        mConfirmBtn = (Button) findViewById(R.id.sure);
+        mConfirmBtn = (ImageView) findViewById(R.id.sure);
         mGuide = (ImageView) findViewById(R.id.iv_game_guide);
         mShowEggBtn = (TextView) findViewById(R.id.tv_game_egg);
         mEggsContainer = (RelativeLayout) findViewById(R.id.rl_game_eggs_container);
@@ -268,7 +266,7 @@ public class EggGamePreviewActivity extends Activity {
     private void initWebView() {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
-        mWebView.loadUrl("http://app.stemmind.com/vr/a/preview.php?c=" + info.contentId );
+        mWebView.loadUrl("http://app.stemmind.com/vr/a/preview.php?c=" + info.contentId);
         ContainerView containerView = new ContainerView();
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.addJavascriptInterface(containerView, "containerView");
@@ -300,21 +298,21 @@ public class EggGamePreviewActivity extends Activity {
         oks.setTitle(getString(R.string.share));
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
 //        oks.setTitleUrl(URLConstant.SHARED_URL);
-        oks.setTitleUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId );
+        oks.setTitleUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId);
         // text是分享文本，所有平台都需要这个字段
         oks.setText("我是分享文本");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
 //        oks.setUrl("http://app.stemmind.com/vr/a/tour.html");
-        oks.setUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId );
+        oks.setUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId);
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
         oks.setComment("我是测试评论文本");
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
 //        oks.setSiteUrl(URLConstant.SHARED_URL);
-        oks.setSiteUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId );
+        oks.setSiteUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId);
 
 // 启动分享GUI
         oks.show(EggGamePreviewActivity.this);
