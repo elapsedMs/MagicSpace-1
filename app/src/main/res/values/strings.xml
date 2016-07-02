@@ -31,4 +31,6 @@
     <string name="have">有</string>
     <string name="my_best_time">我最好的时间</string>
     <string name="des">简介：</string>
+    <string name="update_egg_success">彩蛋放置上传成功</string>
+    <string name="update_egg_failed">彩蛋放置上传失败</string>
 </resources>
