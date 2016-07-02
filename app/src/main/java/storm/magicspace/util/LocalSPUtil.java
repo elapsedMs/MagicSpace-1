@@ -163,4 +163,8 @@ public class LocalSPUtil extends SharedPreferencesUtil {
         }
         return null;
     }
+
+    public static void saveToken(String token) {
+
+    }
 }

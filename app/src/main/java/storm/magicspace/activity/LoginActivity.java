@@ -10,6 +10,7 @@ import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.util.JsonUtil;
 import storm.magicspace.R;
+import storm.magicspace.bean.SyncAccount;
 import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.http.AccountHttpManager;
 import storm.magicspace.http.HTTPManager;
@@ -89,6 +90,9 @@ public class LoginActivity extends BaseActivity {
         public void onSuccess(SyncAccountResponse syncAccountResponse) {
             super.onSuccess(syncAccountResponse);
             Toast.makeText(LoginActivity.this, "sync success", Toast.LENGTH_SHORT).show();
+            SyncAccount data = syncAccountResponse.getData();
+
+            LocalSPUtil.saveToken(data == null ? "" : data.getToken());
             goToNext(MainActivity.class);
         }
 
