@@ -170,7 +170,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
             circlePicList = albumResponse.data;
             imageViews.clear();
             title.setText(circlePicList.get(0).getTitle());
-            desc.setText("没字段");
+            desc.setText("");
             for (int i = 0; i < circlePicList.size(); i++) {
                 ImageView imageView = new ImageView(getActivity());
                 Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);

@@ -68,7 +68,7 @@ public class CachedAdapter extends BaseAdapter {
             holder.albumPicView.setSupportTimes(album.getAppreciateCount());
             holder.nameTv.setText(album.getNickName() == null ? "" : album.getNickName());
             holder.descTv.setText(album.getDescription() == null ? "" : album.getDescription());
-            holder.countTv.setText("没字段");
+            holder.countTv.setText("");
             holder.btnTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
