@@ -18,6 +18,7 @@ public class EggImage {
     private String typeId;
     private String name;
     private String parentTypeId;
+    private String imgurl;
     /**
      * objectId :
      * userId : 1
@@ -49,6 +50,14 @@ public class EggImage {
 
     public String getParentTypeId() {
         return parentTypeId;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
     }
 
     public void setParentTypeId(String parentTypeId) {

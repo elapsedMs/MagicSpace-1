@@ -8,7 +8,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.umeng.fb.FeedbackAgent;
 
 import storm.commonlib.common.base.BaseFragment;
 import storm.commonlib.common.util.ActivityCollector;
@@ -55,7 +58,8 @@ public class SettingFragment extends BaseFragment {
                 break;
 
             case R.id.rl_feedback:
-                FeedBackActivity.startActivity(getActivity());
+                FeedbackAgent agent = new FeedbackAgent(getActivity());
+                agent.startFeedbackActivity();
                 break;
 
             case R.id.rl_about_us:

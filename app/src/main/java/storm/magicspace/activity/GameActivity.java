@@ -1,15 +1,15 @@
 package storm.magicspace.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,6 +23,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -43,12 +47,13 @@ import storm.magicspace.bean.httpBean.EggImage;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
+import storm.magicspace.fragment.EggImageFragment;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.URLConstant;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
 
-public class GameActivity extends Activity {
+public class GameActivity extends FragmentActivity {
 
     public static final String TAG = GameActivity.class.getSimpleName();
     public static final String ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM = "bottom";
@@ -62,22 +67,22 @@ public class GameActivity extends Activity {
     private ImageView mConfirmBtn;
     private SeekBar mAlphaController;
     private RelativeLayout mEggsContainer;
-    private RecyclerView mEggsLayout;
     private ImageView mGuide;
     private TextView mShowEggBtn;
     private TextView mEggsLoadingHint;
     private ImageView mSharedBtn;
+    private ImageView mBackBtn;
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
 
     private float mAlphaVal = 1.0f;
     private int mEggsCount = 1;
     private FloatInfo mFloatInfo;
     private boolean isAlphaControllerShowing = false;
-    private EggsAdapter mEggsAdapter;
     private String mUrl;
     private List<ScenesBean> mScenes;
     private String mContentId;
-    private ImageView mBackBtn;
-    private Handler mHandler;
+    private List<EggImage> mEggImageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +91,6 @@ public class GameActivity extends Activity {
         initData();
         initView();
         initEvent();
-
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                mFloatView.setVisibility(View.VISIBLE);
-                updateEggsCountHint(mEggsCount-- == 0 ? 0 : mEggsCount--);
-                // TODO: 16/7/2 need update
-            }
-        };
     }
 
     private void initData() {
@@ -117,16 +113,15 @@ public class GameActivity extends Activity {
         mGuide = (ImageView) findViewById(R.id.iv_game_guide);
         mShowEggBtn = (TextView) findViewById(R.id.tv_game_egg);
         mEggsContainer = (RelativeLayout) findViewById(R.id.rl_game_eggs_container);
-        mEggsLayout = (RecyclerView) findViewById(R.id.rv_game_eggs);
         mEggsLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
         mSharedBtn = (ImageView) findViewById(R.id.iv_game_confirm);
         mBackBtn = (ImageView) findViewById(R.id.iv_game_back);
+        mViewPager = (ViewPager) findViewById(R.id.vp_game_eggs);
+        mTabLayout = (TabLayout) findViewById(R.id.tab_layout_game);
     }
 
     private void initEggs() {
-        //mEggsLayout.setLayoutManager(new LinearLayoutManager(this, OrientationHelper.HORIZONTAL,false));
         updateEggsCountHint(mEggsCount = EGG_INIT_COUNT);
-        mEggsLayout.setLayoutManager(new GridLayoutManager(this, 1, OrientationHelper.HORIZONTAL, false));
         new GetEggImageListTask().execute();
         new IssueUGCContentTask().execute();
     }
@@ -173,6 +168,7 @@ public class GameActivity extends Activity {
 
         @Override
         public UpdateUGCContentScenesResponse doRequest(Void param) {
+            super.doRequest(param);
             if (mScenes != null) {
                 UpdateData updateData = new UpdateData();
                 updateData.setBgimageUrl(mContentId);
@@ -191,7 +187,7 @@ public class GameActivity extends Activity {
                 items.setTransparency("0.5");
                 items.setEnabled("1");
                 updateData.setItems(items);
-                HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.convertObjectToJson(updateData));
+                return HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(updateData));
             }
             try {
                 Thread.sleep(1000);
@@ -204,30 +200,24 @@ public class GameActivity extends Activity {
         @Override
         public void onSuccess(UpdateUGCContentScenesResponse response) {
             super.onSuccess(response);
-            Toast.makeText(GameActivity.this, "彩蛋放置上传成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GameActivity.this, R.string.update_egg_success, Toast.LENGTH_SHORT).show();
             createEgg();
-            updateEggsCountHint(mEggsCount); // TODO : when request available this method should be move to success callback.
-            resetFloatView();
-        }
-
-
-        @Override
-        public void onFailed() {
-            super.onFailed();
-//            Toast.makeText(GameActivity.this, "彩蛋放置上传失败", Toast.LENGTH_SHORT).show();//// TODO: 16/7/2 I found it toast when success. by li.
-            createEgg();
-            updateEggsCountHint(mEggsCount); // TODO : when request available this method should be move to success callback.
+            updateEggsCountHint(mEggsCount);
             resetFloatView();
             resetAlphaController();
         }
 
-
+        @Override
+        public void onFailed() {
+            super.onFailed();
+            Toast.makeText(GameActivity.this, R.string.update_egg_failed, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void resetAlphaController() {
         mAlphaController.setProgress(100);
+        mAlphaController.setVisibility(View.INVISIBLE);
         mAlphaVal = 1.0f;
-        mAlphaController.setVisibility(View.GONE);
     }
 
     private class GetEggImageListTask extends BaseASyncTask<Void, EggImageListResponse> {
@@ -241,31 +231,70 @@ public class GameActivity extends Activity {
         protected void onPostExecute(EggImageListResponse eggImageListResponse) {
             if (eggImageListResponse != null) {
                 mEggsLoadingHint.setVisibility(View.INVISIBLE);
-                mEggsLayout.setVisibility(View.VISIBLE);
-                List<EggImage> data = eggImageListResponse.getData();
-                EggImage eggImage = data.get(0);
-                mEggsAdapter = new EggsAdapter(GameActivity.this, eggImage);
-                mEggsLayout.setAdapter(mEggsAdapter);
-                mEggsAdapter.setOnClickListener(new EggsAdapter.ClickInterface() {
+                mEggImageList = eggImageListResponse.getData();
+                final ArrayList<EggImageFragment> fragments = new ArrayList<>();
+                for (int i = 0; i < mEggImageList.size(); i++) {
+                    EggImageFragment fragment = EggImageFragment.getInstance(i);
+                    fragment.setOnEggClickListener(new EggsAdapter.ClickInterface() {
+                        @Override
+                        public void onClick(int position, String url, Bitmap bitmap) {
+                            LogUtil.d(TAG, "position = " + position + ", url = " + url);
+                            mFloatView.setImageBitmap(bitmap);
+                            mFloatInfo = null;
+                            mUrl = url;
+                            initFloatView();
+                        }
+                    });
+                    fragments.add(fragment);
+                }
+                mViewPager.setOffscreenPageLimit(fragments.size());
+                mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
                     @Override
-                    public void onClick(final int position, final String url, final Bitmap bitmap) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                LogUtil.d(TAG, "position = " + position + ", url = " + url);
-                                mFloatView.setImageBitmap(bitmap);
-                                mFloatInfo = null;
-                                mUrl = url;
-                                initFloatView();
-
-                            }
-                        });
+                    public Fragment getItem(int position) {
+                        return fragments.get(position);
                     }
+
+                    @Override
+                    public int getCount() {
+                        return fragments.size();
+                    }
+
                 });
+                mTabLayout.setupWithViewPager(mViewPager);
+                for (int i = 0; i < mEggImageList.size(); i++) {
+                    String imgurl = mEggImageList.get(i).getImgurl();
+                    final RequestCreator load = Picasso.with(GameActivity.this).load(imgurl);
+                    final int finalI = i;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Bitmap bitmap = load.get();
+                                final BitmapDrawable bitmapDrawable = new BitmapDrawable(
+                                        getResources(), bitmap);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        TabLayout.Tab tab = mTabLayout.getTabAt(finalI);
+                                        if (tab != null) {
+                                            tab.setIcon(bitmapDrawable);
+                                        }
+                                    }
+                                });
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                }
             } else {
                 mEggsLoadingHint.setText(R.string.loading_failed);
             }
         }
+    }
+
+    public List<EggImage> getEggImageList() {
+        return mEggImageList;
     }
 
     private void createEgg() {
@@ -331,6 +360,7 @@ public class GameActivity extends Activity {
 
     private void resetFloatView() {
         mFloatView.setVisibility(View.INVISIBLE);
+        mUrl = null;
     }
 
     private void updateEggsCountHint(int count) {
@@ -344,9 +374,8 @@ public class GameActivity extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mAlphaVal = progress * 1f / 100;
-                mFloatView.setLocalAlpha(mAlphaVal);
+                mFloatView.setAlpha(mAlphaVal);
                 Log.d(TAG, "alpha = " + mAlphaVal);
-
             }
 
             @Override
@@ -425,7 +454,7 @@ public class GameActivity extends Activity {
     private void initWebView() {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
-        mWebView.loadUrl("http://app.stemmind.com/vr/a/vreditor.php?c=" + mContentId);
+        mWebView.loadUrl("http://app.stemmind.com/vr/a/vreditor.php?c="+mContentId);
         ContainerView containerView = new ContainerView();
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.addJavascriptInterface(containerView, "containerView");
@@ -435,15 +464,15 @@ public class GameActivity extends Activity {
 
         @JavascriptInterface
         public void editItem(String contentId, String sceneId, String order) {
-            LogUtil.d(TAG, "editItem used");
-            mHandler.sendEmptyMessage(0);
-
+            LogUtil.d(TAG, "edit call back, contentId = " + contentId + ", sceneId = " + sceneId +
+                    ", order = " + order);
+            mFloatView.setVisibility(View.VISIBLE);
+            updateEggsCountHint(mEggsCount-- == 0 ? 0 : mEggsCount--);
         }
 
         @JavascriptInterface
         public void dropItemCallBack(String msg) {
-            LogUtil.d(TAG, "receive msg :" + msg);
-            // {"x":"0","y":"0","scale":"0.5","alpha":"0.5","rotate":"0"}
+            LogUtil.d(TAG, "drop call back, msg = " + msg);
         }
     }
 
