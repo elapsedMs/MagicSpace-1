@@ -346,6 +346,7 @@ public class GameActivity extends Activity {
                 mAlphaVal = progress * 1f / 100;
                 mFloatView.setLocalAlpha(mAlphaVal);
                 Log.d(TAG, "alpha = " + mAlphaVal);
+
             }
 
             @Override
