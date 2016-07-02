@@ -60,7 +60,6 @@
         android:drawableLeft="@mipmap/game_time"
         android:drawablePadding="@dimen/px_10"
         android:gravity="center"
-        android:text="12:00"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_40_px" />
 

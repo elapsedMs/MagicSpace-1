@@ -92,14 +92,14 @@ public class GameActivity extends Activity {
             @Override
             public void handleMessage(Message msg) {
                 mFloatView.setVisibility(View.VISIBLE);
+                updateEggsCountHint(mEggsCount-- == 0 ? 0 : mEggsCount--);
+                // TODO: 16/7/2 need update
             }
         };
     }
 
     private void initData() {
         mContentId = getRandomContentId();
-
-
     }
 
     public void initView() {
