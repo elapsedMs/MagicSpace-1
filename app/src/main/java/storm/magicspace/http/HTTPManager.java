@@ -102,7 +102,7 @@ public class HTTPManager {
                 URLConstant.URL_ISSUE_UGC_CONTENT,
                 EMPTY,
                 IssueUCGContentResponse.class,
-                "userId", "3970430042189702",
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "description", description,
                 "url", url,
                 "sourceId", sourceId

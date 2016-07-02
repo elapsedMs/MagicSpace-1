@@ -179,10 +179,11 @@ public class GameActivity extends Activity {
                 updateData.setBgimageUrl(mContentId);
                 updateData.setItemsCount(mEggsCount);
                 updateData.setOrder(mEggsCount);
+                updateData.setSceneId(mScenes.get(0) == null ? "" : mScenes.get(0).getSceneId());
                 updateData.setTimeLimit(120);
-                updateData.setTips("");
+                updateData.setTips("2");
                 UpdateData.ItemsBean items = new UpdateData.ItemsBean();
-                items.setItemId("");//
+                items.setItemId("1");//
                 items.setX("1");
                 items.setY("2");
                 items.setItemMediaUrl("http://app.stemmind.com/vr/objs/08.png");
@@ -191,7 +192,7 @@ public class GameActivity extends Activity {
                 items.setTransparency("0.5");
                 items.setEnabled("1");
                 updateData.setItems(items);
-                HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(updateData));
+                HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.convertObjectToJson(updateData));
             }
             try {
                 Thread.sleep(1000);
