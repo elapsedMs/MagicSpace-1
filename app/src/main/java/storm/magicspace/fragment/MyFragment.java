@@ -161,7 +161,7 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
 //            desc.setText("没字段");
             for (int i = 0; i < circlePicList.size(); i++) {
                 RoundedImageView imageView = new RoundedImageView(getActivity());
-                imageView.setCornerRadius(100f);
+                imageView.setCornerRadius(200f);
                 Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
                 imageViews.add(imageView);
             }
