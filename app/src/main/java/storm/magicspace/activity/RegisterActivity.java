@@ -145,7 +145,7 @@ public class RegisterActivity extends BaseActivity {
         @Override
         protected GetVerifyCodeResponse doInBackground(String... params) {
             statCountTime();
-            return AccountHttpManager.getVerifyCode(params[0], params[1]);
+            return AccountHttpManager.getVerifyCode(params[1], "sendsmscode");
         }
     }
 

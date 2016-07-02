@@ -129,7 +129,7 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
         }
 
         @Override
-        protected void onPostExecute(UserInfoResponse userInfoResponse) {
+        public void onSuccess(UserInfoResponse userInfoResponse) {
             super.onPostExecute(userInfoResponse);
 
             UserInfo data = userInfoResponse.data;

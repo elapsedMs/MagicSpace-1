@@ -104,8 +104,69 @@ public class AccountHttpManager {
         return result;
     }
 
-    public static GetVerifyCodeResponse getVerifyCode(String sendType, String phone) {
-        reqSms(phone);
+    public static GetVerifyCodeResponse getVerifyCode(String phone, String type) {
+        try {
+            Log.i(TAG, "reqSms  phoneNum" + phone);
+            String url = ACCOUNT_HOST_URL + "sendsmscode";
+
+            Map<String, Object> params = new HashMap<String, Object>();
+
+            String open_verify = BaseUtil.MD5(type + "&" + phone + URLConstant.MJ_USER_CENTER_KEY + URLConstant.MJ_USER_CENTER_KEY);
+
+            CustomJSONObject obj = new CustomJSONObject();
+            obj.put("send_type", type);
+            obj.put("regist_tel", phone);
+            obj.put("open_verify", open_verify);
+            String openid = URLEncoder.encode(obj.toString(), "utf-8");
+            Log.i(TAG, openid);
+            params.put("open_id", openid);
+            aq = new AQuery(getApplication());
+
+            aq.ajax(url, params, JSONObject.class,
+                    new AjaxCallback<JSONObject>() {
+                        @Override
+                        public void callback(String url, JSONObject json,
+                                             AjaxStatus status) {
+                            Log.i(TAG, "reqSms callback json = "
+                                    + (json == null ? "" : json));
+                            if (json != null) {
+                                try {
+                                    boolean smsStatus = json
+                                            .getBoolean("status");
+                                    String msg = json.getString("msg");
+                                    if (smsStatus) {
+                                        if (!TextUtils.isEmpty(msg)) {
+                                            Toast.makeText(getApplication(),
+                                                    msg, Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                    } else {
+                                        if (!TextUtils.isEmpty(msg)) {
+                                            Toast.makeText(getApplication(),
+                                                    msg, Toast.LENGTH_SHORT)
+                                                    .show();
+                                        } else {
+                                            Toast.makeText(getApplication(),
+                                                    "获取验证码失败，请稍后再试",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.i(TAG, "reqSms", e);
+                                }
+                            } else {
+                                Toast.makeText(getApplication(),
+                                        "获取验证码失败，请检查网络", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.i(TAG, "reqSms", e);
+        }
+
         return null;
     }
 
@@ -235,7 +296,7 @@ public class AccountHttpManager {
                             Log.i("AccountManager",
                                     "userReg callBack json = "
                                             + String.valueOf(json));
-                             response[0] = JsonUtil.convertJsonToObject(String.valueOf(json), TypeToken.get(RegisterResponse.class));
+                            response[0] = JsonUtil.convertJsonToObject(String.valueOf(json), TypeToken.get(RegisterResponse.class));
                         }
                     });
 
@@ -245,4 +306,35 @@ public class AccountHttpManager {
         }
         return response[0];
     }
+
+    public static RegisterResponse changePwd(String phoneNum, String password, String msg) {
+        final RegisterResponse[] response = {new RegisterResponse()};
+        String url = "http://sso.mojing.cn/user/api/getuserpassword";
+        Map<String, Object> params = new HashMap<String, Object>();
+        String open_verify = BaseUtil.MD5(phoneNum + "&" + password + "&" + msg
+                + URLConstant.MJ_USER_CENTER_KEY + URLConstant.MJ_USER_CENTER_KEY);
+        try {
+            CustomJSONObject jsonparam = new CustomJSONObject();
+            jsonparam.put("user_tel", phoneNum);
+            jsonparam.put("user_new_pwd", password);
+            jsonparam.put("user_check", msg);
+            jsonparam.put("open_verify", open_verify);
+            String open_id = URLEncoder.encode(jsonparam.toString(), "utf-8");
+            params.put("open_id", open_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        aq.ajax(url, params, JSONObject.class, new AjaxCallback<JSONObject>() {
+
+            @Override
+            public void callback(String url, JSONObject json, AjaxStatus status) {
+                if (json != null) {
+                    response[0] = JsonUtil.convertJsonToObject(String.valueOf(json), TypeToken.get(RegisterResponse.class));
+                }
+            }
+        });
+        return response[0];
+
+    }
+
 }
