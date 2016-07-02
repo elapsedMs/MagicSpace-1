@@ -17,7 +17,6 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -60,7 +59,7 @@ public class GameActivity extends Activity {
 
     private WebView mWebView;
     private FloatView mFloatView;
-    private Button mConfirmBtn;
+    private ImageView mConfirmBtn;
     private SeekBar mAlphaController;
     private RelativeLayout mEggsContainer;
     private RecyclerView mEggsLayout;
@@ -114,7 +113,7 @@ public class GameActivity extends Activity {
         mWebView = (WebView) findViewById(R.id.webview_game);
         mFloatView = (FloatView) findViewById(R.id.floatview_game);
         mAlphaController = (SeekBar) findViewById(R.id.alpha);
-        mConfirmBtn = (Button) findViewById(R.id.sure);
+        mConfirmBtn = (ImageView) findViewById(R.id.sure);
         mGuide = (ImageView) findViewById(R.id.iv_game_guide);
         mShowEggBtn = (TextView) findViewById(R.id.tv_game_egg);
         mEggsContainer = (RelativeLayout) findViewById(R.id.rl_game_eggs_container);
@@ -215,7 +214,7 @@ public class GameActivity extends Activity {
         @Override
         public void onFailed() {
             super.onFailed();
-            Toast.makeText(GameActivity.this, "彩蛋放置上传失败", Toast.LENGTH_SHORT).show();//// TODO: 16/7/2 I found it toast when success. by li.
+//            Toast.makeText(GameActivity.this, "彩蛋放置上传失败", Toast.LENGTH_SHORT).show();//// TODO: 16/7/2 I found it toast when success. by li.
             createEgg();
             updateEggsCountHint(mEggsCount); // TODO : when request available this method should be move to success callback.
             resetFloatView();
