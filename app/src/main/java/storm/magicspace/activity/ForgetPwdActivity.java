@@ -17,8 +17,7 @@ public class ForgetPwdActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forget_pwd);
+        setActivityTitle("找回密码");
 
-        setActivityTitle("测试");
     }
 }

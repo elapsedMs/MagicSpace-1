@@ -37,8 +37,10 @@ public class LoginActivity extends BaseActivity {
         setTitleBarRightTvVisibility(View.VISIBLE);
 
         findEventView(R.id.bt_login);
+        findEventView(R.id.tv_forget_pwd);
         nameEt = findView(R.id.et_login_name);
         passwordEt = findView(R.id.et_login_password);
+
     }
 
     @Override
@@ -63,8 +65,12 @@ public class LoginActivity extends BaseActivity {
                     Toast.makeText(LoginActivity.this, "账户不能为空", Toast.LENGTH_SHORT).show();
                     break;
                 }
-
                 doLogin(name, password);
+                break;
+
+            case R.id.tv_forget_pwd:
+                goToNext(ForgetPwdActivity.class);
+                break;
         }
     }
 

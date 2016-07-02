@@ -76,6 +76,9 @@
             android:name=".activity.FreshHelpActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.ForgetPwdActivity"
+                  android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"/>
