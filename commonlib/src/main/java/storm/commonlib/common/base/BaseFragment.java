@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import storm.commonlib.common.util.ClickUtil;
 import storm.commonlib.common.util.ViewUtil;
 
@@ -120,5 +122,17 @@ public class BaseFragment extends Fragment implements AdapterView.OnItemClickLis
         intent.putExtras(bundle);
         startActivityForResult(intent, requestCode);
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(getApplication());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(getApplication());       //统计时长
     }
 }

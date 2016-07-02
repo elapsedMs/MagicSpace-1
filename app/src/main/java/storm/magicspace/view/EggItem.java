@@ -42,6 +42,7 @@ public class EggItem extends BaseView {
         super.initView(context);
         tv_egg_name = (TextView) findViewById(R.id.tv_egg_name);
         tv_egg_date = (TextView) findViewById(R.id.tv_egg_date);
+        tv_egg_date.setVisibility(GONE);
         tv_egg_works_mojing = (TextView) findViewById(R.id.tv_egg_works_mojing);
         tv_egg_works_egg = (TextView) findViewById(R.id.tv_egg_works_egg);
         tv_egg_works_gold = (TextView) findViewById(R.id.tv_egg_works_gold);

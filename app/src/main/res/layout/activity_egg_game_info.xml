@@ -8,11 +8,28 @@
         <!--android:id="@+id/viewpager_egg"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="@dimen/px_200" />-->
+    <FrameLayout
+        android:id="@+id/egg_info_tiltle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_400">
+
+        <WebView
+            android:id="@+id/wv_egg_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_400" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/px_10"/>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewpager_egg"
+        android:layout_below="@+id/egg_info_tiltle"
         android:layout_margin="@dimen/px_20"
         android:orientation="vertical">
 
@@ -21,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px_40"
-            android:text="性感女团奇幻探险"
             android:textSize="@dimen/text_size_36_px" />
 
         <TextView
@@ -35,7 +51,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px_40"
-            android:text="有7283人点赞"
             android:textStyle="bold" />
 
         <TextView
@@ -43,21 +58,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_egg_game_title"
-            android:text="69人/273MB   免费" />
+           />
 
         <TextView
             android:id="@+id/tv_egg_game_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_egg_game_title"
-            android:text="平均通关时长：10 总时长： 12：00" />
+         />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_egg_game_title"
             android:layout_marginTop="@dimen/px_40"
-            android:text="简介："
+            android:text="@string/des"
             android:textStyle="bold" />
 
         <TextView
@@ -65,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_egg_game_title"
-            android:text="四位靓丽的少女............" />
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -82,25 +97,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_egg_game_title"
-                    android:text="我最好的时间"
+                    android:text="@string/my_best_time"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_my_best_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_egg_game_title"
-                    android:text="00:00" />
+                   />
             </LinearLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center"
-                android:background="@color/white"
-                android:text="排行榜"
-                android:textSize="@dimen/text_size_24_px"
-                android:visibility="gone"/>
+
         </RelativeLayout>
     </LinearLayout>
 
@@ -121,7 +129,7 @@
             android:gravity="center"
             android:paddingLeft="80dp"
             android:paddingRight="80dp"
-            android:text="@string/preview"
+            android:text="@string/go_to_game"
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_s" />

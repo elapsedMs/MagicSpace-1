@@ -6,6 +6,8 @@ import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import storm.commonlib.R;
 import storm.commonlib.common.util.ActivityCollector;
 import storm.commonlib.common.util.ClickUtil;
@@ -106,5 +108,12 @@ public class BaseActivity extends CommonBaseActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
