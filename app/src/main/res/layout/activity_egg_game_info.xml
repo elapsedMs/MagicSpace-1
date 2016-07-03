@@ -4,10 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/viewpager_egg"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/px_200" />-->
     <FrameLayout
         android:id="@+id/egg_info_tiltle"
         android:layout_width="match_parent"
@@ -26,64 +22,114 @@
             android:layout_marginLeft="@dimen/px_10"/>
     </FrameLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/egg_info_tiltle"
-        android:layout_margin="@dimen/px_20"
-        android:orientation="vertical">
+        android:layout_below="@+id/egg_info_tiltle">
 
         <TextView
             android:id="@+id/tv_egg_game_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/px_662"
+            android:layout_height="@dimen/px_124"
+            android:layout_alignLeft="@+id/tv_divider"
+            android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/px_40"
+            android:gravity="center|left"
+            android:textColor="#333333"
             android:textSize="@dimen/text_size_36_px" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tv_divider"
+            android:layout_width="@dimen/px_662"
             android:layout_height="1px"
-            android:layout_marginTop="@dimen/px_40"
-            android:background="@color/gray" />
+            android:layout_below="@+id/tv_egg_game_title"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="@color/gray"
+            android:gravity="center" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_20"
+        android:layout_alignLeft="@+id/tv_divider"
+        android:layout_below="@+id/tv_divider"
+        android:orientation="vertical">
 
+
+        <LinearLayout
+            android:layout_width="@dimen/px_662"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_40"
+                android:text="@string/have"
+                android:textColor="#333333"
+                android:textSize="@dimen/text_size_28_px" />
         <TextView
             android:id="@+id/tv_egg_game_zan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px_40"
-            android:textStyle="bold" />
+            android:textColor="#ff8b00"
+            android:textSize="@dimen/text_size_28_px" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_40"
+                android:text="@string/appreciatecount"
+                android:textColor="#333333"
+                android:textSize="@dimen/text_size_28_px" />
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_egg_game_person_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_egg_game_title"
+            android:layout_marginTop="@dimen/px_10"
+            android:textColor="#999999"
+            android:textSize="@dimen/text_size_28_px"
            />
 
         <TextView
             android:id="@+id/tv_egg_game_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_egg_game_title"
+            android:layout_marginTop="@dimen/px_10"
+            android:textColor="#999999"
+            android:textSize="@dimen/text_size_28_px"
          />
+
+        <TextView
+            android:id="@+id/tv_egg_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_10"
+            android:textColor="#999999"
+            android:textSize="@dimen/text_size_28_px"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_egg_game_title"
             android:layout_marginTop="@dimen/px_40"
             android:text="@string/des"
-            android:textStyle="bold" />
+            android:textColor="#333333"
+            android:textSize="@dimen/text_size_28_px" />
 
         <TextView
             android:id="@+id/tv_egg_game_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_egg_game_title"
+            android:layout_marginTop="@dimen/px_10"
+            android:textColor="#999999"
+            android:textSize="@dimen/text_size_28_px"
             />
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/px_664"
             android:layout_height="wrap_content">
 
             <LinearLayout
@@ -96,22 +142,25 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_egg_game_title"
                     android:text="@string/my_best_time"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="@dimen/px_10"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/text_size_28_px" />
 
                 <TextView
                     android:id="@+id/tv_my_best_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_egg_game_title"
+                    android:layout_marginTop="@dimen/px_10"
+                    android:textColor="#999999"
+                    android:textSize="@dimen/text_size_28_px"
                    />
             </LinearLayout>
 
 
         </RelativeLayout>
     </LinearLayout>
-
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

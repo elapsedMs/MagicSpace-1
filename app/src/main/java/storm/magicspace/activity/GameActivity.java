@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -42,7 +43,7 @@ import storm.magicspace.R;
 import storm.magicspace.adapter.EggsAdapter;
 import storm.magicspace.bean.IssueUCGContent;
 import storm.magicspace.bean.IssueUCGContent.ScenesBean;
-import storm.magicspace.bean.UpdateData;
+import storm.magicspace.bean.UGCUpdateContent;
 import storm.magicspace.bean.httpBean.EggImage;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
@@ -134,19 +135,15 @@ public class GameActivity extends FragmentActivity {
         }
 
         @Override
-        public void onSuccess(IssueUCGContentResponse issueUCGContentResponse) {
-            super.onSuccess(issueUCGContentResponse);
-            IssueUCGContent data = issueUCGContentResponse.getData();
-            List<ScenesBean> scenes = data.getScenes();
-            if (scenes != null) {
-                mScenes = scenes;
-            }
+        public void onSuccess(IssueUCGContentResponse response) {
+            super.onSuccess(response);
+            IssueUCGContent content = response.getData();
+            if (content == null) return;
+            List<ScenesBean> scenes = content.getScenes();
+            if (scenes == null) return;
+            mScenes = scenes;
         }
 
-        @Override
-        public void onFailed() {
-            super.onFailed();
-        }
     }
 
     private String getRandomContentId() {
@@ -169,32 +166,9 @@ public class GameActivity extends FragmentActivity {
         @Override
         public UpdateUGCContentScenesResponse doRequest(Void param) {
             super.doRequest(param);
-            if (mScenes != null) {
-                UpdateData updateData = new UpdateData();
-                updateData.setBgimageUrl(mContentId);
-                updateData.setItemsCount(mEggsCount);
-                updateData.setOrder(mEggsCount);
-                updateData.setSceneId(mScenes.get(0) == null ? "" : mScenes.get(0).getSceneId());
-                updateData.setTimeLimit(120);
-                updateData.setTips("2");
-                UpdateData.ItemsBean items = new UpdateData.ItemsBean();
-                items.setItemId("1");//
-                items.setX("1");
-                items.setY("2");
-                items.setItemMediaUrl("http://app.stemmind.com/vr/objs/08.png");
-                items.setScalex("1.0");
-                items.setRotatez("20");
-                items.setTransparency("0.5");
-                items.setEnabled("1");
-                updateData.setItems(items);
-                return HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(updateData));
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
+            if (mScenes == null) return null;
+            UGCUpdateContent content = createUpdateBean();
+            return HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(content));
         }
 
         @Override
@@ -214,6 +188,28 @@ public class GameActivity extends FragmentActivity {
         }
     }
 
+    @NonNull
+    private UGCUpdateContent createUpdateBean() {
+        UGCUpdateContent content = new UGCUpdateContent();
+        content.setBgimageUrl(mContentId);
+        content.setItemsCount(mEggsCount);
+        content.setOrder(mEggsCount);
+        content.setSceneId(mScenes.get(0) == null ? "" : mScenes.get(0).getSceneId());
+        content.setTimeLimit(120);
+        content.setTips("2");
+        UGCUpdateContent.EggInfo eggInfo = new UGCUpdateContent.EggInfo();
+        eggInfo.setItemId("1");//
+        eggInfo.setX("1");
+        eggInfo.setY("2");
+        eggInfo.setItemMediaUrl("http://app.stemmind.com/vr/objs/08.png");
+        eggInfo.setScalex("1.0");
+        eggInfo.setRotatez("20");
+        eggInfo.setTransparency("0.5");
+        eggInfo.setEnabled("1");
+        content.setItems(eggInfo);
+        return content;
+    }
+
     private void resetAlphaController() {
         mAlphaController.setProgress(100);
         mAlphaController.setVisibility(View.INVISIBLE);
@@ -224,73 +220,93 @@ public class GameActivity extends FragmentActivity {
 
         @Override
         public EggImageListResponse doRequest(Void param) {
+
             return HTTPManager.getEggImageList();
         }
 
         @Override
-        protected void onPostExecute(EggImageListResponse eggImageListResponse) {
-            if (eggImageListResponse != null) {
-                mEggsLoadingHint.setVisibility(View.INVISIBLE);
-                mEggImageList = eggImageListResponse.getData();
-                final ArrayList<EggImageFragment> fragments = new ArrayList<>();
-                for (int i = 0; i < mEggImageList.size(); i++) {
-                    EggImageFragment fragment = EggImageFragment.getInstance(i);
-                    fragment.setOnEggClickListener(new EggsAdapter.ClickInterface() {
-                        @Override
-                        public void onClick(int position, String url, Bitmap bitmap) {
-                            LogUtil.d(TAG, "position = " + position + ", url = " + url);
-                            mFloatView.setImageBitmap(bitmap);
-                            mFloatInfo = null;
-                            mUrl = url;
-                            initFloatView();
-                        }
-                    });
-                    fragments.add(fragment);
-                }
-                mViewPager.setOffscreenPageLimit(fragments.size());
-                mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-                    @Override
-                    public Fragment getItem(int position) {
-                        return fragments.get(position);
+        public void onSuccess(EggImageListResponse response) {
+            super.onSuccess(response);
+            mEggsLoadingHint.setVisibility(View.INVISIBLE);
+            mEggImageList = response.getData();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ArrayList<EggImageFragment> fragments = new ArrayList<>();
+                    int size = mEggImageList.size();
+                    for (int i = 0; i < size; i++) {
+                        EggImageFragment fragment = EggImageFragment.getInstance(i);
+                        setEggImageListener(fragment);
+                        fragments.add(fragment);
                     }
-
-                    @Override
-                    public int getCount() {
-                        return fragments.size();
+                    initViewPager(fragments);
+                    for (int i = 0; i < size; i++) {
+                        // init viewpager first
+                        fillTabLayout(i);
                     }
-
-                });
-                mTabLayout.setupWithViewPager(mViewPager);
-                for (int i = 0; i < mEggImageList.size(); i++) {
-                    String imgurl = mEggImageList.get(i).getImgurl();
-                    final RequestCreator load = Picasso.with(GameActivity.this).load(imgurl);
-                    final int finalI = i;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Bitmap bitmap = load.get();
-                                final BitmapDrawable bitmapDrawable = new BitmapDrawable(
-                                        getResources(), bitmap);
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        TabLayout.Tab tab = mTabLayout.getTabAt(finalI);
-                                        if (tab != null) {
-                                            tab.setIcon(bitmapDrawable);
-                                        }
-                                    }
-                                });
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
                 }
-            } else {
-                mEggsLoadingHint.setText(R.string.loading_failed);
-            }
+            }).start();
         }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+            mEggsLoadingHint.setText(R.string.loading_failed);
+        }
+    }
+
+    private void fillTabLayout(int pos) {
+        try {
+            BitmapDrawable bitmapDrawable = getDrawableWithBitmap(pos);
+            TabLayout.Tab tab = mTabLayout.getTabAt(pos);
+            if (tab != null) {
+                tab.setIcon(bitmapDrawable);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @NonNull
+    private BitmapDrawable getDrawableWithBitmap(int pos) throws IOException {
+        Bitmap bitmap = createBitmapWithUrl(pos);
+        return new BitmapDrawable(getResources(), bitmap);
+    }
+
+    private Bitmap createBitmapWithUrl(int pos) throws IOException {
+        String url = mEggImageList.get(pos).getImgurl();
+        RequestCreator load = Picasso.with(GameActivity.this).load(url);
+        return load.get();
+    }
+
+    private void initViewPager(final ArrayList<EggImageFragment> fragments) {
+        mViewPager.setOffscreenPageLimit(fragments.size());
+        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+
+        });
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private void setEggImageListener(EggImageFragment fragment) {
+        fragment.setOnEggClickListener(new EggsAdapter.ClickInterface() {
+            @Override
+            public void onClick(int position, String url, Bitmap bitmap) {
+                LogUtil.d(TAG, "position = " + position + ", url = " + url);
+                mFloatView.setImageBitmap(bitmap);
+                mFloatInfo = null;
+                mUrl = url;
+                initFloatView();
+            }
+        });
     }
 
     public List<EggImage> getEggImageList() {
@@ -466,8 +482,15 @@ public class GameActivity extends FragmentActivity {
         public void editItem(String contentId, String sceneId, String order) {
             LogUtil.d(TAG, "edit call back, contentId = " + contentId + ", sceneId = " + sceneId +
                     ", order = " + order);
-            mFloatView.setVisibility(View.VISIBLE);
-            updateEggsCountHint(mEggsCount-- == 0 ? 0 : mEggsCount--);
+////            mFloatView.setVisibility(View.VISIBLE);
+            mEggsCount = mEggsCount -1;
+            mEggsCount = mEggsCount >= 0 ? mEggsCount : 0;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateEggsCountHint(mEggsCount);
+                }
+            });
         }
 
         @JavascriptInterface

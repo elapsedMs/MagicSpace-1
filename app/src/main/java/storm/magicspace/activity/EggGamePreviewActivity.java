@@ -2,27 +2,24 @@ package storm.magicspace.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseActivity;
-import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
 import storm.magicspace.bean.EggInfo;
 
 public class EggGamePreviewActivity extends BaseActivity {
     private WebView wv_egg_game_preview;
     private EggInfo info;
+    private Handler mHandler;
 
     public EggGamePreviewActivity() {
         super(R.layout.activity_egg_preview, CommonConstants.ACTIVITY_STYLE_WITH_LOADING);
@@ -32,6 +29,32 @@ public class EggGamePreviewActivity extends BaseActivity {
     @Override
     public void initView() {
         super.initView();
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 0:
+                        finish();
+                        break;
+
+                    case 1:
+                       showShare();
+                        break;
+
+                    case 2:
+                        Toast.makeText(EggGamePreviewActivity.this,"过关成功",Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case 3:
+                        Toast.makeText(EggGamePreviewActivity.this,"过关失败",Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case 4:
+                        dismissBaseDialog();
+                        break;
+                }
+            }
+        };
         wv_egg_game_preview = (WebView) findViewById(R.id.wv_egg_game_preview);
         Intent intent = this.getIntent();
         info = (EggInfo) intent.getSerializableExtra("game_info");
@@ -51,14 +74,28 @@ public class EggGamePreviewActivity extends BaseActivity {
     private class ContainerView {
 
         @JavascriptInterface
-        public void editItem(String contentId, String sceneId, String order) {
-            LogUtil.d("py", "editItem used");
+        public void goBack() {
+            mHandler.sendEmptyMessage(0);
         }
 
         @JavascriptInterface
-        public void dropItemCallBack(String msg) {
-            LogUtil.d("py", "receive msg :" + msg);
-            // {"x":"0","y":"0","scale":"0.5","alpha":"0.5","rotate":"0"}
+        public void shareGame() {
+            mHandler.sendEmptyMessage(1);
+        }
+
+        @JavascriptInterface
+        public void endGame(boolean bool) {
+            if(bool){
+                mHandler.sendEmptyMessage(2);
+            }else{
+                mHandler.sendEmptyMessage(3);
+            }
+
+        }
+
+        @JavascriptInterface
+        public void onLoadComplete() {
+            mHandler.sendEmptyMessage(4);
         }
     }
 

@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
-import storm.commonlib.common.util.JsonUtil;
 import storm.magicspace.R;
 import storm.magicspace.bean.SyncAccount;
 import storm.magicspace.bean.httpBean.SyncAccountResponse;
@@ -23,6 +22,7 @@ public class LoginActivity extends BaseActivity {
 
     private EditText nameEt;
     private EditText passwordEt;
+    private String mLoginJson;
 
     public LoginActivity() {
         super(R.layout.activity_login);
@@ -108,7 +108,10 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         protected LoginResponse doInBackground(String... params) {
-            return AccountHttpManager.doLogin(params[0], params[1]);
+            AccountHttpManager.LoginJson loginJson = new AccountHttpManager.LoginJson();
+            LoginResponse response = AccountHttpManager.doLogin(params[0], params[1], loginJson);
+            mLoginJson = loginJson.getJson();
+            return response;
         }
 
         @Override
@@ -126,8 +129,7 @@ public class LoginActivity extends BaseActivity {
                 Toast.makeText(LoginActivity.this, loginResponse.getMsg(), Toast.LENGTH_SHORT).show();
                 return;
             }
-            new SyncTask().execute(new String[]{loginResponse.getData().getUser_no(),
-                    JsonUtil.convertObjectToJson(loginResponse)});
+            new SyncTask().execute(new String[]{loginResponse.getData().getUser_no(), mLoginJson});
             LocalSPUtil.saveLoginAccountId(loginResponse.getData().getUser_no());
             LocalSPUtil.saveAccountInfo(loginResponse.getData());
         }
