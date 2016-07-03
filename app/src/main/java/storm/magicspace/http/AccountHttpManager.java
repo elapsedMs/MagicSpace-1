@@ -39,7 +39,7 @@ public class AccountHttpManager {
     private static String TAG = "AccountHttpManager";
     private static AQuery aq;
 
-    public static LoginResponse doLogin(String name, String password) {
+    public static LoginResponse doLogin(String name, String password, LoginJson loginJson) {
         //debug.info("UGCServer getMJUserInfo is start......");
         String result = "";
         String url = ACCOUNT_HOST_URL + "apilogin";
@@ -66,7 +66,7 @@ public class AccountHttpManager {
         params.put("open_id", openid);
 
         try {
-            result = doObjectPost(url, params);
+            loginJson.setJson(result = doObjectPost(url, params));
         } catch (Exception ignored) {
         }
         return JsonUtil.convertJsonToObject(result, TypeToken.get(LoginResponse.class));
@@ -335,6 +335,18 @@ public class AccountHttpManager {
         });
         return response[0];
 
+    }
+
+    public static class LoginJson {
+        private String json;
+
+        public String getJson() {
+            return json;
+        }
+
+        public void setJson(String json) {
+            this.json = json;
+        }
     }
 
 }
