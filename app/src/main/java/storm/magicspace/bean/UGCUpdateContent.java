@@ -3,7 +3,7 @@ package storm.magicspace.bean;
 /**
  * Created by xt on 16/6/30.
  */
-public class UpdateData {
+public class UGCUpdateContent {
 
     /**
      * bgimageUrl : 3381
@@ -31,7 +31,7 @@ public class UpdateData {
      * enabled : 1
      */
 
-    private ItemsBean items;
+    private EggInfo items;
     private int itemsCount;
     private int order;
     private String sceneId;
@@ -46,11 +46,11 @@ public class UpdateData {
         this.bgimageUrl = bgimageUrl;
     }
 
-    public ItemsBean getItems() {
+    public EggInfo getItems() {
         return items;
     }
 
-    public void setItems(ItemsBean items) {
+    public void setItems(EggInfo items) {
         this.items = items;
     }
 
@@ -94,7 +94,7 @@ public class UpdateData {
         this.tips = tips;
     }
 
-    public static class ItemsBean {
+    public static class EggInfo {
         private String itemId;
         private String itemMediaUrl;
         private String x;
