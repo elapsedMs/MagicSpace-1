@@ -241,6 +241,7 @@ public class GameActivity extends FragmentActivity {
                     }
                     initViewPager(fragments);
                     for (int i = 0; i < size; i++) {
+                        // init viewpager first
                         fillTabLayout(i);
                     }
                 }
@@ -254,10 +255,10 @@ public class GameActivity extends FragmentActivity {
         }
     }
 
-    private void fillTabLayout(int i) {
+    private void fillTabLayout(int pos) {
         try {
-            BitmapDrawable bitmapDrawable = getDrawableWithBitmap(i);
-            TabLayout.Tab tab = mTabLayout.getTabAt(i);
+            BitmapDrawable bitmapDrawable = getDrawableWithBitmap(pos);
+            TabLayout.Tab tab = mTabLayout.getTabAt(pos);
             if (tab != null) {
                 tab.setIcon(bitmapDrawable);
             }
@@ -267,13 +268,13 @@ public class GameActivity extends FragmentActivity {
     }
 
     @NonNull
-    private BitmapDrawable getDrawableWithBitmap(int i) throws IOException {
-        Bitmap bitmap = createBitmapWithUrl(i);
+    private BitmapDrawable getDrawableWithBitmap(int pos) throws IOException {
+        Bitmap bitmap = createBitmapWithUrl(pos);
         return new BitmapDrawable(getResources(), bitmap);
     }
 
-    private Bitmap createBitmapWithUrl(int i) throws IOException {
-        String imgurl = mEggImageList.get(i).getImgurl();
+    private Bitmap createBitmapWithUrl(int pos) throws IOException {
+        String imgurl = mEggImageList.get(pos).getImgurl();
         final RequestCreator load = Picasso.with(GameActivity.this).load(imgurl);
         return load.get();
     }
@@ -481,8 +482,15 @@ public class GameActivity extends FragmentActivity {
         public void editItem(String contentId, String sceneId, String order) {
             LogUtil.d(TAG, "edit call back, contentId = " + contentId + ", sceneId = " + sceneId +
                     ", order = " + order);
-            mFloatView.setVisibility(View.VISIBLE);
-            updateEggsCountHint(mEggsCount-- == 0 ? 0 : mEggsCount--);
+////            mFloatView.setVisibility(View.VISIBLE);
+            mEggsCount = mEggsCount -1;
+            mEggsCount = mEggsCount >= 0 ? mEggsCount : 0;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateEggsCountHint(mEggsCount);
+                }
+            });
         }
 
         @JavascriptInterface
