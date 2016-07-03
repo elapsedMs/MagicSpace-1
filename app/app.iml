@@ -111,8 +111,8 @@
     <orderEntry type="library" exported="" name="leakcanary-android-1.4-beta2" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-watcher-1.4-beta2" level="project" />
     <orderEntry type="library" exported="" name="com.umeng.fb.5.4.0" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-24.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="commons-httpclient-3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-24.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.7.3" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Moments-2.7.3" level="project" />

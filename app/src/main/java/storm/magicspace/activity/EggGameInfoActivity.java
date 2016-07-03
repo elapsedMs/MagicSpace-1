@@ -15,7 +15,7 @@ import storm.magicspace.bean.EggInfo;
 
 public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     private EggInfo info;
-    private TextView tv_egg_game_zan, tv_egg_game_des, tv_egg_game_person_counttv_egg_game_time, tv_egg_game_person_count, tv_egg_game_time, tv_my_best_time,tv_egg_game_title;
+    private TextView tv_egg_game_zan, tv_egg_game_des, tv_egg_game_person_count, tv_egg_game_time, tv_my_best_time, tv_egg_game_title, tv_egg_count;
     private WebView wv_egg_info;
     public EggGameInfoActivity() {
         super(R.layout.activity_egg_game_info, CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR);
@@ -32,6 +32,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
         tv_my_best_time = findView(R.id.tv_my_best_time);
         wv_egg_info = findView(R.id.wv_egg_info);
         tv_egg_game_title = findView(R.id.tv_egg_game_title);
+        tv_egg_count = findView(R.id.tv_egg_count);
         setActivityTitle(getString(R.string.game_info));
         setTitleRightBtVisibility(View.GONE);
         setTitleLeftBtVisibility(View.VISIBLE);
@@ -39,16 +40,18 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
         info = (EggInfo) intent.getSerializableExtra("game_info");
         if (info != null) {
             String appreciateCount = info.appreciateCount == null ? "" : info.appreciateCount;
-            tv_egg_game_zan.setText(getString(R.string.have) + appreciateCount + getString(R.string.appreciatecount));
+            tv_egg_game_zan.setText(appreciateCount);
             tv_egg_game_des.setText(info.description == null ? "" : info.description);
             String playCount = info.playCount == null ? "" : info.playCount;
             tv_egg_game_person_count.setText(playCount + getString(R.string.play_count));
             String avgTime = info.avgtime == null ? "" : info.avgtime;
             tv_egg_game_time.setText(getString(R.string.avgtime) + avgTime);
-//            tv_my_best_time.setText(info.);
+//            tv_my_best_time.setText(info.myBestTime);
             //ToDo add my best time
             tv_egg_game_title.setText(info.title);
             initWebView(info.contentId == null ? "" : info.contentId);
+            String egg_count = info.itemCount == null ? "" : info.itemCount;
+            tv_egg_count.setText(getResources().getString(R.string.egg_count) + egg_count);
         }
 
     }

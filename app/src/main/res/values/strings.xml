@@ -9,8 +9,8 @@
     <string name="login_out">退出登录</string>
     <string name="share">分享</string>
     <string name="assessment">求好评</string>
-    <string name="tip_assessment">您的支持是我们坚持的动力  </string>
-    <string name="tip_about_us">欢迎加入客户端反馈QQ全XXXX XXXX\n或拨打客服电话4007263385反馈您的问题或意见</string>
+    <string name="tip_assessment">您的支持是我们坚持的动力    </string>
+    <string name="tip_about_us">欢迎加入客户端反馈QQ群</string>
     <string name="input_feed_back">在此输入反馈内容</string>
     <string name="feedback_input_limit">最多输入50个字</string>
     <string name="tip_feedback_contact">请留下邮箱或电话，方便我们与您联系</string>
@@ -33,4 +33,7 @@
     <string name="des">简介：</string>
     <string name="update_egg_success">彩蛋放置上传成功</string>
     <string name="update_egg_failed">彩蛋放置上传失败</string>
+    <string name="egg_count">彩蛋数：</string>
+    <string name="call_me">或拨打客服电话</string>
+    <string name="give_me_feedback">反馈您的意见或建议</string>
 </resources>

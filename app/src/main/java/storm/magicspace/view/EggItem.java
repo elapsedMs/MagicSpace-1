@@ -58,7 +58,7 @@ public class EggItem extends BaseView {
             tv_egg_works_mojing.setText(info.playCount == null ? "" : info.playCount);
             tv_egg_works_gold.setText(info.creditEarned == null ? "" : info.creditEarned);
             tv_egg_works_egg.setText(info.itemCount == null ? "" : info.itemCount);
-            tv_egg_name.setText(info.nickName == null ? "" : info.nickName);
+            tv_egg_name.setText(info.title == null ? "" : info.title);
             Picasso.with(mContext).load(info.thumbImageUrl).into(iv_egg);
             tv_egg_date.setText(info.createTime == null ? "" : info.createTime);
             tv_egg_works_time.setText(info.avgtime == null ? "" : info.avgtime);
