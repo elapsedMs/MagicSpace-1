@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="commons-httpclient-3.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.lucee/commons-httpclient/3.1/d48120f2f62dd9df19fbb46b17c429b0127718d6/commons-httpclient-3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

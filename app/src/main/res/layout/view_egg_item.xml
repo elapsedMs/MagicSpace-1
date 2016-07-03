@@ -7,45 +7,56 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/px_100"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical">
 
         <View
             android:layout_width="@dimen/px_10"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/px_60"
             android:layout_alignBottom="@+id/tv_egg_name"
             android:layout_alignParentTop="@+id/tv_egg_name"
-            android:background="#af26af" />
+            android:layout_gravity="center_vertical"
+            android:background="#7a4fc9"
+            android:gravity="center_vertical" />
 
         <TextView
             android:id="@+id/tv_egg_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/activity_base_top_margin"
-            android:text="活火山蹦极" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/px_20"
+            android:gravity="center_vertical"
+            android:textColor="#333333"
+            android:textSize="@dimen/text_size_36_px" />
 
         <TextView
             android:id="@+id/tv_egg_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/activity_base_top_margin"
-            android:text="2016.3.14" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/px_20"
+            android:gravity="center_vertical"
+            android:textColor="#666666"
+            android:textSize="@dimen/text_size_28_px" />
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/iv_egg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_414"
+        android:layout_height="@dimen/px_440"
         android:layout_gravity="center"
-        android:scaleType="fitXY"
-        android:src="@mipmap/ic_launcher" />
+        android:scaleType="fitXY" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/px_94"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/px_6">
+        android:layout_marginLeft="@dimen/px_52"
+        android:layout_marginRight="@dimen/px_52"
+        android:layout_marginTop="@dimen/px_10">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -64,7 +75,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="999+" />
+                android:layout_marginTop="@dimen/px_10"
+                android:textColor="#999999"
+                android:textSize="@dimen/px_20" />
 
         </LinearLayout>
 
@@ -85,7 +98,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="15+" />
+                android:layout_marginTop="@dimen/px_10"
+                android:textColor="#999999"
+                android:textSize="@dimen/px_20" />
 
         </LinearLayout>
 
@@ -106,7 +121,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="5" />
+                android:layout_marginTop="@dimen/px_10"
+                android:textColor="#999999"
+                android:textSize="@dimen/px_20" />
 
         </LinearLayout>
 
@@ -127,7 +144,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="12:00" />
+                android:layout_marginTop="@dimen/px_10"
+                android:textColor="#999999"
+                android:textSize="@dimen/px_20" />
 
         </LinearLayout>
 
@@ -135,5 +154,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_20"
-        android:background="@color/light_gray"/>
+        android:background="#ededed"/>
 </LinearLayout>
