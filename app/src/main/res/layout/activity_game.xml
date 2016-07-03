@@ -104,15 +104,22 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_300"
         android:layout_alignParentBottom="true"
-        android:background="#88000000"
+        android:background="#c018101b"
         android:visibility="gone"
         tools:visibility="visible">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_game_eggs"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout_game"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"/>
+            android:layout_height="wrap_content"/>
+
+        <storm.magicspace.view.FastViewPager
+            android:layout_below="@id/tab_layout_game"
+            android:id="@+id/vp_game_eggs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </storm.magicspace.view.FastViewPager>
+
 
         <TextView
             android:id="@+id/tv_game_loading"
