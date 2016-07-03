@@ -22,7 +22,7 @@
     <string name="eggs_count">X %d</string>
     <string name="submit">提交</string>
     <string name="game_info">游戏详情</string>
-    <string name="go_to_game">进入游戏</string>
+    <string name="go_to_game">挑战</string>
     <string name="download">下载</string>
     <string name="login_failed">登陆失败</string>
     <string name="avgtime">平均通关时长：</string>
