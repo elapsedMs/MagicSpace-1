@@ -113,12 +113,18 @@
         android:layout_below="@+id/mine_rl_title"
         android:background="#00000000">
 
+        <Gallery
+            android:id="@+id/mine_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <android.support.v4.view.ViewPager
             android:id="@+id/show_view_page"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_300"
             android:layout_centerInParent="true"
-            android:background="#00000000"/>
+            android:background="#00000000"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

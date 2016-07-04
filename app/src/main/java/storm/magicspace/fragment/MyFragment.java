@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Gallery;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
 
     private List<CirclePic> circlePicList = new ArrayList<>();
     private List<MineShowView> imageViews = new ArrayList<>();
+    private Gallery gallery;
 
     @Nullable
     @Override
@@ -51,8 +53,15 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        gallery = findView(view, R.id.mine_gallery);
+    }
+
+    @Override
     public void initData() {
         super.initData();
+
 
 //        new GetcouponListTask().execute();
         new CirclePicTask().execute();
@@ -187,15 +196,17 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
             super.onSuccess(albumResponse);
             circlePicList = albumResponse.data;
             imageViews.clear();
+
+            gallery.setAdapter(new GalleryAdapter(getActivity(), circlePicList));
 //            title.setText(circlePicList.get(0).getTitle());
-//            desc.setText("");
-            for (int i = 0; i < circlePicList.size(); i++) {
-                mineShowView = new MineShowView(getActivity());
-                RoundedImageView imageView = mineShowView.getImageView();
-                Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
-                imageViews.add(mineShowView);
-            }
-            showPage.setAdapter(new MineShowViewAdapter(imageViews));
+////            desc.setText("");
+//            for (int i = 0; i < circlePicList.size(); i++) {
+//                mineShowView = new MineShowView(getActivity());
+//                RoundedImageView imageView = mineShowView.getImageView();
+//                Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
+//                imageViews.add(mineShowView);
+//            }
+//            showPage.setAdapter(new MineShowViewAdapter(imageViews));
         }
     }
 }
