@@ -12,9 +12,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
-import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.commonlib.common.view.TitleBar;
 import storm.magicspace.R;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
@@ -22,8 +20,6 @@ import storm.magicspace.fragment.EggFragment;
 import storm.magicspace.fragment.MyFragment;
 import storm.magicspace.fragment.SettingFragment;
 import storm.magicspace.fragment.album.AlbumFragment;
-import storm.magicspace.http.HTTPManager;
-import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.view.HomeTabView;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
@@ -170,7 +166,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 break;
             case EGG:
                 useNormalTitle();
-                setActivityTitle("彩蛋区");
+                setActivityTitle("作品区");
                 selectChange(false, false, true, false);
                 break;
             case MY:

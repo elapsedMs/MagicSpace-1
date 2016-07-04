@@ -89,17 +89,18 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onSuccess(SyncAccountResponse syncAccountResponse) {
             super.onSuccess(syncAccountResponse);
-            Toast.makeText(LoginActivity.this, "sync success", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(LoginActivity.this, "同步成功", Toast.LENGTH_SHORT).show();
             SyncAccount data = syncAccountResponse.getData();
 
-            LocalSPUtil.saveToken(data == null ? "" : data.getToken());
+            LocalSPUtil.saveToken(data == null ? EMPTY : data.getToken());
             goToNext(MainActivity.class);
         }
 
         @Override
         public void onFailed() {
             super.onFailed();
-            Toast.makeText(LoginActivity.this, "sync failed", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(LoginActivity.this, "同步失败", Toast.LENGTH_SHORT).show();
+            LocalSPUtil.saveToken(EMPTY);
             goToNext(MainActivity.class);
         }
     }
