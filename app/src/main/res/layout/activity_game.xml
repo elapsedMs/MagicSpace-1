@@ -78,6 +78,7 @@
         android:textSize="@dimen/text_size_40_px"/>
 
     <TextView
+        android:visibility="invisible"
         android:id="@+id/tv_game_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
