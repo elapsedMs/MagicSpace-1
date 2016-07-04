@@ -14,7 +14,6 @@ import java.util.List;
 
 import storm.magicspace.R;
 import storm.magicspace.bean.Album;
-import storm.magicspace.download.FileInfo;
 import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumPicView;
 

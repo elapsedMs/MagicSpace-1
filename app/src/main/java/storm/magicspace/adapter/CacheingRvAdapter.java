@@ -11,12 +11,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.gdq.multhreaddownload.download.DownloadService;
+import com.gdq.multhreaddownload.download.bean.FileInfo;
+
 import java.util.List;
 
 import retrofit.http.POST;
 import storm.magicspace.R;
-import storm.magicspace.download.DownloadService;
-import storm.magicspace.download.FileInfo;
 
 /**
  * Created by gdq on 16/6/21.
