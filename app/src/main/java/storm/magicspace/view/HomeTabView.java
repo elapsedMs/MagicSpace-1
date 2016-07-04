@@ -3,16 +3,12 @@ package storm.magicspace.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Attributes;
 
 import storm.commonlib.common.base.BaseView;
 import storm.magicspace.R;
@@ -59,7 +55,7 @@ public class HomeTabView extends BaseView implements View.OnClickListener {
                 break;
             case EGG:
                 picIv.setImageResource(R.drawable.selector_home_tab_egg);
-                nameTv.setText("彩蛋区");
+                nameTv.setText("作品区");
                 break;
             case MY:
                 picIv.setImageResource(R.drawable.selector_home_tab_my);
