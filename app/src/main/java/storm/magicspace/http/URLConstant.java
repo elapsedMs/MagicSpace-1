@@ -62,6 +62,9 @@ public class URLConstant {
     //同步账户信息
     public static final String URL_SYNC_ACCOUNT = "syncAccount";
 
+    //自动登录
+    public static final String URL_AUTO_LOGIN = "userLogin";
+
     //登录
     public static final String LOGIN = "apilogin";
 

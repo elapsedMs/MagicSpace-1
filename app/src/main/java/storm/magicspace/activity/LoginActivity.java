@@ -123,8 +123,6 @@ public class LoginActivity extends BaseActivity {
                 return;
             }
 
-            if (loginResponse == null) return;
-
             if (!loginResponse.isStatus()) {
                 Toast.makeText(LoginActivity.this, loginResponse.getMsg(), Toast.LENGTH_SHORT).show();
                 return;

@@ -2,6 +2,7 @@ package storm.magicspace.http;
 
 import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
+import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
@@ -183,5 +184,16 @@ public class HTTPManager {
                 "content", "1",
                 "contact", "1"
         );
+    }
+
+    public static BaseResponse AutoLogin() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_AUTO_LOGIN,
+                EMPTY,
+                EggHttpResponse.class,
+                "token", LocalSPUtil.getToken(),
+                "userId", LocalSPUtil.getLoginAccountId());
+
     }
 }

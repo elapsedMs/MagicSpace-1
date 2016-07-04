@@ -71,5 +71,4 @@ public class SharedPreferencesUtil {
         return StringUtil.EMPTY;
     }
 
-
 }
