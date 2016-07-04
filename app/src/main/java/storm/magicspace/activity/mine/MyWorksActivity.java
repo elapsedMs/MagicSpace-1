@@ -76,8 +76,8 @@ public class MyWorksActivity extends BaseActivity {
         }
     }
 
-    private void resetView(int gone) {
-        nodata.setVisibility(gone);
-        btView.setVisibility(gone);
+    private void resetView(int visibility) {
+        nodata.setVisibility(visibility);
+        btView.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 }
