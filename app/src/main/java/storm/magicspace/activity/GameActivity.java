@@ -70,16 +70,20 @@ public class GameActivity extends FragmentActivity {
 
     private WebView mWebView;
     private FloatView mFloatView;
-    private ImageView mConfirmBtn;
-    private SeekBar mAlphaController;
-    private RelativeLayout mEggsContainer;
-    private ImageView mGuide;
-    private TextView mShowEggBtn;
-    private TextView mEggsLoadingHint;
-    private ImageView mSharedBtn;
+
     private ImageView mBackBtn;
+    private ImageView mConfirmBtn;
+    private ImageView mDeleteBtn;
+    private ImageView mSharedBtn;
+    private TextView mShowEggBtn;
+
+    private RelativeLayout mEggsContainer;
+    private TextView mLoadingHint;
     private ViewPager mEggPager;
     private TabLayout mEggTab;
+
+    private SeekBar mAlphaController;
+    private ImageView mGuide;
 
     private float mAlphaVal = 1.0f;
     private int mEggsCount = 1;
@@ -90,7 +94,6 @@ public class GameActivity extends FragmentActivity {
     private List<EggImage> mEggImageList;
     private List<UGCScene> mScenes;
     private Map<String, UGCItem> mEggInfos;
-    private ImageView mDeleteBtn;
     // Get from issue, use for update
     private UGCScene mUCGScene;
     private List<UGCItem> mUGCItems;
@@ -131,10 +134,28 @@ public class GameActivity extends FragmentActivity {
 
         mGuide = (ImageView) findViewById(R.id.iv_game_guide);
         mEggsContainer = (RelativeLayout) findViewById(R.id.rl_game_eggs_container);
-        mEggsLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
+        mLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
         mEggPager = (ViewPager) findViewById(R.id.vp_game_eggs);
         mEggTab = (TabLayout) findViewById(R.id.tab_layout_game);
+
+        syncFloatView(false);
     }
+
+    /**
+     * sync button status when float view status change
+     */
+    private void syncFloatView(boolean floatViewShowing) {
+        if (floatViewShowing) {
+            mConfirmBtn.setVisibility(View.VISIBLE);
+            mDeleteBtn.setVisibility(View.VISIBLE);
+            mSharedBtn.setVisibility(View.GONE);
+        } else {
+            mConfirmBtn.setVisibility(View.INVISIBLE);
+            mDeleteBtn.setVisibility(View.INVISIBLE);
+            mSharedBtn.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     private void initEggs() {
         updateEggsCountHint(mEggsCount = EGG_INIT_COUNT);
@@ -192,6 +213,7 @@ public class GameActivity extends FragmentActivity {
             mUGCItems.add(mCurrentItem);
             mUCGScene.setItems(mUGCItems);
             mUCGScene.setItemsCount(mEggsCount + "");
+            mEggInfos.put(String.valueOf(mEggsCount), mCurrentItem);
             return HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(mUCGScene));
         }
 
@@ -259,7 +281,7 @@ public class GameActivity extends FragmentActivity {
         @Override
         public void onSuccess(EggImageListResponse response) {
             super.onSuccess(response);
-            mEggsLoadingHint.setVisibility(View.INVISIBLE);
+            mLoadingHint.setVisibility(View.INVISIBLE);
             mEggImageList = response.getData();
             new Thread(new Runnable() {
                 @Override
@@ -283,7 +305,7 @@ public class GameActivity extends FragmentActivity {
         @Override
         public void onFailed() {
             super.onFailed();
-            mEggsLoadingHint.setText(R.string.loading_failed);
+            mLoadingHint.setText(R.string.loading_failed);
         }
     }
 
@@ -350,6 +372,7 @@ public class GameActivity extends FragmentActivity {
                 mFloatInfo = null;
                 mUrl = url;
                 initFloatView();
+                syncFloatView(true);
             }
         });
     }
@@ -416,10 +439,18 @@ public class GameActivity extends FragmentActivity {
                 GameActivity.this.finish();
             }
         });
+
+        mDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetFloatView();
+            }
+        });
     }
 
     private void resetFloatView() {
-        mFloatView.setVisibility(View.INVISIBLE);
+        mFloatView.setImageBitmap(null);
+        syncFloatView(false);
         mUrl = null;
     }
 
@@ -452,7 +483,6 @@ public class GameActivity extends FragmentActivity {
     }
 
     private void initFloatView() {
-        // mFloatView.setImageResource(R.mipmap.surprise_egg_red);
         mFloatView.setVisibility(View.VISIBLE);
         mFloatView.setOnFloatListener(new FloatView.FloatListener() {
             @Override
@@ -534,8 +564,8 @@ public class GameActivity extends FragmentActivity {
         public void editItem(String contentId, String sceneId, String order) {
             LogUtil.d(TAG, "edit call back, contentId = " + contentId + ", sceneId = " + sceneId +
                     ", order = " + order);
-////            mFloatView.setVisibility(View.VISIBLE);
-            mEggsCount = mEggsCount -1;
+//            mFloatView.setVisibility(View.VISIBLE);
+            mEggsCount = mEggsCount - 1;
             mEggsCount = mEggsCount >= 0 ? mEggsCount : 0;
             runOnUiThread(new Runnable() {
                 @Override
