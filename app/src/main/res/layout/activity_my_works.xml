@@ -37,12 +37,13 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/network_done" />
+            android:src="@mipmap/network_done"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,7 +51,7 @@
             android:layout_marginTop="@dimen/px_26"
             android:text="暂时没有网络"
             android:textColor="#8f8f8f"
-            android:textSize="@dimen/px_34" />
+            android:textSize="@dimen/px_34"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,7 +59,7 @@
             android:layout_marginTop="@dimen/px_26"
             android:text="请检查网络设置"
             android:textColor="#8f8f8f"
-            android:textSize="@dimen/px_22" />
+            android:textSize="@dimen/px_22"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -72,7 +73,7 @@
             android:paddingTop="@dimen/px_24"
             android:text="刷新一下"
             android:textColor="#ffffff"
-            android:textSize="@dimen/px_28" />
+            android:textSize="@dimen/px_28"/>
     </LinearLayout>
 
 </RelativeLayout>

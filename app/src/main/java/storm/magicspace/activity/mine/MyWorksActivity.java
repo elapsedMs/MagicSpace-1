@@ -37,7 +37,6 @@ public class MyWorksActivity extends BaseActivity {
         adapter = new WorksAdapter(list, this);
         nodata = findView(R.id.my_works_no_net_work_ll);
         btView = findView(R.id.rl_build_works);
-        nodata.setVisibility(View.VISIBLE);
 
         listView.setAdapter(adapter);
         GetMyWorksTask task = new GetMyWorksTask();
@@ -54,6 +53,16 @@ public class MyWorksActivity extends BaseActivity {
         @Override
         public void onSuccess(MyWorksResponse myWorksResponse) {
             super.onSuccess(myWorksResponse);
+            resetView(View.GONE);
+            list.clear();
+            list.addAll(myWorksResponse.data);
+            adapter.notifyDataSetChanged();
+        }
+
+
+        @Override
+        public void onSuccessWithoutResult(MyWorksResponse myWorksResponse) {
+            super.onSuccessWithoutResult(myWorksResponse);
             resetView(View.GONE);
             list.clear();
             list.addAll(myWorksResponse.data);
