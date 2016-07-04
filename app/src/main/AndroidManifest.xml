@@ -6,7 +6,7 @@
     <application
         android:name=".base.MagicApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -76,8 +76,9 @@
             android:name=".activity.FreshHelpActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".activity.ForgetPwdActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ForgetPwdActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.RegisterActivity"
@@ -112,21 +113,21 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
-        <activity android:name="com.umeng.fb.ConversationActivity" />
+        <activity android:name="com.umeng.fb.ConversationActivity"/>
 
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="57760bebe0f55afeca000d30"></meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="mojingugc0001" />
+            android:value="mojingugc0001"/>
 
         <!--<meta-data-->
-            <!--android:name="UMENG_APPKEY"-->
-            <!--android:value="57760bebe0f55afeca000d30" />-->
+        <!--android:name="UMENG_APPKEY"-->
+        <!--android:value="57760bebe0f55afeca000d30" />-->
         <!--<meta-data-->
-            <!--android:name="Channel ID"-->
-            <!--android:value="mojingugc0001" />-->
+        <!--android:name="Channel ID"-->
+        <!--android:value="mojingugc0001" />-->
 
     </application>
 
