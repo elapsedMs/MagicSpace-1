@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gdq.multhreaddownload.download.bean.FileInfo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -28,7 +29,6 @@ import storm.magicspace.adapter.ViewPagerAdatper;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.CirclePic;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
-import storm.magicspace.download.FileInfo;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.util.LocalSPUtil;
