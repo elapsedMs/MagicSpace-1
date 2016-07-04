@@ -165,7 +165,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         Log.d("gdq", "1");
         switch (type) {
             case ALBUM:
-                useSelectTitle("在线", "本地");
+                useSelectTitle("在线", "收藏");
                 selectChange(true, false, false, false);
                 break;
             case EGG:

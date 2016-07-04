@@ -5,10 +5,19 @@
     android:layout_height="match_parent"
     android:background="@color/main_bg">
 
+    <ListView
+        android:id="@+id/cachedLv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
+
     <RelativeLayout
         android:id="@+id/rl_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <storm.magicspace.view.AlbumTitleView
             android:id="@+id/cacheingATV"
@@ -27,10 +36,10 @@
             album_title:album_title_style="normal" />
 
         <ListView
-            android:layout_above="@+id/bottom"
-            android:id="@+id/cachedLv"
+            android:id="@+id/cachedLv1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/bottom"
             android:layout_below="@id/cachedATV"
             android:background="#ffffff"
             android:divider="@null"
