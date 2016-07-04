@@ -66,7 +66,7 @@ public class GameActivity extends FragmentActivity {
     public static final String ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM = "bottom";
     public static final String ALPHA_CONTROLLER_POSITION_ABOVE_EGGS = "above_eggs";
     public static final int EGG_INIT_COUNT = 0;
-    public static final int EGG_MAX_COUNT = 5;
+    public static final int EGG_MAX_COUNT = 10;
     public static final String DEFAULT_CONTENT_ID = "3403";
 
     private WebView mWebView;
@@ -479,7 +479,7 @@ public class GameActivity extends FragmentActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mAlphaVal = progress * 1f / 100;
                 Log.d(TAG, "alpha = " + mAlphaVal);
-                mFloatView.setAlpha(mAlphaVal);
+                mFloatView.setFloatAlpha(mAlphaVal);
                 mCurrentItem.setTransparency(mAlphaVal + "");
             }
 

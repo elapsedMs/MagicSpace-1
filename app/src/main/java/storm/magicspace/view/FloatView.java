@@ -64,6 +64,7 @@ public class FloatView extends ImageView {
     private boolean mNewFloat;
     private float mNewScale;
     private float mNewRotate;
+    private Paint mBitmapPaint;
 
     public FloatView(Context context) {
         super(context);
@@ -130,6 +131,11 @@ public class FloatView extends ImageView {
         requestFocus();
     }
 
+    public void setFloatAlpha(float alpha) {
+        mBitmapPaint.setAlpha((int) (255*alpha));
+        invalidate();
+    }
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
@@ -160,6 +166,12 @@ public class FloatView extends ImageView {
         mPaint.setDither(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(2.0f);
+
+        mBitmapPaint = new Paint();
+        mBitmapPaint.setAntiAlias(true);
+        mBitmapPaint.setDither(true);
+        mBitmapPaint.setStyle(Paint.Style.STROKE);
+        mBitmapPaint.setStrokeWidth(2.0f);
 
         lt_Bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.game_egg_opacity);
         rt_Bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.game_egg_rotation);
@@ -432,8 +444,8 @@ public class FloatView extends ImageView {
 
             canvas.save();
 
-            canvas.drawBitmap(mBitmap, matrix, mPaint);
-/////;.LKL.;/.LK,JMHNBG,./
+            canvas.drawBitmap(mBitmap, matrix, mBitmapPaint);
+
             float val1 = values[2];
             float val2 = values[5];
             float val3 = values[0] * width + values[2];
