@@ -49,7 +49,7 @@ public class IssueUCGContent {
      * items :
      */
 
-    private List<ScenesBean> scenes;
+    private List<UGCScene> scenes;
 
     public String getUserId() {
         return userId;
@@ -163,77 +163,12 @@ public class IssueUCGContent {
         this.description = description;
     }
 
-    public List<ScenesBean> getScenes() {
+    public List<UGCScene> getScenes() {
         return scenes;
     }
 
-    public void setScenes(List<ScenesBean> scenes) {
+    public void setScenes(List<UGCScene> scenes) {
         this.scenes = scenes;
     }
 
-    public static class ScenesBean {
-        private String sceneId;
-        private String order;
-        private String itemsCount;
-        private String timeLimit;
-        private String tips;
-        private String bgimageUrl;
-        private String items;
-
-        public String getSceneId() {
-            return sceneId;
-        }
-
-        public void setSceneId(String sceneId) {
-            this.sceneId = sceneId;
-        }
-
-        public String getOrder() {
-            return order;
-        }
-
-        public void setOrder(String order) {
-            this.order = order;
-        }
-
-        public String getItemsCount() {
-            return itemsCount;
-        }
-
-        public void setItemsCount(String itemsCount) {
-            this.itemsCount = itemsCount;
-        }
-
-        public String getTimeLimit() {
-            return timeLimit;
-        }
-
-        public void setTimeLimit(String timeLimit) {
-            this.timeLimit = timeLimit;
-        }
-
-        public String getTips() {
-            return tips;
-        }
-
-        public void setTips(String tips) {
-            this.tips = tips;
-        }
-
-        public String getBgimageUrl() {
-            return bgimageUrl;
-        }
-
-        public void setBgimageUrl(String bgimageUrl) {
-            this.bgimageUrl = bgimageUrl;
-        }
-
-        public String getItems() {
-            return items;
-        }
-
-        public void setItems(String items) {
-            this.items = items;
-        }
-    }
 }

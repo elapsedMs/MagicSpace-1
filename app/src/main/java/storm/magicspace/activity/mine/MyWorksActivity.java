@@ -2,7 +2,9 @@ package storm.magicspace.activity.mine;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,8 @@ public class MyWorksActivity extends BaseActivity {
     private ListView listView;
     private WorksAdapter adapter;
     private List<Album> list = new ArrayList<>();
+    private LinearLayout nodata;
+    private RelativeLayout btView;
 
     public MyWorksActivity() {
         super(R.layout.activity_my_works);
@@ -31,6 +35,10 @@ public class MyWorksActivity extends BaseActivity {
         setTitleLeftBtVisibility(View.VISIBLE);
         listView = (ListView) findViewById(R.id.listview);
         adapter = new WorksAdapter(list, this);
+        nodata = findView(R.id.my_works_no_net_work_ll);
+        btView = findView(R.id.rl_build_works);
+        nodata.setVisibility(View.VISIBLE);
+
         listView.setAdapter(adapter);
         GetMyWorksTask task = new GetMyWorksTask();
         task.execute();
@@ -42,12 +50,25 @@ public class MyWorksActivity extends BaseActivity {
             return HTTPManager.getMyWorks("", "");
         }
 
+
         @Override
-        protected void onPostExecute(MyWorksResponse myWorksResponse) {
-            super.onPostExecute(myWorksResponse);
+        public void onSuccess(MyWorksResponse myWorksResponse) {
+            super.onSuccess(myWorksResponse);
+            resetView(View.GONE);
             list.clear();
             list.addAll(myWorksResponse.data);
             adapter.notifyDataSetChanged();
         }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+            resetView(View.VISIBLE);
+        }
+    }
+
+    private void resetView(int gone) {
+        nodata.setVisibility(gone);
+        btView.setVisibility(gone);
     }
 }

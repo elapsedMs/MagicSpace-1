@@ -70,4 +70,5 @@ public class SharedPreferencesUtil {
     public static String getToken() {
         return StringUtil.EMPTY;
     }
+
 }

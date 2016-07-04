@@ -9,6 +9,7 @@ import android.widget.Toast;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
+import storm.magicspace.bean.SyncAccount;
 import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.http.AccountHttpManager;
 import storm.magicspace.http.HTTPManager;
@@ -88,14 +89,18 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onSuccess(SyncAccountResponse syncAccountResponse) {
             super.onSuccess(syncAccountResponse);
-            Toast.makeText(LoginActivity.this, "sync success", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(LoginActivity.this, "同步成功", Toast.LENGTH_SHORT).show();
+            SyncAccount data = syncAccountResponse.getData();
+
+            LocalSPUtil.saveToken(data == null ? EMPTY : data.getToken());
             goToNext(MainActivity.class);
         }
 
         @Override
         public void onFailed() {
             super.onFailed();
-            Toast.makeText(LoginActivity.this, "sync failed", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(LoginActivity.this, "同步失败", Toast.LENGTH_SHORT).show();
+            LocalSPUtil.saveToken(EMPTY);
             goToNext(MainActivity.class);
         }
     }
@@ -118,8 +123,6 @@ public class LoginActivity extends BaseActivity {
                 Toast.makeText(LoginActivity.this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            if (loginResponse == null) return;
 
             if (!loginResponse.isStatus()) {
                 Toast.makeText(LoginActivity.this, loginResponse.getMsg(), Toast.LENGTH_SHORT).show();

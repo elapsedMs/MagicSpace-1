@@ -2,6 +2,7 @@ package storm.magicspace.http;
 
 import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
+import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
@@ -11,6 +12,7 @@ import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
+import storm.magicspace.http.reponse.ConponResponse;
 import storm.magicspace.http.reponse.EggHttpResponse;
 import storm.magicspace.util.LocalSPUtil;
 
@@ -148,6 +150,17 @@ public class HTTPManager {
         );
     }
 
+
+    public static ConponResponse GetcouponList() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_GET_FOCUS_CONTENT_LIST,
+                EMPTY,
+                ConponResponse.class,
+                "", ""
+        );
+    }
+
     public static EggHttpResponse getEggList() {
         return ServiceUtils.request(
                 RequestTypes.POST,
@@ -171,5 +184,16 @@ public class HTTPManager {
                 "content", "1",
                 "contact", "1"
         );
+    }
+
+    public static BaseResponse AutoLogin() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_AUTO_LOGIN,
+                EMPTY,
+                EggHttpResponse.class,
+                "token", LocalSPUtil.getToken(),
+                "userId", LocalSPUtil.getLoginAccountId());
+
     }
 }

@@ -4,10 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <FrameLayout
         android:id="@+id/egg_info_tiltle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_400">
+        android:layout_height="@dimen/px_350">
 
         <WebView
             android:id="@+id/wv_egg_info"
@@ -15,14 +22,15 @@
             android:layout_height="@dimen/px_400" />
 
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/details_arrow"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="@dimen/px_10"/>
+            android:layout_marginLeft="@dimen/px_20"/>
     </FrameLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/egg_info_tiltle">
@@ -165,7 +173,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
+        android:layout_below="@+id/rl_total"
         android:padding="10dp">
 
         <Button
@@ -200,4 +208,6 @@
             android:textSize="@dimen/text_size_s" />
 
     </RelativeLayout>
+</RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -5,6 +5,15 @@ package storm.magicspace.bean;
  */
 public class SyncAccount {
     private String msg;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getMsg() {
         return msg;

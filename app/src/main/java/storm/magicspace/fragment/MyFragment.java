@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Gallery;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,13 +25,13 @@ import storm.magicspace.R;
 import storm.magicspace.activity.FreshHelpActivity;
 import storm.magicspace.activity.mine.MyCollectionActivity;
 import storm.magicspace.activity.mine.MyWorksActivity;
-import storm.magicspace.adapter.ViewPagerAdatper;
 import storm.magicspace.bean.CirclePic;
 import storm.magicspace.bean.UserInfo;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.util.LocalSPUtil;
+import storm.magicspace.view.MineShowView;
 
 public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
@@ -43,7 +43,8 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     private ViewPager showPage;
 
     private List<CirclePic> circlePicList = new ArrayList<>();
-    private List<ImageView> imageViews = new ArrayList<>();
+    private List<MineShowView> imageViews = new ArrayList<>();
+    private Gallery gallery;
 
     @Nullable
     @Override
@@ -52,11 +53,18 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        gallery = findView(view, R.id.mine_gallery);
+    }
+
+    @Override
     public void initData() {
         super.initData();
 
-        new CirclePicTask().execute();
 
+//        new GetcouponListTask().execute();
+        new CirclePicTask().execute();
         GetAccountInfoTask task = new GetAccountInfoTask(getActivity());
         task.execute();
     }
@@ -74,7 +82,7 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
         advator = findView(view, R.id.mine_ri_avatar);
         money = findView(view, R.id.money);
         level = findView(view, R.id.level);
-        showPage = (ViewPager) findView(view, R.id.show_view_page);
+        showPage = findView(view, R.id.show_view_page);
         showPage.setOnPageChangeListener(this);
     }
 
@@ -146,29 +154,59 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
         }
     }
 
+//    private class GetcouponListTask extends BaseASyncTask<Void, ConponResponse> {
+//        @Override
+//        public ConponResponse doRequest(Void param) {
+//            return HTTPManager.GetcouponList();
+//        }
+//
+//        @Override
+//        public void onSuccess(ConponResponse conponResponse) {
+//            super.onSuccess(conponResponse);
+//            circlePicList = ConponResponse.data;
+//            imageViews.clear();
+////            title.setText(circlePicList.get(0).getTitle());
+////            desc.setText("没字段");
+//            for (int i = 0; i < circlePicList.size(); i++) {
+//                RoundedImageView imageView = new RoundedImageView(getActivity());
+//                imageView.setCornerRadius(200f);
+//                Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
+//                imageViews.add(imageView);
+//            }
+////
+//            showPage.setAdapter(new ViewPagerAdatper(imageViews));
+//
+//        }
+//    }
+
     private class CirclePicTask extends BaseASyncTask<Void, CirclePicResponse> {
+
+        private MineShowView mineShowView;
+
         @Override
         public CirclePicResponse doRequest(Void param) {
             return HTTPManager.getAlbumCirclePic();
         }
 
+        /**
+         * @param albumResponse
+         */
         @Override
         public void onSuccess(CirclePicResponse albumResponse) {
             super.onSuccess(albumResponse);
             circlePicList = albumResponse.data;
             imageViews.clear();
+
+            gallery.setAdapter(new GalleryAdapter(getActivity(), circlePicList));
 //            title.setText(circlePicList.get(0).getTitle());
-//            desc.setText("没字段");
-            for (int i = 0; i < circlePicList.size(); i++) {
-                RoundedImageView imageView = new RoundedImageView(getActivity());
-                imageView.setCornerRadius(200f);
-                Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
-                imageViews.add(imageView);
-            }
-
-            showPage.setAdapter(new ViewPagerAdatper(imageViews));
-
+////            desc.setText("");
+//            for (int i = 0; i < circlePicList.size(); i++) {
+//                mineShowView = new MineShowView(getActivity());
+//                RoundedImageView imageView = mineShowView.getImageView();
+//                Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
+//                imageViews.add(mineShowView);
+//            }
+//            showPage.setAdapter(new MineShowViewAdapter(imageViews));
         }
     }
-
 }

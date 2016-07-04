@@ -8,17 +8,14 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.view.TitleBar;
 import storm.magicspace.R;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
-import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.fragment.GameCollectionFragment;
 import storm.magicspace.fragment.TopicCollectionFragment;
-import storm.magicspace.http.HTTPManager;
 
-public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPageChangeListener, TitleBar.OnSelectTitleClickedListener {
 
     private List<Fragment> fragmentList = new ArrayList<>();
     private ViewPager viewPager;
@@ -37,10 +34,12 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
         setOnSelectTitleClickedListener(new TitleBar.OnSelectTitleClickedListener() {
             @Override
             public void leftClicked() {
+                viewPager.setCurrentItem(0);
             }
 
             @Override
             public void rightClicked() {
+                viewPager.setCurrentItem(1);
             }
         });
     }
@@ -60,13 +59,11 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
         useBothTitle();
         setSecondTitleBackground(android.R.color.white);
         setSelectTitle("游戏", "主题");
-
-
+        setOnSelectTitleClickedListener(this);
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
@@ -83,6 +80,16 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
 
     @Override
     public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void leftClicked() {
+
+    }
+
+    @Override
+    public void rightClicked() {
 
     }
 }
