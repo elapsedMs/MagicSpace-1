@@ -11,6 +11,7 @@ import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
+import storm.magicspace.http.reponse.ConponResponse;
 import storm.magicspace.http.reponse.EggHttpResponse;
 import storm.magicspace.util.LocalSPUtil;
 
@@ -144,6 +145,17 @@ public class HTTPManager {
                 URLConstant.URL_GET_FOCUS_CONTENT_LIST,
                 EMPTY,
                 CirclePicResponse.class,
+                "", ""
+        );
+    }
+
+
+    public static ConponResponse GetcouponList() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_GET_FOCUS_CONTENT_LIST,
+                EMPTY,
+                ConponResponse.class,
                 "", ""
         );
     }

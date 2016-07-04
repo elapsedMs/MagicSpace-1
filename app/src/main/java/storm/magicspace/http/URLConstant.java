@@ -44,6 +44,9 @@ public class URLConstant {
     //获取主页轮播
     public static final String URL_GET_FOCUS_CONTENT_LIST = "getFocusContentList";
 
+    //获取个人主页轮播
+    public static final String URL_GET_COUPON_LIST = "getcouponList";
+
     //获取彩蛋区列表
     public static final String URL_GET_EGG_LIST = "getUGCContentList";
 
