@@ -10,6 +10,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.gdq.multhreaddownload.download.db.ThreadDAO;
+import com.gdq.multhreaddownload.download.db.ThreadDaoImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +26,6 @@ import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.base.MagicApplication;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
-import storm.magicspace.download.FileInfo;
-import storm.magicspace.download.db.ThreadDAO;
-import storm.magicspace.download.db.ThreadDaoImpl;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumTitleView;

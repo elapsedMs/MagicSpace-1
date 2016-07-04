@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -15,6 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.gdq.multhreaddownload.download.DownloadService;
+import com.gdq.multhreaddownload.download.bean.FileInfo;
+import com.gdq.multhreaddownload.download.db.ThreadDAO;
+import com.gdq.multhreaddownload.download.db.ThreadDaoImpl;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,10 +31,6 @@ import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 import storm.magicspace.adapter.FileListAdapter;
 import storm.magicspace.bean.Album;
-import storm.magicspace.download.DownloadService;
-import storm.magicspace.download.FileInfo;
-import storm.magicspace.download.db.ThreadDAO;
-import storm.magicspace.download.db.ThreadDaoImpl;
 import storm.magicspace.event.LengthEvent;
 import storm.magicspace.util.LocalSPUtil;
 

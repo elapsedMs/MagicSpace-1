@@ -14,11 +14,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
+import com.gdq.multhreaddownload.download.bean.FileInfo;
+
 import java.util.List;
 
 import storm.magicspace.R;
-import storm.magicspace.download.DownloadService;
-import storm.magicspace.download.FileInfo;
 
 public class FileListAdapter extends BaseAdapter {
     private Context mContext;
