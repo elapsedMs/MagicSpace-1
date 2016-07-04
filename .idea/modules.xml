@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/MagicSpace.iml" filepath="$PROJECT_DIR$/MagicSpace.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonlib/commonlib.iml" filepath="$PROJECT_DIR$/commonlib/commonlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multhreaddownload2/multhreaddownload2.iml" filepath="$PROJECT_DIR$/multhreaddownload2/multhreaddownload2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multhreaddownload2/multhreaddownload2.iml" filepath="$PROJECT_DIR$/multhreaddownload2/multhreaddownload2.iml" />
     </modules>
   </component>
 </project>

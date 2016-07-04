@@ -36,7 +36,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/cancel"
+            android:id="@+id/iv_game_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/px_24"
@@ -45,7 +45,7 @@
             android:gravity="center"/>
 
         <ImageView
-            android:id="@+id/sure"
+            android:id="@+id/iv_game_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/px_24"
@@ -54,7 +54,7 @@
             android:gravity="center"/>
 
         <ImageView
-            android:id="@+id/iv_game_confirm"
+            android:id="@+id/iv_game_shared"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/px_40"

@@ -5,6 +5,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.gdq.multhreaddownload.download.bean.FileInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,6 @@ import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 import storm.magicspace.adapter.OnlineRVAdapter;
 import storm.magicspace.bean.Album;
-import storm.magicspace.download.FileInfo;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.view.GridItemDecoration;
