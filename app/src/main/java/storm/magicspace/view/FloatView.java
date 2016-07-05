@@ -156,7 +156,9 @@ public class FloatView extends ImageView {
                 matrix.postRotate(mNewRotate, mWidth / 2, mHeight / 2);
                 matrix.postScale(mNewScale, mNewScale, mWidth / 2, mHeight / 2);
             }
-            tMatrix.set(matrix);
+            if (!mNewFloat) {
+                tMatrix.set(matrix);
+            }
         }
     }
 
