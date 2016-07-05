@@ -69,7 +69,7 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
                 eggInfo.contentId = list.get(position).getContentId();
                 intent.putExtra("game_info", eggInfo);
                 context.startActivity(intent);
-//                onRecyclerViewClickListener.onItemClick(position);
+                onRecyclerViewClickListener.onItemClick(position);
             }
         });
 

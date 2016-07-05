@@ -1,5 +1,6 @@
 package storm.magicspace.fragment.album;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -57,6 +58,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
     private TextView desc;
     private List<CirclePic> circlePicList = new ArrayList<>();
     private List<ImageView> imageViews = new ArrayList<>();
+    private LinearLayout guideDotLl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,28 +67,12 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
 
     @Override
     public void initView(View view) {
-        new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new CirclePicTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         super.initView(view);
+        guideDotLl = (LinearLayout) view.findViewById(id.ll_guide_dot);
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
         contentLl = (LinearLayout) view.findViewById(id.ll_content);
         viewPager = (ViewPager) view.findViewById(id.viewpager);
         viewPager.setOnPageChangeListener(this);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         recyclerView = (RecyclerView) view.findViewById(id.recycler_view);
         title = (TextView) view.findViewById(id.title);
         desc = (TextView) view.findViewById(id.desc);
@@ -95,6 +81,8 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         guessULikeATV.setOnClickListener(this);
         initRecyclerView();
         showContent();
+        new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new CirclePicTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private void initRecyclerView() {
@@ -105,9 +93,9 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         adapter.setOnRecyclerViewClickListener(new OnlineRVAdapter.OnRecyclerViewClickListener() {
             @Override
             public void onItemClick(int position) {
-                Bundle bundle = new Bundle();
-                bundle.putString("url", "http://app.stemmind.com/vr/a/preview.php?c=" + albumList.get(position).getContentId());
-                goToNext(WebActivity.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("url", "http://app.stemmind.com/vr/a/preview.php?c=" + albumList.get(position).getContentId());
+//                goToNext(WebActivity.class, bundle);
             }
 
             @Override
@@ -206,6 +194,11 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
                 });
                 Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
                 imageViews.add(imageView);
+
+//                ImageView dot = new ImageView(getActivity());
+//                dot.setBackgroundResource(R.drawable.shape_guide_dot);
+//                dot.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+//                guideDotLl.addView(dot);
             }
             viewPager.setAdapter(new ViewPagerAdatper(imageViews));
 
