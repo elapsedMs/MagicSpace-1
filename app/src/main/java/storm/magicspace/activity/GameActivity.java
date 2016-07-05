@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,6 +53,7 @@ import storm.magicspace.bean.httpBean.EggImage;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
+import storm.magicspace.event.GameEvent;
 import storm.magicspace.fragment.EggImageFragment;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.view.FloatView;
@@ -101,6 +105,7 @@ public class GameActivity extends FragmentActivity {
     private boolean mFrmoEdit;
     private String mWebUrl;
     private boolean Debug = true;
+    private IssueUCGContent mUCGContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,9 +189,9 @@ public class GameActivity extends FragmentActivity {
         @Override
         public void onSuccess(IssueUCGContentResponse response) {
             super.onSuccess(response);
-            IssueUCGContent content = response.getData();
-            if (content == null) return;
-            List<UGCScene> scenes = content.getScenes();
+            mUCGContent = response.getData();
+            if (mUCGContent == null) return;
+            List<UGCScene> scenes = mUCGContent.getScenes();
             if (scenes == null) return;
             mUCGScene = scenes.get(0);
             mUGCItems = mUCGScene.getItems();
@@ -230,7 +235,7 @@ public class GameActivity extends FragmentActivity {
                 }
                 mUGCItems.add(mCurrentItem);
                 mUCGScene.setItems(mUGCItems);
-                mUCGScene.setItemsCount(mEggsCount + "");
+                mUCGScene.setItemsCount(mEggsCount+1 + "");
                 mEggInfos.put(mEggKey, mCurrentItem);
                 mFrmoEdit = false;
                 return HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(mUCGScene));
@@ -239,7 +244,7 @@ public class GameActivity extends FragmentActivity {
             mCurrentItem.setItemId(mEggKey);
             mUGCItems.add(mCurrentItem);
             mUCGScene.setItems(mUGCItems);
-            mUCGScene.setItemsCount(mEggsCount + "");
+            mUCGScene.setItemsCount(mEggsCount+1 + "");
             mEggInfos.put(mEggKey, mCurrentItem);
             return HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(mUCGScene));
         }
@@ -321,11 +326,8 @@ public class GameActivity extends FragmentActivity {
                         setEggImageListener(fragment);
                         fragments.add(fragment);
                     }
-                    initViewPager(fragments);
-                    for (int i = 0; i < size; i++) {
-                        // init viewpager first
-                        fillTabLayout(i);
-                    }
+                    initViewPager(fragments, size);
+
                 }
             }).start();
         }
@@ -337,16 +339,26 @@ public class GameActivity extends FragmentActivity {
         }
     }
 
-    private void fillTabLayout(int pos) {
-        try {
-            BitmapDrawable bitmapDrawable = getDrawableWithBitmap(pos);
-            TabLayout.Tab tab = mEggTab.getTabAt(pos);
-            if (tab != null) {
-                tab.setIcon(bitmapDrawable);
+    private void fillTabLayout(final int pos) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final BitmapDrawable bitmapDrawable = getDrawableWithBitmap(pos);
+                    final TabLayout.Tab tab = mEggTab.getTabAt(pos);
+                    if (tab != null) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tab.setIcon(bitmapDrawable);
+                            }
+                        });
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
 
     @NonNull
@@ -361,7 +373,7 @@ public class GameActivity extends FragmentActivity {
         return load.get();
     }
 
-    private void initViewPager(final ArrayList<EggImageFragment> fragments) {
+    private void initViewPager(final ArrayList<EggImageFragment> fragments, final int size) {
         mEggPager.setOffscreenPageLimit(fragments.size());
         mEggPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -375,7 +387,16 @@ public class GameActivity extends FragmentActivity {
             }
 
         });
-        mEggTab.setupWithViewPager(mEggPager);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mEggTab.setupWithViewPager(mEggPager);
+                for (int i = 0; i < size; i++) {
+                    // init viewpager first
+                    fillTabLayout(i);
+                }
+            }
+        });
     }
 
     private void setEggImageListener(EggImageFragment fragment) {
@@ -435,6 +456,21 @@ public class GameActivity extends FragmentActivity {
                 Intent intent = new Intent(GameActivity.this, GameEditDetailActivity.class);
                 intent.putExtra("contentId",mContentId);
                 startActivity(intent);
+                final GameEvent gameEvent = new GameEvent();
+                UGCScene ugcScene = mUCGContent.getScenes().get(0);
+                ugcScene.setItems(mUGCItems);
+                gameEvent.content = mUCGContent;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                EventBus.getDefault().post(gameEvent);
+                            }
+                        });
+                    }
+                }, 200);
             }
         });
 
@@ -674,6 +710,8 @@ public class GameActivity extends FragmentActivity {
             e.printStackTrace();
         }
     }
+
+
 
 }
 

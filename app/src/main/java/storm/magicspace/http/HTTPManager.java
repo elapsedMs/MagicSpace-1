@@ -8,6 +8,7 @@ import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
+import storm.magicspace.bean.httpBean.SubmitUGCContentResponse;
 import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
@@ -122,6 +123,21 @@ public class HTTPManager {
                 URLConstant.URL_UPDATE_UGC_CONTENT_SCENES,
                 EMPTY,
                 UpdateUGCContentScenesResponse.class,
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
+                "contentId", contendId,
+                "data", data
+        );
+    }
+
+    /**
+     * 发布游戏
+     */
+    public static SubmitUGCContentResponse submitUGCContent(String contendId, String data) {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_UPDATE_UGC_CONTENT_SCENES,
+                EMPTY,
+                SubmitUGCContentResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "contentId", contendId,
                 "data", data
