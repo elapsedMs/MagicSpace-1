@@ -2,6 +2,8 @@ package storm.magicspace.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,6 +36,7 @@ public class AboutUsActivity extends BaseActivity {
         rl_share = findEventView(R.id.rl_share);
         setActivityTitle(getResources().getString(R.string.about_us));
         setTitleRightBtVisibility(View.GONE);
+        tv_version.setText(getVersion());
     }
 
     public static void startActivity(Context context) {
@@ -86,4 +89,19 @@ public class AboutUsActivity extends BaseActivity {
 // 启动分享GUI
         oks.show(AboutUsActivity.this);
     }
+    /**
+      * 获取版本号
+      * @return 当前应用的版本号
+       */
+     public String getVersion() {
+            try {
+                   PackageManager manager = this.getPackageManager();
+                     PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+                     String version = info.versionName;
+                     return  version;
+                 } catch (Exception e) {
+                     e.printStackTrace();
+                     return "获取版本号失败";
+                 }
+         }
 }
