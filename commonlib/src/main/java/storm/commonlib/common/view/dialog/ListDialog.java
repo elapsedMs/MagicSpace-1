@@ -30,13 +30,13 @@ public class ListDialog extends BaseDialog {
         super.init(context, layoutId);
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        findViewById(R.id.bt_list_dialog_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isShowing())
-                    dismiss();
-            }
-        });
+//        findViewById(R.id.bt_list_dialog_cancel).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (isShowing())
+//                    dismiss();
+//            }
+//        });
     }
 
     public ListDialog setItems(OnClickListener listDialogClickListener, List<String> items) {

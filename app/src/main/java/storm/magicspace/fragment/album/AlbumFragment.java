@@ -10,6 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,7 @@ import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
 import storm.magicspace.activity.MainActivity;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
+import storm.magicspace.event.ViewPagerEvent;
 
 /**
  * Created by gdq on 16/6/15.
@@ -39,6 +44,11 @@ public class AlbumFragment extends BaseFragment implements ViewPager.OnPageChang
         myHandler = new MyHandler(this);
         mainActivity.setHandler(myHandler);
         return view;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ViewPagerEvent viewPagerEvent) {
+        viewPager.setCurrentItem(viewPagerEvent.position);
     }
 
     @Override

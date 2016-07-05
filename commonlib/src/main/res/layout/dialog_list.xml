@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/px_50"
-    android:paddingRight="@dimen/px_50">
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/lv_list_dialog"
@@ -13,12 +11,12 @@
         android:divider="@color/list_dialog_divider"
         android:dividerHeight="1px" />
 
-    <Button
+    <TextView
         android:id="@+id/bt_list_dialog_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px_30"
         android:layout_marginBottom="@dimen/px_30"
+        android:layout_marginTop="@dimen/px_30"
         android:background="@drawable/bg_list_dialog"
         android:padding="@dimen/personal_center_padding_top_and_bottom"
         android:text="@string/list_dialog_cancel"

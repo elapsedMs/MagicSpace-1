@@ -118,9 +118,11 @@ public class CommonBaseActivity extends FragmentActivity {
             }
         });
     }
-    public void showRedDot(String count){
+
+    public void showRedDot(String count) {
         titleBar.showRedDot(count);
     }
+
     public void onTitleBarRightSecondBtClicked(View view) {
     }
 

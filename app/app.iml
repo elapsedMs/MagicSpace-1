@@ -106,8 +106,8 @@
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.5" level="project" />
     <orderEntry type="library" exported="" name="roboguice-4.0.0" level="project" />
     <orderEntry type="library" exported="" name="umeng-analytics-v6.0.1" level="project" />
-    <orderEntry type="library" exported="" name="joda-time-2.9.4" level="project" />
     <orderEntry type="library" exported="" name="eventbus-3.0.0" level="project" />
+    <orderEntry type="library" exported="" name="joda-time-2.9.4" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QQ-2.7.3" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="utdid4all-1.0.4" level="project" />

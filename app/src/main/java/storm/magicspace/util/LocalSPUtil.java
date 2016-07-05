@@ -19,6 +19,7 @@ import storm.magicspace.bean.Album;
 import storm.magicspace.http.reponse.LoginResponse;
 
 import static android.content.Context.MODE_PRIVATE;
+import static storm.commonlib.common.BaseApplication.getApplication;
 
 /**
  * Created by lixiaolu on 16/6/28.
@@ -28,6 +29,8 @@ public class LocalSPUtil extends SharedPreferencesUtil {
     private static final String ALBUM = "ALBUM";
     private static final String FINISH_ALBUM = "FINISH_ALBUM";
     private static final String UNFINISH_ALBUM = "UNFINISH_ALBUM";
+    public static final String TOKEN = "TOKEN";
+    public static final String USER_NO = "USER_NO";
 
     public static void saveAccountInfo(LoginResponse.AccountInfo data) {
         saveObject(BaseApplication.getApplication(), data);
@@ -162,5 +165,27 @@ public class LocalSPUtil extends SharedPreferencesUtil {
                 return list.get(i);
         }
         return null;
+    }
+
+    public static void saveToken(String token) {
+        SharedPreferences.Editor editor = getEditor(getApplication(), TOKEN);
+        editor.putString(TOKEN, token);
+        editor.commit();
+    }
+
+    public static String getToken() {
+        SharedPreferences preferences = getPreferences(getApplication(), TOKEN);
+        return preferences.getString(TOKEN, "");
+    }
+
+    public static void saveUserNo(String userNo) {
+        SharedPreferences.Editor editor = getEditor(getApplication(), TOKEN);
+        editor.putString(USER_NO, userNo);
+        editor.commit();
+    }
+
+    public static String getTUserNo() {
+        SharedPreferences preferences = getPreferences(getApplication(), TOKEN);
+        return preferences.getString(USER_NO, "");
     }
 }
