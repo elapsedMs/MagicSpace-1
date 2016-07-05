@@ -30,6 +30,7 @@ public class ListDialog extends Dialog implements View.OnClickListener {
     private TextView cancelBtn;
     private List<String> list = new ArrayList<>();
     private ListAdapter adapter;
+    private LinearLayout father;
 
     public ListDialog(Context context, int theme) {
         super(context, theme);
@@ -42,6 +43,7 @@ public class ListDialog extends Dialog implements View.OnClickListener {
         listView.setAdapter(adapter);
         cancelBtn = (TextView) view.findViewById(R.id.cancel_1);
         cancelBtn.setOnClickListener(this);
+        father = (LinearLayout) view.findViewById(R.id.father);
         setContentView(view);
     }
 
@@ -135,6 +137,6 @@ public class ListDialog extends Dialog implements View.OnClickListener {
     @Override
     public void show() {
         super.show();
-        ObjectAnimator.ofFloat(this, "translateY", 0, 100).setDuration(1000).start();
+        ObjectAnimator.ofFloat(father, "translationY", 600, 0).setDuration(500).start();
     }
 }
