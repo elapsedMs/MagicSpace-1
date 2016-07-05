@@ -7,20 +7,25 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import storm.commonlib.common.CommonConstants;
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.activity.GameActivity;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.EggInfo;
+import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.reponse.AddCollectResponse;
 
 public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     private Album info;
     private TextView tv_egg_game_zan, tv_egg_game_des, tv_egg_game_title;
     private WebView wv_egg_info;
     private TextView collectTv;
+
     public AlbumInfoActivity() {
         super(R.layout.album_info, CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR);
     }
@@ -78,6 +83,7 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
                 this.startActivity(new Intent(AlbumInfoActivity.this, GameActivity.class));
                 break;
             case R.id.tv_collect:
+                new AddCollectTask().execute(info.getContentId());
                 break;
             default:
                 break;
@@ -99,4 +105,22 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
 
     }
 
+    private class AddCollectTask extends BaseASyncTask<String, AddCollectResponse> {
+        @Override
+        public AddCollectResponse doRequest(String param) {
+            return HTTPManager.addCollect(param);
+        }
+
+        @Override
+        public void onSuccess(AddCollectResponse addCollectResponse) {
+            super.onSuccess(addCollectResponse);
+            Toast.makeText(AlbumInfoActivity.this, "收藏成功", 0).show();
+        }
+
+        @Override
+        public void onSuccessWithoutResult(AddCollectResponse addCollectResponse) {
+            super.onSuccessWithoutResult(addCollectResponse);
+            Toast.makeText(AlbumInfoActivity.this, "收藏成功", 0).show();
+        }
+    }
 }

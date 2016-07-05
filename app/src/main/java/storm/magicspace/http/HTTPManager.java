@@ -220,7 +220,7 @@ public class HTTPManager {
                 EMPTY,
                 AddCollectResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
-                "", "0"
+                "contentId", contentId
         );
     }
 }
