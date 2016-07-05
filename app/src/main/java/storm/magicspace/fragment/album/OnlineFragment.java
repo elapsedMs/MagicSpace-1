@@ -1,5 +1,8 @@
 package storm.magicspace.fragment.album;
 
+import android.app.ActionBar;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -21,6 +24,7 @@ import java.util.List;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
+import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.activity.album.GuessYouLikeActivity;
 import storm.magicspace.activity.album.WebActivity;
@@ -28,6 +32,7 @@ import storm.magicspace.adapter.OnlineRVAdapter;
 import storm.magicspace.adapter.ViewPagerAdatper;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.CirclePic;
+import storm.magicspace.bean.EggInfo;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AlbumResponse;
@@ -53,6 +58,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
     private TextView desc;
     private List<CirclePic> circlePicList = new ArrayList<>();
     private List<ImageView> imageViews = new ArrayList<>();
+    private LinearLayout guideDotLl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,9 +67,8 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
 
     @Override
     public void initView(View view) {
-        new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new CirclePicTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         super.initView(view);
+        guideDotLl = (LinearLayout) view.findViewById(id.ll_guide_dot);
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
         contentLl = (LinearLayout) view.findViewById(id.ll_content);
         viewPager = (ViewPager) view.findViewById(id.viewpager);
@@ -76,6 +81,8 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         guessULikeATV.setOnClickListener(this);
         initRecyclerView();
         showContent();
+        new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new CirclePicTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private void initRecyclerView() {
@@ -86,9 +93,9 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         adapter.setOnRecyclerViewClickListener(new OnlineRVAdapter.OnRecyclerViewClickListener() {
             @Override
             public void onItemClick(int position) {
-                Bundle bundle = new Bundle();
-                bundle.putString("url", "http://app.stemmind.com/vr/a/preview.php?c=" + albumList.get(position).getContentId());
-                goToNext(WebActivity.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("url", "http://app.stemmind.com/vr/a/preview.php?c=" + albumList.get(position).getContentId());
+//                goToNext(WebActivity.class, bundle);
             }
 
             @Override
@@ -172,9 +179,26 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
             title.setText(circlePicList.get(0).getTitle());
             desc.setText("");
             for (int i = 0; i < circlePicList.size(); i++) {
-                ImageView imageView = new ImageView(getActivity());
+                final ImageView imageView = new ImageView(getActivity());
+                imageView.setTag(circlePicList.get(i).getHyberlink());
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setAction("android.intent.action.VIEW");
+                        Uri content_url = Uri.parse((String) imageView.getTag());
+                        intent.setData(content_url);
+                        startActivity(intent);
+                    }
+                });
                 Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
                 imageViews.add(imageView);
+
+//                ImageView dot = new ImageView(getActivity());
+//                dot.setBackgroundResource(R.drawable.shape_guide_dot);
+//                dot.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+//                guideDotLl.addView(dot);
             }
             viewPager.setAdapter(new ViewPagerAdatper(imageViews));
 
