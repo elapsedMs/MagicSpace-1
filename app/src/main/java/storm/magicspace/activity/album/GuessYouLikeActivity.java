@@ -50,9 +50,9 @@ public class GuessYouLikeActivity extends BaseActivity {
         adapter.setOnRecyclerViewClickListener(new OnlineRVAdapter.OnRecyclerViewClickListener() {
             @Override
             public void onItemClick(int position) {
-                Bundle bundle = new Bundle();
-                bundle.putString("url", albumList.get(position).getUrl());
-                goToNext(WebActivity.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("url", albumList.get(position).getUrl());
+//                goToNext(WebActivity.class, bundle);
             }
 
             @Override

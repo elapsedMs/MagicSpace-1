@@ -65,6 +65,9 @@ public class URLConstant {
     //自动登录
     public static final String URL_AUTO_LOGIN = "userLogin";
 
+    //添加收藏
+    public static final String URL_ADD_COLLECTION = "addCollect";
+
     //登录
     public static final String LOGIN = "apilogin";
 

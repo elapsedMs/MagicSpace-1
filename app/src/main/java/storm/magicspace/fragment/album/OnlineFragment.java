@@ -1,6 +1,5 @@
 package storm.magicspace.fragment.album;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,17 +23,15 @@ import java.util.List;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
-import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.activity.album.GuessYouLikeActivity;
-import storm.magicspace.activity.album.WebActivity;
 import storm.magicspace.adapter.OnlineRVAdapter;
 import storm.magicspace.adapter.ViewPagerAdatper;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.CirclePic;
-import storm.magicspace.bean.EggInfo;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.reponse.AddCollectResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumTitleView;
@@ -81,6 +78,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         guessULikeATV.setOnClickListener(this);
         initRecyclerView();
         showContent();
+        new AddCollectTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new CirclePicTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -202,6 +200,18 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
             }
             viewPager.setAdapter(new ViewPagerAdatper(imageViews));
 
+        }
+    }
+
+    private class AddCollectTask extends BaseASyncTask<String, AddCollectResponse> {
+        @Override
+        public AddCollectResponse doRequest(String param) {
+            return HTTPManager.addCollect(param);
+        }
+
+        @Override
+        public void onSuccess(AddCollectResponse addCollectResponse) {
+            super.onSuccess(addCollectResponse);
         }
     }
 

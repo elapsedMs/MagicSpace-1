@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/white"
-            android:hint="请输入密码"
+            android:hint="请输入新密码"
             android:padding="@dimen/distance_l"
             android:textColorHint="@color/gray"
             android:textSize="@dimen/text_size_xs"/>
