@@ -91,7 +91,9 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:hint="请输入验证码"
+            android:numeric="integer"
             android:padding="@dimen/distance_l"
+            android:singleLine="true"
             android:textColorHint="@color/gray"
             android:textSize="@dimen/text_size_xs"/>
 
