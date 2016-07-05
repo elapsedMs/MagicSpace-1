@@ -61,6 +61,10 @@ public class FloatView extends ImageView {
     private float mLastY;
     private float mDensity;
     private Matrix tMatrix = new Matrix();
+    private boolean mNewFloat;
+    private float mNewScale;
+    private float mNewRotate;
+    private Paint mBitmapPaint;
 
     public FloatView(Context context) {
         super(context);
@@ -117,6 +121,21 @@ public class FloatView extends ImageView {
 //        }
     }
 
+    public void setFloatView(Bitmap bitmap, float scale, float rotate) {
+        mBitmap = bitmap;
+        matrix = new Matrix();
+        mNewFloat = true;
+        mNewScale = scale;
+        mNewRotate = -rotate;
+        invalidate();
+        requestFocus();
+    }
+
+    public void setFloatAlpha(float alpha) {
+        mBitmapPaint.setAlpha((int) (255*alpha));
+        invalidate();
+    }
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
@@ -125,9 +144,14 @@ public class FloatView extends ImageView {
         if (mBitmap != null) {
             int bitmapWidth = mBitmap.getWidth();
             int bitmapHeight = mBitmap.getHeight();
+            float scaleVal = mWidth / 4.0f / bitmapWidth;
             mBitmapDiagonalLen = Math.hypot(bitmapWidth, bitmapHeight);
             matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
-            matrix.postScale(mDensity, mDensity, mWidth / 2, mHeight / 2);
+            matrix.postScale(scaleVal, scaleVal, mWidth / 2, mHeight / 2);
+            if (mNewFloat) {
+                matrix.postRotate(mNewRotate, mWidth / 2, mHeight / 2);
+                matrix.postScale(mNewScale, mNewScale, mWidth / 2, mHeight / 2);
+            }
             tMatrix.set(matrix);
         }
     }
@@ -142,6 +166,12 @@ public class FloatView extends ImageView {
         mPaint.setDither(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(2.0f);
+
+        mBitmapPaint = new Paint();
+        mBitmapPaint.setAntiAlias(true);
+        mBitmapPaint.setDither(true);
+        mBitmapPaint.setStyle(Paint.Style.STROKE);
+        mBitmapPaint.setStrokeWidth(2.0f);
 
         lt_Bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.game_egg_opacity);
         rt_Bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.game_egg_rotation);
@@ -257,8 +287,14 @@ public class FloatView extends ImageView {
         float scale = getDiagonalLen(event) / mToCenterDistance;
 
         float scaleDiagonalLen = getDiagonalLen(event);
-        if (((scaleDiagonalLen / (mBitmapDiagonalLen / 2) <= SCALE_MIN_FACTOR)) && scale < 1 ||
-                (scaleDiagonalLen / (mBitmapDiagonalLen / 2) >= SCALE_MAX_FACTOR) && scale > 1) {
+        boolean max = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) >= SCALE_MAX_FACTOR) && scale > 1;
+        boolean min = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) <= SCALE_MIN_FACTOR) && scale < 1;
+        if (min || max) {
+//            if (min) {
+//                scale = SCALE_MIN_FACTOR;
+//            } else {
+//                scale = SCALE_MAX_FACTOR;
+//            }
             scale = 1;
             float moveX = event.getX(0);
             float moveY = event.getY(0);
@@ -408,8 +444,8 @@ public class FloatView extends ImageView {
 
             canvas.save();
 
-            canvas.drawBitmap(mBitmap, matrix, mPaint);
-/////;.LKL.;/.LK,JMHNBG,./
+            canvas.drawBitmap(mBitmap, matrix, mBitmapPaint);
+
             float val1 = values[2];
             float val2 = values[5];
             float val3 = values[0] * width + values[2];

@@ -38,6 +38,7 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
+import storm.commonlib.common.util.BaseUtil;
 import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.LogUtil;
 import storm.commonlib.common.util.SharedPreferencesUtil;
@@ -65,7 +66,7 @@ public class GameActivity extends FragmentActivity {
     public static final String ALPHA_CONTROLLER_POSITION_PARENT_BOTTOM = "bottom";
     public static final String ALPHA_CONTROLLER_POSITION_ABOVE_EGGS = "above_eggs";
     public static final int EGG_INIT_COUNT = 0;
-    public static final int EGG_MAX_COUNT = 5;
+    public static final int EGG_MAX_COUNT = 10;
     public static final String DEFAULT_CONTENT_ID = "3403";
 
     private WebView mWebView;
@@ -92,12 +93,14 @@ public class GameActivity extends FragmentActivity {
     private String mUrl;
     private String mContentId;
     private List<EggImage> mEggImageList;
-    private List<UGCScene> mScenes;
     private Map<String, UGCItem> mEggInfos;
     // Get from issue, use for update
     private UGCScene mUCGScene;
     private List<UGCItem> mUGCItems;
     private UGCItem mCurrentItem;
+    private int mCurrentState = 1;
+    private boolean mWebViewInit = false;
+    private String mEggKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +120,7 @@ public class GameActivity extends FragmentActivity {
         findView();
         initFloatView();
         initWebView();
+        syncFloatView(false);
         initAlphaController();
         initEggs();
     }
@@ -137,8 +141,6 @@ public class GameActivity extends FragmentActivity {
         mLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
         mEggPager = (ViewPager) findViewById(R.id.vp_game_eggs);
         mEggTab = (TabLayout) findViewById(R.id.tab_layout_game);
-
-        syncFloatView(false);
     }
 
     /**
@@ -146,13 +148,22 @@ public class GameActivity extends FragmentActivity {
      */
     private void syncFloatView(boolean floatViewShowing) {
         if (floatViewShowing) {
+            mCurrentState = 0;
             mConfirmBtn.setVisibility(View.VISIBLE);
             mDeleteBtn.setVisibility(View.VISIBLE);
             mSharedBtn.setVisibility(View.GONE);
         } else {
+            mCurrentState = 1;
             mConfirmBtn.setVisibility(View.INVISIBLE);
             mDeleteBtn.setVisibility(View.INVISIBLE);
             mSharedBtn.setVisibility(View.VISIBLE);
+        }
+        reportEditorState();
+    }
+
+    private void reportEditorState() {
+        if (mWebViewInit) {
+            mWebView.loadUrl("javascript:setEditorState('" + mCurrentState + "')");
         }
     }
 
@@ -177,8 +188,7 @@ public class GameActivity extends FragmentActivity {
             if (content == null) return;
             List<UGCScene> scenes = content.getScenes();
             if (scenes == null) return;
-            mScenes = scenes;
-            mUCGScene = mScenes.get(0);
+            mUCGScene = scenes.get(0);
             mUGCItems = mUCGScene.getItems();
             for (UGCItem ugcItem : mUGCItems) {
                 mEggInfos.put(ugcItem.getItemId(), ugcItem);
@@ -207,13 +217,15 @@ public class GameActivity extends FragmentActivity {
         @Override
         public UpdateUGCContentScenesResponse doRequest(Void param) {
             super.doRequest(param);
-            if (mScenes == null) return null;
+            if (mUCGScene == null) return null;
             //UGCUpdateContent content = createUpdateBean();
             //return HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(content));
+            mEggKey = BaseUtil.MD5(System.currentTimeMillis() + "");
+            mCurrentItem.setItemId(mEggKey);
             mUGCItems.add(mCurrentItem);
             mUCGScene.setItems(mUGCItems);
             mUCGScene.setItemsCount(mEggsCount + "");
-            mEggInfos.put(String.valueOf(mEggsCount), mCurrentItem);
+            mEggInfos.put(mEggKey, mCurrentItem);
             return HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(mUCGScene));
         }
 
@@ -233,6 +245,7 @@ public class GameActivity extends FragmentActivity {
             super.onFailed();
             Toast.makeText(GameActivity.this, R.string.update_egg_failed, Toast.LENGTH_SHORT).show();
             mUGCItems.remove(mCurrentItem);
+            mEggInfos.remove(mEggKey);
         }
     }
 
@@ -323,12 +336,12 @@ public class GameActivity extends FragmentActivity {
 
     @NonNull
     private BitmapDrawable getDrawableWithBitmap(int pos) throws IOException {
-        Bitmap bitmap = createBitmapWithUrl(pos);
+        String url = mEggImageList.get(pos).getImgurl();
+        Bitmap bitmap = createBitmapWithUrl(url);
         return new BitmapDrawable(getResources(), bitmap);
     }
 
-    private Bitmap createBitmapWithUrl(int pos) throws IOException {
-        String url = mEggImageList.get(pos).getImgurl();
+    private Bitmap createBitmapWithUrl(String url) throws IOException {
         RequestCreator load = Picasso.with(GameActivity.this).load(url);
         return load.get();
     }
@@ -367,7 +380,7 @@ public class GameActivity extends FragmentActivity {
 
                 mCurrentItem.setItemMediaUrl(url);
                 mCurrentItem.setEnabled("1");
-                mCurrentItem.setItemId(mEggsCount + "");
+                //mCurrentItem.setItemId(mEggsCount + "");
 
                 mFloatInfo = null;
                 mUrl = url;
@@ -466,7 +479,7 @@ public class GameActivity extends FragmentActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mAlphaVal = progress * 1f / 100;
                 Log.d(TAG, "alpha = " + mAlphaVal);
-                mFloatView.setAlpha(mAlphaVal);
+                mFloatView.setFloatAlpha(mAlphaVal);
                 mCurrentItem.setTransparency(mAlphaVal + "");
             }
 
@@ -552,10 +565,11 @@ public class GameActivity extends FragmentActivity {
     private void initWebView() {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
-        mWebView.loadUrl("http://app.stemmind.com/vr/a/vreditor.php?c="+mContentId);
+        mWebView.loadUrl("http://app.stemmind.com/vr/a/vreditor.php?ua=app&c="+mContentId);
         ContainerView containerView = new ContainerView();
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.addJavascriptInterface(containerView, "containerView");
+        mWebViewInit = true;
     }
 
     private class ContainerView {
@@ -567,18 +581,67 @@ public class GameActivity extends FragmentActivity {
 //            mFloatView.setVisibility(View.VISIBLE);
             mEggsCount = mEggsCount - 1;
             mEggsCount = mEggsCount >= 0 ? mEggsCount : 0;
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    updateEggsCountHint(mEggsCount);
-                }
-            });
+            UGCItem ugcItem = mEggInfos.get(order);
+            if (ugcItem == null) return;
+            String url = ugcItem.getItemMediaUrl();
+            float rotate = Float.parseFloat(ugcItem.getRotatez());
+            float scale = Float.parseFloat(ugcItem.getScalex());
+            float alpha = Float.parseFloat(ugcItem.getTransparency());
+            createAndShowBitmap(url, scale, rotate, alpha);
+            updateCountHint();
         }
+
+//        @JavascriptInterface
+//        public int currentState() {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Toast.makeText(GameActivity.this, "current state = " + mCurrentState, Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//
+//            return mCurrentState;
+//        }
 
         @JavascriptInterface
         public void dropItemCallBack(String msg) {
             LogUtil.d(TAG, "drop call back, msg = " + msg);
         }
+    }
+
+    private void updateCountHint() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                updateEggsCountHint(mEggsCount);
+            }
+        });
+    }
+
+    private void createAndShowBitmap(final String url, final float scale, final float rotate,
+                                     final float alpha) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Bitmap bitmap = createBitmapWithUrl(url);
+                    showBitmap(bitmap, scale, rotate, alpha);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void showBitmap(final Bitmap bitmap, final float scale, final float rotate,
+                            float alpha) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mFloatView.setImageBitmap(null);
+                mFloatView.setFloatView(bitmap, scale, rotate);
+            }
+        });
     }
 
     private void showShare() {
