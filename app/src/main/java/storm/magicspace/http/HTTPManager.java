@@ -136,7 +136,7 @@ public class HTTPManager {
     public static SubmitUGCContentResponse submitUGCContent(String contendId, String data) {
         return ServiceUtils.request(
                 RequestTypes.POST,
-                URLConstant.URL_UPDATE_UGC_CONTENT_SCENES,
+                URLConstant.URL_SUBMIT_UGC_CONTENT,
                 EMPTY,
                 SubmitUGCContentResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
