@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class MyWorksActivity extends BaseActivity {
     private List<Album> list = new ArrayList<>();
     private LinearLayout nodata;
     private RelativeLayout btView;
+    private TextView refresh;
 
     public MyWorksActivity() {
         super(R.layout.activity_my_works);
@@ -37,10 +39,21 @@ public class MyWorksActivity extends BaseActivity {
         adapter = new WorksAdapter(list, this);
         nodata = findView(R.id.my_works_no_net_work_ll);
         btView = findView(R.id.rl_build_works);
-
+        refresh = findEventView(R.id.refresh);
         listView.setAdapter(adapter);
         GetMyWorksTask task = new GetMyWorksTask();
         task.execute();
+    }
+
+    @Override
+    public void onLocalClicked(int resId) {
+        super.onLocalClicked(resId);
+        switch (resId) {
+            case R.id.refresh:
+                refresh.setClickable(false);
+                new GetMyWorksTask().execute();
+                break;
+        }
     }
 
     private class GetMyWorksTask extends BaseASyncTask<String, MyWorksResponse> {
@@ -49,11 +62,11 @@ public class MyWorksActivity extends BaseActivity {
             return HTTPManager.getMyWorks("", "");
         }
 
-
         @Override
         public void onSuccess(MyWorksResponse myWorksResponse) {
             super.onSuccess(myWorksResponse);
             resetView(View.GONE);
+            refresh.setClickable(true);
             list.clear();
             list.addAll(myWorksResponse.data);
             adapter.notifyDataSetChanged();
@@ -64,6 +77,7 @@ public class MyWorksActivity extends BaseActivity {
         public void onSuccessWithoutResult(MyWorksResponse myWorksResponse) {
             super.onSuccessWithoutResult(myWorksResponse);
             resetView(View.GONE);
+            refresh.setClickable(true);
             list.clear();
             list.addAll(myWorksResponse.data);
             adapter.notifyDataSetChanged();
@@ -72,12 +86,13 @@ public class MyWorksActivity extends BaseActivity {
         @Override
         public void onFailed() {
             super.onFailed();
+            refresh.setClickable(true);
             resetView(View.VISIBLE);
         }
     }
 
     private void resetView(int visibility) {
         nodata.setVisibility(visibility);
-        btView.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
+//        btView.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 }

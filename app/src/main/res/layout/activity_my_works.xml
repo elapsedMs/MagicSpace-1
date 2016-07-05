@@ -27,7 +27,8 @@
             android:layout_centerInParent="true"
             android:background="@mipmap/btn_bg"
             android:text="制作我的作品"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -62,6 +63,7 @@
             android:textSize="@dimen/px_22"/>
 
         <TextView
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/px_116"
