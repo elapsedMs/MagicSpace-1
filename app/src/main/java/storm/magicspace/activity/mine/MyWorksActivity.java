@@ -2,6 +2,7 @@ package storm.magicspace.activity.mine;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -13,6 +14,7 @@ import java.util.List;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
+import storm.magicspace.activity.EggGameInfoActivity;
 import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
@@ -42,6 +44,12 @@ public class MyWorksActivity extends BaseActivity {
         refresh = findEventView(R.id.refresh);
         listView.setAdapter(adapter);
         GetMyWorksTask task = new GetMyWorksTask();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                goToNext(EggGameInfoActivity.class);
+            }
+        });
         task.execute();
     }
 
