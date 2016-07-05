@@ -58,8 +58,14 @@ public class GameEditDetailActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if ("".equals(s)) {
+                    Toast.makeText(GameEditDetailActivity.this, "最少5个，最多20个", Toast.LENGTH_SHORT).show();
+                    myEditText.setText(lastCount + "");
+                    myEditText.setSelection(myEditText.length());
+                    return;
+                }
                 int mycount = Integer.parseInt("" + s);
-                if (mycount < 5 || mycount > 20) {
+                if ("".equals(s) || mycount < 5 || mycount > 20) {
                     Toast.makeText(GameEditDetailActivity.this, "最少5个，最多20个", Toast.LENGTH_SHORT).show();
                     myEditText.setText(lastCount + "");
                     myEditText.setSelection(myEditText.length());

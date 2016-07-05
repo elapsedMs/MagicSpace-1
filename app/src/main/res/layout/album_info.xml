@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/egg_info_tiltle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_350">
+
+                <WebView
+                    android:id="@+id/wv_egg_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_400" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:src="@mipmap/details_arrow" />
+            </FrameLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/egg_info_tiltle">
+
+                <TextView
+                    android:id="@+id/tv_egg_game_title"
+                    android:layout_width="@dimen/px_662"
+                    android:layout_height="@dimen/px_124"
+                    android:layout_alignLeft="@+id/tv_divider"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/px_40"
+                    android:gravity="center|left"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/text_size_36_px" />
+
+                <TextView
+                    android:id="@+id/tv_divider"
+                    android:layout_width="@dimen/px_662"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/tv_egg_game_title"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:background="@color/gray"
+                    android:gravity="center" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_divider"
+                    android:layout_below="@+id/tv_divider"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="@dimen/px_662"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_40"
+                            android:text="@string/have"
+                            android:textColor="#333333"
+                            android:textSize="@dimen/text_size_28_px" />
+
+                        <TextView
+                            android:id="@+id/tv_egg_game_zan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_40"
+                            android:textColor="#ff8b00"
+                            android:textSize="@dimen/text_size_28_px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_40"
+                            android:text="@string/appreciatecount"
+                            android:textColor="#333333"
+                            android:textSize="@dimen/text_size_28_px" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_40"
+                        android:text="@string/des"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/text_size_28_px" />
+
+                    <TextView
+                        android:id="@+id/tv_egg_game_des"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_10"
+                        android:textColor="#999999"
+                        android:textSize="@dimen/text_size_28_px" />
+
+                    <RelativeLayout
+                        android:layout_width="@dimen/px_664"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_collect"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/shape_btn"
+                            android:paddingBottom="@dimen/px_10"
+                            android:paddingLeft="@dimen/px_20"
+                            android:paddingRight="@dimen/px_20"
+                            android:paddingTop="@dimen/px_10"
+                            android:text="收藏"
+                            android:textColor="#9285ca" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/px_5"
+        android:layout_marginTop="@dimen/px_5"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/bt_egg_game_info_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_2"
+                android:gravity="center"
+                android:text="预览"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_s" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/bt_egg_game_info_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_2"
+                android:gravity="center"
+                android:text="制作游戏"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_s" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
