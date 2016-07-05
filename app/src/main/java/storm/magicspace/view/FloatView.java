@@ -131,6 +131,10 @@ public class FloatView extends ImageView {
         requestFocus();
     }
 
+    public void useExtraMatrix(boolean use) {
+        mNewFloat = use;
+    }
+
     public void setFloatAlpha(float alpha) {
         mBitmapPaint.setAlpha((int) (255*alpha));
         invalidate();

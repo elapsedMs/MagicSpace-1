@@ -239,7 +239,7 @@ public class GameActivity extends FragmentActivity {
             // TODO if key exist? should not generate new key
             if (mFrmoEdit) {
                 for (UGCItem ugcItem : mUGCItems) {
-                    if (ugcItem!=null && ugcItem.getItemId().equals(mEggKey)) {
+                    if (ugcItem != null && ugcItem.getItemId().equals(mEggKey)) {
                         mUGCItems.remove(ugcItem);
                         break;
                     }
@@ -415,6 +415,8 @@ public class GameActivity extends FragmentActivity {
             @Override
             public void onClick(int position, String url, Bitmap bitmap) {
                 LogUtil.d(TAG, "position = " + position + ", url = " + url);
+                mFloatView.useExtraMatrix(mFrmoEdit);
+                //mFloatView.setImageBitmap(null);
                 mFloatView.setImageBitmap(bitmap);
 //                mFloatView.setImageBitmap(null);
 //                mFloatView.setFloatView(bitmap, 1, 30);
