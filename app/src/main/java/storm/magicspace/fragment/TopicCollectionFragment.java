@@ -16,6 +16,8 @@ import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
 import storm.magicspace.activity.EggGameInfoActivity;
+import storm.magicspace.activity.GameEditDetailActivity;
+import storm.magicspace.activity.album.AlbumInfoActivity;
 import storm.magicspace.adapter.CachedAdapter;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
@@ -47,7 +49,9 @@ public class TopicCollectionFragment extends BaseFragment {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        goToNext(EggGameInfoActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("album", list.get(position));
+                        goToNext(AlbumInfoActivity.class,bundle);
                     }
                 });
             }
