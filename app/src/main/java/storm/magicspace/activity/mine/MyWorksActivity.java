@@ -15,6 +15,8 @@ import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 import storm.magicspace.activity.EggGameInfoActivity;
+import storm.magicspace.activity.GameEditDetailActivity;
+import storm.magicspace.activity.album.AlbumInfoActivity;
 import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
@@ -47,7 +49,9 @@ public class MyWorksActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                goToNext(EggGameInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("album", list.get(position));
+                goToNext(AlbumInfoActivity.class,bundle);
             }
         });
         task.execute();

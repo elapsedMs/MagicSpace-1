@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,6 +57,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
     private List<CirclePic> circlePicList = new ArrayList<>();
     private List<ImageView> imageViews = new ArrayList<>();
     private LinearLayout guideDotLl;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,12 +67,15 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
     @Override
     public void initView(View view) {
         super.initView(view);
-        guideDotLl = (LinearLayout) view.findViewById(id.ll_guide_dot);
+        guideDotLl = (LinearLayout) view.findViewById(R.id.ll_guide_dot);
+        guideDotLl.setVisibility(View.GONE);
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
         contentLl = (LinearLayout) view.findViewById(id.ll_content);
         viewPager = (ViewPager) view.findViewById(id.viewpager);
         viewPager.setOnPageChangeListener(this);
+//        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(id.refreshlayout);
         recyclerView = (RecyclerView) view.findViewById(id.recycler_view);
+//        initRefreshView();
         title = (TextView) view.findViewById(id.title);
         desc = (TextView) view.findViewById(id.desc);
         guessULikeATV = (AlbumTitleView) view.findViewById(id.you_like);
@@ -78,9 +83,20 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         guessULikeATV.setOnClickListener(this);
         initRecyclerView();
         showContent();
-        new AddCollectTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new CirclePicTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private void initRefreshView() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new CirclePicTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void initRecyclerView() {
@@ -193,26 +209,14 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
                 Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
                 imageViews.add(imageView);
 
-//                ImageView dot = new ImageView(getActivity());
-//                dot.setBackgroundResource(R.drawable.shape_guide_dot);
-//                dot.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-//                guideDotLl.addView(dot);
+                ImageView dot = new ImageView(getActivity());
+                dot.setBackgroundResource(R.drawable.shape_guide_dot);
+                guideDotLl.addView(dot);
             }
             viewPager.setAdapter(new ViewPagerAdatper(imageViews));
 
         }
     }
 
-    private class AddCollectTask extends BaseASyncTask<String, AddCollectResponse> {
-        @Override
-        public AddCollectResponse doRequest(String param) {
-            return HTTPManager.addCollect(param);
-        }
-
-        @Override
-        public void onSuccess(AddCollectResponse addCollectResponse) {
-            super.onSuccess(addCollectResponse);
-        }
-    }
 
 }
