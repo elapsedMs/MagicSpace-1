@@ -115,7 +115,7 @@ public class ForgetPwdActivity extends BaseActivity {
 
     private void statCountTime() {
         task = new TimerTask() {
-            int second = 10;
+            int second = 60;
 
             @Override
             public void run() {
