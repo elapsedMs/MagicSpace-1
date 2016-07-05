@@ -1,5 +1,6 @@
 package storm.magicspace.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.squareup.haha.perflib.Main;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -19,6 +22,8 @@ import java.util.List;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.view.TitleBar;
 import storm.magicspace.R;
+import storm.magicspace.activity.album.GuessYouLikeActivity;
+import storm.magicspace.activity.mine.MyCollectionActivity;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
 import storm.magicspace.dialog.ListDialog;
 import storm.magicspace.event.ViewPagerEvent;
@@ -170,17 +175,19 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                         switch (position) {
                             //在线
                             case 0:
-                                ViewPagerEvent viewPagerEvent = new ViewPagerEvent();
-                                viewPagerEvent.position = 0;
-                                EventBus.getDefault().post(viewPagerEvent);
-                                viewPager.setCurrentItem(0);
+//                                ViewPagerEvent viewPagerEvent = new ViewPagerEvent();
+//                                viewPagerEvent.position = 0;
+//                                EventBus.getDefault().post(viewPagerEvent);
+//                                viewPager.setCurrentItem(0);
+                                startActivity(new Intent(MainActivity.this, GuessYouLikeActivity.class));
                                 break;
                             //收藏
                             case 1:
-                                ViewPagerEvent viewPagerEvent1 = new ViewPagerEvent();
-                                viewPagerEvent1.position = 1;
-                                EventBus.getDefault().post(viewPagerEvent1);
-                                viewPager.setCurrentItem(0);
+//                                ViewPagerEvent viewPagerEvent1 = new ViewPagerEvent();
+//                                viewPagerEvent1.position = 1;
+//                                EventBus.getDefault().post(viewPagerEvent1);
+//                                viewPager.setCurrentItem(0);
+                                startActivity(new Intent(MainActivity.this, MyCollectionActivity.class));
                                 break;
                             //随机
                             case 2:

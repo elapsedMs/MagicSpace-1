@@ -21,6 +21,7 @@ import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.R;
 import storm.magicspace.activity.EggGamePreviewActivity;
+import storm.magicspace.activity.album.AlbumInfoActivity;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.EggInfo;
 import storm.magicspace.view.AlbumPicView;
@@ -64,10 +65,8 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Log.d("gdq", "father onClick ");
-                Intent intent = new Intent(context, EggGamePreviewActivity.class);
-                EggInfo eggInfo = new EggInfo();
-                eggInfo.contentId = list.get(position).getContentId();
-                intent.putExtra("game_info", eggInfo);
+                Intent intent = new Intent(context, AlbumInfoActivity.class);
+                intent.putExtra("album", list.get(position));
                 context.startActivity(intent);
                 onRecyclerViewClickListener.onItemClick(position);
             }
