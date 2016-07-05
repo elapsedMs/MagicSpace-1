@@ -11,6 +11,7 @@ import storm.magicspace.bean.httpBean.MyWorksResponse;
 import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
+import storm.magicspace.http.reponse.AddCollectResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.http.reponse.ConponResponse;
 import storm.magicspace.http.reponse.EggHttpResponse;
@@ -194,6 +195,16 @@ public class HTTPManager {
                 EggHttpResponse.class,
                 "token", LocalSPUtil.getToken(),
                 "userId", LocalSPUtil.getLoginAccountId());
+    }
 
+    public static AddCollectResponse addCollect(String contentId) {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_ADD_COLLECTION,
+                EMPTY,
+                AddCollectResponse.class,
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
+                "", "0"
+        );
     }
 }
