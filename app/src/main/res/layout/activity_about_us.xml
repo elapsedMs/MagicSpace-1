@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/px_116"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/app_icon"/>
 
         <TextView
             android:id="@+id/tv_version"
