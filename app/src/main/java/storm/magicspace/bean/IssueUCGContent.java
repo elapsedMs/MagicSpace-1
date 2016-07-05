@@ -39,6 +39,9 @@ public class IssueUCGContent {
     private String isCollected;
     private String isAppreciated;
     private String description;
+    private String title;
+    private String price;
+
     /**
      * sceneId : 42
      * order : 0
@@ -161,6 +164,22 @@ public class IssueUCGContent {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public List<UGCScene> getScenes() {

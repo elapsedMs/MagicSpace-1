@@ -1,18 +1,28 @@
 package storm.magicspace.activity;
 
+import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
+import storm.commonlib.common.util.JsonUtil;
 import storm.magicspace.R;
+import storm.magicspace.bean.IssueUCGContent;
+import storm.magicspace.bean.httpBean.SubmitUGCContentResponse;
+import storm.magicspace.event.GameEvent;
+import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.URLConstant;
 import storm.magicspace.view.MyEditText;
 
@@ -29,9 +39,16 @@ public class GameEditDetailActivity extends BaseActivity {
     private TextView giveUpTv;
     private TextView publishTv;
     private int lastCount = 5;
+    private IssueUCGContent mUCGContent;
 
     public GameEditDetailActivity() {
         super(R.layout.activity_game_edit_detail);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -58,14 +75,9 @@ public class GameEditDetailActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if ("".equals(s)) {
-                    Toast.makeText(GameEditDetailActivity.this, "最少5个，最多20个", Toast.LENGTH_SHORT).show();
-                    myEditText.setText(lastCount + "");
-                    myEditText.setSelection(myEditText.length());
-                    return;
-                }
+                if (TextUtils.isEmpty(s)) return;
                 int mycount = Integer.parseInt("" + s);
-                if ("".equals(s) || mycount < 5 || mycount > 20) {
+                if (mycount < 5 || mycount > 20) {
                     Toast.makeText(GameEditDetailActivity.this, "最少5个，最多20个", Toast.LENGTH_SHORT).show();
                     myEditText.setText(lastCount + "");
                     myEditText.setSelection(myEditText.length());
@@ -79,6 +91,11 @@ public class GameEditDetailActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(GameEvent gameEvent) {
+        mUCGContent = gameEvent.content;
     }
 
     @Override
@@ -95,7 +112,45 @@ public class GameEditDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.publish:
+                publish();
                 break;
+        }
+    }
+
+    private void publish() {
+        String desc = descEt.getText().toString();
+        if (TextUtils.isEmpty(desc)) {
+            mUCGContent.setDescription(desc);
+            Toast.makeText(GameEditDetailActivity.this, "简介不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String price = myEditText.getText().toString();
+        if (TextUtils.isEmpty(price)) {
+            mUCGContent.setPrice(price);
+            Toast.makeText(GameEditDetailActivity.this, "请选择金币", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        new PublishTask().execute();
+    }
+
+    class PublishTask extends BaseASyncTask<Void, SubmitUGCContentResponse> {
+
+        @Override
+        public SubmitUGCContentResponse doRequest(Void param) {
+            String data = JsonUtil.convertObjectToJson(mUCGContent);
+            return HTTPManager.submitUGCContent(mContentId, data);
+        }
+
+        @Override
+        public void onSuccess(SubmitUGCContentResponse response) {
+            super.onSuccess(response);
+            Toast.makeText(GameEditDetailActivity.this, "游戏发布成功", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+            Toast.makeText(GameEditDetailActivity.this, "游戏发布失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -124,5 +179,11 @@ public class GameEditDetailActivity extends BaseActivity {
         oks.setSiteUrl(URLConstant.SHARED_URL + mContentId);
         // 启动分享GUI
         oks.show(GameEditDetailActivity.this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
