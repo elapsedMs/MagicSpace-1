@@ -59,6 +59,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/px_10"
-            android:src="@mipmap/btn_download" />
+            android:src="@mipmap/btn_download"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

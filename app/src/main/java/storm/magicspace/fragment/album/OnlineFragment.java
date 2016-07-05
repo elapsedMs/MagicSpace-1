@@ -1,5 +1,7 @@
 package storm.magicspace.fragment.album;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -21,6 +23,7 @@ import java.util.List;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
+import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.activity.album.GuessYouLikeActivity;
 import storm.magicspace.activity.album.WebActivity;
@@ -28,6 +31,7 @@ import storm.magicspace.adapter.OnlineRVAdapter;
 import storm.magicspace.adapter.ViewPagerAdatper;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.CirclePic;
+import storm.magicspace.bean.EggInfo;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AlbumResponse;
@@ -68,6 +72,21 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         contentLl = (LinearLayout) view.findViewById(id.ll_content);
         viewPager = (ViewPager) view.findViewById(id.viewpager);
         viewPager.setOnPageChangeListener(this);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         recyclerView = (RecyclerView) view.findViewById(id.recycler_view);
         title = (TextView) view.findViewById(id.title);
         desc = (TextView) view.findViewById(id.desc);
@@ -172,7 +191,19 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
             title.setText(circlePicList.get(0).getTitle());
             desc.setText("");
             for (int i = 0; i < circlePicList.size(); i++) {
-                ImageView imageView = new ImageView(getActivity());
+                final ImageView imageView = new ImageView(getActivity());
+                imageView.setTag(circlePicList.get(i).getHyberlink());
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setAction("android.intent.action.VIEW");
+                        Uri content_url = Uri.parse((String) imageView.getTag());
+                        intent.setData(content_url);
+                        startActivity(intent);
+                    }
+                });
                 Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
                 imageViews.add(imageView);
             }

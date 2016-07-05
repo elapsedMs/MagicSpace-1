@@ -35,7 +35,7 @@ import storm.magicspace.view.AlbumTitleView;
  */
 public class NativeFragment extends BaseFragment implements View.OnClickListener {
     private ListView listView;
-    private WorksAdapter adapter;
+    private CachedAdapter adapter;
     private List<Album> list = new ArrayList<>();
 
     private AlbumTitleView albumTitleView;
@@ -102,7 +102,7 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
 //        cachedListView.setAdapter(adapter);
 //        noDownloadLl = (LinearLayout) view.findViewById(R.id.no_download_ll);
 //        contentRl = (RelativeLayout) view.findViewById(R.id.rl_content);
-        adapter = new WorksAdapter(list, getActivity());
+        adapter = new CachedAdapter(list, getActivity());
         listView.setAdapter(adapter);
 
     }
