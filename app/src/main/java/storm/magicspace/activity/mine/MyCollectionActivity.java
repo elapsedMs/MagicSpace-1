@@ -34,10 +34,12 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
         setOnSelectTitleClickedListener(new TitleBar.OnSelectTitleClickedListener() {
             @Override
             public void leftClicked() {
+                viewPager.setCurrentItem(0);
             }
 
             @Override
             public void rightClicked() {
+                viewPager.setCurrentItem(1);
             }
         });
     }

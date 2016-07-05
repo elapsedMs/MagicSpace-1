@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/MagicSpace/commonlib/unspecified/jars/classes.jar"
+        jar="/Users/medtree/MagicSpace/app/build/intermediates/exploded-aar/MagicSpace/commonlib/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="179e9798b48eba8b8c03503618217b6516eb459f">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-071b8787e62a390ee4837169e4041c897c2f6600.jar" />
+        sha1="0ef9687f16835a968999cd7ab96ca052d7a21e0b">
+        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-2cf2f0ceb273e638065b55618980662de19454f5.jar" />
     </item>
 
 </items>

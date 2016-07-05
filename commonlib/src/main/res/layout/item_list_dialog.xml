@@ -11,9 +11,10 @@
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:gravity="center_horizontal"
-        android:padding="@dimen/personal_center_padding_top_and_bottom"
+        android:paddingBottom="@dimen/personal_center_padding_top_and_bottom"
+        android:paddingTop="@dimen/personal_center_padding_top_and_bottom"
         android:text=""
-        android:textColor="@color/list_dilaog_item_color"
+        android:textColor="#000000"
         android:textSize="@dimen/personal_center_name" />
 
 </LinearLayout>

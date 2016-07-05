@@ -7,15 +7,21 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.view.TitleBar;
 import storm.magicspace.R;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
+import storm.magicspace.dialog.ListDialog;
+import storm.magicspace.event.ViewPagerEvent;
 import storm.magicspace.fragment.EggFragment;
 import storm.magicspace.fragment.MyFragment;
 import storm.magicspace.fragment.SettingFragment;
@@ -23,6 +29,9 @@ import storm.magicspace.fragment.album.AlbumFragment;
 import storm.magicspace.view.HomeTabView;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+
+    private final String[] data = new String[]{"从图库选择", "从收藏选择", "随机"};
+
     private static final int ALBUM = 1;
     private static final int EGG = 2;
     private static final int MY = 3;
@@ -36,6 +45,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private HomeTabView settingHtv;
     private ImageView addIv;
     private Handler handler;
+    private ListDialog listDialog;
 
     public MainActivity() {
         super(R.layout.activity_main);
@@ -88,6 +98,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     private void initViewPager() {
         AlbumFragment albumFragment = new AlbumFragment();
+        EventBus.getDefault().register(albumFragment);
         EggFragment eggFragment = new EggFragment();
         MyFragment myFragment = new MyFragment();
         SettingFragment settingFragment = new SettingFragment();
@@ -152,7 +163,34 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 viewPager.setCurrentItem(3);
                 break;
             case R.id.add_Btn:
-                goToNext(GameActivity.class);
+                ListDialog.Buider buider = new ListDialog.Buider(MainActivity.this);
+                listDialog = buider.setData(Arrays.asList(data)).setItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        switch (position) {
+                            //在线
+                            case 0:
+                                ViewPagerEvent viewPagerEvent = new ViewPagerEvent();
+                                viewPagerEvent.position = 0;
+                                EventBus.getDefault().post(viewPagerEvent);
+                                viewPager.setCurrentItem(0);
+                                break;
+                            //收藏
+                            case 1:
+                                ViewPagerEvent viewPagerEvent1 = new ViewPagerEvent();
+                                viewPagerEvent1.position = 1;
+                                EventBus.getDefault().post(viewPagerEvent1);
+                                viewPager.setCurrentItem(0);
+                                break;
+                            //随机
+                            case 2:
+                                goToNext(GameActivity.class);
+                                break;
+                        }
+                        listDialog.dismiss();
+                    }
+                }).create();
+                listDialog.show();
                 break;
         }
     }

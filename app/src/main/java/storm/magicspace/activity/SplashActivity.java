@@ -25,6 +25,8 @@ public class SplashActivity extends BaseActivity {
         String token = LocalSPUtil.getToken();
         if (token != null && !token.equalsIgnoreCase(EMPTY)) {
             LoginByToken();
+        } else {
+            goToNext(LoginActivity.class);
         }
     }
 
