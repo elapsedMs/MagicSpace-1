@@ -46,7 +46,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
             tv_egg_game_person_count.setText(playCount + getString(R.string.play_count));
             String avgTime = info.avgtime == null ? "" : info.avgtime;
             tv_egg_game_time.setText(getString(R.string.avgtime) + avgTime);
-//            tv_my_best_time.setText(info.myBestTime);
+            tv_my_best_time.setText(info.myBestTime==null?"":info.myBestTime);
             //ToDo add my best time
             tv_egg_game_title.setText(info.title);
             initWebView(info.contentId == null ? "" : info.contentId);

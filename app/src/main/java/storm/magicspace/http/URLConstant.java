@@ -57,6 +57,9 @@ public class URLConstant {
     public static final String URL_ISSUE_UGC_CONTENT = "issueUGCContent";
 
     //更新UGC主题
+    public static final String URL_SUBMIT_UGC_CONTENT = "submitUGCContent";
+
+    //发布游戏
     public static final String URL_UPDATE_UGC_CONTENT_SCENES = "updateUGCContentScenes";
 
     //同步账户信息

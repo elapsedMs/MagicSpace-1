@@ -56,6 +56,7 @@ import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.event.GameEvent;
 import storm.magicspace.fragment.EggImageFragment;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
 
@@ -128,6 +129,16 @@ public class GameActivity extends FragmentActivity {
         syncFloatView(false);
         initAlphaController();
         initEggs();
+        initGuide();
+    }
+
+    private void initGuide() {
+        String token = LocalSPUtil.getToken();
+        if (!TextUtils.isEmpty(token)) {
+            mGuide.setVisibility(View.GONE);
+        } else {
+            mGuide.setVisibility(View.VISIBLE);
+        }
     }
 
     private void findView() {

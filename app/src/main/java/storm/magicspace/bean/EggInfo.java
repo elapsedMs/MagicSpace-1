@@ -26,7 +26,7 @@ public class EggInfo implements Serializable {
     public String creditEarned;
     public String itemCount;
     public String title;
-
+    public String myBestTime;
 
     //// TODO: 16/7/1 需要加一个字段 isAudit,my best time
 }
