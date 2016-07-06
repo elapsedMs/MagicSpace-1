@@ -30,6 +30,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,6 +54,7 @@ import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.event.GameEvent;
+import storm.magicspace.event.PublishEvent;
 import storm.magicspace.fragment.EggImageFragment;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.util.LocalSPUtil;
@@ -64,14 +67,14 @@ public class GameActivity extends FragmentActivity {
     // CONSTANT
     ///////////////////////////////////////////////////////////////////////////
     private static final String TAG = GameActivity.class.getSimpleName();
-    private static final boolean DEBUG = true;
     private static final String RULE_BOTTOM = "bottom";
     private static final String RULE_ABOVE_EGG = "above_eggs";
+    private static final String DEFAULT_CONTENT_ID = "3403";
     private static final int EGG_INIT_COUNT = 0;
     private static final int EGG_MIN_COUNT = 3;
     private static final int EGG_MAX_COUNT = 10;
-    private static final String DEFAULT_CONTENT_ID = "3403";
-    public static final boolean USE_TEST_URL = false;
+    private static final boolean DEBUG = true;
+    private static final boolean USE_TEST_URL = false;
 
     ///////////////////////////////////////////////////////////////////////////
     // VIEW
@@ -115,6 +118,7 @@ public class GameActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         setContentView(R.layout.activity_game);
         initData();
         initView();
@@ -190,7 +194,6 @@ public class GameActivity extends FragmentActivity {
         reportEditorState();
     }
 
-
     private void reportEditorState() {
         if (mWebViewInit) {
             mWebView.loadUrl("javascript:setEditorState('" + mCurrentState + "')");
@@ -204,7 +207,6 @@ public class GameActivity extends FragmentActivity {
     }
 
     private class IssueUGCContentTask extends BaseASyncTask<Void, IssueUCGContentResponse> {
-
         @Override
         public IssueUCGContentResponse doRequest(Void param) {
             return HTTPManager.issueUCCContent("", "", mContentId);
@@ -219,11 +221,11 @@ public class GameActivity extends FragmentActivity {
             if (scenes == null) return;
             mUCGScene = scenes.get(0);
             mUGCItems = mUCGScene.getItems();
+            if (mUGCItems == null) return;
             for (UGCItem ugcItem : mUGCItems) {
                 mEggInfos.put(ugcItem.getItemId(), ugcItem);
             }
         }
-
     }
 
     private String getRandomContentId() {
@@ -238,7 +240,6 @@ public class GameActivity extends FragmentActivity {
     }
 
     private class UpdateUGCContentTask extends BaseASyncTask<Void, UpdateUGCContentScenesResponse> {
-
         public UpdateUGCContentTask(Context context, boolean hasLoadingDialog) {
             super(context, hasLoadingDialog);
         }
@@ -285,7 +286,9 @@ public class GameActivity extends FragmentActivity {
             super.onFailed();
             Toast.makeText(GameActivity.this, R.string.update_egg_failed, Toast.LENGTH_SHORT)
                     .show();
-            mUGCItems.remove(mCurrentItem);
+            if (mUGCItems != null) {
+                mUGCItems.remove(mCurrentItem);
+            }
             mEggInfos.remove(mEggKey);
         }
 
@@ -298,7 +301,6 @@ public class GameActivity extends FragmentActivity {
     }
 
     private class GetEggImageListTask extends BaseASyncTask<Void, EggImageListResponse> {
-
         @Override
         public EggImageListResponse doRequest(Void param) {
             return HTTPManager.getEggImageList();
@@ -323,12 +325,12 @@ public class GameActivity extends FragmentActivity {
                 }
             }).start();
         }
+
         @Override
         public void onFailed() {
             super.onFailed();
             mLoadingHint.setText(R.string.loading_failed);
         }
-
     }
 
     private void fillTabLayout(final int pos) {
@@ -338,11 +340,14 @@ public class GameActivity extends FragmentActivity {
                 try {
                     final BitmapDrawable bitmapDrawable = getDrawableWithBitmap(pos);
                     final TabLayout.Tab tab = mEggTab.getTabAt(pos);
+                    final View view = View.inflate(GameActivity.this, R.layout.item_tab, null);
+                    ImageView iv = (ImageView) view.findViewById(R.id.iv_egg);
+                    iv.setImageDrawable(bitmapDrawable);
                     if (tab != null) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                tab.setIcon(bitmapDrawable);
+                                tab.setCustomView(view);
                             }
                         });
                     }
@@ -688,15 +693,28 @@ public class GameActivity extends FragmentActivity {
     }
 
     private void showBitmap(final Bitmap bitmap, final float scale, final float rotate,
-                            float alpha) {
+                            final float alpha) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mFloatView.setImageBitmap(null);
                 mFloatView.setFloatView(bitmap, scale, rotate);
+                //mFloatView.setFloatAlpha(alpha);
+                //mAlphaBar.setProgress(alpha);
+                //todo: alpha!
             }
-            //todo: alpha
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(PublishEvent event) {
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void log(String log, Object... msg) {

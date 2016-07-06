@@ -13,16 +13,23 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.util.JsonUtil;
+import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
 import storm.magicspace.bean.IssueUCGContent;
 import storm.magicspace.bean.UGCScene;
 import storm.magicspace.bean.httpBean.SubmitUGCContentResponse;
 import storm.magicspace.event.GameEvent;
+import storm.magicspace.event.PublishEvent;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.URLConstant;
 import storm.magicspace.view.MyEditText;
@@ -31,6 +38,7 @@ import storm.magicspace.view.MyEditText;
  * Created by gdq on 16/7/5.
  */
 public class GameEditDetailActivity extends BaseActivity {
+    private static final String TAG = GameEditDetailActivity.class.getSimpleName();
     private String mContentId;
     private MyEditText myEditText;
     private TextView titleTv;
@@ -59,7 +67,7 @@ public class GameEditDetailActivity extends BaseActivity {
         setTitleLeftBtVisibility(View.VISIBLE);
         setRightTvClickable(true);
         setRightText(R.string.share);
-        setTitleBarRightTvVisibility(View.VISIBLE);
+        setTitleBarRightTvVisibility(View.INVISIBLE);
         mContentId = getIntent().getStringExtra("contentId");
         publishTv = findEventView(R.id.publish);
         titleTv = findEventView(R.id.title);
@@ -109,7 +117,7 @@ public class GameEditDetailActivity extends BaseActivity {
     @Override
     public void onTitleBarRightTvClicked(View view) {
         super.onTitleBarRightTvClicked(view);
-        showShare();
+        //showShare();
     }
 
     @Override
@@ -153,6 +161,7 @@ public class GameEditDetailActivity extends BaseActivity {
         public void onSuccess(SubmitUGCContentResponse response) {
             super.onSuccess(response);
             Toast.makeText(GameEditDetailActivity.this, "游戏发布成功", Toast.LENGTH_SHORT).show();
+            showShare();
         }
 
         @Override
@@ -185,6 +194,41 @@ public class GameEditDetailActivity extends BaseActivity {
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl(URLConstant.SHARED_URL + mContentId);
+
+
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                LogUtil.d(TAG, "onComplete");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PublishEvent publishEvent = new PublishEvent();
+                        EventBus.getDefault().post(publishEvent);
+                        finish();
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                LogUtil.d(TAG, "onError");
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                LogUtil.d(TAG, "onCancel");
+            }
+        });
+
+        oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+            @Override
+            public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
+                LogUtil.d(TAG, "onShare");
+            }
+        });
+
+        //ShareSDK.getPlatform(Tec)
         // 启动分享GUI
         oks.show(GameEditDetailActivity.this);
     }

@@ -103,18 +103,24 @@
     <RelativeLayout
         android:id="@+id/rl_game_eggs_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_300"
+        android:layout_height="@dimen/px_394"
         android:layout_alignParentBottom="true"
         android:background="#c018101b"
         android:visibility="gone"
         tools:visibility="visible">
 
         <android.support.design.widget.TabLayout
+            android:paddingTop="@dimen/px_10"
+            android:paddingBottom="@dimen/px_10"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingRight="@dimen/px_20"
             android:id="@+id/tab_layout_game"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <storm.magicspace.view.FastViewPager
+            android:layout_marginLeft="@dimen/px_20"
+            android:layout_marginRight="@dimen/px_20"
             android:layout_below="@id/tab_layout_game"
             android:id="@+id/vp_game_eggs"
             android:layout_width="match_parent"
