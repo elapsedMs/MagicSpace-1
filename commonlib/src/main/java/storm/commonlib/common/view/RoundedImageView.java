@@ -149,7 +149,8 @@ public class RoundedImageView extends ImageView {
         updateDrawableAttrs();
         if (localStyle != 1000 && mDrawable != null) {
             Bitmap bitmap = drawableToBitmap(mDrawable);
-            changeBitmap(bitmap, (localStyle == 0 ? 3 : localStyle) * 0.5f);
+            Bitmap tempbitmap = changeBitmap(bitmap, 1.5f);
+            mDrawable = bitmapToDrawble(tempbitmap, getContext());
         }
 
         super.setImageDrawable(mDrawable);

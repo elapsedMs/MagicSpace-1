@@ -49,6 +49,7 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     private Gallery gallery;
     private List<Conpon> conponList;
     private GalleryAdapter adapter;
+    private List<Conpon> tempConponList;
 
     @Nullable
     @Override
@@ -64,6 +65,7 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 adapter.setSelectedPosition(position);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -184,12 +186,11 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
             imageViews.clear();
 //            title.setText(circlePicList.get(0).getTitle());
             conponList = conponResponse.data;
+            tempConponList = conponList;
             if (conponList == null) return;
-            adapter = new GalleryAdapter(getActivity(), conponList);
+            adapter = new GalleryAdapter(getActivity(), conponList, conponList.size() / 2);
             gallery.setAdapter(adapter);
-            gallery.setSelection(conponList.size() / 2);
         }
     }
-
 
 }

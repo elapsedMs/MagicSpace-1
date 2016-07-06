@@ -2,15 +2,9 @@ package storm.magicspace.fragment;
 
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SpinnerAdapter;
+import android.widget.BaseAdapter;
 
 import com.squareup.picasso.Picasso;
 
@@ -23,15 +17,16 @@ import storm.magicspace.view.MineShowView;
 /**
  * Created by lixiaolu on 16/7/4.
  */
-public class GalleryAdapter implements SpinnerAdapter {
+public class GalleryAdapter extends BaseAdapter {
 
     private final Context context;
     private final List<Conpon> circlePics;
     private int selectPosition;
 
-    public GalleryAdapter(Context context, List<Conpon> circlePicList) {
+    public GalleryAdapter(Context context, List<Conpon> circlePicList, int selectPosition) {
         this.context = context;
         circlePics = circlePicList;
+        this.selectPosition = selectPosition;
     }
 
     @Override
@@ -99,27 +94,4 @@ public class GalleryAdapter implements SpinnerAdapter {
     }
 
 
-    public static Bitmap drawableToBitmap(Drawable drawable) {
-        int width = drawable.getIntrinsicWidth();
-        int height = drawable.getIntrinsicHeight();
-        Bitmap bitmap = Bitmap.createBitmap(width, height, drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, width, height);
-        drawable.draw(canvas);
-        return bitmap;
-
-    }
-
-    public static Drawable bitmapToDrawble(Bitmap bitmap, Context mcontext) {
-        Drawable drawable = new BitmapDrawable(mcontext.getResources(), bitmap);
-        return drawable;
-    }
-
-
-    private static Bitmap changeBitmap(Bitmap bitmap, float sy) {
-        Matrix matrix = new Matrix();
-        matrix.postScale(sy, sy); //长和宽放大缩小的比例
-        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        return resizeBmp;
-    }
 }
