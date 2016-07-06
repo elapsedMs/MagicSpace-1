@@ -68,6 +68,7 @@ public class GameActivity extends FragmentActivity {
     public static final String RULE_BOTTOM = "bottom";
     public static final String RULE_ABOVE_EGG = "above_eggs";
     public static final int EGG_INIT_COUNT = 0;
+    public static final int EGG_MIN_COUNT = 3;
     public static final int EGG_MAX_COUNT = 10;
     public static final String DEFAULT_CONTENT_ID = "3403";
 
@@ -474,9 +475,15 @@ public class GameActivity extends FragmentActivity {
         mSharedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mEggsCount < EGG_MIN_COUNT) {
+                    Toast.makeText(GameActivity.this, R.string.add_egg_less_hint, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent intent = new Intent(GameActivity.this, GameEditDetailActivity.class);
                 intent.putExtra("contentId",mContentId);
                 startActivity(intent);
+
                 final GameEvent gameEvent = new GameEvent();
                 UGCScene ugcScene = mUCGContent.getScenes().get(0);
                 ugcScene.setItems(mUGCItems);
