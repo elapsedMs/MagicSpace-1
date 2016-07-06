@@ -31,6 +31,8 @@ public class LocalSPUtil extends SharedPreferencesUtil {
     private static final String UNFINISH_ALBUM = "UNFINISH_ALBUM";
     public static final String TOKEN = "TOKEN";
     public static final String USER_NO = "USER_NO";
+    public static final String GUIDE = "GUIDE";
+    public static final String GAME = "GAME";
 
     public static void saveAccountInfo(LoginResponse.AccountInfo data) {
         saveObject(BaseApplication.getApplication(), data);
@@ -176,6 +178,17 @@ public class LocalSPUtil extends SharedPreferencesUtil {
     public static String getToken() {
         SharedPreferences preferences = getPreferences(getApplication(), TOKEN);
         return preferences.getString(TOKEN, "");
+    }
+
+    public static void saveGuide(boolean showed) {
+        SharedPreferences.Editor editor = getEditor(getApplication(), GAME);
+        editor.putBoolean(GUIDE, showed);
+        editor.commit();
+    }
+
+    public static boolean getGuide() {
+        SharedPreferences preferences = getPreferences(getApplication(), GAME);
+        return preferences.getBoolean(GUIDE, false);
     }
 
     public static void saveUserNo(String userNo) {

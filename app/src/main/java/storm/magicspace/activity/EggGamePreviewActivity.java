@@ -1,7 +1,9 @@
 package storm.magicspace.activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.webkit.JavascriptInterface;
@@ -13,16 +15,22 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseActivity;
+import storm.commonlib.common.util.LogUtil;
+import storm.commonlib.common.view.dialog.MedtreeDialog;
 import storm.magicspace.R;
 import storm.magicspace.bean.EggInfo;
+
+import static storm.commonlib.common.view.dialog.MedtreeDialog.DisplayStyle.LOADING;
 
 public class EggGamePreviewActivity extends BaseActivity {
     private WebView wv_egg_game_preview;
     private EggInfo info;
     private Handler mHandler;
 
+    private TimeCount time;
+    private MedtreeDialog medtreeDialog;
     public EggGamePreviewActivity() {
-        super(R.layout.activity_egg_preview, CommonConstants.ACTIVITY_STYLE_WITH_LOADING);
+        super(R.layout.activity_egg_preview, CommonConstants.ACTIVITY_STYLE_EMPTY);
     }
 
 
@@ -50,7 +58,7 @@ public class EggGamePreviewActivity extends BaseActivity {
                         break;
 
                     case 4:
-                        dismissBaseDialog();
+                        dismissLoadingDialog();
                         break;
                 }
             }
@@ -59,6 +67,10 @@ public class EggGamePreviewActivity extends BaseActivity {
         Intent intent = this.getIntent();
         info = (EggInfo) intent.getSerializableExtra("game_info");
         initWebView();
+        showloadingeDialog(LOADING, "数据加载中…", "", true, true);
+
+        time = new TimeCount(30 * 1000, 1000);
+        time.start();
     }
 
     @SuppressLint("JavascriptInterface")
@@ -129,6 +141,48 @@ public class EggGamePreviewActivity extends BaseActivity {
 
 // 启动分享GUI
         oks.show(EggGamePreviewActivity.this);
+    }
+
+    class TimeCount extends CountDownTimer {
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);//参数依次为总时长,和计时的时间间隔
+        }
+
+        @Override
+        public void onFinish() {// 计时完毕
+            dismissLoadingDialog();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {// 计时过程
+
+        }
+    }
+
+    public void showloadingeDialog(MedtreeDialog.DisplayStyle style, String title, String message, boolean shouldBottomHide, boolean hasAnimation) {
+        medtreeDialog = medtreeDialog == null ? new MedtreeDialog(this) : medtreeDialog;
+        medtreeDialog.displayWithStyle(style);
+        medtreeDialog.setMessage(message);
+        medtreeDialog.setTitle(title);
+
+        if (shouldBottomHide)
+            medtreeDialog.hideBottom();
+
+        if (hasAnimation)
+            medtreeDialog.startAnimation();
+        medtreeDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mHandler.sendEmptyMessage(4);
+                LogUtil.d("py", "dismiss");
+            }
+        });
+        medtreeDialog.show();
+    }
+
+    public void dismissLoadingDialog() {
+        if (medtreeDialog != null)
+            medtreeDialog.dismiss();
     }
 }
 

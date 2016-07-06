@@ -20,6 +20,7 @@ import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.util.JsonUtil;
 import storm.magicspace.R;
 import storm.magicspace.bean.IssueUCGContent;
+import storm.magicspace.bean.UGCScene;
 import storm.magicspace.bean.httpBean.SubmitUGCContentResponse;
 import storm.magicspace.event.GameEvent;
 import storm.magicspace.http.HTTPManager;
@@ -96,6 +97,13 @@ public class GameEditDetailActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GameEvent gameEvent) {
         mUCGContent = gameEvent.content;
+        if (mUCGContent == null || mUCGContent.getScenes() == null) return;
+        UGCScene ugcScene = mUCGContent.getScenes().get(0);
+        if (ugcScene == null) return;
+        String title = mUCGContent.getTitle();
+        String itemsCount = ugcScene.getItemsCount();
+        titleTv.setText(title);
+        eggCountTv.setText(itemsCount);
     }
 
     @Override
