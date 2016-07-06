@@ -650,7 +650,7 @@ public class GameActivity extends FragmentActivity {
     }
 
     private boolean test() {
-        return true;
+        return false;
     }
 
 
