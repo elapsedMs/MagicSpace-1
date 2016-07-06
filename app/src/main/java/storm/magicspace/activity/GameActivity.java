@@ -134,11 +134,12 @@ public class GameActivity extends FragmentActivity {
     }
 
     private void initGuide() {
-        String token = LocalSPUtil.getToken();
-        if (!TextUtils.isEmpty(token)) {
+        boolean showedGuide = LocalSPUtil.getGuide();
+        if (showedGuide) {
             mGuide.setVisibility(View.GONE);
         } else {
             mGuide.setVisibility(View.VISIBLE);
+            LocalSPUtil.saveGuide(true);
         }
     }
 
