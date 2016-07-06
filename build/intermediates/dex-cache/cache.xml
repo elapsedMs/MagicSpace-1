@@ -6,238 +6,217 @@
         jumboMode="false"
         revision="23.0.3"
         sha1="1821601ddbec5ff125653097812823388700af74">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-431a6ae67a4cf28898ff76b34346b2401001f625.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/classes-431a6ae67a4cf28898ff76b34346b2401001f625.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="efeda77c808750cb670ee9c48d8a1835d89dbcb2">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-1d73521a00982f976bff36655dc8742dd839e064.jar" />
-    </item>
-    <item
-        jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/com.squareup.leakcanary/leakcanary-analyzer/1.4-beta2/449777cd466ac0a16f7e8d0dc508e70e2cdd13a9/leakcanary-analyzer-1.4-beta2.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="449777cd466ac0a16f7e8d0dc508e70e2cdd13a9">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/leakcanary-analyzer-1.4-beta2-e6374710dd7bc7008ede6578f7655940575ec1d4.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/classes-1d73521a00982f976bff36655dc8742dd839e064.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/ShareSDK-QQ-2.7.3.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="a1d89d2a66ec81307ae99a2a4ee0d7b11f75cb5b">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/ShareSDK-QQ-2.7.3-de68c4bef972644624a00d076303e431ede6f186.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/ShareSDK-QQ-2.7.3-de68c4bef972644624a00d076303e431ede6f186.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/ShareSDK-Wechat-Moments-2.7.3.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="970252c65fcb3e7f8faa63a01faa58917dfc1c19">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Moments-2.7.3-09c54b752886eb1452f0b90f3ecf8a6dcc09a666.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/ShareSDK-Wechat-Moments-2.7.3-09c54b752886eb1452f0b90f3ecf8a6dcc09a666.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/picasso-2.5.2-0d6c2a9060e6ffdcffb5ed522ec474523ea3efcb.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/picasso-2.5.2-0d6c2a9060e6ffdcffb5ed522ec474523ea3efcb.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/joda-time/joda-time/2.9.4/1c295b462f16702ebe720bbb08f62e1ba80da41b/joda-time-2.9.4.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="1c295b462f16702ebe720bbb08f62e1ba80da41b">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/joda-time-2.9.4-dfe9f535a1ab7a7f2ba01af6b94b764a3637398b.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/joda-time-2.9.4-dfe9f535a1ab7a7f2ba01af6b94b764a3637398b.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/org.lucee/commons-httpclient/3.1/d48120f2f62dd9df19fbb46b17c429b0127718d6/commons-httpclient-3.1.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="d48120f2f62dd9df19fbb46b17c429b0127718d6">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/commons-httpclient-3.1-ea3457a55a0d3daa30cc39b936d4f6d72973d696.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/commons-httpclient-3.1-ea3457a55a0d3daa30cc39b936d4f6d72973d696.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.9.0/a681c044244d9fc375198588297a39ba78028423/retrofit-1.9.0.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="a681c044244d9fc375198588297a39ba78028423">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/retrofit-1.9.0-7272e9fc1b8669bef42202d41e97ceb85083a74b.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/retrofit-1.9.0-7272e9fc1b8669bef42202d41e97ceb85083a74b.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/MobTools-2016.0623.1641.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="3c1d0c1670293a30fc29f2ed8ba33e0a6f9821fe">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/MobTools-2016.0623.1641-34ae6b7ae36b957ae2bf9838db1e68acc5799f4c.jar" />
-    </item>
-    <item
-        jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/com.squareup.haha/haha/2.0.2/fd65b84d12d6adc77ec0e4fcaca623fc391d8679/haha-2.0.2.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="fd65b84d12d6adc77ec0e4fcaca623fc391d8679">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/haha-2.0.2-e7f85867c5117c507246ff2c6cdf0a27337683bd.jar" />
-    </item>
-    <item
-        jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.4-beta2/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="9c8472f8e10502af60d0f63ea11eed68bdf690c2">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-3985f3daba4919dd54eb4c0ec903b205d4123586.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/MobTools-2016.0623.1641-34ae6b7ae36b957ae2bf9838db1e68acc5799f4c.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0-alpha1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="9aaaea3a89040f8176f810c85e288fc74d5d1f12">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-fa606df5e88dda16e1ff9a8d16a68985cb75a0e2.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/classes-fa606df5e88dda16e1ff9a8d16a68985cb75a0e2.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0-alpha1/jars/libs/internal_impl-24.0.0-alpha1.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="e57fba0a2d57d3501d8f4ff44c23092978804845">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/internal_impl-24.0.0-alpha1-7a837bd9f94970d13a4d203654312d3c91a93e40.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/internal_impl-24.0.0-alpha1-7a837bd9f94970d13a4d203654312d3c91a93e40.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Downloads/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/24.0.0-alpha1/support-annotations-24.0.0-alpha1.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="b8062546971a3d196343232a19a3c0016272ba47">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/support-annotations-24.0.0-alpha1-24e0899333d0856b13f681ffdf64630682c38213.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/support-annotations-24.0.0-alpha1-24e0899333d0856b13f681ffdf64630682c38213.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/MagicSpace/commonlib/unspecified/jars/libs/umeng_social_sdk.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="8fc99dcc063c0b2c7f70ae8919f3f5496baabb1f">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/umeng_social_sdk-c1d822ada8d67ee5b5af0d7c81805a0c15a0a5bf.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/umeng_social_sdk-c1d822ada8d67ee5b5af0d7c81805a0c15a0a5bf.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/MobCommons-2016.0623.1641.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="57eee6c3e8bab2ed4b9a585a7f590808d6518573">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/MobCommons-2016.0623.1641-512e085ca2502f3998a47cf152f1fc130384a25a.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/MobCommons-2016.0623.1641-512e085ca2502f3998a47cf152f1fc130384a25a.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/utdid4all-1.0.4.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="4345fa0a5a7768f2f9c86aaab7db9e2906765193">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/utdid4all-1.0.4-37632d5413e1e2867f49c83742233293ebdb8114.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/utdid4all-1.0.4-37632d5413e1e2867f49c83742233293ebdb8114.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/MagicSpace/commonlib/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="54bb3e53ae6fb43d5c663f49794c9ee8af5a7ff2">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-071b8787e62a390ee4837169e4041c897c2f6600.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/classes-071b8787e62a390ee4837169e4041c897c2f6600.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/ShareSDK-QZone-2.7.3.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="4720eef867e3b83217a9c45c42a9a6ec85bf6388">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/ShareSDK-QZone-2.7.3-85e6871bb20ca344e8b42c7eba365efdad736c7e.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/ShareSDK-QZone-2.7.3-85e6871bb20ca344e8b42c7eba365efdad736c7e.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/android-query.0.26.7.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="aa997823bc89263500714864ff136de1e6025b4e">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/android-query.0.26.7-ade7abfb56f02652f02817233a91afff0e201a8a.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/android-query.0.26.7-ade7abfb56f02652f02817233a91afff0e201a8a.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/ShareSDK-Wechat-2.7.3.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="b2bbbb5075adb434d125f3ac1d412129f0ab346e">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-2.7.3-4ecf7acc43587a64e5f1d136df0f1b4d79b6b2db.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/ShareSDK-Wechat-2.7.3-4ecf7acc43587a64e5f1d136df0f1b4d79b6b2db.jar" />
     </item>
     <item
-        jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/com.squareup.leakcanary/leakcanary-watcher/1.4-beta2/6a920fb0d14e5e3b36e37cf33b1eeef2bcce4c92/leakcanary-watcher-1.4-beta2.jar"
+        jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android-no-op/1.4-beta2/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="6a920fb0d14e5e3b36e37cf33b1eeef2bcce4c92">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/leakcanary-watcher-1.4-beta2-b16149de8b158d6f5a6b233589fe6b0744ff2042.jar" />
+        sha1="560bca701ac165c2081e0b7196556a968c84893e">
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/classes-52c3891be7032924163b7fd689806c719290be46.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/umeng-analytics-v6.0.1.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="aab9085bca0c26dcb9cb11837a5f5e22cc102a5e">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/umeng-analytics-v6.0.1-e90d79c68038ea2662984ef88aaaa4e810bb55c5.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/umeng-analytics-v6.0.1-e90d79c68038ea2662984ef88aaaa4e810bb55c5.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/ShareSDK-SinaWeibo-2.7.3.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="da14045fadb57b99922fb528e4f9664fe211b848">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/ShareSDK-SinaWeibo-2.7.3-b951ad6875413c1aae34c01b876157b4bf10319e.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/ShareSDK-SinaWeibo-2.7.3-b951ad6875413c1aae34c01b876157b4bf10319e.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/org.roboguice/roboguice/4.0.0/4383dc18c98dc5d409e055b0c864987ad8bdccee/roboguice-4.0.0.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="4383dc18c98dc5d409e055b0c864987ad8bdccee">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/roboguice-4.0.0-c76ee7874da9deeba4b479d49ece9af164fbc733.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/roboguice-4.0.0-c76ee7874da9deeba4b479d49ece9af164fbc733.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.2/f1bc476cc167b18e66c297df599b2377131a8947/gson-2.6.2.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="f1bc476cc167b18e66c297df599b2377131a8947">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/gson-2.6.2-d23391d20e8d30e6ae8a628673ebf45bd2ea36c7.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/gson-2.6.2-d23391d20e8d30e6ae8a628673ebf45bd2ea36c7.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/com.nostra13.universalimageloader/universal-image-loader/1.9.5/442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375/universal-image-loader-1.9.5.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.5-a0d769ea756992f612a24b34774744b00781fb4d.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/universal-image-loader-1.9.5-a0d769ea756992f612a24b34774744b00781fb4d.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/com.umeng.fb.5.4.0.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="993055275c65a58d47e98493d8028a74a0e1c06e">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/com.umeng.fb.5.4.0-0df3ed410a5b02f685ddef8849d46e41c6608d4e.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/com.umeng.fb.5.4.0-0df3ed410a5b02f685ddef8849d46e41c6608d4e.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/ShareSDK-Wechat-Core-2.7.3.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="6dfb6daefbe903a246e83032045501ab329701a8">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Core-2.7.3-07596d4b3abfd5c77d18936d68bdedd31985e7b1.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/ShareSDK-Wechat-Core-2.7.3-07596d4b3abfd5c77d18936d68bdedd31985e7b1.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/libs/ShareSDK-Core-2.7.3.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="d90e081f60d97b39fbb688a3043e0dc227111ed6">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/ShareSDK-Core-2.7.3-3d76f18af01fb3bb5eb23c351dc74c4d7aefd3fd.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/ShareSDK-Core-2.7.3-3d76f18af01fb3bb5eb23c351dc74c4d7aefd3fd.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/org.greenrobot/eventbus/3.0.0/ddd99896e9569eaababbe81b35d80e1b91c4ad85/eventbus-3.0.0.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="ddd99896e9569eaababbe81b35d80e1b91c4ad85">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/eventbus-3.0.0-3768095a326bf09cceb862713593a3a027b4b1f0.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/eventbus-3.0.0-3768095a326bf09cceb862713593a3a027b4b1f0.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/MagicSpace/multhreaddownload2/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="b8535a1cec14e9c2fe02f8a4092fdcb85198a758">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-3ecda7023f7baede91e8628ac74b7f17fff3e31b.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/classes-3ecda7023f7baede91e8628ac74b7f17fff3e31b.jar" />
     </item>
     <item
         jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-edad2fda6630f25491b669997d2aa8b8d4ce2487.jar" />
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/release/classes-edad2fda6630f25491b669997d2aa8b8d4ce2487.jar" />
     </item>
 
 </items>
