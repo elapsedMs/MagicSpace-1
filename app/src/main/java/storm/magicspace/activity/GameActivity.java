@@ -236,10 +236,12 @@ public class GameActivity extends FragmentActivity {
             if (mUCGScene == null) return null;
             //UGCUpdateContent content = createUpdateBean();
             //return HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(content));
-            // TODO if key exist? should not generate new key
+            // if key exist, should't generate new key
             if (mFrmoEdit) {
                 for (UGCItem ugcItem : mUGCItems) {
-                    if (ugcItem != null && ugcItem.getItemId().equals(mEggKey)) {
+                    if (ugcItem != null && ugcItem.getItemId() != null
+                            && ugcItem.getItemId().equals(mEggKey)) {
+                        // TODO: item dismiss
                         mUGCItems.remove(ugcItem);
                         break;
                     }
@@ -251,7 +253,7 @@ public class GameActivity extends FragmentActivity {
                 mFrmoEdit = false;
                 return HTTPManager.updateUGCContentScenes("", mContentId, JsonUtil.toJson(mUCGScene));
             }
-            mEggKey = System.currentTimeMillis() + "";//BaseUtil.MD5(System.currentTimeMillis() + "");
+            mEggKey = System.currentTimeMillis() + "";
             mCurrentItem.setItemId(mEggKey);
             mUGCItems.add(mCurrentItem);
             mUCGScene.setItems(mUGCItems);
@@ -421,16 +423,17 @@ public class GameActivity extends FragmentActivity {
 //                mFloatView.setImageBitmap(null);
 //                mFloatView.setFloatView(bitmap, 1, 30);
 
-                mCurrentItem = new UGCItem();
-
-                mCurrentItem.setX("0");
-                mCurrentItem.setY("0");
-                mCurrentItem.setScalex(1.0f + "");
-                mCurrentItem.setRotatez(0.0f + "");
-                mCurrentItem.setTransparency(1.0f + "");
-
+                if (!mFrmoEdit) {
+                    mCurrentItem = new UGCItem();
+                    mCurrentItem.setX("0");
+                    mCurrentItem.setY("0");
+                    mCurrentItem.setScalex(1.0f + "");
+                    mCurrentItem.setRotatez(0.0f + "");
+                    mCurrentItem.setTransparency(1.0f + "");
+                    mCurrentItem.setEnabled("1");
+                }
                 mCurrentItem.setItemMediaUrl(url);
-                mCurrentItem.setEnabled("1");
+
                 //mCurrentItem.setItemId(mEggsCount + "");
 
                 mFloatInfo = null;
@@ -447,10 +450,15 @@ public class GameActivity extends FragmentActivity {
 
     private void createEgg() {
         String itemId = mEggKey;
-        float alpha = mAlphaVal;
-        float scale = mFloatInfo != null ? mFloatInfo.getScale() : 1.0f;
-        float rotate = mFloatInfo != null ? -mFloatInfo.getRotate() : 0.0f;
-        log("contentId = %s, itemId = %s, url = %s, alpha = %s, scale = %s, rotate = %s",
+//        float alpha = mAlphaVal;
+//        float scale = mFloatInfo != null ? mFloatInfo.getScale() : 1.0f;
+//        float rotate = mFloatInfo != null ? -mFloatInfo.getRotate() : 0.0f;
+
+        float alpha = Float.parseFloat(mCurrentItem.getTransparency());
+        float scale = Float.parseFloat(mCurrentItem.getScalex());
+        float rotate = -Float.parseFloat(mCurrentItem.getRotatez());
+
+        log("[JS dropItem] >>> contentId = %s, itemId = %s, url = %s, alpha = %s, scale = %s, rotate = %s",
                 mContentId, itemId, mUrl, alpha, scale, rotate);
         // dropItem('contentId', 'itemId', 'url', 'alpha', 'scale', 'rotate')
         mWebView.loadUrl("javascript:dropItem('"
@@ -642,7 +650,7 @@ public class GameActivity extends FragmentActivity {
     }
 
     private boolean test() {
-        return false;
+        return true;
     }
 
 
@@ -650,8 +658,6 @@ public class GameActivity extends FragmentActivity {
 
         @JavascriptInterface
         public void editItem(String contentId, String sceneId, String itemId) {
-            LogUtil.d(TAG, "edit call back, contentId = " + contentId + ", sceneId = " + sceneId +
-                    ", itemId = " + itemId);
             log("[JS editItem] >>> contentId = %s, sceneId =  %s, itemId = %s"
                     ,contentId ,sceneId, itemId);
             mEggsCount = mEggsCount - 1;
@@ -710,6 +716,7 @@ public class GameActivity extends FragmentActivity {
                 mFloatView.setImageBitmap(null);
                 mFloatView.setFloatView(bitmap, scale, rotate);
             }
+            //todo:
         });
     }
 
