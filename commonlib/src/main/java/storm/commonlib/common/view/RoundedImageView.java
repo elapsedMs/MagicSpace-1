@@ -5,6 +5,10 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
@@ -15,6 +19,9 @@ import storm.commonlib.R;
 import storm.commonlib.common.util.LogUtil;
 
 
+/**
+ * ra
+ */
 @SuppressWarnings("UnusedDeclaration")
 public class RoundedImageView extends ImageView {
 
@@ -43,6 +50,7 @@ public class RoundedImageView extends ImageView {
     private Drawable mBackgroundDrawable;
 
     private ScaleType mScaleType;
+    private int localStyle = 1000;
 
     public RoundedImageView(Context context) {
         super(context);
@@ -139,7 +147,36 @@ public class RoundedImageView extends ImageView {
         mResource = 0;
         mDrawable = RoundedDrawable.fromDrawable(drawable);
         updateDrawableAttrs();
+        if (localStyle != 1000 && mDrawable != null) {
+            Bitmap bitmap = drawableToBitmap(mDrawable);
+            changeBitmap(bitmap, (localStyle == 0 ? 3 : localStyle) * 0.5f);
+        }
+
         super.setImageDrawable(mDrawable);
+    }
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        int width = drawable.getIntrinsicWidth();
+        int height = drawable.getIntrinsicHeight();
+        Bitmap bitmap = Bitmap.createBitmap(width, height, drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, width, height);
+        drawable.draw(canvas);
+        return bitmap;
+
+    }
+
+    public static Drawable bitmapToDrawble(Bitmap bitmap, Context mcontext) {
+        Drawable drawable = new BitmapDrawable(mcontext.getResources(), bitmap);
+        return drawable;
+    }
+
+
+    private static Bitmap changeBitmap(Bitmap bitmap, float sy) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(sy, sy); //长和宽放大缩小的比例
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return resizeBmp;
     }
 
     @Override
@@ -319,5 +356,14 @@ public class RoundedImageView extends ImageView {
         mutateBackground = mutate;
         updateBackgroundDrawableAttrs(true);
         invalidate();
+    }
+
+    public void setHeightAndWeight(int abs) {
+
+
+    }
+
+    public void setLocalStyle(int i) {
+        this.localStyle = i;
     }
 }

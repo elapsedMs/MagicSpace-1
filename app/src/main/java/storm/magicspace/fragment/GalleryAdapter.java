@@ -2,6 +2,12 @@ package storm.magicspace.fragment;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SpinnerAdapter;
@@ -11,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import storm.commonlib.common.view.RoundedImageView;
-import storm.magicspace.bean.CirclePic;
+import storm.magicspace.http.Conpon;
 import storm.magicspace.view.MineShowView;
 
 /**
@@ -20,9 +26,10 @@ import storm.magicspace.view.MineShowView;
 public class GalleryAdapter implements SpinnerAdapter {
 
     private final Context context;
-    private final List<CirclePic> circlePics;
+    private final List<Conpon> circlePics;
+    private int selectPosition;
 
-    public GalleryAdapter(Context context, List<CirclePic> circlePicList) {
+    public GalleryAdapter(Context context, List<Conpon> circlePicList) {
         this.context = context;
         circlePics = circlePicList;
     }
@@ -64,8 +71,9 @@ public class GalleryAdapter implements SpinnerAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        MineShowView item = convertView == null ? new MineShowView(context) : (MineShowView)convertView;
+        MineShowView item = convertView == null ? new MineShowView(context) : (MineShowView) convertView;
         RoundedImageView imageView = item.getImageView();
+        imageView.setLocalStyle(selectPosition - position);
         Picasso.with(context).load(circlePics.get(position).getUrl()).into(imageView);
         return item;
     }
@@ -83,5 +91,35 @@ public class GalleryAdapter implements SpinnerAdapter {
     @Override
     public boolean isEmpty() {
         return false;
+    }
+
+
+    public void setSelectedPosition(int position) {
+        this.selectPosition = position;
+    }
+
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        int width = drawable.getIntrinsicWidth();
+        int height = drawable.getIntrinsicHeight();
+        Bitmap bitmap = Bitmap.createBitmap(width, height, drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, width, height);
+        drawable.draw(canvas);
+        return bitmap;
+
+    }
+
+    public static Drawable bitmapToDrawble(Bitmap bitmap, Context mcontext) {
+        Drawable drawable = new BitmapDrawable(mcontext.getResources(), bitmap);
+        return drawable;
+    }
+
+
+    private static Bitmap changeBitmap(Bitmap bitmap, float sy) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(sy, sy); //长和宽放大缩小的比例
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return resizeBmp;
     }
 }
