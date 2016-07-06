@@ -25,6 +25,7 @@ public class FloatView extends ImageView {
     private final static float SCALE_MIN_FACTOR = 0.7f;
     private final static float SCALE_MAX_FACTOR = 1.5f;
     private final static int DEFAULT_PADDING = 20;
+    private final static double DEFAULT_ALPHA = 0.15;
 
     private static final String TAG = FloatView.class.getSimpleName();
 
@@ -67,6 +68,7 @@ public class FloatView extends ImageView {
     private Paint mBitmapPaint;
     private float mRealScale;
     private int mTogglePadding = DEFAULT_PADDING;
+
 
     public FloatView(Context context) {
         super(context);
@@ -140,7 +142,7 @@ public class FloatView extends ImageView {
     }
 
     public void setFloatAlpha(float alpha) {
-        mBitmapPaint.setAlpha((int) (255*alpha));
+        mBitmapPaint.setAlpha((int)(255 * (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * alpha)));
         invalidate();
     }
 
