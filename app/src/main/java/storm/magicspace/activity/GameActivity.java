@@ -127,7 +127,17 @@ public class GameActivity extends FragmentActivity {
 
     private void initData() {
         mContentId = getRandomContentId();
+        setContentIdIfNecessary();
         mEggInfos = new HashMap();
+    }
+
+    private void setContentIdIfNecessary() {
+        Intent intent = getIntent();
+        if (intent == null) return;
+        String contentId = intent.getStringExtra("contentId");
+        if (!TextUtils.isEmpty(contentId)) {
+            mContentId = contentId;
+        }
     }
 
     public void initView() {
