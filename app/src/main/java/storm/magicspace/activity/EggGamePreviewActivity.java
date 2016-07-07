@@ -29,6 +29,7 @@ public class EggGamePreviewActivity extends BaseActivity {
 
     private TimeCount time;
     private MedtreeDialog medtreeDialog;
+
     public EggGamePreviewActivity() {
         super(R.layout.activity_egg_preview, CommonConstants.ACTIVITY_STYLE_EMPTY);
     }
@@ -46,15 +47,15 @@ public class EggGamePreviewActivity extends BaseActivity {
                         break;
 
                     case 1:
-                       showShare();
+                        showShare();
                         break;
 
                     case 2:
-                        Toast.makeText(EggGamePreviewActivity.this,"过关成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EggGamePreviewActivity.this, "过关成功", Toast.LENGTH_SHORT).show();
                         break;
 
                     case 3:
-                        Toast.makeText(EggGamePreviewActivity.this,"过关失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EggGamePreviewActivity.this, "过关失败", Toast.LENGTH_SHORT).show();
                         break;
 
                     case 4:
@@ -77,7 +78,7 @@ public class EggGamePreviewActivity extends BaseActivity {
     private void initWebView() {
         wv_egg_game_preview.getSettings().setJavaScriptEnabled(true);
         wv_egg_game_preview.getSettings().setDefaultTextEncodingName("gb2312");
-        wv_egg_game_preview.loadUrl("http://app.stemmind.com/vr/a/preview.php?c=" + info.contentId);
+        wv_egg_game_preview.loadUrl("player.php?ua=app&s=ugc&c=" + info.contentId);
         ContainerView containerView = new ContainerView();
         wv_egg_game_preview.setWebViewClient(new WebViewClient());
         wv_egg_game_preview.addJavascriptInterface(containerView, "containerView");
@@ -97,9 +98,9 @@ public class EggGamePreviewActivity extends BaseActivity {
 
         @JavascriptInterface
         public void endGame(boolean bool) {
-            if(bool){
+            if (bool) {
                 mHandler.sendEmptyMessage(2);
-            }else{
+            } else {
                 mHandler.sendEmptyMessage(3);
             }
 

@@ -36,7 +36,7 @@ public class GuessYouLikeActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setActivityTitle("猜你喜欢");
+        setActivityTitle("图库");
         setTitleLeftBtVisibility(View.VISIBLE);
         super.initView();
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshlayout);

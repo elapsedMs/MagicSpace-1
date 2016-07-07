@@ -31,12 +31,12 @@
 
                 <ToggleButton
                     android:id="@+id/tb_isVisible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/px_106"
+                    android:layout_height="@dimen/px_60"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/activity_base_right_margin"
-                    android:background="@mipmap/switch_off"
+                    android:background="@drawable/selector_switch"
                     android:textOff=""
                     android:textOn=""/>
             </RelativeLayout>
