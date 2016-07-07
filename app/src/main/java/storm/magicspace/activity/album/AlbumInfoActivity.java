@@ -16,6 +16,7 @@ import storm.magicspace.R;
 import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.activity.GameActivity;
 import storm.magicspace.bean.Album;
+import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AddCollectResponse;
 
@@ -89,17 +90,20 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
         super.onLocalClicked(resId);
         switch (resId) {
             case R.id.bt_egg_game_info_left:
-                if (from.equals(CommonConstants.GAME)) {
-                    Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
-                    gameIntent.putExtra(CommonConstants.CONTENT_ID, info.getContentId());
-                    gameIntent.putExtra(FROM, from);
-                    this.startActivity(gameIntent);
-                } else {
-                    Intent gameIntent = new Intent(AlbumInfoActivity.this, EggGamePreviewActivity.class);
-                    gameIntent.putExtra(CommonConstants.CONTENT_ID, info.getContentId());
-                    gameIntent.putExtra(FROM, from);
-                    this.startActivity(gameIntent);
-                }
+//                if (from.equals(CommonConstants.GAME)) {
+//                    Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
+//                    gameIntent.putExtra(CommonConstants.CONTENT_ID, info.getContentId());
+//                    gameIntent.putExtra(FROM, from);
+//                    this.startActivity(gameIntent);
+//                } else {
+                Intent gameIntent = new Intent(AlbumInfoActivity.this, EggGamePreviewActivity.class);
+                gameIntent.putExtra(CommonConstants.CONTENT_ID, info.getContentId());
+                EggInfo eggInfo = new EggInfo();
+                eggInfo.contentId = info.getContentId();
+                gameIntent.putExtra("game_info", eggInfo);
+                gameIntent.putExtra(FROM, from);
+                this.startActivity(gameIntent);
+//                }
                 break;
 
             case R.id.bt_egg_game_info_right:
@@ -110,10 +114,10 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
 //                intent.putExtra(FROM, from);
 //                this.startActivity(intent);
 
-                Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
-                gameIntent.putExtra(CommonConstants.CONTENT_ID, info.getContentId());
-                gameIntent.putExtra(FROM, from);
-                this.startActivity(gameIntent);
+                Intent buildIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
+                buildIntent.putExtra(CommonConstants.CONTENT_ID, info.getContentId());
+                buildIntent.putExtra(FROM, from);
+                this.startActivity(buildIntent);
                 break;
 
             case R.id.tv_collect:
