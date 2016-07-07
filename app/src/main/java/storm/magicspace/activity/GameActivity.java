@@ -2,6 +2,7 @@ package storm.magicspace.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -42,6 +43,7 @@ import java.util.Random;
 
 import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
+import storm.commonlib.common.util.DialogUtils;
 import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.R;
@@ -60,6 +62,8 @@ import storm.magicspace.http.HTTPManager;
 import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
+
+import static storm.magicspace.view.FloatView.DEFAULT_ALPHA;
 
 public class GameActivity extends FragmentActivity {
 
@@ -263,7 +267,7 @@ public class GameActivity extends FragmentActivity {
                 for (UGCItem ugcItem : mUGCItems) {
                     if (ugcItem != null && ugcItem.getItemId() != null
                             && ugcItem.getItemId().equals(mEggKey)) {
-                        // TODO: item dismiss
+                        // sometime item dismiss ?
                         mUGCItems.remove(ugcItem);
                         break;
                     }
@@ -466,7 +470,21 @@ public class GameActivity extends FragmentActivity {
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameActivity.this.finish();
+                DialogUtils.showContentDialog(GameActivity.this, getString(R.string.game_quit_hint),
+                        getString(R.string.cancel), getString(R.string.confirm),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                GameActivity.this.finish();
+                            }
+                        },
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
             }
         });
     }
@@ -553,8 +571,9 @@ public class GameActivity extends FragmentActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mAlphaVal = progress * 1f / 100;
                 mFloatView.setFloatAlpha(mAlphaVal);
-                mCurrentItem.setTransparency(mAlphaVal + "");
-                log("alpha = %s", mAlphaVal);
+                float alpha = (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * mAlphaVal);
+                mCurrentItem.setTransparency(String.valueOf(alpha));
+                log("alpha = %s", alpha);
             }
 
             @Override
@@ -574,7 +593,6 @@ public class GameActivity extends FragmentActivity {
         mFloatView.setOnFloatListener(new FloatView.FloatListener() {
             @Override
             public void clickLeftTop() {
-                log("transparency btn clicked");
                 if (!mAlphaBarShowing) {
                     mAlphaBar.setVisibility(View.VISIBLE);
                 } else {
@@ -602,6 +620,7 @@ public class GameActivity extends FragmentActivity {
                 mCurrentItem.setY("0");
                 mCurrentItem.setScalex(String.valueOf(floatInfo.getScale()));
                 mCurrentItem.setRotatez(String.valueOf(floatInfo.getRotate()));
+                mCurrentItem.setTransparency(String.valueOf(floatInfo.getAlpha()));
             }
 
         });
@@ -709,7 +728,7 @@ public class GameActivity extends FragmentActivity {
             public void run() {
                 mFloatView.setImageBitmap(null);
                 mFloatView.setFloatView(bitmap, scale, rotate);
-                //mFloatView.setFloatAlpha(alpha);
+                mFloatView.setFloatAlpha(alpha);
                 //mAlphaBar.setProgress(alpha);
                 //todo: alpha!
             }

@@ -25,7 +25,7 @@ public class FloatView extends ImageView {
     private final static float SCALE_MIN_FACTOR = 0.7f;
     private final static float SCALE_MAX_FACTOR = 1.5f;
     private final static int DEFAULT_PADDING = 20;
-    private final static double DEFAULT_ALPHA = 0.15;
+    public final static float DEFAULT_ALPHA = 0.15f;
 
     private static final String TAG = FloatView.class.getSimpleName();
 
@@ -141,6 +141,10 @@ public class FloatView extends ImageView {
         mNewFloat = use;
     }
 
+    /**
+     * set transparency
+     * @param alpha the range of transparency 0.0 ~ 1.0
+     */
     public void setFloatAlpha(float alpha) {
         mBitmapPaint.setAlpha((int)(255 * (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * alpha)));
         invalidate();
@@ -271,7 +275,7 @@ public class FloatView extends ImageView {
                     vals[Matrix.MSCALE_X]) * (180 / Math.PI));
 
             // alpha
-            float alpha = 1f;
+            float alpha = mBitmapPaint.getAlpha() * 100.0f / 255;
 
             Log.d(TAG, "x = " + x + ", y = " + y + ", scale = " + scale + ", rotate = " + degree);
 
