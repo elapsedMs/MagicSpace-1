@@ -85,6 +85,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
             case R.id.bt_egg_game_info_left:
                 Intent gameIntent = new Intent(EggGameInfoActivity.this, GameActivity.class);
                 gameIntent.putExtra("contentId", info.contentId);
+                gameIntent.putExtra(CommonConstants.FROM, CommonConstants.GAME);
                 this.startActivity(gameIntent);
                 break;
 
