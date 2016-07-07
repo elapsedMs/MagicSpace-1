@@ -60,12 +60,12 @@ import storm.magicspace.event.GameEvent;
 import storm.magicspace.event.PublishEvent;
 import storm.magicspace.fragment.EggImageFragment;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.URLConstant;
 import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
 
 import static storm.commonlib.common.CommonConstants.CONTEND_IDS;
-import static storm.commonlib.common.CommonConstants.FROM;
 import static storm.magicspace.view.FloatView.DEFAULT_ALPHA;
 
 public class GameActivity extends FragmentActivity {
@@ -74,10 +74,6 @@ public class GameActivity extends FragmentActivity {
     // CONSTANT
     ///////////////////////////////////////////////////////////////////////////
     private static final String TAG = GameActivity.class.getSimpleName();
-    private static final String URL_TOPIC =
-            "http://app.stemmind.com/vr/a/vreditor.php?ua=app&s=mat&c=";
-    private static final String URL_GAME =
-            "http://app.stemmind.com/vr/a/vreditor.php?ua=app&s=ugc&c=";
     private static final String RULE_BOTTOM = "bottom";
     private static final String RULE_ABOVE_EGG = "above_eggs";
     private static final String DEFAULT_CONTENT_ID = "3403";
@@ -148,7 +144,7 @@ public class GameActivity extends FragmentActivity {
     private String configFrom() {
         Intent intent = getIntent();
         if (intent == null) return CommonConstants.GAME;
-        return intent.getStringExtra(FROM);
+        return intent.getStringExtra(CommonConstants.FROM);
     }
 
     private void setContentIdIfNecessary() {
@@ -690,11 +686,11 @@ public class GameActivity extends FragmentActivity {
 
     private String getUrl() {
         if (CommonConstants.GAME.equals(mFrom)) {
-            return URL_GAME + mContentId;
+            return URLConstant.URL_WEBVIEW_GAME + mContentId;
         } else if (CommonConstants.TOPIC.equals(mFrom)) {
-            return URL_TOPIC + mContentId;
+            return URLConstant.URL_WEBVIEW_TOPIC + mContentId;
         } else {
-            return URL_GAME + mContentId;
+            return URLConstant.URL_WEBVIEW_GAME + mContentId;
         }
     }
 
