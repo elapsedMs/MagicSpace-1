@@ -16,7 +16,6 @@ import storm.magicspace.R;
 import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.activity.GameActivity;
 import storm.magicspace.bean.Album;
-import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AddCollectResponse;
 
@@ -89,8 +88,8 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     public void onLocalClicked(int resId) {
         super.onLocalClicked(resId);
         switch (resId) {
-            case R.id.bt_egg_game_info_right:
-                if (from.equalsIgnoreCase(CommonConstants.TOPIC)) {
+            case R.id.bt_egg_game_info_left:
+                if (from.equals(CommonConstants.GAME)) {
                     Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
                     gameIntent.putExtra(CommonConstants.CONTENT_ID, info.getContentId());
                     gameIntent.putExtra(FROM, from);
@@ -103,13 +102,18 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
                 }
                 break;
 
-            case R.id.bt_egg_game_info_left:
-                Intent intent = new Intent(AlbumInfoActivity.this, EggGamePreviewActivity.class);
-                EggInfo eggInfo = new EggInfo();
-                eggInfo.contentId = info.getContentId();
-                intent.putExtra("game_info", eggInfo);
-                intent.putExtra(FROM, from);
-                this.startActivity(intent);
+            case R.id.bt_egg_game_info_right:
+//                Intent intent = new Intent(AlbumInfoActivity.this, EggGamePreviewActivity.class);
+//                EggInfo eggInfo = new EggInfo();
+//                eggInfo.contentId = info.getContentId();
+//                intent.putExtra("game_info", eggInfo);
+//                intent.putExtra(FROM, from);
+//                this.startActivity(intent);
+
+                Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
+                gameIntent.putExtra(CommonConstants.CONTENT_ID, info.getContentId());
+                gameIntent.putExtra(FROM, from);
+                this.startActivity(gameIntent);
                 break;
 
             case R.id.tv_collect:

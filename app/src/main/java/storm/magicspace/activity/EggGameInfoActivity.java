@@ -25,8 +25,8 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
     @Override
     public void initView() {
         super.initView();
-        findEventView(R.id.bt_egg_game_info_right);
-        findEventView(R.id.bt_egg_game_info_left);
+        findEventView(R.id.bt_egg_game_info_right_a);
+        findEventView(R.id.bt_egg_game_info_left_a);
         tv_egg_game_zan = findView(R.id.tv_egg_game_zan);
         tv_egg_game_des = findView(R.id.tv_egg_game_des);
         tv_egg_game_person_count = findView(R.id.tv_egg_game_person_count);
@@ -74,7 +74,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
     public void onLocalClicked(int resId) {
         super.onLocalClicked(resId);
         switch (resId) {
-            case R.id.bt_egg_game_info_right:
+            case R.id.bt_egg_game_info_right_a:
                 Intent intent = new Intent(EggGameInfoActivity.this, EggGamePreviewActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("game_info", info);
@@ -84,7 +84,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
                 this.startActivity(intent);
                 break;
 
-            case R.id.bt_egg_game_info_left:
+            case R.id.bt_egg_game_info_left_a:
                 Intent gameIntent = new Intent(EggGameInfoActivity.this, GameActivity.class);
                 gameIntent.putExtra(CommonConstants.CONTENT_ID, info.contentId);
                 gameIntent.putExtra(CommonConstants.FROM, CommonConstants.GAME);

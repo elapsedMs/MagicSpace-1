@@ -70,7 +70,7 @@ public class AboutUsActivity extends BaseActivity {
 // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
         //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle(getString(R.string.share));
+        oks.setTitle("魔fun全景挖彩蛋");
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl("http://app.stemmind.com/vr/a/tour.html");
         // text是分享文本，所有平台都需要这个字段
@@ -89,19 +89,21 @@ public class AboutUsActivity extends BaseActivity {
 // 启动分享GUI
         oks.show(AboutUsActivity.this);
     }
+
     /**
-      * 获取版本号
-      * @return 当前应用的版本号
-       */
-     public String getVersion() {
-            try {
-                   PackageManager manager = this.getPackageManager();
-                     PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-                     String version = info.versionName;
-                     return  version;
-                 } catch (Exception e) {
-                     e.printStackTrace();
-                     return "获取版本号失败";
-                 }
-         }
+     * 获取版本号
+     *
+     * @return 当前应用的版本号
+     */
+    public String getVersion() {
+        try {
+            PackageManager manager = this.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+            String version = info.versionName;
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "获取版本号失败";
+        }
+    }
 }
