@@ -53,15 +53,15 @@
             <LinearLayout
                 android:id="@+id/ll_guide_dot"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/px_20"
                 android:layout_above="@id/bottom1"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/px_16"
                 android:background="@drawable/guide_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/px_10"
-                android:paddingRight="@dimen/px_10">
+                android:paddingLeft="@dimen/px_20"
+                android:paddingRight="@dimen/px_20">
 
             </LinearLayout>
         </RelativeLayout>

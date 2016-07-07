@@ -72,7 +72,6 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         viewPager = (ViewPager) mHeaderView.findViewById(id.viewpager);
         viewPager.setOnPageChangeListener(this);
         guideDotLl = (LinearLayout) mHeaderView.findViewById(R.id.ll_guide_dot);
-        guideDotLl.setVisibility(View.GONE);
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
         contentLl = (LinearLayout) mHeaderView.findViewById(id.ll_content);
 
@@ -154,6 +153,15 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
     @Override
     public void onPageSelected(int position) {
         title.setText(circlePicList.get(position).getTitle());
+        int count = guideDotLl.getChildCount();
+        for (int i = 0; i < count; i++) {
+            ImageView view = (ImageView) guideDotLl.getChildAt(i);
+            if (position == i) {
+                view.setImageDrawable(getResources().getDrawable(R.drawable.shape_guide_dot));
+            } else {
+                view.setImageDrawable(getResources().getDrawable(R.drawable.shape_guide_dot_normal));
+            }
+        }
     }
 
     @Override
@@ -209,7 +217,12 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
                 imageViews.add(imageView);
 
                 ImageView dot = new ImageView(getActivity());
-                dot.setBackgroundResource(R.drawable.shape_guide_dot);
+                if (i==0){
+                    dot.setImageDrawable(getResources().getDrawable(R.drawable.shape_guide_dot));
+                }else{
+                    dot.setPadding(8, 0, 0, 0);
+                    dot.setImageDrawable(getResources().getDrawable(R.drawable.shape_guide_dot_normal));
+                }
                 guideDotLl.addView(dot);
             }
             viewPager.setAdapter(new ViewPagerAdatper(imageViews));
