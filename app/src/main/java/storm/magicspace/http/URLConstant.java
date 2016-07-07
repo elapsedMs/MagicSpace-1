@@ -89,4 +89,18 @@ public class URLConstant {
     public static final String GAME_SHARED_URL = "http://app.stemmind.com/vr/a/player.php?s=ugc&c=";
 
     public static final String ADDREPORT = "addReport";
+
+    public static final String URL_WEBVIEW_TOPIC =
+            "http://app.stemmind.com/vr/a/vreditor.php?ua=app&s=mat&c=";
+
+    public static final String URL_WEBVIEW_GAME =
+            "http://app.stemmind.com/vr/a/vreditor.php?ua=app&s=ugc&c=";
+
+    public static final String URL_WEBVIEW_PREVIEW_TOPIC =
+            "http://app.stemmind.com/vr/a/preview.php?ua=app&s=mat&c";
+
+    public static final String URL_WEBVIEW_PREVIEW_GAME =
+            "http://app.stemmind.com/vr/a/preview.php?ua=app&s=ugc&c=";
+
+
 }

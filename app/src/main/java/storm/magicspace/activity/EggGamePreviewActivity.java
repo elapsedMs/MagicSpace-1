@@ -3,6 +3,7 @@ package storm.magicspace.activity;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,7 @@ import storm.commonlib.common.util.LogUtil;
 import storm.commonlib.common.view.dialog.MedtreeDialog;
 import storm.magicspace.R;
 import storm.magicspace.bean.EggInfo;
+import storm.magicspace.http.URLConstant;
 
 import static storm.commonlib.common.view.dialog.MedtreeDialog.DisplayStyle.LOADING;
 
@@ -29,11 +31,24 @@ public class EggGamePreviewActivity extends BaseActivity {
 
     private TimeCount time;
     private MedtreeDialog medtreeDialog;
+    private String mFrom;
+    private String mContentId;
 
     public EggGamePreviewActivity() {
         super(R.layout.activity_egg_preview, CommonConstants.ACTIVITY_STYLE_EMPTY);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mFrom = configFrom();
+    }
+
+    private String configFrom() {
+        Intent intent = getIntent();
+        if (intent == null) return CommonConstants.GAME;
+        return intent.getStringExtra(CommonConstants.FROM);
+    }
 
     @Override
     public void initView() {
@@ -67,6 +82,7 @@ public class EggGamePreviewActivity extends BaseActivity {
         wv_egg_game_preview = (WebView) findViewById(R.id.wv_egg_game_preview);
         Intent intent = this.getIntent();
         info = (EggInfo) intent.getSerializableExtra("game_info");
+        mContentId = info.contentId;
         initWebView();
         showloadingeDialog(LOADING, "数据加载中…", "", true, true);
 
@@ -78,10 +94,21 @@ public class EggGamePreviewActivity extends BaseActivity {
     private void initWebView() {
         wv_egg_game_preview.getSettings().setJavaScriptEnabled(true);
         wv_egg_game_preview.getSettings().setDefaultTextEncodingName("gb2312");
-        wv_egg_game_preview.loadUrl("http://app.stemmind.com/vr/a/player.php?ua=app&s=ugc&c=" + info.contentId);
+        String webUrl = getUrl();
+        wv_egg_game_preview.loadUrl(webUrl);
         ContainerView containerView = new ContainerView();
         wv_egg_game_preview.setWebViewClient(new WebViewClient());
         wv_egg_game_preview.addJavascriptInterface(containerView, "containerView");
+    }
+
+    private String getUrl() {
+        if (CommonConstants.GAME.equals(mFrom)) {
+            return URLConstant.URL_WEBVIEW_GAME + mContentId;
+        } else if (CommonConstants.TOPIC.equals(mFrom)) {
+            return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId;
+        } else {
+            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId;
+        }
     }
 
     private class ContainerView {
@@ -126,14 +153,14 @@ public class EggGamePreviewActivity extends BaseActivity {
 //        oks.setTitleUrl(URLConstant.SHARED_URL);
         oks.setTitleUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId);
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("我是分享文本");
+        oks.setText(getString(R.string.shared_content));
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
 //        oks.setUrl("http://app.stemmind.com/vr/a/tour.html");
         oks.setUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId);
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment("我是测试评论文本");
+        //oks.setComment("我是测试评论文本");
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
