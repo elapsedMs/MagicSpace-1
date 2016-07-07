@@ -123,6 +123,7 @@ public class GameActivity extends FragmentActivity {
     private boolean mFromEdit;
     private IssueUCGContent mUCGContent;
     private String mFrom;
+    private boolean mCoinError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,6 +251,15 @@ public class GameActivity extends FragmentActivity {
             if (mUGCItems == null) return;
             for (UGCItem ugcItem : mUGCItems) {
                 mEggInfos.put(ugcItem.getItemId(), ugcItem);
+            }
+        }
+
+        @Override
+        public void onFailed(IssueUCGContentResponse response) {
+            super.onFailed(response);
+            float status = response.getStatus();
+            if (status == 1001) {
+                mCoinError = true;
             }
         }
     }
@@ -538,6 +548,11 @@ public class GameActivity extends FragmentActivity {
         mSharedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mCoinError) {
+                    Toast.makeText(GameActivity.this, R.string.coin_error_hint,
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (mEggsCount < EGG_MIN_COUNT) {
                     Toast.makeText(GameActivity.this, R.string.add_egg_less_hint,
                             Toast.LENGTH_SHORT).show();

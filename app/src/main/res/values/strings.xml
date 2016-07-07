@@ -41,4 +41,5 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     <string name="shared_content">想知道四面八方到处找朋友藏的彩蛋是什么感觉吗？快来体验魔fun全景挖彩蛋！</string>
+    <string name="coin_error_hint">金币不足，只能试用，不能保存</string>
 </resources>
