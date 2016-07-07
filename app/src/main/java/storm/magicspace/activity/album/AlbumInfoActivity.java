@@ -70,6 +70,7 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
             tv_egg_game_zan.setText(appreciateCount);
             tv_egg_game_des.setText(info.getDescription() == null ? "" : info.getDescription());
             initWebView(info.getContentId() == null ? "" : info.getContentId());
+            collectTv.setVisibility(info.getIsCollected().equals("1") ? View.GONE : View.VISIBLE);
         }
     }
 
@@ -146,7 +147,7 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private class AddCollectTask extends BaseASyncTask<String, AddCollectResponse> {
         @Override
         public AddCollectResponse doRequest(String param) {
-            return HTTPManager.addCollect(param);
+            return HTTPManager.addCollect(param, from);
         }
 
         @Override

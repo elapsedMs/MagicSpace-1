@@ -50,11 +50,9 @@ public class HTTPManager {
     /**
      * 获取我的作品
      *
-     * @param userId
-     * @param authorId
      * @return
      */
-    public static MyWorksResponse getMyWorks(String userId, String authorId) {
+    public static MyWorksResponse getMyWorks() {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_MY_WORKS,
@@ -211,14 +209,15 @@ public class HTTPManager {
                 "userId", LocalSPUtil.getLoginAccountId());
     }
 
-    public static AddCollectResponse addCollect(String contentId) {
+    public static AddCollectResponse addCollect(String contentId,String type) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_ADD_COLLECTION,
                 EMPTY,
                 AddCollectResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
-                "contentId", contentId
+                "contentId", contentId,
+                "contentTypeId",type
         );
     }
 }

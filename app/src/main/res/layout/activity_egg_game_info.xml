@@ -208,7 +208,7 @@
                             android:layout_gravity="center"
                             android:background="@drawable/shape_2"
                             android:gravity="center"
-                            android:text=""
+                            android:text="挑战"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_s"/>
                     </LinearLayout>
@@ -227,7 +227,7 @@
                             android:layout_gravity="center"
                             android:background="@drawable/shape_2"
                             android:gravity="center"
-                            android:text=""
+                            android:text="制作游戏"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_s"/>
                     </LinearLayout>

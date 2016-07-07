@@ -1,13 +1,19 @@
 package storm.magicspace.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import com.google.gson.reflect.TypeToken;
 import com.umeng.socialize.PlatformConfig;
 
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
+import storm.commonlib.common.http.baseHttpBean.ListResponse;
+import storm.commonlib.common.http.baseHttpBean.ObjectResponse;
+import storm.commonlib.common.util.JsonUtil;
 import storm.magicspace.R;
+import storm.magicspace.bean.httpBean.MyWorksResponse;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.util.LocalSPUtil;
 
@@ -24,6 +30,13 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        new Object();
+        new ObjectResponse<>();
+        Log.i("lixiaolu", JsonUtil.convertObjectToJson(new MyWorksResponse()));
+        Log.i("lixiaolu", JsonUtil.convertObjectToJson(new ListResponse<Void>()));
+        String text = "{\"date\":0,\"channel\":0,\"data_type\":0,\"status\":0,\"data\":[]}";
+
+        JsonUtil.convertJsonToObject(text, TypeToken.get(MyWorksResponse.class));
         PlatformConfig.setWeixin("wxe1bd4b6f12b6491a", "a454e2ff97ec283009e677a628ebd37d");
 
         //新浪微博

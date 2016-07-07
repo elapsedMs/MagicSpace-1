@@ -105,7 +105,7 @@ public class MyWorksActivity extends BaseActivity {
     private class GetMyWorksTask extends BaseASyncTask<String, MyWorksResponse> {
         @Override
         public MyWorksResponse doRequest(String param) {
-            return HTTPManager.getMyWorks("", "");
+            return HTTPManager.getMyWorks();
         }
 
         @Override
