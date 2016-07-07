@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
@@ -22,6 +23,8 @@ import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
 import storm.magicspace.http.HTTPManager;
+
+import static storm.commonlib.common.CommonConstants.FROM;
 
 public class MyWorksActivity extends BaseActivity {
     private ListView listView;
@@ -55,6 +58,7 @@ public class MyWorksActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("album", list.get(position));
+                bundle.putSerializable(FROM, CommonConstants.GAME);
                 goToNext(AlbumInfoActivity.class, bundle);
             }
         });
