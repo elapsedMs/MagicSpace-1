@@ -18,8 +18,6 @@ import java.util.List;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
-import storm.magicspace.activity.EggGameInfoActivity;
-import storm.magicspace.activity.GameEditDetailActivity;
 import storm.magicspace.activity.album.AlbumInfoActivity;
 import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.bean.Album;
@@ -68,7 +66,7 @@ public class GameCollectionFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("album", list.get(position));
-                goToNext(AlbumInfoActivity.class,bundle);
+                goToNext(AlbumInfoActivity.class, bundle);
             }
         });
         new GetMyCollectionTask().execute();

@@ -19,6 +19,8 @@ import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.AddCollectResponse;
 
+import static storm.commonlib.common.CommonConstants.FROM;
+
 public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     private Album info;
     private TextView tv_egg_game_zan, tv_egg_game_des, tv_egg_game_title;
@@ -44,6 +46,8 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
         setTitleLeftBtVisibility(View.VISIBLE);
         Intent intent = this.getIntent();
         info = (Album) intent.getSerializableExtra("album");
+        String from = intent.getStringExtra(FROM);
+        //// TODO: 16/7/7 首页进来主题详情
         if (info != null) {
             String appreciateCount = info.getAppreciateCount() == null ? "" : info.getAppreciateCount();
             tv_egg_game_title.setText(info.getTitle());

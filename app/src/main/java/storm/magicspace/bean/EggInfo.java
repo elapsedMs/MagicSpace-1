@@ -21,6 +21,8 @@ public class EggInfo implements Serializable {
     public String isAppreciated;
     public String description;
 
+
+
     public String playCount;
     public String avgtime;
     public String creditEarned;

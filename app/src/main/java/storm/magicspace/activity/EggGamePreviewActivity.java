@@ -78,7 +78,7 @@ public class EggGamePreviewActivity extends BaseActivity {
     private void initWebView() {
         wv_egg_game_preview.getSettings().setJavaScriptEnabled(true);
         wv_egg_game_preview.getSettings().setDefaultTextEncodingName("gb2312");
-        wv_egg_game_preview.loadUrl("player.php?ua=app&s=ugc&c=" + info.contentId);
+        wv_egg_game_preview.loadUrl("http://app.stemmind.com/vr/a/player.php?ua=app&s=ugc&c=" + info.contentId);
         ContainerView containerView = new ContainerView();
         wv_egg_game_preview.setWebViewClient(new WebViewClient());
         wv_egg_game_preview.addJavascriptInterface(containerView, "containerView");
