@@ -182,9 +182,9 @@ public class HTTPManager {
                 URLConstant.URL_GET_EGG_LIST,
                 EMPTY,
                 EggHttpResponse.class,
-                "userId", "0",
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "page", "1",
-                "pageSize", "2"
+                "pageSize", "20"
         );
     }
 

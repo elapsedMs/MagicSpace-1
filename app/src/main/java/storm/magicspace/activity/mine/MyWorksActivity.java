@@ -14,8 +14,6 @@ import java.util.List;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
-import storm.magicspace.activity.EggGameInfoActivity;
-import storm.magicspace.activity.GameEditDetailActivity;
 import storm.magicspace.activity.album.AlbumInfoActivity;
 import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.bean.Album;
@@ -51,7 +49,7 @@ public class MyWorksActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("album", list.get(position));
-                goToNext(AlbumInfoActivity.class,bundle);
+                goToNext(AlbumInfoActivity.class, bundle);
             }
         });
         task.execute();
@@ -83,7 +81,6 @@ public class MyWorksActivity extends BaseActivity {
             list.addAll(myWorksResponse.data);
             adapter.notifyDataSetChanged();
         }
-
 
         @Override
         public void onSuccessWithoutResult(MyWorksResponse myWorksResponse) {

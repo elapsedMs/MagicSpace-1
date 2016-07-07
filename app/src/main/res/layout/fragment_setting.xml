@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,11 +14,11 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="@dimen/activity_base_bottom_margin">
+                android:padding="@dimen/activity_base_bottom_margin"
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -26,8 +26,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/activity_base_left_margin"
-                    android:text="@string/my_product_is_visible"
-                    android:textSize="@dimen/text_size_s" />
+                    android:text="@string/message_notice"
+                    android:textSize="@dimen/text_size_s"/>
 
                 <ToggleButton
                     android:id="@+id/tb_isVisible"
@@ -36,7 +36,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/activity_base_right_margin"
-                    android:background="@drawable/selector_switch"
+                    android:background="@mipmap/switch_off"
                     android:textOff=""
                     android:textOn=""/>
             </RelativeLayout>
@@ -48,7 +48,8 @@
                 android:layout_marginTop="@dimen/activity_base_top_margin"
                 android:background="@drawable/item_selector"
                 android:clickable="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -62,7 +63,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/activity_base_left_margin"
                         android:text="@string/message_notice"
-                        android:textSize="@dimen/text_size_s" />
+                        android:textSize="@dimen/text_size_s"/>
 
                     <TextView
                         android:id="@+id/tv_message_notice"
@@ -74,7 +75,7 @@
                         android:drawableRight="@mipmap/arrow_right"
                         android:gravity="center"
                         android:text="已开启  "
-                        android:textSize="@dimen/text_size_xs" />
+                        android:textSize="@dimen/text_size_xs"/>
 
                 </RelativeLayout>
 
@@ -85,8 +86,8 @@
                     android:layout_centerVertical="true"
                     android:padding="@dimen/activity_base_left_margin"
                     android:text="要开启或关闭XX的推送通知，请在iphone的'设置'-'通知'中找到'XX'进行设置"
-                    android:textSize="@dimen/text_size_xs"
-                    android:textColor="@color/gray"/>
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_xs"/>
             </LinearLayout>
 
             <RelativeLayout
@@ -105,7 +106,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/activity_base_left_margin"
                     android:text="@string/feedback"
-                    android:textSize="@dimen/text_size_s" />
+                    android:textSize="@dimen/text_size_s"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -113,7 +114,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/activity_base_right_margin"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/arrow_right"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -132,7 +133,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/activity_base_left_margin"
                     android:text="@string/about_us"
-                    android:textSize="@dimen/text_size_s" />
+                    android:textSize="@dimen/text_size_s"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -140,7 +141,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/activity_base_right_margin"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/arrow_right"/>
             </RelativeLayout>
 
             <Button
@@ -150,7 +151,7 @@
                 android:layout_marginTop="@dimen/activity_base_top_margin"
                 android:background="@drawable/item_selector"
                 android:text="@string/login_out"
-                android:textSize="@dimen/text_size_s" />
+                android:textSize="@dimen/text_size_s"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

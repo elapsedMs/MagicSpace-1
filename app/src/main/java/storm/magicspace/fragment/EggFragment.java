@@ -12,13 +12,10 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
 import storm.magicspace.activity.EggGameInfoActivity;
-import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.adapter.EggAdapter;
 import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.HTTPManager;
@@ -41,7 +38,7 @@ public class EggFragment extends BaseFragment {
     public void initView(View view) {
         super.initView(view);
         lv_egg = this.findItemEventView(view, R.id.lv_egg);
-        no_net_work_ll_egg = findView(view,R.id.no_net_work_ll_egg);
+        no_net_work_ll_egg = findView(view, R.id.no_net_work_ll_egg);
 
     }
 
@@ -55,7 +52,7 @@ public class EggFragment extends BaseFragment {
     public void onLocalItemClicked(AdapterView<?> parent, View view, int position, long id) {
         super.onLocalItemClicked(parent, view, position, id);
 //        goToNext(EggGameInfoActivity.class);
-        Intent intent = new Intent(getActivity(),EggGameInfoActivity.class);
+        Intent intent = new Intent(getActivity(), EggGameInfoActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("game_info", egginfoList.get(position));
         intent.putExtras(bundle);
@@ -89,6 +86,7 @@ public class EggFragment extends BaseFragment {
         no_net_work_ll_egg.setVisibility(View.VISIBLE);
         lv_egg.setVisibility(View.GONE);
     }
+
     private void showContent() {
         no_net_work_ll_egg.setVisibility(View.GONE);
         lv_egg.setVisibility(View.VISIBLE);
