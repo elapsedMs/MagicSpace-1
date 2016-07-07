@@ -71,7 +71,6 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
             tv_egg_game_des.setText(info.getDescription() == null ? "" : info.getDescription());
             initWebView(info.getContentId() == null ? "" : info.getContentId());
         }
-
     }
 
     private void initWebView(String mContentId) {
@@ -94,10 +93,12 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
                 if (from.equalsIgnoreCase(CommonConstants.TOPIC)) {
                     Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
                     gameIntent.putExtra("contentId", info.getContentId());
+                    gameIntent.putExtra(FROM, from);
                     this.startActivity(gameIntent);
                 } else {
                     Intent gameIntent = new Intent(AlbumInfoActivity.this, EggGamePreviewActivity.class);
                     gameIntent.putExtra("contentId", info.getContentId());
+                    gameIntent.putExtra(FROM, from);
                     this.startActivity(gameIntent);
                 }
                 break;
@@ -107,7 +108,7 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
                 EggInfo eggInfo = new EggInfo();
                 eggInfo.contentId = info.getContentId();
                 intent.putExtra("game_info", eggInfo);
-                intent.putExtra(FROM, CommonConstants.TOPIC);
+                intent.putExtra(FROM, from);
                 this.startActivity(intent);
                 break;
 
