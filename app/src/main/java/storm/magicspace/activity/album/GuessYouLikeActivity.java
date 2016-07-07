@@ -1,6 +1,8 @@
 package storm.magicspace.activity.album;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -26,6 +28,7 @@ public class GuessYouLikeActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private OnlineRVAdapter adapter;
     private List<Album> albumList = new ArrayList<>();
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public GuessYouLikeActivity() {
         super(R.layout.activity_guess_you_like);
@@ -36,8 +39,10 @@ public class GuessYouLikeActivity extends BaseActivity {
         setActivityTitle("猜你喜欢");
         setTitleLeftBtVisibility(View.VISIBLE);
         super.initView();
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshlayout);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         initRecyclerView();
+        initRefreshView();
         new TestTask().execute();
 
     }
@@ -50,9 +55,6 @@ public class GuessYouLikeActivity extends BaseActivity {
         adapter.setOnRecyclerViewClickListener(new OnlineRVAdapter.OnRecyclerViewClickListener() {
             @Override
             public void onItemClick(int position) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("url", albumList.get(position).getUrl());
-//                goToNext(WebActivity.class, bundle);
             }
 
             @Override
@@ -64,7 +66,32 @@ public class GuessYouLikeActivity extends BaseActivity {
                 goToNext(CacheingActivity.class, bundle);
             }
         });
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (!recyclerView.canScrollVertically(-1)) {
+                    swipeRefreshLayout.setEnabled(true);
+                }
+            }
+        });
     }
+
+    private void initRefreshView() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
+        swipeRefreshLayout.setEnabled(false);
+    }
+
 
     private class TestTask extends BaseASyncTask<Void, AlbumResponse> {
         @Override
@@ -76,6 +103,7 @@ public class GuessYouLikeActivity extends BaseActivity {
         @Override
         public void onSuccess(AlbumResponse albumResponse) {
             super.onSuccess(albumResponse);
+            swipeRefreshLayout.setRefreshing(false);
             albumList.clear();
             albumList.addAll(albumResponse.data);
             adapter.notifyDataSetChanged();

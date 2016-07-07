@@ -73,8 +73,8 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/design/22.2.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0-alpha1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.0.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.4-beta2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
@@ -98,22 +98,34 @@
     <orderEntry type="library" exported="" name="android-query.0.26.7" level="project" />
     <orderEntry type="library" exported="" name="haha-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="gson-2.6.2" level="project" />
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    <orderEntry type="library" exported="" name="ShareSDK-SinaWeibo-2.7.3" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-Core-2.7.3" level="project" />
+    <orderEntry type="library" exported="" name="MobCommons-2016.0623.1641" level="project" />
+    <orderEntry type="library" exported="" name="universal-image-loader-1.9.5" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-24.0.0" level="project" />
+    <orderEntry type="library" exported="" name="roboguice-4.0.0" level="project" />
+    <orderEntry type="library" exported="" name="umeng-analytics-v6.0.1" level="project" />
+    <orderEntry type="library" exported="" name="eventbus-3.0.0" level="project" />
+    <orderEntry type="library" exported="" name="joda-time-2.9.4" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-QQ-2.7.3" level="project" />
+    <orderEntry type="library" exported="" name="utdid4all-1.0.4" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-24.0.0" level="project" />
+    <orderEntry type="library" exported="" name="retrofit-1.9.0" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-v7-24.0.0" level="project" />
+=======
+>>>>>>> Stashed changes
     <orderEntry type="library" exported="" name="joda-time-2.9.4" level="project" />
     <orderEntry type="library" exported="" name="retrofit-1.9.0" level="project" />
-    <orderEntry type="library" exported="" name="umeng_social_sdk" level="project" />
     <orderEntry type="library" exported="" name="com.umeng.fb.5.4.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-24.0.0-alpha1" level="project" />
-    <orderEntry type="library" exported="" name="SocialSDK_WeiXin_1" level="project" />
-    <orderEntry type="library" exported="" name="SocialSDK_WeiXin_2" level="project" />
-    <orderEntry type="library" exported="" name="SocialSDK_QQZone_3" level="project" />
+>>>>>>> 65354856415e658eb6b2e89bab38cc70fcef891c
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Core-2.7.3" level="project" />
-    <orderEntry type="library" exported="" name="SocialSDK_tencentWB_1" level="project" />
-    <orderEntry type="library" exported="" name="SocialSDK_tencentWB_2" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QZone-2.7.3" level="project" />
-    <orderEntry type="library" exported="" name="SocialSDK_tencentWB_3" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-android-1.4-beta2" level="project" />
-    <orderEntry type="library" exported="" name="open_sdk_r5509" level="project" />
     <orderEntry type="library" exported="" name="umeng-analytics-v6.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-24.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="roboguice-4.0.0" level="project" />
@@ -127,6 +139,10 @@
     <orderEntry type="library" exported="" name="MobCommons-2016.0623.1641" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-watcher-1.4-beta2" level="project" />
+<<<<<<< HEAD
+    <orderEntry type="library" exported="" name="com.umeng.fb.5.4.0" level="project" />
+=======
+>>>>>>> 65354856415e658eb6b2e89bab38cc70fcef891c
     <orderEntry type="library" exported="" name="commons-httpclient-3.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Core-2.7.3" level="project" />
     <orderEntry type="library" exported="" name="design-22.2.1" level="project" />

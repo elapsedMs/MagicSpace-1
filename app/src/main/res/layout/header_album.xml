@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_414">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <RelativeLayout
+                android:id="@+id/bottom1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_42"
+                android:layout_alignParentBottom="true"
+                android:alpha="0.5"
+                android:background="#000000"
+                android:paddingLeft="@dimen/px_8"
+                android:paddingRight="@dimen/px_8">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/px_22" />
+
+                <TextView
+                    android:id="@+id/desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/px_22" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_guide_dot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/bottom1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/px_16"
+                android:background="@drawable/guide_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/px_10"
+                android:paddingRight="@dimen/px_10">
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <storm.magicspace.view.AlbumTitleView
+            android:id="@+id/you_like"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_20"
+            title:album_title_name="猜你喜欢"
+            title:album_title_style="have_count" />
+    </LinearLayout>
+</LinearLayout>

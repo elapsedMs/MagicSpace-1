@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refreshlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/listview"
@@ -9,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/rl_build_works"
         android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:dividerHeight="0dp" />
 
     <RelativeLayout
         android:id="@+id/rl_build_works"
@@ -28,7 +29,7 @@
             android:background="@mipmap/btn_bg"
             android:text="制作我的作品"
             android:textColor="@color/white"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -44,7 +45,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/network_done"/>
+            android:src="@mipmap/network_done" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,7 +53,7 @@
             android:layout_marginTop="@dimen/px_26"
             android:text="暂时没有网络"
             android:textColor="#8f8f8f"
-            android:textSize="@dimen/px_34"/>
+            android:textSize="@dimen/px_34" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,7 +61,7 @@
             android:layout_marginTop="@dimen/px_26"
             android:text="请检查网络设置"
             android:textColor="#8f8f8f"
-            android:textSize="@dimen/px_22"/>
+            android:textSize="@dimen/px_22" />
 
         <TextView
             android:id="@+id/refresh"
@@ -75,7 +76,7 @@
             android:paddingTop="@dimen/px_24"
             android:text="刷新一下"
             android:textColor="#ffffff"
-            android:textSize="@dimen/px_28"/>
+            android:textSize="@dimen/px_28" />
     </LinearLayout>
 
-</RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
