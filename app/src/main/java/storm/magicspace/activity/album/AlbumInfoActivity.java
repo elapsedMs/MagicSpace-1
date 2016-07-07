@@ -46,10 +46,10 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
         rightBt = findEventView(R.id.bt_egg_game_info_right);
         if (from == null) {
             setActivityTitle("详情");
-        } else if (from.equalsIgnoreCase(CommonConstants.GAME)) {
+        } else if (from.equals(CommonConstants.GAME)) {
             setActivityTitle(getString(R.string.game_info));
             leftBT.setText("挑战");
-        } else if (from.equalsIgnoreCase(CommonConstants.TOPIC)) {
+        } else if (from.equals(CommonConstants.TOPIC)) {
             setActivityTitle("主题详情");
             leftBT.setText("预览");
         } else setActivityTitle("详情");
