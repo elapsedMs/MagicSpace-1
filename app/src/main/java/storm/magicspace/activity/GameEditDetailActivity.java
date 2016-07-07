@@ -41,7 +41,7 @@ public class GameEditDetailActivity extends BaseActivity {
     private static final String TAG = GameEditDetailActivity.class.getSimpleName();
     private String mContentId;
     private MyEditText myEditText;
-    private TextView titleTv;
+    private EditText titleTv;
     private TextView eggCountTv;
     private TextView timeTv;
     private EditText descEt;
@@ -85,15 +85,15 @@ public class GameEditDetailActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (TextUtils.isEmpty(s)) return;
-                int mycount = Integer.parseInt("" + s);
-                if (mycount < 5 || mycount > 20) {
-                    Toast.makeText(GameEditDetailActivity.this, "最少5个，最多20个", Toast.LENGTH_SHORT).show();
-                    myEditText.setText(lastCount + "");
-                    myEditText.setSelection(myEditText.length());
-                } else {
-                    lastCount = mycount;
-                }
+//                if (TextUtils.isEmpty(s)) return;
+//                int mycount = Integer.parseInt("" + s);
+//                if (mycount < 5 || mycount > 20) {
+//                    Toast.makeText(GameEditDetailActivity.this, "最少5个，最多20个", Toast.LENGTH_SHORT).show();
+//                    myEditText.setText(lastCount + "");
+//                    myEditText.setSelection(myEditText.length());
+//                } else {
+//                    lastCount = mycount;
+//                }
             }
 
             @Override
@@ -150,6 +150,20 @@ public class GameEditDetailActivity extends BaseActivity {
     }
 
     private void publish() {
+
+//        if (TextUtils.isEmpty(s)) return;
+//                int mycount = Integer.parseInt("" + s);
+//                if (mycount < 5 || mycount > 20) {
+//                    Toast.makeText(GameEditDetailActivity.this, "最少5个，最多20个", Toast.LENGTH_SHORT).show();
+//                    myEditText.setText(lastCount + "");
+
+        String title = titleTv.getText().toString();
+        if (TextUtils.isEmpty(title)) {
+            mUCGContent.setTitle(title);
+            Toast.makeText(GameEditDetailActivity.this, "标题不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String desc = descEt.getText().toString();
         if (TextUtils.isEmpty(desc)) {
             mUCGContent.setDescription(desc);
@@ -159,8 +173,14 @@ public class GameEditDetailActivity extends BaseActivity {
         String price = myEditText.getText().toString();
         if (TextUtils.isEmpty(price)) {
             mUCGContent.setPrice(price);
-            Toast.makeText(GameEditDetailActivity.this, "请选择金币", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GameEditDetailActivity.this, "请输入金币", Toast.LENGTH_SHORT).show();
             return;
+        } else {
+            int mycount = Integer.parseInt(price);
+            if (mycount < 5 || mycount > 20) {
+                Toast.makeText(GameEditDetailActivity.this, "最少5个，最多20个", Toast.LENGTH_SHORT).show();
+                myEditText.setText("");
+            }
         }
         new PublishTask().execute();
     }

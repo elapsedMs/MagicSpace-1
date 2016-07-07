@@ -1,20 +1,20 @@
 package storm.magicspace.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import storm.magicspace.R;
+import storm.magicspace.activity.GameActivity;
 import storm.magicspace.bean.Album;
-import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumPicView;
 
 /**
@@ -46,7 +46,7 @@ public class CachedAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.view_cached, null);
@@ -71,7 +71,11 @@ public class CachedAdapter extends BaseAdapter {
             holder.btnTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "跳转开发中", 1).show();
+//                    Toast.makeText(context, "跳转开发中", 1).show();
+                    Intent intent = new Intent(context, GameActivity.class);
+                    intent.putExtra("contentId", list.get(position).getContentId());
+
+                    context.startActivity(intent);
                 }
             });
         }

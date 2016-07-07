@@ -35,7 +35,7 @@ import storm.magicspace.view.HomeTabView;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
-    private final String[] data = new String[]{"从图库选择", "从收藏选择", "随机"};
+    private final String[] data = new String[]{"从图库选择", "从收藏选择"};
 
     private static final int ALBUM = 1;
     private static final int EGG = 2;
@@ -190,9 +190,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                                 startActivity(new Intent(MainActivity.this, MyCollectionActivity.class));
                                 break;
                             //随机
-                            case 2:
-                                goToNext(GameActivity.class);
-                                break;
+//                            case 2:
+//                                goToNext(GameActivity.class);
+//                                break;
                         }
                         listDialog.dismiss();
                     }

@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.TextView;
@@ -27,9 +28,10 @@ import storm.magicspace.activity.mine.MyCollectionActivity;
 import storm.magicspace.activity.mine.MyWorksActivity;
 import storm.magicspace.bean.CirclePic;
 import storm.magicspace.bean.UserInfo;
-import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
+import storm.magicspace.http.Conpon;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.reponse.ConponResponse;
 import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.MineShowView;
 
@@ -45,6 +47,9 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     private List<CirclePic> circlePicList = new ArrayList<>();
     private List<MineShowView> imageViews = new ArrayList<>();
     private Gallery gallery;
+    private List<Conpon> conponList;
+    private GalleryAdapter adapter;
+    private List<Conpon> tempConponList;
 
     @Nullable
     @Override
@@ -56,6 +61,18 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         gallery = findView(view, R.id.mine_gallery);
+        gallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                adapter.setSelectedPosition(position);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
@@ -63,8 +80,8 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
         super.initData();
 
 
-//        new GetcouponListTask().execute();
-        new CirclePicTask().execute();
+        new GetcouponListTask().execute();
+//        new CirclePicTask().execute();
         GetAccountInfoTask task = new GetAccountInfoTask(getActivity());
         task.execute();
     }
@@ -84,7 +101,10 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
         level = findView(view, R.id.level);
         showPage = findView(view, R.id.show_view_page);
         showPage.setOnPageChangeListener(this);
+
+
     }
+
 
     @Override
     public void onLocalClicked(int resId) {
@@ -154,59 +174,23 @@ public class MyFragment extends BaseFragment implements ViewPager.OnPageChangeLi
         }
     }
 
-//    private class GetcouponListTask extends BaseASyncTask<Void, ConponResponse> {
-//        @Override
-//        public ConponResponse doRequest(Void param) {
-//            return HTTPManager.GetcouponList();
-//        }
-//
-//        @Override
-//        public void onSuccess(ConponResponse conponResponse) {
-//            super.onSuccess(conponResponse);
-//            circlePicList = ConponResponse.data;
-//            imageViews.clear();
-////            title.setText(circlePicList.get(0).getTitle());
-////            desc.setText("没字段");
-//            for (int i = 0; i < circlePicList.size(); i++) {
-//                RoundedImageView imageView = new RoundedImageView(getActivity());
-//                imageView.setCornerRadius(200f);
-//                Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
-//                imageViews.add(imageView);
-//            }
-////
-//            showPage.setAdapter(new ViewPagerAdatper(imageViews));
-//
-//        }
-//    }
-
-    private class CirclePicTask extends BaseASyncTask<Void, CirclePicResponse> {
-
-        private MineShowView mineShowView;
-
+    private class GetcouponListTask extends BaseASyncTask<Void, ConponResponse> {
         @Override
-        public CirclePicResponse doRequest(Void param) {
-            return HTTPManager.getAlbumCirclePic();
+        public ConponResponse doRequest(Void param) {
+            return HTTPManager.GetcouponList();
         }
 
-        /**
-         * @param albumResponse
-         */
         @Override
-        public void onSuccess(CirclePicResponse albumResponse) {
-            super.onSuccess(albumResponse);
-            circlePicList = albumResponse.data;
+        public void onSuccess(ConponResponse conponResponse) {
+            super.onSuccess(conponResponse);
             imageViews.clear();
-
-            gallery.setAdapter(new GalleryAdapter(getActivity(), circlePicList));
 //            title.setText(circlePicList.get(0).getTitle());
-////            desc.setText("");
-//            for (int i = 0; i < circlePicList.size(); i++) {
-//                mineShowView = new MineShowView(getActivity());
-//                RoundedImageView imageView = mineShowView.getImageView();
-//                Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
-//                imageViews.add(mineShowView);
-//            }
-//            showPage.setAdapter(new MineShowViewAdapter(imageViews));
+            conponList = conponResponse.data;
+            tempConponList = conponList;
+            if (conponList == null) return;
+            adapter = new GalleryAdapter(getActivity(), conponList, conponList.size() / 2);
+            gallery.setAdapter(adapter);
         }
     }
+
 }

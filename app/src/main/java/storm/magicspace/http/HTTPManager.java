@@ -169,7 +169,7 @@ public class HTTPManager {
     public static ConponResponse GetcouponList() {
         return ServiceUtils.request(
                 RequestTypes.POST,
-                URLConstant.URL_GET_FOCUS_CONTENT_LIST,
+                URLConstant.URL_GET_COUPON_LIST,
                 EMPTY,
                 ConponResponse.class,
                 "", ""
@@ -182,9 +182,9 @@ public class HTTPManager {
                 URLConstant.URL_GET_EGG_LIST,
                 EMPTY,
                 EggHttpResponse.class,
-                "userId", "0",
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "page", "1",
-                "pageSize", "2"
+                "pageSize", "20"
         );
     }
 

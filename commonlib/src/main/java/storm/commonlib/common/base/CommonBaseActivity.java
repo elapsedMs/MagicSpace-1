@@ -3,8 +3,13 @@ package storm.commonlib.common.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import storm.commonlib.R;
 import storm.commonlib.common.CommonConstants;
@@ -22,6 +27,14 @@ public class CommonBaseActivity extends FragmentActivity {
     private int style = CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR;
     private TitleBar titleBar;
     private MedtreeDialog medtreeDialog;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            dismissBaseDialog();
+        }
+    };
+    ;
 
     public CommonBaseActivity(int contentViewId, int style) {
         this.style = style;
@@ -38,6 +51,7 @@ public class CommonBaseActivity extends FragmentActivity {
         setContentView(contentViewId);
         initTitleBar();
         switchActivityType();
+
     }
 
     @Override
@@ -265,6 +279,17 @@ public class CommonBaseActivity extends FragmentActivity {
 
     public void showBaseDialog(MedtreeDialog.DisplayStyle style, String title, String message, boolean shouldBottomHide, boolean hasAnimation) {
         medtreeDialog = medtreeDialog == null ? new MedtreeDialog(this) : medtreeDialog;
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(0);
+            }
+        };
+        timer.schedule(task, 2);
+
+        medtreeDialog.setCancelable(true);
         medtreeDialog.displayWithStyle(style);
         medtreeDialog.setMessage(message);
         medtreeDialog.setTitle(title);

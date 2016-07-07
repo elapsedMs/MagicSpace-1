@@ -52,6 +52,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
     private AlbumTitleView guessULikeATV;
     private List<Album> albumList = new ArrayList<>();
     private OnlineRVAdapter adapter;
+    private View mHeaderView;
     private TextView title;
     private TextView desc;
     private List<CirclePic> circlePicList = new ArrayList<>();
@@ -67,49 +68,45 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
     @Override
     public void initView(View view) {
         super.initView(view);
-        guideDotLl = (LinearLayout) view.findViewById(R.id.ll_guide_dot);
+        initRecyclerView(view);
+        viewPager = (ViewPager) mHeaderView.findViewById(id.viewpager);
+        viewPager.setOnPageChangeListener(this);
+        guideDotLl = (LinearLayout) mHeaderView.findViewById(R.id.ll_guide_dot);
         guideDotLl.setVisibility(View.GONE);
         noNetWorkLl = (LinearLayout) view.findViewById(id.no_net_work_ll);
-        contentLl = (LinearLayout) view.findViewById(id.ll_content);
-        viewPager = (ViewPager) view.findViewById(id.viewpager);
-        viewPager.setOnPageChangeListener(this);
-//        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(id.refreshlayout);
-        recyclerView = (RecyclerView) view.findViewById(id.recycler_view);
-//        initRefreshView();
-        title = (TextView) view.findViewById(id.title);
-        desc = (TextView) view.findViewById(id.desc);
-        guessULikeATV = (AlbumTitleView) view.findViewById(id.you_like);
+        contentLl = (LinearLayout) mHeaderView.findViewById(id.ll_content);
+
+        title = (TextView) mHeaderView.findViewById(id.title);
+        desc = (TextView) mHeaderView.findViewById(id.desc);
+        guessULikeATV = (AlbumTitleView) mHeaderView.findViewById(id.you_like);
         guessULikeATV.setCount("更多");
         guessULikeATV.setOnClickListener(this);
-        initRecyclerView();
         showContent();
         new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new CirclePicTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private void initRefreshView() {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    private void initRecyclerView(View view) {
+        recyclerView = (RecyclerView) view.findViewById(id.recycler_view);
+        recyclerView.addItemDecoration(new GridItemDecoration(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        final GridLayoutManager layoutManagernew = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(layoutManagernew);
+        mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header_album, recyclerView, false);
+
+        adapter = new OnlineRVAdapter(albumList, getActivity(), true, mHeaderView);
+        recyclerView.setAdapter(adapter);
+
+        layoutManagernew.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
-            public void onRefresh() {
-                new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                new CirclePicTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            public int getSpanSize(int position) {
+                return adapter.isHeader(position) ? layoutManagernew.getSpanCount() : 1;
             }
         });
-        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
-        swipeRefreshLayout.setRefreshing(false);
-    }
 
-    private void initRecyclerView() {
-        adapter = new OnlineRVAdapter(albumList, getActivity(), true);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.addItemDecoration(new GridItemDecoration(getActivity()));
         adapter.setOnRecyclerViewClickListener(new OnlineRVAdapter.OnRecyclerViewClickListener() {
             @Override
             public void onItemClick(int position) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("url", "http://app.stemmind.com/vr/a/preview.php?c=" + albumList.get(position).getContentId());
-//                goToNext(WebActivity.class, bundle);
             }
 
             @Override
@@ -136,11 +133,13 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
     public void showNoNetWork() {
         noNetWorkLl.setVisibility(View.VISIBLE);
         contentLl.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
     }
 
     public void showContent() {
         noNetWorkLl.setVisibility(View.GONE);
         contentLl.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override

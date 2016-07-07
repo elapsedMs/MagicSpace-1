@@ -39,6 +39,9 @@ public class ForgetPwdActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setActivityTitle("找回密码");
+
+        setTitleLeftBtVisibility(View.VISIBLE);
+
         getVerifyCode = findEventView(R.id.bt_get_forget_pwd_verify);
         findEventView(R.id.bt_forget_pwd_submit);
         phoneInputEt = findView(R.id.et_forget_pwd_phone_input);

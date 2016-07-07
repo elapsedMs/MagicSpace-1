@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -101,6 +100,8 @@ public class AlbumFragment extends BaseFragment implements ViewPager.OnPageChang
         viewPager.setOnPageChangeListener(this);
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(1);
+//        viewPager.setHorizontalScrollBarEnabled(false);
+
         mainActivity.leftTitleSelected();
     }
 
