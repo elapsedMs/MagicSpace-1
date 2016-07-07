@@ -37,5 +37,4 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile files('src/main/libs/umeng-analytics-v6.0.1.jar')
     compile files('src/main/libs/utdid4all-1.0.4.jar')
-    compile files('src/main/libs/umeng_social_sdk.jar')
 }

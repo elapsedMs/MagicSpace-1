@@ -69,6 +69,8 @@ public class AuthLoginView extends LinearLayout implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         SHARE_MEDIA platform = null;
+        Toast.makeText(BaseApplication.getApplication(), "clicked!", Toast.LENGTH_SHORT).show();
+
         switch (v.getId()) {
             case R.id.share_xinlang:
                 platform = SHARE_MEDIA.SINA;

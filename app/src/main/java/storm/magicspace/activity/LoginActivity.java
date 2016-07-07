@@ -6,6 +6,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.Map;
+
+import storm.commonlib.common.BaseApplication;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
@@ -15,14 +22,17 @@ import storm.magicspace.http.AccountHttpManager;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.LoginResponse;
 import storm.magicspace.util.LocalSPUtil;
+import storm.magicspace.view.AuthLoginView;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
 
 public class LoginActivity extends BaseActivity {
 
     private EditText nameEt;
+    private UMShareAPI mShareAPI = null;
     private EditText passwordEt;
     private String mLoginJson;
+    private AuthLoginView authLogin;
 
     public LoginActivity() {
         super(R.layout.activity_login);
@@ -31,6 +41,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mShareAPI = UMShareAPI.get(this);
 
         setActivityTitle("登录");
 //        setActivityTitleAndTextColor(R.color.title_color_gray, R.color.title_color);
@@ -39,6 +50,10 @@ public class LoginActivity extends BaseActivity {
 
         findEventView(R.id.bt_login);
         findEventView(R.id.tv_forget_pwd);
+        findEventView(R.id.share_qq);
+        findEventView(R.id.share_weixin);
+        findEventView(R.id.share_xinlang);
+
         nameEt = findView(R.id.et_login_name);
         passwordEt = findView(R.id.et_login_password);
 
@@ -53,6 +68,8 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onLocalClicked(int resId) {
         super.onLocalClicked(resId);
+        SHARE_MEDIA platform = null;
+
         switch (resId) {
             case R.id.bt_login:
                 String name = nameEt.getText().toString();
@@ -72,6 +89,22 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_forget_pwd:
                 goToNext(ForgetPwdActivity.class);
                 break;
+
+            case R.id.share_xinlang:
+                platform = SHARE_MEDIA.SINA;
+                mShareAPI.doOauthVerify(this, platform, umAuthListener);
+                break;
+
+            case R.id.share_qq:
+                platform = SHARE_MEDIA.QQ;
+                mShareAPI.doOauthVerify(this, platform, umAuthListener);
+                break;
+
+            case R.id.share_weixin:
+                platform = SHARE_MEDIA.WEIXIN;
+                mShareAPI.doOauthVerify(this, platform, umAuthListener);
+                break;
+
         }
     }
 
@@ -134,4 +167,21 @@ public class LoginActivity extends BaseActivity {
         }
 
     }
+
+    private UMAuthListener umAuthListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            Toast.makeText(BaseApplication.getApplication(), "Authorize succeed", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText(BaseApplication.getApplication(), "Authorize fail", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText(BaseApplication.getApplication(), "Authorize cancel", Toast.LENGTH_SHORT).show();
+        }
+    };
 }
