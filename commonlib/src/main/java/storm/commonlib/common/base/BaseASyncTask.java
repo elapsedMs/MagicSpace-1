@@ -45,6 +45,7 @@ public class BaseASyncTask<T, V extends BaseResponse> extends AsyncTask<T, Void,
         if (v.status != 0 && v.status >= 1000) {
             MessageUtil.showMessage(v.status_msg == null || v.status_msg.equals(EMPTY) ? BaseApplication.getApplication().getString(R.string.error_network) : v.status_msg);
             onFailed();
+            onFailed(v);
         } else {
             if (v.getData() != null) {
                 onSuccess(v);
@@ -59,6 +60,9 @@ public class BaseASyncTask<T, V extends BaseResponse> extends AsyncTask<T, Void,
     }
 
     public void onFailed() {
+    }
+
+    public void onFailed(V v) {
     }
 
     public void onSuccess(V v) {

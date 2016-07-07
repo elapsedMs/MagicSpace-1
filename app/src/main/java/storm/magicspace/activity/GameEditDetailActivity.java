@@ -26,6 +26,7 @@ import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.LogUtil;
 import storm.magicspace.R;
 import storm.magicspace.bean.IssueUCGContent;
+import storm.magicspace.bean.SubmitUGCContent;
 import storm.magicspace.bean.UGCScene;
 import storm.magicspace.bean.httpBean.SubmitUGCContentResponse;
 import storm.magicspace.event.GameEvent;
@@ -204,7 +205,20 @@ public class GameEditDetailActivity extends BaseActivity {
         @Override
         public void onFailed() {
             super.onFailed();
-            Toast.makeText(GameEditDetailActivity.this, "游戏发布失败", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onFailed(SubmitUGCContentResponse response) {
+            super.onFailed(response);
+            SubmitUGCContent data = response.getData();
+            if (data == null) {
+                Toast.makeText(GameEditDetailActivity.this, "游戏发布失败", Toast.LENGTH_SHORT)
+                        .show();
+                return;
+            }
+            String msg = data.getMsg();
+            Toast.makeText(GameEditDetailActivity.this, msg, Toast.LENGTH_SHORT).show();
+
         }
     }
 
