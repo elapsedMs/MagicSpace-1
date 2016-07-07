@@ -58,6 +58,7 @@
                     android:gravity="center" />
 
                 <LinearLayout
+                    android:id="@+id/ll_"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/tv_divider"
@@ -183,46 +184,54 @@
 
                     </RelativeLayout>
                 </LinearLayout>
-            </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/rl_total"
-                android:padding="10dp">
-
-                <Button
-                    android:id="@+id/bt_egg_game_info_preview"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ll"
+                    android:layout_below="@+id/ll_"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/distance_xxl"
-                    android:background="@drawable/btn_bg"
-                    android:gravity="center"
-                    android:paddingLeft="80dp"
-                    android:paddingRight="80dp"
-                    android:text="@string/go_to_game"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_s" />
+                    android:layout_marginBottom="@dimen/px_5"
+                    android:layout_marginTop="@dimen/px_5"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/bt_egg_game_info_download"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/distance_xxl"
-                    android:background="@drawable/btn_bg"
-                    android:gravity="center"
-                    android:paddingLeft="80dp"
-                    android:paddingRight="80dp"
-                    android:text="@string/download"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_s"
-                    android:visibility="gone" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center">
 
+                        <Button
+                            android:id="@+id/bt_egg_game_info_preview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/shape_2"
+                            android:gravity="center"
+                            android:text="@string/go_to_game"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_s" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/bt_egg_game_info_download"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/shape_2"
+                            android:gravity="center"
+                            android:text="制作游戏"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_s" />
+                    </LinearLayout>
+                </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
