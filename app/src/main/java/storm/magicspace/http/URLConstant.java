@@ -86,5 +86,7 @@ public class URLConstant {
 
     public static final String SHARED_URL = "http://app.stemmind.com/vr/html/gamedetail.php?c=";
 
+    public static final String GAME_SHARED_URL = "http://app.stemmind.com/vr/a/player.php?s=ugc&c=";
+
     public static final String ADDREPORT = "addReport";
 }
