@@ -2,60 +2,18 @@
 <items version="2" >
 
     <item
-        jar="/Users/medtree/MagicSpace/app/src/main/jniLibs/libs/SocialSDK_WeiXin_1.jar"
+        jar="/Users/lixiaolu/Desktop/MagicSpace/app/src/main/jniLibs/libs/weiboSDKCore_3.1.4.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="47f4993168154fa73377d7470b9f6887d48a8023">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/SocialSDK_WeiXin_1-5e36bebe8a43488608233767c70e5991cca7def2.jar" />
+        sha1="f3617ce51258bf3ec0fe2503e3c0a920040b1b53">
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/weiboSDKCore_3.1.4-887256b138da017bc974e2c0ecb77b708abd6360.jar" />
     </item>
     <item
-        jar="/Users/medtree/MagicSpace/app/src/main/jniLibs/libs/SocialSDK_tencentWB_1.jar"
+        jar="/Users/lixiaolu/Desktop/MagicSpace/app/src/main/jniLibs/libs/SocialSDK_Sina.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="328c5351cae13f2ab29450d22b6c02d0ac88a855">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/SocialSDK_tencentWB_1-90ef54ae08c0768314814694ed46a7860cee2c98.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/MagicSpace/app/src/main/jniLibs/libs/SocialSDK_QQZone_3.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="96cca85856864b8b39cbd73614208cdeb176f37d">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/SocialSDK_QQZone_3-3ee9487d26e0168fcef720ca1a87af61f5e4ee16.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/MagicSpace/app/src/main/jniLibs/libs/SocialSDK_tencentWB_2.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="6f744074067eb201171c9c8ff1ca45ed821a76a8">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/SocialSDK_tencentWB_2-78fd56f0c9b2df61cba9d999456e21d1c55a5831.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/MagicSpace/app/src/main/jniLibs/libs/open_sdk_r5509.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="538ea8fb21ea76e8cb424598ac38127cb3344d79">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/open_sdk_r5509-14f367e5a0348eb1f7521f97cfa534af36240ea4.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/MagicSpace/app/src/main/jniLibs/libs/umeng_social_sdk.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="8fc99dcc063c0b2c7f70ae8919f3f5496baabb1f">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/umeng_social_sdk-8200f217c05ca47ba91988ac09435d1ea56a2653.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/MagicSpace/app/src/main/jniLibs/libs/SocialSDK_tencentWB_3.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="a942e2bbb77c6de1c3d8acf1ac189b60d9b52ee3">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/SocialSDK_tencentWB_3-c72c2088291e54cdfdf8b5b3bd380ce1cd430999.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/MagicSpace/app/src/main/jniLibs/libs/SocialSDK_WeiXin_2.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="e89ae558009972e03195d31c35ec0d957121d393">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/SocialSDK_WeiXin_2-716fdc8c57dc45754d01d7fd732abac5771da434.jar" />
+        sha1="f1a6a46bebc2cddeec34f105152da887c4182afc">
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/SocialSDK_Sina-ebb7b915be767934264e433d1e946ec01ba4f3a0.jar" />
     </item>
 
 </items>

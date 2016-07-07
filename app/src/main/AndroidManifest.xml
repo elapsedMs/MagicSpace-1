@@ -160,7 +160,6 @@
             android:name="com.google.android.maps"
             android:required="false"/>
         <uses-library android:name="android.test.runner"/>
-        <!--sina-->
         <!--<activity-->
         <!--android:name=".WBShareActivity"-->
         <!--android:configChanges="keyboardHidden|orientation"-->

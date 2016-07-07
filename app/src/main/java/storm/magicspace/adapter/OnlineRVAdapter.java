@@ -2,7 +2,6 @@ package storm.magicspace.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,10 +20,8 @@ import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.R;
-import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.activity.album.AlbumInfoActivity;
 import storm.magicspace.bean.Album;
-import storm.magicspace.bean.EggInfo;
 import storm.magicspace.view.AlbumPicView;
 
 /**
@@ -113,7 +110,6 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
         });
     }
 
-
     @Override
     public int getItemCount() {
 //        return list.size() + 1;
@@ -160,7 +156,6 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
                         CommonConstants.CONTEND_IDS, JsonUtil.toJson(contentIds));
             }
         }
-
     }
 
     public void setOnRecyclerViewClickListener(OnRecyclerViewClickListener onRecyclerViewClickListener) {
