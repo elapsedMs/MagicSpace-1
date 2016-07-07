@@ -21,9 +21,8 @@ import storm.magicspace.R;
  */
 public class FloatView extends ImageView {
 
-    private final static float SCALE_FACTOR = 1f;
     private final static float SCALE_MIN_FACTOR = 0.7f;
-    private final static float SCALE_MAX_FACTOR = 1.5f;
+    private final static float SCALE_MAX_FACTOR = 2.0f;
     private final static int DEFAULT_PADDING = 20;
     public final static float DEFAULT_ALPHA = 0.15f;
 
@@ -31,13 +30,11 @@ public class FloatView extends ImageView {
 
     private Matrix matrix;
     private Paint mPaint;
-    private int mWidth;
-    private int mHeight;
     private Bitmap mBitmap;
     private Bitmap lt_Bitmap;
     private Bitmap rt_Bitmap;
     private Bitmap rb_Bitmap;
-    private Bitmap lb_Bitmap;
+    private Bitmap lb_Bitmap;// left-bottom button unused
     private Rect lt_Rect;
     private Rect rt_Rect;
     private Rect rb_Rect;
@@ -62,7 +59,7 @@ public class FloatView extends ImageView {
     private float mLastY;
     private float mDensity;
     private Matrix tMatrix = new Matrix();
-    private boolean mNewFloat;
+    private boolean mNewMatrix;
     private float mNewScale;
     private float mNewRotate;
     private Paint mBitmapPaint;
@@ -115,22 +112,13 @@ public class FloatView extends ImageView {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-//        mWidth = w;
-//        mHeight = h;
-//        if (mBitmap != null) {
-//            int bitmapWidth = mBitmap.getWidth();
-//            int bitmapHeight = mBitmap.getHeight();
-//            mBitmapDiagonalLen =  Math.hypot(bitmapWidth, bitmapHeight);
-//            matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
-//        }
     }
 
     public void setFloatView(Bitmap bitmap, float scale, float rotate) {
         mBitmap = bitmap;
         matrix = new Matrix();
-        //tMatrix = new Matrix();
         mRealScale = 1;
-        mNewFloat = true;
+        mNewMatrix = true;
         mNewScale = scale;
         mNewRotate = -rotate;
         invalidate();
@@ -138,7 +126,7 @@ public class FloatView extends ImageView {
     }
 
     public void useExtraMatrix(boolean use) {
-        mNewFloat = use;
+        mNewMatrix = use;
     }
 
     /**
@@ -153,29 +141,27 @@ public class FloatView extends ImageView {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        mWidth = getMeasuredWidth();
-        mHeight = getMeasuredHeight();
+        int width = getMeasuredWidth();
+        int height = getMeasuredHeight();
         if (mBitmap != null) {
             int bitmapWidth = mBitmap.getWidth();
             int bitmapHeight = mBitmap.getHeight();
-            float scaleVal =  mWidth / 4.0f / bitmapWidth;
+            float scaleVal =  width / 4.0f / bitmapWidth;
             mBitmapDiagonalLen = Math.hypot(bitmapWidth, bitmapHeight);
-            matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
-            matrix.postScale(scaleVal, scaleVal, mWidth / 2, mHeight / 2);
+            matrix.postTranslate((width - bitmapWidth) / 2, (height - bitmapHeight) / 2);
+            matrix.postScale(scaleVal, scaleVal, width / 2, height / 2);
             mRealScale = scaleVal;
-            if (mNewFloat) {
-                matrix.postRotate(mNewRotate, mWidth / 2, mHeight / 2);
-                matrix.postScale(mNewScale, mNewScale, mWidth / 2, mHeight / 2);
-               // mRealScale = scaleVal * mNewScale;
+            if (mNewMatrix) {
+                matrix.postRotate(mNewRotate, width / 2, height / 2);
+                matrix.postScale(mNewScale, mNewScale, width / 2, height / 2);
             }
-            if (!mNewFloat) {
+            if (!mNewMatrix) {
                 tMatrix.set(matrix);
             }
         }
     }
 
     private void init() {
-
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         mDensity = displayMetrics.density / 2;
 
@@ -196,20 +182,19 @@ public class FloatView extends ImageView {
         rb_Bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.game_egg_scaling);
         lb_Bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
-        lt_Width = (int) (lt_Bitmap.getWidth() * SCALE_FACTOR);
-        lt_Height = (int) (lt_Bitmap.getHeight() * SCALE_FACTOR);
-        rt_Width = (int) (rt_Bitmap.getWidth() * SCALE_FACTOR);
-        rt_Height = (int) (rt_Bitmap.getHeight() * SCALE_FACTOR);
-        rb_Width = (int) (rb_Bitmap.getWidth() * SCALE_FACTOR);
-        rb_Height = (int) (rb_Bitmap.getHeight() * SCALE_FACTOR);
-        lb_Width = (int) (lb_Bitmap.getWidth() * SCALE_FACTOR);
-        lb_Height = (int) (lb_Bitmap.getHeight() * SCALE_FACTOR);
+        lt_Width = lt_Bitmap.getWidth();
+        lt_Height = lt_Bitmap.getHeight();
+        rt_Width = rt_Bitmap.getWidth();
+        rt_Height = rt_Bitmap.getHeight();
+        rb_Width = rb_Bitmap.getWidth();
+        rb_Height = rb_Bitmap.getHeight();
+        lb_Width = lb_Bitmap.getWidth();
+        lb_Height = lb_Bitmap.getHeight();
 
         lt_Rect = new Rect();
         rt_Rect = new Rect();
         rb_Rect = new Rect();
         lb_Rect = new Rect();
-
     }
 
     @Override
@@ -281,7 +266,6 @@ public class FloatView extends ImageView {
 
             FloatInfo floatInfo = new FloatInfo(x, y, alpha, scale, degree);
             mListener.floatInfo(floatInfo);
-
         }
     }
 
@@ -296,23 +280,13 @@ public class FloatView extends ImageView {
     }
 
     private void executeScale(MotionEvent event) {
-        // rotate
-//        matrix.postRotate((rotationToStartPoint(event) - mRotateDegree) * 2, mMiddlePoint.x,
-//                mMiddlePoint.y);
-//        mRotateDegree = rotationToStartPoint(event);
-
-        // scale
         float scale = getDiagonalLen(event) / mToCenterDistance;
-
         float scaleDiagonalLen = getDiagonalLen(event);
-        boolean max = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) >= mRealScale*SCALE_MAX_FACTOR) && scale > 1;
-        boolean min = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) <= mRealScale*SCALE_MIN_FACTOR) && scale < 1;
+        boolean max = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) >= mRealScale*SCALE_MAX_FACTOR)
+                && scale > 1;
+        boolean min = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) <= mRealScale*SCALE_MIN_FACTOR)
+                && scale < 1;
         if (min || max) {
-//            if (min) {
-//                scale = SCALE_MIN_FACTOR;
-//            } else {
-//                scale = SCALE_MAX_FACTOR;
-//            }
             scale = 1;
             float moveX = event.getX(0);
             float moveY = event.getY(0);
@@ -327,13 +301,10 @@ public class FloatView extends ImageView {
     }
 
     private void executeRotate(MotionEvent event) {
-        // rotate
         PointF pointF = new PointF();
         getMidPoint(pointF, tMatrix);
         matrix.postRotate((rotationToStartPoint(event) - mRotateDegree) * 2, pointF.x, pointF.y);
         mRotateDegree = rotationToStartPoint(event);
-        //getDiagonalLen(event);
-        //matrix.postScale(1, 1, mMiddlePoint.x, mMiddlePoint.y);
         invalidate();
     }
 
@@ -345,7 +316,6 @@ public class FloatView extends ImageView {
 
     private void doScale(MotionEvent event) {
         mTriggerScaleAction = true;
-//        mRotateDegree = rotationToStartPoint(event);
         midPointToStartPoint(event);
         mToCenterDistance = getDiagonalLen(event);
         if (mListener != null) {
@@ -356,12 +326,6 @@ public class FloatView extends ImageView {
     private void doRotate(MotionEvent event) {
         mTriggerRotateAction = true;
         mRotateDegree = rotationToStartPoint(event);
-//        midPointToStartPoint(event);
-//        mToCenterDistance = getDiagonalLen(event);
-//        PointF localPointF = new PointF();
-//        getMidPoint(localPointF, matrix);
-//        matrix.preRotate(-90, localPointF.x, localPointF.y);
-//        invalidate();
         if (mListener != null) {
             mListener.clickRightTop();
         }
@@ -510,10 +474,6 @@ public class FloatView extends ImageView {
         canvas.drawLine(val3, val4, val7, val8, mPaint);
         canvas.drawLine(val7, val8, val5, val6, mPaint);
         canvas.drawLine(val5, val6, val1, val2, mPaint);
-    }
-
-    public void setLocalAlpha(float mAlphaVal) {
-
     }
 
     public interface FloatListener {

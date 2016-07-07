@@ -470,23 +470,27 @@ public class GameActivity extends FragmentActivity {
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogUtils.showContentDialog(GameActivity.this, getString(R.string.game_quit_hint),
-                        getString(R.string.cancel), getString(R.string.confirm),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                GameActivity.this.finish();
-                            }
-                        },
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                showBackDialog();
             }
         });
+    }
+
+    private void showBackDialog() {
+        DialogUtils.showContentDialog(GameActivity.this, getString(R.string.game_quit_hint),
+                getString(R.string.cancel), getString(R.string.confirm),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        GameActivity.this.finish();
+                    }
+                },
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
     }
 
     private void handleShowEggEvent() {
@@ -729,8 +733,7 @@ public class GameActivity extends FragmentActivity {
                 mFloatView.setImageBitmap(null);
                 mFloatView.setFloatView(bitmap, scale, rotate);
                 mFloatView.setFloatAlpha(alpha);
-                //mAlphaBar.setProgress(alpha);
-                //todo: alpha!
+                mAlphaBar.setProgress((int) (alpha*100));
             }
         });
     }
