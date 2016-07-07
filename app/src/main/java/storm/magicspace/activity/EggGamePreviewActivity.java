@@ -103,7 +103,7 @@ public class EggGamePreviewActivity extends BaseActivity {
 
     private String getUrl() {
         if (CommonConstants.GAME.equals(mFrom)) {
-            return URLConstant.URL_WEBVIEW_GAME + mContentId;
+            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId;
         } else if (CommonConstants.TOPIC.equals(mFrom)) {
             return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId;
         } else {
