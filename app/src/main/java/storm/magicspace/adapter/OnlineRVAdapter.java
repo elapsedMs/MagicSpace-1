@@ -20,10 +20,8 @@ import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.R;
-import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.activity.album.AlbumInfoActivity;
 import storm.magicspace.bean.Album;
-import storm.magicspace.bean.EggInfo;
 import storm.magicspace.view.AlbumPicView;
 
 /**
