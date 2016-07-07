@@ -1,5 +1,6 @@
 package storm.magicspace.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.utils.Log;
 
 import java.util.Map;
 
@@ -87,7 +89,8 @@ public class LoginActivity extends BaseActivity {
                 break;
 
             case R.id.tv_forget_pwd:
-                goToNext(ForgetPwdActivity.class);
+//                goToNext(ForgetPwdActivity.class);
+                mShareAPI.deleteOauth(LoginActivity.this, SHARE_MEDIA.WEIXIN, umdelAuthListener);
                 break;
 
             case R.id.share_xinlang:
@@ -122,7 +125,6 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onSuccess(SyncAccountResponse syncAccountResponse) {
             super.onSuccess(syncAccountResponse);
-//            Toast.makeText(LoginActivity.this, "同步成功", Toast.LENGTH_SHORT).show();
             SyncAccount data = syncAccountResponse.getData();
 
             LocalSPUtil.saveToken(data == null ? EMPTY : data.getToken());
@@ -132,7 +134,6 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onFailed() {
             super.onFailed();
-//            Toast.makeText(LoginActivity.this, "同步失败", Toast.LENGTH_SHORT).show();
             LocalSPUtil.saveToken(EMPTY);
             goToNext(MainActivity.class);
         }
@@ -184,4 +185,29 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(BaseApplication.getApplication(), "Authorize cancel", Toast.LENGTH_SHORT).show();
         }
     };
+
+    private UMAuthListener umdelAuthListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            Toast.makeText(getApplicationContext(), "delete Authorize succeed", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText(getApplicationContext(), "delete Authorize fail", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText(getApplicationContext(), "delete Authorize cancel", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("auth", "on activity re 2");
+        mShareAPI.onActivityResult(requestCode, resultCode, data);
+        Log.d("auth", "on activity re 3");
+    }
 }
