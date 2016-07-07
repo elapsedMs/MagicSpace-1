@@ -37,4 +37,7 @@
     <string name="egg_count">彩蛋数：</string>
     <string name="call_me">或拨打客服电话</string>
     <string name="give_me_feedback">反馈您的意见或建议</string>
+    <string name="game_quit_hint">彩蛋制作中，您退出后将不会保存</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
 </resources>

@@ -49,6 +49,7 @@ public class GameEditDetailActivity extends BaseActivity {
     private TextView publishTv;
     private int lastCount = 5;
     private IssueUCGContent mUCGContent;
+    private boolean success;
 
     public GameEditDetailActivity() {
         super(R.layout.activity_game_edit_detail);
@@ -133,6 +134,21 @@ public class GameEditDetailActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (success) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    PublishEvent publishEvent = new PublishEvent();
+                    EventBus.getDefault().post(publishEvent);
+                    finish();
+                }
+            });
+        }
+    }
+
     private void publish() {
 
 //        if (TextUtils.isEmpty(s)) return;
@@ -182,6 +198,7 @@ public class GameEditDetailActivity extends BaseActivity {
             super.onSuccess(response);
             Toast.makeText(GameEditDetailActivity.this, "游戏发布成功", Toast.LENGTH_SHORT).show();
             showShare();
+            success = true;
         }
 
         @Override
