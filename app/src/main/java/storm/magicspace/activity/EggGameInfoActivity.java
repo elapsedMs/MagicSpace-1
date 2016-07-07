@@ -26,6 +26,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
     public void initView() {
         super.initView();
         findEventView(R.id.bt_egg_game_info_preview);
+        findEventView(R.id.bt_egg_game_info_download);
         tv_egg_game_zan = findView(R.id.tv_egg_game_zan);
         tv_egg_game_des = findView(R.id.tv_egg_game_des);
         tv_egg_game_person_count = findView(R.id.tv_egg_game_person_count);
@@ -82,6 +83,9 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
                 break;
 
             case R.id.bt_egg_game_info_download:
+                Intent gameIntent = new Intent(EggGameInfoActivity.this, GameActivity.class);
+                gameIntent.putExtra("contentId", info.contentId);
+                this.startActivity(gameIntent);
                 break;
 
             default:
