@@ -64,6 +64,8 @@ import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.FloatView;
 import storm.magicspace.view.FloatView.FloatInfo;
 
+import static storm.commonlib.common.CommonConstants.CONTEND_IDS;
+import static storm.commonlib.common.CommonConstants.FROM;
 import static storm.magicspace.view.FloatView.DEFAULT_ALPHA;
 
 public class GameActivity extends FragmentActivity {
@@ -72,6 +74,10 @@ public class GameActivity extends FragmentActivity {
     // CONSTANT
     ///////////////////////////////////////////////////////////////////////////
     private static final String TAG = GameActivity.class.getSimpleName();
+    private static final String URL_TOPIC =
+            "http://app.stemmind.com/vr/a/vreditor.php?ua=app&s=mat&c=";
+    private static final String URL_GAME =
+            "http://app.stemmind.com/vr/a/vreditor.php?ua=app&s=ugc&c=";
     private static final String RULE_BOTTOM = "bottom";
     private static final String RULE_ABOVE_EGG = "above_eggs";
     private static final String DEFAULT_CONTENT_ID = "3403";
@@ -80,6 +86,7 @@ public class GameActivity extends FragmentActivity {
     private static final int EGG_MAX_COUNT = 10;
     private static final boolean DEBUG = true;
     private static final boolean USE_TEST_URL = false;
+
 
     ///////////////////////////////////////////////////////////////////////////
     // VIEW
@@ -119,6 +126,7 @@ public class GameActivity extends FragmentActivity {
     private String mEggKey;
     private boolean mFromEdit;
     private IssueUCGContent mUCGContent;
+    private String mFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +141,14 @@ public class GameActivity extends FragmentActivity {
     private void initData() {
         mContentId = getRandomContentId();
         setContentIdIfNecessary();
+        mFrom = configFrom();
         mEggInfos = new HashMap();
+    }
+
+    private String configFrom() {
+        Intent intent = getIntent();
+        if (intent == null) return CommonConstants.GAME;
+        return intent.getStringExtra(FROM);
     }
 
     private void setContentIdIfNecessary() {
@@ -245,7 +260,7 @@ public class GameActivity extends FragmentActivity {
 
     private String getRandomContentId() {
         String contentJson = SharedPreferencesUtil.getJsonFromSharedPreferences(this,
-                CommonConstants.CONTEND_IDS);
+                CONTEND_IDS);
         if (contentJson == null) return DEFAULT_CONTENT_ID;
         ArrayList contentList = JsonUtil.fromJson(contentJson, ArrayList.class);
         if (contentList == null || contentList.size() == 0) return DEFAULT_CONTENT_ID;
@@ -662,15 +677,25 @@ public class GameActivity extends FragmentActivity {
     private void initWebView() {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
-        String mWebUrl = "http://app.stemmind.com/vr/a/vreditor.php?ua=app&c=" + mContentId;
+        String webUrl = getUrl();
         if (USE_TEST_URL) {
-            mWebUrl = "http://app.stemmind.com/vr/a/test.php?ua=app&c=" + mContentId;
+            webUrl = "http://app.stemmind.com/vr/a/test.php?ua=app&c=" + mContentId;
         }
-        mWebView.loadUrl(mWebUrl);
+        mWebView.loadUrl(webUrl);
         ContainerView containerView = new ContainerView();
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.addJavascriptInterface(containerView, "containerView");
         mWebViewInit = true;
+    }
+
+    private String getUrl() {
+        if (CommonConstants.GAME.equals(mFrom)) {
+            return URL_GAME + mContentId;
+        } else if (CommonConstants.TOPIC.equals(mFrom)) {
+            return URL_TOPIC + mContentId;
+        } else {
+            return URL_GAME + mContentId;
+        }
     }
 
     private class ContainerView {

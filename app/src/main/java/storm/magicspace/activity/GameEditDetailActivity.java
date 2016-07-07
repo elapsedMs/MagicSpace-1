@@ -218,7 +218,7 @@ public class GameEditDetailActivity extends BaseActivity {
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(getString(R.string.share));
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl(URLConstant.SHARED_URL + mContentId);
+        oks.setTitleUrl(URLConstant.GAME_SHARED_URL + mContentId);
         // text是分享文本，所有平台都需要这个字段
         oks.setText("我是分享文本");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
@@ -230,7 +230,7 @@ public class GameEditDetailActivity extends BaseActivity {
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl(URLConstant.SHARED_URL + mContentId);
+        oks.setSiteUrl(URLConstant.GAME_SHARED_URL + mContentId);
 
 
         oks.setCallback(new PlatformActionListener() {
