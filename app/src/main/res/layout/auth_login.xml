@@ -43,18 +43,21 @@
 
 
             <ImageView
+                android:id="@+id/share_weixin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@mipmap/land_icon_weixin"/>
 
             <ImageView
+                android:id="@+id/share_qq"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@mipmap/land_icon_qq"/>
 
             <ImageView
+                android:id="@+id/share_xinlang"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
