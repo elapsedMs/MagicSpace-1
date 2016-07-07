@@ -99,9 +99,77 @@
             android:textSize="@dimen/text_size_s"/>
     </LinearLayout>
 
-    <storm.magicspace.view.AuthLoginView
-        android:layout_width="match_parent"
+    <!--<storm.magicspace.view.AuthLoginView-->
+    <!--android:id="@+id/login_auth_login"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"/>-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_100"
+            android:layout_marginRight="@dimen/px_100"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/px_10"
+                android:layout_toRightOf="@+id/center_text"
+                android:background="#afafaf"/>
+
+            <TextView
+                android:id="@+id/center_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="使用合作账号一键登录"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/px_10"
+                android:layout_toLeftOf="@+id/center_text"
+                android:background="#afafaf"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/px_80"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/share_weixin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/land_icon_weixin"/>
+
+            <ImageView
+                android:id="@+id/share_qq"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/land_icon_qq"/>
+
+            <ImageView
+                android:id="@+id/share_xinlang"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/land_icon_sina"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
