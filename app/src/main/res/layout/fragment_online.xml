@@ -1,133 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:id="@+id/refreshlayout"-->
-    <!--android:layout_height="match_parent">-->
 
-    <RelativeLayout xmlns:title="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/no_net_work_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_bg"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/ll_content"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/network_done" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_26"
+            android:text="暂时没有网络"
+            android:textColor="#8f8f8f"
+            android:textSize="@dimen/px_34" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_26"
+            android:text="请检查网络设置"
+            android:textColor="#8f8f8f"
+            android:textSize="@dimen/px_22" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_414">
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewpager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <RelativeLayout
-                    android:id="@+id/bottom1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_42"
-                    android:layout_alignParentBottom="true"
-                    android:alpha="0.5"
-                    android:background="#000000"
-                    android:paddingLeft="@dimen/px_8"
-                    android:paddingRight="@dimen/px_8">
-
-                    <TextView
-                        android:id="@+id/title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:textColor="#ffffff"
-                        android:textSize="@dimen/px_22" />
-
-                    <TextView
-                        android:id="@+id/desc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:textColor="#ffffff"
-                        android:textSize="@dimen/px_22" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_guide_dot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@id/bottom1"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/px_16"
-                    android:background="@drawable/guide_bg"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/px_10"
-                    android:paddingRight="@dimen/px_10">
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <storm.magicspace.view.AlbumTitleView
-                android:id="@+id/you_like"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px_20"
-                title:album_title_name="猜你喜欢"
-                title:album_title_style="have_count" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/no_net_work_ll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/px_116"
+            android:layout_marginRight="@dimen/px_116"
+            android:layout_marginTop="@dimen/px_96"
+            android:background="@drawable/shape_albun_btn"
             android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/network_done" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px_26"
-                android:text="暂时没有网络"
-                android:textColor="#8f8f8f"
-                android:textSize="@dimen/px_34" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px_26"
-                android:text="请检查网络设置"
-                android:textColor="#8f8f8f"
-                android:textSize="@dimen/px_22" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/px_116"
-                android:layout_marginRight="@dimen/px_116"
-                android:layout_marginTop="@dimen/px_96"
-                android:background="@drawable/shape_albun_btn"
-                android:gravity="center"
-                android:paddingBottom="@dimen/px_24"
-                android:paddingTop="@dimen/px_24"
-                android:text="刷新一下"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/px_28" />
-        </LinearLayout>
-    </RelativeLayout>
-<!--</android.support.v4.widget.SwipeRefreshLayout>-->
+            android:paddingBottom="@dimen/px_24"
+            android:paddingTop="@dimen/px_24"
+            android:text="刷新一下"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/px_28" />
+    </LinearLayout>
+</RelativeLayout><!--</android.support.v4.widget.SwipeRefreshLayout>-->

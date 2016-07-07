@@ -1,10 +1,13 @@
 package storm.magicspace.fragment.album;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -37,6 +40,7 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
     private ListView listView;
     private CachedAdapter adapter;
     private List<Album> list = new ArrayList<>();
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private AlbumTitleView albumTitleView;
     private AlbumTitleView cachedATV;
@@ -92,11 +96,27 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void initView(View view) {
         super.initView(view);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshlayout);
+        initRefreshView();
+
 //        cachedATV = (AlbumTitleView) view.findViewById(R.id.cachedATV);
 //        albumTitleView = (AlbumTitleView) view.findViewById(R.id.cacheingATV);
 //        albumTitleView.setOnClickListener(this);
 //        albumTitleView.showDot();
         listView = (ListView) view.findViewById(R.id.cachedLv);
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem == 0)
+                    swipeRefreshLayout.setEnabled(true);
+            }
+        });
+
 //        adapter = new CachedAdapter(albumList, getActivity());
 //        adapter = new CachedAdapter(albumList, getActivity());
 //        cachedListView.setAdapter(adapter);
@@ -105,6 +125,17 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
         adapter = new CachedAdapter(list, getActivity());
         listView.setAdapter(adapter);
 
+    }
+
+    private void initRefreshView() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new GetMyCollectionTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
+        swipeRefreshLayout.setEnabled(false);
     }
 
     @Override
@@ -151,6 +182,7 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
         @Override
         protected void onPostExecute(MyCollectionResponse myCollectionResponse) {
             super.onPostExecute(myCollectionResponse);
+            swipeRefreshLayout.setRefreshing(false);
             if (myCollectionResponse == null || myCollectionResponse.data == null) {
                 Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
                 return;

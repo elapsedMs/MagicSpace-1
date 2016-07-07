@@ -26,11 +26,9 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        Log.d("gdq", "onDraw");
         super.onDraw(c, parent, state);
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
-            Log.d("gdq", "onDraw child");
             final View child = parent.getChildAt(i);
 
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
@@ -48,7 +46,6 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
-        Log.d("gdq", "getItemOffsets");
         outRect.set(0, 0, mDivider.getIntrinsicWidth(),
                 mDivider.getIntrinsicHeight());
     }
