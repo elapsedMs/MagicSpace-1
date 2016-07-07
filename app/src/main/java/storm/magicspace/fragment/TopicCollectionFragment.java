@@ -61,7 +61,7 @@ public class TopicCollectionFragment extends BaseFragment {
             }
         });
 
-        adapter = new CafdachedAdapter(list, getActivity());
+        adapter = new CachedAdapter(list, getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,7 +71,7 @@ public class TopicCollectionFragment extends BaseFragment {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("album", list.get(position));
-                        goToNext(AlbumInfoActivity.class, bundle);
+                        goToNext(AlbumInfoActivity.class,bundle);
                     }
                 });
             }

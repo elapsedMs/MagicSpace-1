@@ -20,7 +20,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_base_left_margin"
             android:clickable="true"
-            android:padding="@dimen/px_6"
+            android:paddingRight="@dimen/px_40"
             android:src="@drawable/selector_back"
             android:visibility="gone"/>
 

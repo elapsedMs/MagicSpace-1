@@ -138,7 +138,7 @@ public class MedtreeDialog extends Dialog {
                 startAnimation();
                 setTitle(getContext().getString(R.string.data_loading));
                 messageView.setVisibility(GONE);
-                this.setCancelable(false);
+                this.setCancelable(true);
                 break;
         }
     }

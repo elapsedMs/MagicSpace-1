@@ -97,8 +97,7 @@ public class HTTPManager {
     /**
      * 发表UGC主题
      */
-    public static IssueUCGContentResponse issueUCCContent(String userId,
-                                                          String description,
+    public static IssueUCGContentResponse issueUCCContent(String description,
                                                           String url,
                                                           String sourceId) {
         return ServiceUtils.request(
@@ -116,8 +115,7 @@ public class HTTPManager {
     /**
      * 更新UGC主题
      */
-    public static UpdateUGCContentScenesResponse updateUGCContentScenes(String userId,
-                                                                        String contendId,
+    public static UpdateUGCContentScenesResponse updateUGCContentScenes(String contendId,
                                                                         String data) {
         return ServiceUtils.request(
                 RequestTypes.POST,
@@ -171,7 +169,7 @@ public class HTTPManager {
     public static ConponResponse GetcouponList() {
         return ServiceUtils.request(
                 RequestTypes.POST,
-                URLConstant.URL_GET_FOCUS_CONTENT_LIST,
+                URLConstant.URL_GET_COUPON_LIST,
                 EMPTY,
                 ConponResponse.class,
                 "", ""

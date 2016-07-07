@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'org.lucee:commons-httpclient:3.1'
@@ -37,4 +37,5 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile files('src/main/libs/umeng-analytics-v6.0.1.jar')
     compile files('src/main/libs/utdid4all-1.0.4.jar')
+    compile files('src/main/libs/umeng_social_sdk.jar')
 }

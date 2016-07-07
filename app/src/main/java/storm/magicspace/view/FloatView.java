@@ -21,10 +21,11 @@ import storm.magicspace.R;
  */
 public class FloatView extends ImageView {
 
-
     private final static float SCALE_FACTOR = 1f;
     private final static float SCALE_MIN_FACTOR = 0.7f;
     private final static float SCALE_MAX_FACTOR = 1.5f;
+    private final static int DEFAULT_PADDING = 20;
+    private final static double DEFAULT_ALPHA = 0.15;
 
     private static final String TAG = FloatView.class.getSimpleName();
 
@@ -65,6 +66,9 @@ public class FloatView extends ImageView {
     private float mNewScale;
     private float mNewRotate;
     private Paint mBitmapPaint;
+    private float mRealScale;
+    private int mTogglePadding = DEFAULT_PADDING;
+
 
     public FloatView(Context context) {
         super(context);
@@ -124,6 +128,8 @@ public class FloatView extends ImageView {
     public void setFloatView(Bitmap bitmap, float scale, float rotate) {
         mBitmap = bitmap;
         matrix = new Matrix();
+        //tMatrix = new Matrix();
+        mRealScale = 1;
         mNewFloat = true;
         mNewScale = scale;
         mNewRotate = -rotate;
@@ -136,7 +142,7 @@ public class FloatView extends ImageView {
     }
 
     public void setFloatAlpha(float alpha) {
-        mBitmapPaint.setAlpha((int) (255*alpha));
+        mBitmapPaint.setAlpha((int)(255 * (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * alpha)));
         invalidate();
     }
 
@@ -148,13 +154,15 @@ public class FloatView extends ImageView {
         if (mBitmap != null) {
             int bitmapWidth = mBitmap.getWidth();
             int bitmapHeight = mBitmap.getHeight();
-            float scaleVal = mWidth / 4.0f / bitmapWidth;
+            float scaleVal =  mWidth / 4.0f / bitmapWidth;
             mBitmapDiagonalLen = Math.hypot(bitmapWidth, bitmapHeight);
             matrix.postTranslate((mWidth - bitmapWidth) / 2, (mHeight - bitmapHeight) / 2);
             matrix.postScale(scaleVal, scaleVal, mWidth / 2, mHeight / 2);
+            mRealScale = scaleVal;
             if (mNewFloat) {
                 matrix.postRotate(mNewRotate, mWidth / 2, mHeight / 2);
                 matrix.postScale(mNewScale, mNewScale, mWidth / 2, mHeight / 2);
+               // mRealScale = scaleVal * mNewScale;
             }
             if (!mNewFloat) {
                 tMatrix.set(matrix);
@@ -293,8 +301,8 @@ public class FloatView extends ImageView {
         float scale = getDiagonalLen(event) / mToCenterDistance;
 
         float scaleDiagonalLen = getDiagonalLen(event);
-        boolean max = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) >= SCALE_MAX_FACTOR) && scale > 1;
-        boolean min = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) <= SCALE_MIN_FACTOR) && scale < 1;
+        boolean max = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) >= mRealScale*SCALE_MAX_FACTOR) && scale > 1;
+        boolean min = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) <= mRealScale*SCALE_MIN_FACTOR) && scale < 1;
         if (min || max) {
 //            if (min) {
 //                scale = SCALE_MIN_FACTOR;
@@ -397,7 +405,11 @@ public class FloatView extends ImageView {
     }
 
     private boolean isInside(float x, float y, Rect rect) {
-        return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+        int left = rect.left - mTogglePadding;
+        int right = rect.right + mTogglePadding;
+        int top = rect.top - mTogglePadding;
+        int bottom = rect.bottom + mTogglePadding;
+        return x >= left && x <= right && y >= top && y <= bottom;
     }
 
     private boolean isInBitmap(MotionEvent event) {

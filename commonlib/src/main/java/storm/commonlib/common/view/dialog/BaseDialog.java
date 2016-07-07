@@ -29,7 +29,7 @@ public abstract class BaseDialog extends Dialog implements DialogInterface {
         this.mContext = context;
         layout = View.inflate(context, layoutId, null);
         setContentView(layout);
-        setCancelable(false);
+        setCancelable(true);
     }
 
     public static class Builder<E extends BaseDialog> {

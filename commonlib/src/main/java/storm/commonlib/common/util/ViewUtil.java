@@ -122,7 +122,7 @@ public class ViewUtil {
         dialog.setMessage(message);
         dialog.setIndeterminate(indeterminate);
         if (onCancelListener == null) {
-            dialog.setCancelable(false);
+            dialog.setCancelable(true); //暂时设定可以退出。 需求会变
         } else {
             dialog.setCancelable(true);
             dialog.setOnCancelListener(onCancelListener);

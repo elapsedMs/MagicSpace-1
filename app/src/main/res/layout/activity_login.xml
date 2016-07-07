@@ -1,97 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/light_gray"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/light_gray">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/white"
+                android:gravity="right"
+                android:text="账号"/>
+
+            <EditText
+                android:id="@+id/et_login_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:hint="请输入账户名"
+                android:maxLength="17"
+                android:padding="@dimen/distance_l"
+                android:singleLine="true"
+                android:text="18601324008"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/text_size_xs"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:gravity="right"
+                android:text="密码"/>
+
+            <EditText
+                android:id="@+id/et_login_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:hint="请输入密码"
+                android:maxLength="15"
+                android:padding="@dimen/distance_l"
+                android:password="true"
+                android:singleLine="true"
+                android:text="123456a"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/text_size_xs"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tv_forget_pwd"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:background="@color/white"
-            android:gravity="right"
-            android:text="账号"/>
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/px_16"
+            android:layout_marginTop="@dimen/px_24"
+            android:text="忘记密码？"
+            android:textColor="@color/title_color"/>
 
-        <EditText
-            android:id="@+id/et_login_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:hint="请输入账户名"
-            android:maxLength="17"
-            android:padding="@dimen/distance_l"
-            android:singleLine="true"
-            android:text="18601324008"
-            android:textColorHint="@color/gray"
-            android:textSize="@dimen/text_size_xs"/>
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="@dimen/px_620"
+            android:layout_height="@dimen/px_80"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/px_96"
+            android:background="@drawable/btn_bg"
+            android:gravity="center"
+            android:text="登 录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_s"/>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"/>
-
-    <LinearLayout
+    <storm.magicspace.view.AuthLoginView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:layout_alignParentBottom="true"/>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:gravity="right"
-            android:text="密码"/>
-
-        <EditText
-            android:id="@+id/et_login_password"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:hint="请输入密码"
-            android:maxLength="15"
-            android:padding="@dimen/distance_l"
-            android:password="true"
-            android:singleLine="true"
-            android:text="123456a"
-            android:textColorHint="@color/gray"
-            android:textSize="@dimen/text_size_xs"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"/>
-
-    <TextView
-        android:id="@+id/tv_forget_pwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="@dimen/px_16"
-        android:layout_marginTop="@dimen/px_24"
-        android:text="忘记密码？"
-        android:textColor="@color/title_color"/>
-
-    <Button
-        android:id="@+id/bt_login"
-        android:layout_width="@dimen/px_620"
-        android:layout_height="@dimen/px_80"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/px_96"
-        android:background="@drawable/btn_bg"
-        android:gravity="center"
-        android:text="登 录"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_s"/>
-
-</LinearLayout>
+</RelativeLayout>

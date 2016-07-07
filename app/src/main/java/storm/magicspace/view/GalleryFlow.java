@@ -119,5 +119,7 @@ public class GalleryFlow extends Gallery {
         imageMatrix.preTranslate(-(imageWidth / 2), -(imageHeight / 2));
         imageMatrix.postTranslate((imageWidth / 2), (imageHeight / 2));
         mCamera.restore();
+
+
     }
 }

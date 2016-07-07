@@ -4,27 +4,29 @@ import android.content.Context;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SpinnerAdapter;
+import android.widget.BaseAdapter;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import storm.commonlib.common.view.RoundedImageView;
-import storm.magicspace.bean.CirclePic;
+import storm.magicspace.http.Conpon;
 import storm.magicspace.view.MineShowView;
 
 /**
  * Created by lixiaolu on 16/7/4.
  */
-public class GalleryAdapter implements SpinnerAdapter {
+public class GalleryAdapter extends BaseAdapter {
 
     private final Context context;
-    private final List<CirclePic> circlePics;
+    private final List<Conpon> circlePics;
+    private int selectPosition;
 
-    public GalleryAdapter(Context context, List<CirclePic> circlePicList) {
+    public GalleryAdapter(Context context, List<Conpon> circlePicList, int selectPosition) {
         this.context = context;
         circlePics = circlePicList;
+        this.selectPosition = selectPosition;
     }
 
     @Override
@@ -64,8 +66,9 @@ public class GalleryAdapter implements SpinnerAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        MineShowView item = convertView == null ? new MineShowView(context) : (MineShowView)convertView;
+        MineShowView item = convertView == null ? new MineShowView(context) : (MineShowView) convertView;
         RoundedImageView imageView = item.getImageView();
+        imageView.setLocalStyle(selectPosition - position);
         Picasso.with(context).load(circlePics.get(position).getUrl()).into(imageView);
         return item;
     }
@@ -84,4 +87,11 @@ public class GalleryAdapter implements SpinnerAdapter {
     public boolean isEmpty() {
         return false;
     }
+
+
+    public void setSelectedPosition(int position) {
+        this.selectPosition = position;
+    }
+
+
 }

@@ -1,7 +1,6 @@
 package storm.magicspace.activity.album;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.webkit.WebView;
@@ -80,7 +79,9 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
                 break;
 
             case R.id.bt_egg_game_info_download:
-                this.startActivity(new Intent(AlbumInfoActivity.this, GameActivity.class));
+                Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
+                gameIntent.putExtra("contentId", info.getContentId());
+                this.startActivity(gameIntent);
                 break;
             case R.id.tv_collect:
                 new AddCollectTask().execute(info.getContentId());
@@ -114,13 +115,13 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
         @Override
         public void onSuccess(AddCollectResponse addCollectResponse) {
             super.onSuccess(addCollectResponse);
-            Toast.makeText(AlbumInfoActivity.this, "收藏成功", 0).show();
+            Toast.makeText(AlbumInfoActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onSuccessWithoutResult(AddCollectResponse addCollectResponse) {
             super.onSuccessWithoutResult(addCollectResponse);
-            Toast.makeText(AlbumInfoActivity.this, "收藏成功", 0).show();
+            Toast.makeText(AlbumInfoActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
         }
     }
 }

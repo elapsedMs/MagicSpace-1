@@ -49,8 +49,8 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
 
         GameCollectionFragment gameCollectionFragment = new GameCollectionFragment();
         TopicCollectionFragment topicCollectionFragment = new TopicCollectionFragment();
-        fragmentList.add(gameCollectionFragment);
         fragmentList.add(topicCollectionFragment);
+        fragmentList.add(gameCollectionFragment);
         HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(this.getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(adapter);
         viewPager.setOnPageChangeListener(this);
@@ -58,7 +58,7 @@ public class MyCollectionActivity extends BaseActivity implements ViewPager.OnPa
         viewPager.setOffscreenPageLimit(1);
         useBothTitle();
         setSecondTitleBackground(android.R.color.white);
-        setSelectTitle("游戏", "主题");
+        setSelectTitle("主题", "游戏");
         setOnSelectTitleClickedListener(this);
     }
 

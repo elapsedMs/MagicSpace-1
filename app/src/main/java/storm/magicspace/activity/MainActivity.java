@@ -11,9 +11,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
-import com.squareup.haha.perflib.Main;
-
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +26,7 @@ import storm.magicspace.activity.album.GuessYouLikeActivity;
 import storm.magicspace.activity.mine.MyCollectionActivity;
 import storm.magicspace.adapter.HomeViewPagerAdapter;
 import storm.magicspace.dialog.ListDialog;
-import storm.magicspace.event.ViewPagerEvent;
+import storm.magicspace.event.PublishEvent;
 import storm.magicspace.fragment.EggFragment;
 import storm.magicspace.fragment.MyFragment;
 import storm.magicspace.fragment.SettingFragment;
@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -226,9 +226,15 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(PublishEvent event) {
+        selectedTab(EGG);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     // 改写物理按键——返回的逻辑

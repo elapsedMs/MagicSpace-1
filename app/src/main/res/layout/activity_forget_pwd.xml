@@ -57,6 +57,7 @@
             android:background="@color/white"
             android:hint="请输入新密码"
             android:padding="@dimen/distance_l"
+            android:password="true"
             android:textColorHint="@color/gray"
             android:textSize="@dimen/text_size_xs"/>
     </LinearLayout>

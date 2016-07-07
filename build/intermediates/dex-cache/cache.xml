@@ -2,32 +2,18 @@
 <items version="2" >
 
     <item
-        jar="/Users/medtree/MagicSpace/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.0.0/jars/classes.jar"
+        jar="/Users/medtree/MagicSpace/app/build/intermediates/exploded-aar/MagicSpace/commonlib/unspecified/jars/libs/umeng_social_sdk.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="894922f67adeaaef51f077a29e315da21a3382d3">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-c3d56fedf72ed386e20c728f522963bff7bedeed.jar" />
+        sha1="8fc99dcc063c0b2c7f70ae8919f3f5496baabb1f">
+        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/umeng_social_sdk-866d7c67fd30fa904d74a5484b512c2407151c00.jar" />
     </item>
     <item
-        jar="/Users/medtree/MagicSpace/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
+        jar="/Users/medtree/MagicSpace/app/build/intermediates/exploded-aar/MagicSpace/commonlib/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-4edfea17259e9e575587489249bdfab89608ead0.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/24.0.0/2943c74db6d4346ab8c6531adac91fa05c137c40/support-annotations-24.0.0.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/support-annotations-24.0.0-3df74a1800b7d5fde6a3e48d01643c8b6366a0c6.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/MagicSpace/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/libs/internal_impl-24.0.0.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/internal_impl-24.0.0-d3d48854f0308b0d6a979bdc9e589b5c3de5194b.jar" />
+        sha1="c808bd76dcb9db014756f6f299f4c8c7a03160af">
+        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-2cf2f0ceb273e638065b55618980662de19454f5.jar" />
     </item>
 
 </items>

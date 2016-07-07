@@ -72,7 +72,7 @@ public class BaseASyncTask<T, V extends BaseResponse> extends AsyncTask<T, Void,
         if (context == null) return;
         medtreeDialog = medtreeDialog == null ? new ProgressDialog(context) : medtreeDialog;
         medtreeDialog.setMessage(context.getString(R.string.data_loading));
-        medtreeDialog.setCancelable(false);
+        medtreeDialog.setCancelable(true);
 
         if (!medtreeDialog.isShowing())
             medtreeDialog.show();
