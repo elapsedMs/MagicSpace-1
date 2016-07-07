@@ -2,32 +2,18 @@
 <items version="2" >
 
     <item
-        jar="/Users/lixiaolu/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/24.0.0/2943c74db6d4346ab8c6531adac91fa05c137c40/support-annotations-24.0.0.jar"
+        jar="/Users/lixiaolu/Desktop/MagicSpace/app/src/main/jniLibs/libs/weiboSDKCore_3.1.4.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/support-annotations-24.0.0-47a5ecf574c5f1774193de3c6eff1f28e62d54c8.jar" />
+        sha1="f3617ce51258bf3ec0fe2503e3c0a920040b1b53">
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/weiboSDKCore_3.1.4-887256b138da017bc974e2c0ecb77b708abd6360.jar" />
     </item>
     <item
-        jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.0.0/jars/classes.jar"
+        jar="/Users/lixiaolu/Desktop/MagicSpace/app/src/main/jniLibs/libs/SocialSDK_Sina.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="894922f67adeaaef51f077a29e315da21a3382d3">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-c0736895dd8cead668f19943264125fcb9e3f33b.jar" />
-    </item>
-    <item
-        jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-cf6b897a2619f51af74354c2bfb082484cc38382.jar" />
-    </item>
-    <item
-        jar="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/libs/internal_impl-24.0.0.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
-        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/internal_impl-24.0.0-e15e209f6c80551f290f9a3739d0569f80e6c8c5.jar" />
+        sha1="f1a6a46bebc2cddeec34f105152da887c4182afc">
+        <dex dex="/Users/lixiaolu/Desktop/MagicSpace/app/build/intermediates/pre-dexed/debug/SocialSDK_Sina-ebb7b915be767934264e433d1e946ec01ba4f3a0.jar" />
     </item>
 
 </items>

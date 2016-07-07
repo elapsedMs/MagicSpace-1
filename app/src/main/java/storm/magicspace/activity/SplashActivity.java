@@ -27,7 +27,7 @@ public class SplashActivity extends BaseActivity {
         PlatformConfig.setWeixin("wxe1bd4b6f12b6491a", "a454e2ff97ec283009e677a628ebd37d");
 
         //新浪微博
-        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad");
+        PlatformConfig.setSinaWeibo("2320803191", "f8c5701a92c13bbdfa349caaabd611a0");
 
         //qq
         PlatformConfig.setQQZone("1105505772", "uAaqPPyC1SEVEkly");

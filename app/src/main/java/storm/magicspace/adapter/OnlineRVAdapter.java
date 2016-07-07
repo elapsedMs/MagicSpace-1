@@ -110,7 +110,6 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
         });
     }
 
-
     @Override
     public int getItemCount() {
 //        return list.size() + 1;
@@ -157,7 +156,6 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
                         CommonConstants.CONTEND_IDS, JsonUtil.toJson(contentIds));
             }
         }
-
     }
 
     public void setOnRecyclerViewClickListener(OnRecyclerViewClickListener onRecyclerViewClickListener) {
