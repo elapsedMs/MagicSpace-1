@@ -29,6 +29,7 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private TextView collectTv;
     private Button eventBT;
     private String from = "";
+    private Button previewBt;
 
     public AlbumInfoActivity() {
         super(R.layout.album_info, CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR);
@@ -41,18 +42,19 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
         info = (Album) intent.getSerializableExtra("album");
         from = (String) intent.getSerializableExtra(FROM);
 
-        eventBT = findEventView(R.id.bt_egg_game_info_download);
+        eventBT = findEventView(R.id.bt_egg_game_info_left);
+        previewBt = findEventView(R.id.bt_egg_game_info_right);
         if (from == null) {
             setActivityTitle("详情");
         } else if (from.equalsIgnoreCase(CommonConstants.GAME)) {
             setActivityTitle(getString(R.string.game_info));
             eventBT.setText("挑战");
+            previewBt.setText("制作游戏");
         } else if (from.equalsIgnoreCase(CommonConstants.TOPIC)) {
             setActivityTitle("主题详情");
             eventBT.setText("制作游戏");
         } else setActivityTitle("详情");
 
-        findEventView(R.id.bt_egg_game_info_preview);
         tv_egg_game_zan = findView(R.id.tv_egg_game_zan);
         tv_egg_game_des = findView(R.id.tv_egg_game_des);
         wv_egg_info = findView(R.id.wv_egg_info);
@@ -88,7 +90,7 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     public void onLocalClicked(int resId) {
         super.onLocalClicked(resId);
         switch (resId) {
-            case R.id.bt_egg_game_info_preview:
+            case R.id.bt_egg_game_info_right:
                 Intent intent = new Intent(AlbumInfoActivity.this, EggGamePreviewActivity.class);
                 EggInfo eggInfo = new EggInfo();
                 eggInfo.contentId = info.getContentId();
@@ -96,7 +98,7 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
                 this.startActivity(intent);
                 break;
 
-            case R.id.bt_egg_game_info_download:
+            case R.id.bt_egg_game_info_left:
                 if (from.equalsIgnoreCase(CommonConstants.TOPIC)) {
                     Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
                     gameIntent.putExtra("contentId", info.getContentId());
@@ -106,8 +108,8 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
                     gameIntent.putExtra("contentId", info.getContentId());
                     this.startActivity(gameIntent);
                 }
-
                 break;
+
             case R.id.tv_collect:
                 new AddCollectTask().execute(info.getContentId());
                 break;
