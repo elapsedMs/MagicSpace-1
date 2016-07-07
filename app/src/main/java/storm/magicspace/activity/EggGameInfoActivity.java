@@ -79,12 +79,14 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("game_info", info);
                 intent.putExtras(bundle);
+                intent.putExtra(CommonConstants.CONTENT_ID, info.contentId);
+                intent.putExtra(CommonConstants.FROM, CommonConstants.GAME);
                 this.startActivity(intent);
                 break;
 
             case R.id.bt_egg_game_info_left:
                 Intent gameIntent = new Intent(EggGameInfoActivity.this, GameActivity.class);
-                gameIntent.putExtra("contentId", info.contentId);
+                gameIntent.putExtra(CommonConstants.CONTENT_ID, info.contentId);
                 gameIntent.putExtra(CommonConstants.FROM, CommonConstants.GAME);
                 this.startActivity(gameIntent);
                 break;

@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import storm.commonlib.common.CommonConstants;
 import storm.magicspace.R;
 import storm.magicspace.activity.GameActivity;
 import storm.magicspace.bean.Album;
@@ -73,8 +74,8 @@ public class CachedAdapter extends BaseAdapter {
                 public void onClick(View v) {
 //                    Toast.makeText(context, "跳转开发中", 1).show();
                     Intent intent = new Intent(context, GameActivity.class);
-                    intent.putExtra("contentId", list.get(position).getContentId());
-
+                    intent.putExtra(CommonConstants.CONTENT_ID, list.get(position).getContentId());
+                    intent.putExtra(CommonConstants.FROM, CommonConstants.TOPIC);
                     context.startActivity(intent);
                 }
             });

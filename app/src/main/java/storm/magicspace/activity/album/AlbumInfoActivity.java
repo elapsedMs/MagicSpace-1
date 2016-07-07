@@ -93,11 +93,13 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
             case R.id.bt_egg_game_info_right:
                 if (from.equalsIgnoreCase(CommonConstants.TOPIC)) {
                     Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
-                    gameIntent.putExtra("contentId", info.getContentId());
+                    gameIntent.putExtra(CommonConstants.CONTENT_ID, info.getContentId());
+                    gameIntent.putExtra(CommonConstants.FROM, CommonConstants.TOPIC);
                     this.startActivity(gameIntent);
                 } else {
                     Intent gameIntent = new Intent(AlbumInfoActivity.this, EggGamePreviewActivity.class);
-                    gameIntent.putExtra("contentId", info.getContentId());
+                    gameIntent.putExtra(CommonConstants.CONTENT_ID, info.getContentId());
+                    gameIntent.putExtra(CommonConstants.FROM, CommonConstants.TOPIC);
                     this.startActivity(gameIntent);
                 }
                 break;
