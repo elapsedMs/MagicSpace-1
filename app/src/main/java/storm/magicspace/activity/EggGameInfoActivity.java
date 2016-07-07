@@ -17,6 +17,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
     private EggInfo info;
     private TextView tv_egg_game_zan, tv_egg_game_des, tv_egg_game_person_count, tv_egg_game_time, tv_my_best_time, tv_egg_game_title, tv_egg_count;
     private WebView wv_egg_info;
+
     public EggGameInfoActivity() {
         super(R.layout.activity_egg_game_info, CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR);
     }
@@ -47,7 +48,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
             tv_egg_game_person_count.setText(playCount + getString(R.string.play_count));
             String avgTime = info.avgtime == null ? "" : info.avgtime;
             tv_egg_game_time.setText(getString(R.string.avgtime) + avgTime);
-            tv_my_best_time.setText(info.myBestTime==null?"":info.myBestTime);
+            tv_my_best_time.setText(info.myBestTime == null ? "" : info.myBestTime);
             //ToDo add my best time
             tv_egg_game_title.setText(info.title);
             initWebView(info.contentId == null ? "" : info.contentId);
@@ -60,9 +61,10 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
     private void initWebView(String mContentId) {
         wv_egg_info.getSettings().setJavaScriptEnabled(true);
         wv_egg_info.getSettings().setDefaultTextEncodingName("gb2312");
-        wv_egg_info.loadUrl("http://app.stemmind.com/vr/a/preview.php?c=" + mContentId);
+        wv_egg_info.loadUrl("http://app.stemmind.com/vr/a/preview.php?ua=app&s=ugc&c=" + mContentId);
         wv_egg_info.setWebViewClient(new WebViewClient());
     }
+
     @Override
     public void initData() {
         super.initData();
@@ -73,7 +75,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
         super.onLocalClicked(resId);
         switch (resId) {
             case R.id.bt_egg_game_info_preview:
-                Intent intent = new Intent(EggGameInfoActivity.this,EggGamePreviewActivity.class);
+                Intent intent = new Intent(EggGameInfoActivity.this, EggGamePreviewActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("game_info", info);
                 intent.putExtras(bundle);
