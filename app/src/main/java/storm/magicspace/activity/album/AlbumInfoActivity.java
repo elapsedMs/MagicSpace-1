@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,8 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private TextView tv_egg_game_zan, tv_egg_game_des, tv_egg_game_title;
     private WebView wv_egg_info;
     private TextView collectTv;
+    private Button eventBT;
+    private String from = "";
 
     public AlbumInfoActivity() {
         super(R.layout.album_info, CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR);
@@ -34,19 +37,30 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     @Override
     public void initView() {
         super.initView();
+        Intent intent = this.getIntent();
+        info = (Album) intent.getSerializableExtra("album");
+        from = (String) intent.getSerializableExtra(FROM);
+
+        eventBT = findEventView(R.id.bt_egg_game_info_download);
+        if (from == null) {
+            setActivityTitle("详情");
+        } else if (from.equalsIgnoreCase(CommonConstants.GAME)) {
+            setActivityTitle(getString(R.string.game_info));
+            eventBT.setText("挑战");
+        } else if (from.equalsIgnoreCase(CommonConstants.TOPIC)) {
+            setActivityTitle("主题详情");
+            eventBT.setText("制作游戏");
+        } else setActivityTitle("详情");
+
         findEventView(R.id.bt_egg_game_info_preview);
         tv_egg_game_zan = findView(R.id.tv_egg_game_zan);
         tv_egg_game_des = findView(R.id.tv_egg_game_des);
         wv_egg_info = findView(R.id.wv_egg_info);
         collectTv = findEventView(R.id.tv_collect);
-        findEventView(R.id.bt_egg_game_info_download);
         tv_egg_game_title = findView(R.id.tv_egg_game_title);
-        setActivityTitle(getString(R.string.game_info));
         setTitleRightBtVisibility(View.GONE);
         setTitleLeftBtVisibility(View.VISIBLE);
-        Intent intent = this.getIntent();
-        info = (Album) intent.getSerializableExtra("album");
-        String from = intent.getStringExtra(FROM);
+
         //// TODO: 16/7/7 首页进来主题详情
         if (info != null) {
             String appreciateCount = info.getAppreciateCount() == null ? "" : info.getAppreciateCount();
@@ -83,9 +97,16 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
                 break;
 
             case R.id.bt_egg_game_info_download:
-                Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
-                gameIntent.putExtra("contentId", info.getContentId());
-                this.startActivity(gameIntent);
+                if (from.equalsIgnoreCase(CommonConstants.TOPIC)) {
+                    Intent gameIntent = new Intent(AlbumInfoActivity.this, GameActivity.class);
+                    gameIntent.putExtra("contentId", info.getContentId());
+                    this.startActivity(gameIntent);
+                } else {
+                    Intent gameIntent = new Intent(AlbumInfoActivity.this, EggGamePreviewActivity.class);
+                    gameIntent.putExtra("contentId", info.getContentId());
+                    this.startActivity(gameIntent);
+                }
+
                 break;
             case R.id.tv_collect:
                 new AddCollectTask().execute(info.getContentId());

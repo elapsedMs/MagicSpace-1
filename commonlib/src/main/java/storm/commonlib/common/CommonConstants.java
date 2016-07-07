@@ -17,4 +17,5 @@ public class CommonConstants {
 
     public static final String FROM = "FROM";
     public static final String GAME = "GAME";
+    public static final String TOPIC = "TOPIC";
 }

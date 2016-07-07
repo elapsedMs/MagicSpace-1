@@ -24,6 +24,8 @@ import storm.magicspace.activity.album.AlbumInfoActivity;
 import storm.magicspace.bean.Album;
 import storm.magicspace.view.AlbumPicView;
 
+import static storm.commonlib.common.CommonConstants.FROM;
+
 /**
  * Created by gdq on 16/6/22.
  */
@@ -96,6 +98,7 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
             public void onClick(View v) {
                 Intent intent = new Intent(context, AlbumInfoActivity.class);
                 intent.putExtra("album", list.get(pos));
+                intent.putExtra(FROM, CommonConstants.TOPIC);
                 context.startActivity(intent);
                 onRecyclerViewClickListener.onItemClick(pos);
             }

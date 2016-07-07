@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
@@ -23,6 +24,8 @@ import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.http.HTTPManager;
+
+import static storm.commonlib.common.CommonConstants.FROM;
 
 /**
  * Created by lixiaolu on 16/6/20.
@@ -66,6 +69,7 @@ public class GameCollectionFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("album", list.get(position));
+                bundle.putSerializable(FROM, CommonConstants.GAME);
                 goToNext(AlbumInfoActivity.class, bundle);
             }
         });

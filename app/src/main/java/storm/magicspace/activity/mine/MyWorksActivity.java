@@ -27,7 +27,6 @@ import storm.magicspace.http.HTTPManager;
 import static storm.commonlib.common.CommonConstants.FROM;
 
 public class MyWorksActivity extends BaseActivity {
-    public static final String MYWORK = "MYWORK";
     private ListView listView;
     private WorksAdapter adapter;
     private List<Album> list = new ArrayList<>();
@@ -59,7 +58,7 @@ public class MyWorksActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("album", list.get(position));
-                bundle.putString(FROM, CommonConstants.GAME);
+                bundle.putSerializable(FROM, CommonConstants.GAME);
                 goToNext(AlbumInfoActivity.class, bundle);
             }
         });
