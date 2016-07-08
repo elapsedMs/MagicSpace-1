@@ -6,7 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,7 +30,7 @@ public class MyWorksActivity extends BaseActivity {
     private ListView listView;
     private WorksAdapter adapter;
     private List<Album> list = new ArrayList<>();
-    private LinearLayout nodata;
+    private FrameLayout nodata;
     private RelativeLayout btView;
     private TextView refresh;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -139,6 +139,6 @@ public class MyWorksActivity extends BaseActivity {
 
     private void resetView(int visibility) {
         nodata.setVisibility(visibility);
-//        btView.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
+        listView.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 }

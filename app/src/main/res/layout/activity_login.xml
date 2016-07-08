@@ -83,6 +83,7 @@
             android:layout_gravity="right"
             android:layout_marginRight="@dimen/px_16"
             android:layout_marginTop="@dimen/px_24"
+            android:gravity="center"
             android:text="忘记密码？"
             android:textColor="@color/title_color"/>
 

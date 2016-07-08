@@ -17,6 +17,7 @@ import java.util.Map;
 import storm.commonlib.common.BaseApplication;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
+import storm.commonlib.common.view.dialog.MedtreeDialog;
 import storm.magicspace.R;
 import storm.magicspace.bean.SyncAccount;
 import storm.magicspace.bean.httpBean.SyncAccountResponse;
@@ -46,7 +47,6 @@ public class LoginActivity extends BaseActivity {
         mShareAPI = UMShareAPI.get(this);
 
         setActivityTitle("登录");
-//        setActivityTitleAndTextColor(R.color.title_color_gray, R.color.title_color);
         setRightText(R.string.register);
         setTitleBarRightTvVisibility(View.VISIBLE);
 
@@ -89,8 +89,8 @@ public class LoginActivity extends BaseActivity {
                 break;
 
             case R.id.tv_forget_pwd:
-//                goToNext(ForgetPwdActivity.class);
-                mShareAPI.deleteOauth(LoginActivity.this, SHARE_MEDIA.WEIXIN, umdelAuthListener);
+                goToNext(ForgetPwdActivity.class);
+//                mShareAPI.deleteOauth(LoginActivity.this, SHARE_MEDIA.WEIXIN, umdelAuthListener);
                 break;
 
             case R.id.share_xinlang:
@@ -112,6 +112,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void doLogin(String name, String password) {
+        showBaseDialog(MedtreeDialog.DisplayStyle.LOADING, "登录", "登录中，请耐心等候。。。", false, true);
         new LoginTask().execute(name, password);
     }
 
@@ -144,6 +145,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         protected LoginResponse doInBackground(String... params) {
             AccountHttpManager.LoginJson loginJson = new AccountHttpManager.LoginJson();
+
             LoginResponse response = AccountHttpManager.doLogin(params[0], params[1], loginJson);
             mLoginJson = loginJson.getJson();
             return response;
@@ -152,7 +154,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         protected void onPostExecute(LoginResponse loginResponse) {
             super.onPostExecute(loginResponse);
-
+            dismissBaseDialog();
             if (loginResponse == null) {
                 Toast.makeText(LoginActivity.this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
                 return;

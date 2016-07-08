@@ -75,6 +75,7 @@ public class AccountHttpManager {
     public static String doObjectPost(String urlString, Map<String, Object> nameValuePairs) throws Exception {
         URL url = new URL(urlString);
         URLConnection connection = url.openConnection();
+        connection.setConnectTimeout(1000 * 10);
         connection.setDoOutput(true);
         PrintWriter out = new PrintWriter(connection.getOutputStream());
         boolean first = true;

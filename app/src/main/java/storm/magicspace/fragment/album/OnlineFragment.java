@@ -1,7 +1,6 @@
 package storm.magicspace.fragment.album;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -24,6 +23,7 @@ import java.util.List;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
+import storm.magicspace.activity.AdvertActivity;
 import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.activity.album.GuessYouLikeActivity;
 import storm.magicspace.adapter.OnlineRVAdapter;
@@ -32,7 +32,6 @@ import storm.magicspace.bean.Album;
 import storm.magicspace.bean.CirclePic;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.http.HTTPManager;
-import storm.magicspace.http.reponse.AddCollectResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumTitleView;
@@ -201,25 +200,28 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
             desc.setText("");
             for (int i = 0; i < circlePicList.size(); i++) {
                 final ImageView imageView = new ImageView(getActivity());
-                imageView.setTag(circlePicList.get(i).getHyberlink());
+                final String hyberlink = circlePicList.get(i).getHyberlink();
+                imageView.setTag(hyberlink);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setAction("android.intent.action.VIEW");
-                        Uri content_url = Uri.parse((String) imageView.getTag());
-                        intent.setData(content_url);
-                        startActivity(intent);
+                        Intent intent = new Intent(getActivity(), AdvertActivity.class);
+//                        intent.putExtra("URL", content_url);
+//                        intent.setAction("android.intent.action.VIEW");
+//                        intent.setData(content_url);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("URL", hyberlink);
+                        goToNext(AdvertActivity.class, bundle);
                     }
                 });
                 Picasso.with(getActivity()).load(circlePicList.get(i).getUrl()).into(imageView);
                 imageViews.add(imageView);
 
                 ImageView dot = new ImageView(getActivity());
-                if (i==0){
+                if (i == 0) {
                     dot.setImageDrawable(getResources().getDrawable(R.drawable.shape_guide_dot));
-                }else{
+                } else {
                     dot.setPadding(8, 0, 0, 0);
                     dot.setImageDrawable(getResources().getDrawable(R.drawable.shape_guide_dot_normal));
                 }

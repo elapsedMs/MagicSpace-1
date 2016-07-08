@@ -3,11 +3,11 @@ package storm.magicspace.fragment.album;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -19,19 +19,20 @@ import com.gdq.multhreaddownload.download.db.ThreadDaoImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
-import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.activity.MainActivity;
+import storm.magicspace.activity.album.AlbumInfoActivity;
+import storm.magicspace.activity.album.CacheingActivity;
 import storm.magicspace.adapter.CachedAdapter;
-import storm.magicspace.adapter.WorksAdapter;
-import storm.magicspace.base.MagicApplication;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.http.HTTPManager;
-import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.AlbumTitleView;
+
+import static storm.commonlib.common.CommonConstants.FROM;
 
 /**
  * Created by gdq on 16/6/16.
@@ -104,6 +105,16 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
 //        albumTitleView.setOnClickListener(this);
 //        albumTitleView.showDot();
         listView = (ListView) view.findViewById(R.id.cachedLv);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("album", list.get(position));
+                bundle.putSerializable(FROM, CommonConstants.TOPIC);
+                goToNext(AlbumInfoActivity.class, bundle);
+            }
+        });
+
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
