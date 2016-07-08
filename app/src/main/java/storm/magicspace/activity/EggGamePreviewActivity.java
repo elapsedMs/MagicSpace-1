@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -102,29 +103,35 @@ public class EggGamePreviewActivity extends BaseActivity {
     }
 
     private String getUrl() {
-        if (CommonConstants.GAME.equals(mFrom)) {
-            return URLConstants.URL_2 + mContentId;
-        } else if (CommonConstants.TOPIC.equals(mFrom)) {
-            return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId;
-        } else {
-            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId;
-        }
+        //        if (equals) {
+//            return URLConstants.URL_4 + mContentId;
+//        } else if (mFrom.equals(CommonConstants.TOPIC)) {
+//            return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId;
+//        }
+//        else {
+//            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId;
+//        }
+        if (mFrom.equals(CommonConstants.GAME)) return URLConstants.URL_4 + mContentId;
+        else return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId;
     }
 
     private class ContainerView {
 
         @JavascriptInterface
         public void goBack() {
+            Log.i("lixiaolu", "go back");
             mHandler.sendEmptyMessage(0);
         }
 
         @JavascriptInterface
         public void shareGame() {
+            Log.i("lixiaolu", "game share");
             mHandler.sendEmptyMessage(1);
         }
 
         @JavascriptInterface
         public void endGame(boolean bool) {
+            Log.i("lixiaolu", "game end");
             if (bool) {
                 mHandler.sendEmptyMessage(2);
             } else {
@@ -135,6 +142,7 @@ public class EggGamePreviewActivity extends BaseActivity {
 
         @JavascriptInterface
         public void onLoadComplete() {
+            Log.i("lixiaolu", "onLoadComplete");
             mHandler.sendEmptyMessage(4);
         }
     }

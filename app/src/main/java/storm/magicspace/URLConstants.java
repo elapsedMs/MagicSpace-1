@@ -13,4 +13,8 @@ public class URLConstants {
 
     //图库－点击Item－主题界面－点击制作游戏
     public static final String URL_3 = "http://app.stemmind.com/vr/a/vreditor.php?ua=app&s=mat&c=";
+
+    //
+    public static final String URL_4 = "http://app.stemmind.com/vr/a/player.php?ua=app&s=ugc&c=";
+
 }

@@ -216,7 +216,7 @@ public class HTTPManager {
                 AddCollectResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "contentId", contentId,
-                "contentTypeId", type
+                "contentTypeId", type.toLowerCase()
         );
     }
 }
