@@ -151,7 +151,7 @@ public class GameActivity extends FragmentActivity {
     private void setContentIdIfNecessary() {
         Intent intent = getIntent();
         if (intent == null) return;
-        String contentId = intent.getStringExtra("contentId");
+        String contentId = intent.getStringExtra(CommonConstants.CONTENT_ID);
         if (!TextUtils.isEmpty(contentId)) {
             mContentId = contentId;
         }
@@ -242,7 +242,9 @@ public class GameActivity extends FragmentActivity {
         @Override
         public void onSuccess(IssueUCGContentResponse response) {
             super.onSuccess(response);
-            mUCGContent = response.getData();
+            List<IssueUCGContent> data = response.getData();
+            if (data == null) return;
+            mUCGContent = data.get(0);
             if (mUCGContent == null) return;
             List<UGCScene> scenes = mUCGContent.getScenes();
             if (scenes == null) return;
@@ -309,8 +311,7 @@ public class GameActivity extends FragmentActivity {
         @Override
         public void onSuccess(UpdateUGCContentScenesResponse response) {
             super.onSuccess(response);
-            Toast.makeText(GameActivity.this, R.string.update_egg_success, Toast.LENGTH_SHORT)
-                    .show();
+            toastHint(R.string.update_egg_success);
             createEgg();
             resetFloatView();
             resetAlphaController();
@@ -320,14 +321,21 @@ public class GameActivity extends FragmentActivity {
         @Override
         public void onFailed() {
             super.onFailed();
-            Toast.makeText(GameActivity.this, R.string.update_egg_failed, Toast.LENGTH_SHORT)
-                    .show();
+            if (mCoinError) {
+                toastHint(R.string.update_egg_failed_no_coin);
+            } else {
+                toastHint(R.string.update_egg_failed);
+            }
             if (mUGCItems != null) {
                 mUGCItems.remove(mCurrentItem);
             }
             mEggInfos.remove(mEggKey);
         }
 
+    }
+
+    private void toastHint(int resId) {
+        Toast.makeText(GameActivity.this, resId, Toast.LENGTH_SHORT).show();
     }
 
     private void resetAlphaController() {
@@ -530,13 +538,11 @@ public class GameActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(mUrl)) {
-                    Toast.makeText(GameActivity.this, R.string.add_egg_hint,
-                            Toast.LENGTH_SHORT).show();
+                    toastHint(R.string.add_egg_hint);
                     return;
                 }
                 if (mEggsCount >= EGG_MAX_COUNT) {
-                    Toast.makeText(GameActivity.this, R.string.add_egg_over_hint,
-                            Toast.LENGTH_SHORT).show();
+                    toastHint(R.string.add_egg_over_hint);
                     return;
                 }
                 new UpdateUGCContentTask(GameActivity.this, true).execute();
@@ -549,17 +555,15 @@ public class GameActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 if (mCoinError) {
-                    Toast.makeText(GameActivity.this, R.string.coin_error_hint,
-                            Toast.LENGTH_SHORT).show();
+                    toastHint(R.string.coin_error_hint);
                     return;
                 }
                 if (mEggsCount < EGG_MIN_COUNT) {
-                    Toast.makeText(GameActivity.this, R.string.add_egg_less_hint,
-                            Toast.LENGTH_SHORT).show();
+                    toastHint(R.string.add_egg_less_hint);
                     return;
                 }
                 Intent intent = new Intent(GameActivity.this, GameEditDetailActivity.class);
-                intent.putExtra("contentId",mContentId);
+                intent.putExtra(CommonConstants.CONTENT_ID,mContentId);
                 startActivity(intent);
                 sendUCGData();
             }
