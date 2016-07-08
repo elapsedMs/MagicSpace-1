@@ -563,7 +563,7 @@ public class GameActivity extends FragmentActivity {
                     return;
                 }
                 Intent intent = new Intent(GameActivity.this, GameEditDetailActivity.class);
-                intent.putExtra(CommonConstants.CONTENT_ID, mContentId);
+                intent.putExtra(CommonConstants.CONTENT_ID, mUCGContent.getContentId());
                 startActivity(intent);
                 sendUCGData();
             }
@@ -738,6 +738,7 @@ public class GameActivity extends FragmentActivity {
 
         @JavascriptInterface
         public void dropItemCallBack(String msg) {
+            //// TODO: 16/7/8  update msg
             Log.i("lixiaolu", "msg : dropItemCallBack" + msg);
             log("[JS dropItemCallBack] >>> msg = %s ", msg);
         }

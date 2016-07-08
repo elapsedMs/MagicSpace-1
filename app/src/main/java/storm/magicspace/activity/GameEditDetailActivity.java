@@ -191,6 +191,9 @@ public class GameEditDetailActivity extends BaseActivity {
 
         @Override
         public SubmitUGCContentResponse doRequest(Void param) {
+            mUCGContent.setTitle(titleTv.getText().toString());
+            mUCGContent.setDescription("\u8bb0\u5f55\u6536\u85cf");
+//            mUCGContent.setDescription(descEt.getText().toString());
             String data = JsonUtil.convertObjectToJson(mUCGContent);
             return HTTPManager.submitUGCContent(mContentId, data);
         }
