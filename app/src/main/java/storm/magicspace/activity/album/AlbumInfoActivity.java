@@ -18,6 +18,7 @@ import storm.magicspace.activity.GameActivity;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.URLConstant;
 import storm.magicspace.http.reponse.AddCollectResponse;
 
 import static storm.commonlib.common.CommonConstants.FROM;
@@ -77,8 +78,20 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private void initWebView(String mContentId) {
         wv_egg_info.getSettings().setJavaScriptEnabled(true);
         wv_egg_info.getSettings().setDefaultTextEncodingName("gb2312");
-        wv_egg_info.loadUrl("http://app.stemmind.com/vr/a/preview.php?c=" + mContentId);
+        String url = getUrl(mContentId);
+        //wv_egg_info.loadUrl("http://app.stemmind.com/vr/a/preview.php?c=" + mContentId);
+        wv_egg_info.loadUrl(url);
         wv_egg_info.setWebViewClient(new WebViewClient());
+    }
+
+    private String getUrl(String contentId) {
+        if (CommonConstants.GAME.equals(from)) {
+            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + contentId;
+        } else if (CommonConstants.TOPIC.equals(from)) {
+            return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + contentId;
+        } else {
+            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + contentId;
+        }
     }
 
     @Override

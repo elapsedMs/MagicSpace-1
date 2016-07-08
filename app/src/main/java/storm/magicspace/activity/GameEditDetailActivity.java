@@ -20,6 +20,7 @@ import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
+import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.util.JsonUtil;
@@ -70,7 +71,7 @@ public class GameEditDetailActivity extends BaseActivity {
         setRightTvClickable(true);
         setRightText(R.string.share);
         setTitleBarRightTvVisibility(View.INVISIBLE);
-        mContentId = getIntent().getStringExtra("contentId");
+        mContentId = getIntent().getStringExtra(CommonConstants.CONTENT_ID);
         publishTv = findEventView(R.id.publish);
         titleTv = findEventView(R.id.title);
         eggCountTv = findEventView(R.id.egg_count);
