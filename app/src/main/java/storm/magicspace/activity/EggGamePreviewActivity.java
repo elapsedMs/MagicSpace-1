@@ -41,12 +41,12 @@ public class EggGamePreviewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFrom = configFrom();
     }
 
     private String configFrom() {
         Intent intent = getIntent();
         if (intent == null) return CommonConstants.GAME;
+        mContentId = intent.getStringExtra(CommonConstants.CONTENT_ID);
         return intent.getStringExtra(CommonConstants.FROM);
     }
 
@@ -80,12 +80,11 @@ public class EggGamePreviewActivity extends BaseActivity {
             }
         };
         wv_egg_game_preview = (WebView) findViewById(R.id.wv_egg_game_preview);
+        mFrom = configFrom();
         Intent intent = this.getIntent();
         info = (EggInfo) intent.getSerializableExtra("game_info");
-        mContentId = info.contentId;
         initWebView();
         showloadingeDialog(LOADING, "数据加载中…", "", true, true);
-
         time = new TimeCount(30 * 1000, 1000);
         time.start();
     }
