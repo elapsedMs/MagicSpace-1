@@ -19,6 +19,7 @@ import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.util.LogUtil;
 import storm.commonlib.common.view.dialog.MedtreeDialog;
 import storm.magicspace.R;
+import storm.magicspace.URLConstants;
 import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.URLConstant;
 
@@ -102,7 +103,7 @@ public class EggGamePreviewActivity extends BaseActivity {
 
     private String getUrl() {
         if (CommonConstants.GAME.equals(mFrom)) {
-            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId;
+            return URLConstants.URL_2 + mContentId;
         } else if (CommonConstants.TOPIC.equals(mFrom)) {
             return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId;
         } else {

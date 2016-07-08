@@ -13,6 +13,7 @@ import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
+import storm.magicspace.URLConstants;
 import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.activity.GameActivity;
 import storm.magicspace.bean.Album;
@@ -78,9 +79,7 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private void initWebView(String mContentId) {
         wv_egg_info.getSettings().setJavaScriptEnabled(true);
         wv_egg_info.getSettings().setDefaultTextEncodingName("gb2312");
-        String url = getUrl(mContentId);
-        //wv_egg_info.loadUrl("http://app.stemmind.com/vr/a/preview.php?c=" + mContentId);
-        wv_egg_info.loadUrl(url);
+        wv_egg_info.loadUrl(URLConstants.URL_1 + mContentId);
         wv_egg_info.setWebViewClient(new WebViewClient());
     }
 

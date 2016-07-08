@@ -142,6 +142,21 @@ public class GameActivity extends FragmentActivity {
         mEggInfos = new HashMap();
     }
 
+    private String configFrom() {
+        Intent intent = getIntent();
+        if (intent == null) return CommonConstants.GAME;
+        return intent.getStringExtra(CommonConstants.FROM);
+    }
+
+    private void setContentIdIfNecessary() {
+        Intent intent = getIntent();
+        if (intent == null) return;
+        String contentId = intent.getStringExtra(CommonConstants.CONTENT_ID);
+        if (!TextUtils.isEmpty(contentId)) {
+            mContentId = contentId;
+        }
+    }
+
     public void initView() {
         findView();
         initFloatView();
@@ -160,32 +175,15 @@ public class GameActivity extends FragmentActivity {
         handleDeleteEvent();
     }
 
-    private String getRandomContentId() {
-        String contentJson = SharedPreferencesUtil.getJsonFromSharedPreferences(this,
-                CONTEND_IDS);
-        if (contentJson == null) return DEFAULT_CONTENT_ID;
-        ArrayList contentList = JsonUtil.fromJson(contentJson, ArrayList.class);
-        if (contentList == null || contentList.size() == 0) return DEFAULT_CONTENT_ID;
-        Random random = new Random();
-        int id = random.nextInt(contentList.size());
-        return (String) contentList.get(id);
-    }
-
-    private void setContentIdIfNecessary() {
-        Intent intent = getIntent();
-        if (intent == null) return;
-        String contentId = intent.getStringExtra(CommonConstants.CONTENT_ID);
-        if (!TextUtils.isEmpty(contentId)) {
-            mContentId = contentId;
+    private void initGuide() {
+        boolean showedGuide = LocalSPUtil.getGuide();
+        if (showedGuide) {
+            mGuide.setVisibility(View.GONE);
+        } else {
+            mGuide.setVisibility(View.VISIBLE);
+            LocalSPUtil.saveGuide(true);
         }
     }
-
-    private String configFrom() {
-        Intent intent = getIntent();
-        if (intent == null) return CommonConstants.GAME;
-        return intent.getStringExtra(CommonConstants.FROM);
-    }
-
 
     private void findView() {
         mWebView = (WebView) findViewById(R.id.webview_game);
@@ -203,66 +201,6 @@ public class GameActivity extends FragmentActivity {
         mLoadingHint = (TextView) findViewById(R.id.tv_game_loading);
         mEggPager = (ViewPager) findViewById(R.id.vp_game_eggs);
         mEggTab = (TabLayout) findViewById(R.id.tab_layout_game);
-    }
-
-    private void initFloatView() {
-        mFloatView.setVisibility(View.VISIBLE);
-        mFloatView.setOnFloatListener(new FloatView.FloatListener() {
-            @Override
-            public void clickLeftTop() {
-                if (!mAlphaBarShowing) {
-                    mAlphaBar.setVisibility(View.VISIBLE);
-                } else {
-                    mAlphaBar.setVisibility(View.GONE);
-                }
-                mAlphaBarShowing = !mAlphaBarShowing;
-            }
-
-            @Override
-            public void clickRightTop() {
-                log("rotate btn clicked");
-            }
-
-            @Override
-            public void clickRightBottom() {
-                log("scale btn clicked");
-            }
-
-            @Override
-            public void floatInfo(FloatInfo floatInfo) {
-                if (mCurrentItem == null) {
-                    mCurrentItem = new UGCItem();
-                }
-                mCurrentItem.setX("0");
-                mCurrentItem.setY("0");
-                mCurrentItem.setScalex(String.valueOf(floatInfo.getScale()));
-                mCurrentItem.setRotatez(String.valueOf(floatInfo.getRotate()));
-                mCurrentItem.setTransparency(String.valueOf(floatInfo.getAlpha()));
-            }
-
-        });
-        mFloatView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                clearMask();
-                return false;
-            }
-        });
-    }
-
-    @SuppressLint("JavascriptInterface")
-    private void initWebView() {
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setDefaultTextEncodingName("gb2312");
-        String webUrl = getUrl();
-        if (USE_TEST_URL) {
-            webUrl = "http://app.stemmind.com/vr/a/test.php?ua=app&c=" + mContentId;
-        }
-        mWebView.loadUrl(webUrl);
-        ContainerView containerView = new ContainerView();
-        mWebView.setWebViewClient(new WebViewClient());
-        mWebView.addJavascriptInterface(containerView, "containerView");
-        mWebViewInit = true;
     }
 
     /**
@@ -283,29 +221,10 @@ public class GameActivity extends FragmentActivity {
         reportEditorState();
     }
 
-    private void initAlphaController() {
-        positionAlphaController(RULE_ABOVE_EGG);
-        mAlphaBar.setProgress(100);
-        mAlphaBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mAlphaVal = progress * 1f / 100;
-                mFloatView.setFloatAlpha(mAlphaVal);
-                float alpha = (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * mAlphaVal);
-                mCurrentItem.setTransparency(String.valueOf(alpha));
-                log("alpha = %s", alpha);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
+    private void reportEditorState() {
+        if (mWebViewInit) {
+            mWebView.loadUrl("javascript:setEditorState('" + mCurrentState + "')");
+        }
     }
 
     private void initEggs() {
@@ -314,26 +233,6 @@ public class GameActivity extends FragmentActivity {
         new IssueUGCContentTask().execute();
     }
 
-    private void initGuide() {
-        boolean showedGuide = LocalSPUtil.getGuide();
-        if (showedGuide) {
-            mGuide.setVisibility(View.GONE);
-        } else {
-            mGuide.setVisibility(View.VISIBLE);
-            LocalSPUtil.saveGuide(true);
-        }
-    }
-
-    private void reportEditorState() {
-        if (mWebViewInit) {
-            mWebView.loadUrl("javascript:setEditorState('" + mCurrentState + "')");
-        }
-    }
-
-
-    ///////////////////////////////////////////////////////////////////////////
-    // issue request
-    ///////////////////////////////////////////////////////////////////////////
     private class IssueUGCContentTask extends BaseASyncTask<Void, IssueUCGContentResponse> {
         @Override
         public IssueUCGContentResponse doRequest(Void param) {
@@ -367,9 +266,17 @@ public class GameActivity extends FragmentActivity {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // update request
-    ///////////////////////////////////////////////////////////////////////////
+    private String getRandomContentId() {
+        String contentJson = SharedPreferencesUtil.getJsonFromSharedPreferences(this,
+                CONTEND_IDS);
+        if (contentJson == null) return DEFAULT_CONTENT_ID;
+        ArrayList contentList = JsonUtil.fromJson(contentJson, ArrayList.class);
+        if (contentList == null || contentList.size() == 0) return DEFAULT_CONTENT_ID;
+        Random random = new Random();
+        int id = random.nextInt(contentList.size());
+        return (String) contentList.get(id);
+    }
+
     private class UpdateUGCContentTask extends BaseASyncTask<Void, UpdateUGCContentScenesResponse> {
         public UpdateUGCContentTask(Context context, boolean hasLoadingDialog) {
             super(context, hasLoadingDialog);
@@ -424,6 +331,11 @@ public class GameActivity extends FragmentActivity {
             }
             mEggInfos.remove(mEggKey);
         }
+
+    }
+
+    private void toastHint(int resId) {
+        Toast.makeText(GameActivity.this, resId, Toast.LENGTH_SHORT).show();
     }
 
     private void resetAlphaController() {
@@ -432,9 +344,6 @@ public class GameActivity extends FragmentActivity {
         mAlphaVal = 1.0f;
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // egg image request
-    ///////////////////////////////////////////////////////////////////////////
     private class GetEggImageListTask extends BaseASyncTask<Void, EggImageListResponse> {
         @Override
         public EggImageListResponse doRequest(Void param) {
@@ -466,58 +375,6 @@ public class GameActivity extends FragmentActivity {
             super.onFailed();
             mLoadingHint.setText(R.string.loading_failed);
         }
-    }
-
-    private void setEggImageListener(EggImageFragment fragment) {
-        fragment.setOnEggClickListener(new EggsAdapter.ClickInterface() {
-            @Override
-            public void onClick(int position, String url, Bitmap bitmap) {
-                log("egg image, position = %s, url = %s" ,position, url);
-                mFloatView.useExtraMatrix(mFromEdit);
-                //mFloatView.setImageBitmap(null);
-                mFloatView.setImageBitmap(bitmap);
-                if (!mFromEdit) {
-                    mCurrentItem = new UGCItem();
-                    mCurrentItem.setX("0");
-                    mCurrentItem.setY("0");
-                    mCurrentItem.setScalex(1.0f + "");
-                    mCurrentItem.setRotatez(0.0f + "");
-                    mCurrentItem.setTransparency(1.0f + "");
-                    mCurrentItem.setEnabled("1");
-                }
-                mCurrentItem.setItemMediaUrl(url);
-                //mCurrentItem.setItemId(mEggsCount + "");
-                mUrl = url;
-                initFloatView();
-                syncFloatView(true);
-            }
-        });
-    }
-
-    private void initViewPager(final ArrayList<EggImageFragment> fragments, final int size) {
-        mEggPager.setOffscreenPageLimit(fragments.size());
-        mEggPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return fragments.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return fragments.size();
-            }
-
-        });
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mEggTab.setupWithViewPager(mEggPager);
-                for (int i = 0; i < size; i++) {
-                    // init viewpager first
-                    fillTabLayout(i);
-                }
-            }
-        });
     }
 
     private void fillTabLayout(final int pos) {
@@ -555,6 +412,58 @@ public class GameActivity extends FragmentActivity {
     private Bitmap createBitmapWithUrl(String url) throws IOException {
         RequestCreator load = Picasso.with(GameActivity.this).load(url);
         return load.get();
+    }
+
+    private void initViewPager(final ArrayList<EggImageFragment> fragments, final int size) {
+        mEggPager.setOffscreenPageLimit(fragments.size());
+        mEggPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+
+        });
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mEggTab.setupWithViewPager(mEggPager);
+                for (int i = 0; i < size; i++) {
+                    // init viewpager first
+                    fillTabLayout(i);
+                }
+            }
+        });
+    }
+
+    private void setEggImageListener(EggImageFragment fragment) {
+        fragment.setOnEggClickListener(new EggsAdapter.ClickInterface() {
+            @Override
+            public void onClick(int position, String url, Bitmap bitmap) {
+                log("egg image, position = %s, url = %s" ,position, url);
+                mFloatView.useExtraMatrix(mFromEdit);
+                //mFloatView.setImageBitmap(null);
+                mFloatView.setImageBitmap(bitmap);
+                if (!mFromEdit) {
+                    mCurrentItem = new UGCItem();
+                    mCurrentItem.setX("0");
+                    mCurrentItem.setY("0");
+                    mCurrentItem.setScalex(1.0f + "");
+                    mCurrentItem.setRotatez(0.0f + "");
+                    mCurrentItem.setTransparency(1.0f + "");
+                    mCurrentItem.setEnabled("1");
+                }
+                mCurrentItem.setItemMediaUrl(url);
+                //mCurrentItem.setItemId(mEggsCount + "");
+                mUrl = url;
+                initFloatView();
+                syncFloatView(true);
+            }
+        });
     }
 
     public List<EggImage> getEggImageList() {
@@ -689,6 +598,76 @@ public class GameActivity extends FragmentActivity {
         mShowEggBtn.setText(String.format(getResources().getString(R.string.eggs_count), count));
     }
 
+    private void initAlphaController() {
+        positionAlphaController(RULE_ABOVE_EGG);
+        mAlphaBar.setProgress(100);
+        mAlphaBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mAlphaVal = progress * 1f / 100;
+                mFloatView.setFloatAlpha(mAlphaVal);
+                float alpha = (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * mAlphaVal);
+                mCurrentItem.setTransparency(String.valueOf(alpha));
+                log("alpha = %s", alpha);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    private void initFloatView() {
+        mFloatView.setVisibility(View.VISIBLE);
+        mFloatView.setOnFloatListener(new FloatView.FloatListener() {
+            @Override
+            public void clickLeftTop() {
+                if (!mAlphaBarShowing) {
+                    mAlphaBar.setVisibility(View.VISIBLE);
+                } else {
+                    mAlphaBar.setVisibility(View.GONE);
+                }
+                mAlphaBarShowing = !mAlphaBarShowing;
+            }
+
+            @Override
+            public void clickRightTop() {
+                log("rotate btn clicked");
+            }
+
+            @Override
+            public void clickRightBottom() {
+                log("scale btn clicked");
+            }
+
+            @Override
+            public void floatInfo(FloatInfo floatInfo) {
+                if (mCurrentItem == null) {
+                    mCurrentItem = new UGCItem();
+                }
+                mCurrentItem.setX("0");
+                mCurrentItem.setY("0");
+                mCurrentItem.setScalex(String.valueOf(floatInfo.getScale()));
+                mCurrentItem.setRotatez(String.valueOf(floatInfo.getRotate()));
+                mCurrentItem.setTransparency(String.valueOf(floatInfo.getAlpha()));
+            }
+
+        });
+        mFloatView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                clearMask();
+                return false;
+            }
+        });
+    }
+
     private void clearMask() {
         if (mGuide.getVisibility() == View.VISIBLE) mGuide.setVisibility(View.GONE);
         if (mEggsContainer.getVisibility() == View.VISIBLE)
@@ -707,6 +686,21 @@ public class GameActivity extends FragmentActivity {
             layoutParams.addRule(RelativeLayout.ABOVE, R.id.rl_game_eggs_container);
         }
         mAlphaBar.setLayoutParams(layoutParams);
+    }
+
+    @SuppressLint("JavascriptInterface")
+    private void initWebView() {
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setDefaultTextEncodingName("gb2312");
+        String webUrl = getUrl();
+        if (USE_TEST_URL) {
+            webUrl = "http://app.stemmind.com/vr/a/test.php?ua=app&c=" + mContentId;
+        }
+        mWebView.loadUrl(webUrl);
+        ContainerView containerView = new ContainerView();
+        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.addJavascriptInterface(containerView, "containerView");
+        mWebViewInit = true;
     }
 
     private String getUrl() {
@@ -805,10 +799,6 @@ public class GameActivity extends FragmentActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void toastHint(int resId) {
-        Toast.makeText(GameActivity.this, resId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
