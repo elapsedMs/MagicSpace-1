@@ -175,3 +175,4 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
         }
     }
 }
+

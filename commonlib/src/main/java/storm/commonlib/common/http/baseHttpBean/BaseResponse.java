@@ -11,6 +11,7 @@ public class BaseResponse<T> implements Serializable {
     public String language;     //当前返回结果的语言
     public int data_type;       //0为横版，1为竖版
     public T data;              //消息体
+    public String action;
 
     public int getStatus() {
         return status;

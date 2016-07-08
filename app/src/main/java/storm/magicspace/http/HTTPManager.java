@@ -84,7 +84,7 @@ public class HTTPManager {
      */
     public static EggImageListResponse getEggImageList() {
         return ServiceUtils.request(
-                RequestTypes.GET,
+                RequestTypes.POST,
                 URLConstant.URL_GET_EGG_IMAGE_LIST,
                 EMPTY,
                 EggImageListResponse.class
@@ -163,7 +163,6 @@ public class HTTPManager {
         );
     }
 
-
     public static ConponResponse GetcouponList() {
         return ServiceUtils.request(
                 RequestTypes.POST,
@@ -209,7 +208,7 @@ public class HTTPManager {
                 "userId", LocalSPUtil.getLoginAccountId());
     }
 
-    public static AddCollectResponse addCollect(String contentId,String type) {
+    public static AddCollectResponse addCollect(String contentId, String type) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_ADD_COLLECTION,
@@ -217,7 +216,7 @@ public class HTTPManager {
                 AddCollectResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "contentId", contentId,
-                "contentTypeId",type
+                "contentTypeId", type
         );
     }
 }

@@ -242,10 +242,9 @@ public class GameActivity extends FragmentActivity {
         @Override
         public void onSuccess(IssueUCGContentResponse response) {
             super.onSuccess(response);
-            List<IssueUCGContent> data = response.getData();
+            IssueUCGContent data = response.getData();
             if (data == null) return;
-            mUCGContent = data.get(0);
-            if (mUCGContent == null) return;
+            mUCGContent = data;
             List<UGCScene> scenes = mUCGContent.getScenes();
             if (scenes == null) return;
             mUCGScene = scenes.get(0);
@@ -305,7 +304,7 @@ public class GameActivity extends FragmentActivity {
             mUCGScene.setItems(mUGCItems);
             mUCGScene.setItemsCount(String.valueOf(mEggsCount + 1));
             mEggInfos.put(mEggKey, mCurrentItem);
-            return HTTPManager.updateUGCContentScenes(mContentId, JsonUtil.toJson(mUCGScene));
+            return HTTPManager.updateUGCContentScenes(mUCGContent.getContentId(), JsonUtil.toJson(mUCGScene));
         }
 
         @Override
@@ -318,6 +317,7 @@ public class GameActivity extends FragmentActivity {
             mEggsCount = mEggsCount + 1;
             updateEggsCountHint(mEggsCount);
         }
+
         @Override
         public void onFailed() {
             super.onFailed();
@@ -444,7 +444,7 @@ public class GameActivity extends FragmentActivity {
         fragment.setOnEggClickListener(new EggsAdapter.ClickInterface() {
             @Override
             public void onClick(int position, String url, Bitmap bitmap) {
-                log("egg image, position = %s, url = %s" ,position, url);
+                log("egg image, position = %s, url = %s", position, url);
                 mFloatView.useExtraMatrix(mFromEdit);
                 //mFloatView.setImageBitmap(null);
                 mFloatView.setImageBitmap(bitmap);
@@ -563,7 +563,7 @@ public class GameActivity extends FragmentActivity {
                     return;
                 }
                 Intent intent = new Intent(GameActivity.this, GameEditDetailActivity.class);
-                intent.putExtra(CommonConstants.CONTENT_ID,mContentId);
+                intent.putExtra(CommonConstants.CONTENT_ID, mContentId);
                 startActivity(intent);
                 sendUCGData();
             }
@@ -717,8 +717,9 @@ public class GameActivity extends FragmentActivity {
 
         @JavascriptInterface
         public void editItem(String contentId, String sceneId, String itemId) {
+            Log.i("lixiaolu", "msg : editItem");
             log("[JS editItem] >>> contentId = %s, sceneId =  %s, itemId = %s"
-                    ,contentId ,sceneId, itemId);
+                    , contentId, sceneId, itemId);
             mEggsCount = mEggsCount - 1;
             mEggsCount = mEggsCount >= 0 ? mEggsCount : 0;
             UGCItem ugcItem = mEggInfos.get(itemId);
@@ -737,6 +738,7 @@ public class GameActivity extends FragmentActivity {
 
         @JavascriptInterface
         public void dropItemCallBack(String msg) {
+            Log.i("lixiaolu", "msg : dropItemCallBack" + msg);
             log("[JS dropItemCallBack] >>> msg = %s ", msg);
         }
     }
@@ -774,7 +776,7 @@ public class GameActivity extends FragmentActivity {
                 mFloatView.setImageBitmap(null);
                 mFloatView.setFloatView(bitmap, scale, rotate);
                 mFloatView.setFloatAlpha(alpha);
-                mAlphaBar.setProgress((int) (alpha*100));
+                mAlphaBar.setProgress((int) (alpha * 100));
             }
         });
     }
