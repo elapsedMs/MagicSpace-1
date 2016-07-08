@@ -13,6 +13,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.CommonConstants;
@@ -64,7 +67,8 @@ public class EggGamePreviewActivity extends BaseActivity {
                         break;
 
                     case 1:
-                        showShare();
+//                        showShare();
+                        setShare();
                         break;
 
                     case 2:
@@ -219,6 +223,20 @@ public class EggGamePreviewActivity extends BaseActivity {
     public void dismissLoadingDialog() {
         if (medtreeDialog != null)
             medtreeDialog.dismiss();
+    }
+
+    public void setShare(){
+
+        final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
+                {
+                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA,
+                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,SHARE_MEDIA.DOUBAN
+                };
+        new ShareAction(this).setDisplayList(displaylist )
+                .withText(getString(R.string.shared_content))
+                .withTitle("魔fun全景挖彩蛋")
+                .withTargetUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId)
+                .open();
     }
 }
 

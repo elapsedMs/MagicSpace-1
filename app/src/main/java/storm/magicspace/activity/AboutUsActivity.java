@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.CommonConstants;
@@ -49,8 +52,10 @@ public class AboutUsActivity extends BaseActivity {
         super.onLocalClicked(resId);
         switch (resId) {
             case R.id.rl_share:
-                showShare();
+//                showShare();
+                setShare();
                 break;
+
 
             case R.id.rl_assessment:
 
@@ -105,5 +110,18 @@ public class AboutUsActivity extends BaseActivity {
             e.printStackTrace();
             return "获取版本号失败";
         }
+    }
+    public void setShare(){
+
+        final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
+                {
+                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA,
+                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,SHARE_MEDIA.DOUBAN
+                };
+        new ShareAction(this).setDisplayList(displaylist )
+                .withText( getString(R.string.shared_content) )
+                .withTitle("魔fun全景挖彩蛋")
+                .withTargetUrl("http://app.stemmind.com/vr/a/tour.html")
+                .open();
     }
 }
