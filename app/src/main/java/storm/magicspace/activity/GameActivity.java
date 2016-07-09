@@ -503,7 +503,7 @@ public class GameActivity extends FragmentActivity {
         fragment.setOnEggClickListener(new EggsAdapter.ClickInterface() {
             @Override
             public void onClick(int position, String url, Bitmap bitmap) {
-                log("egg image, position = %s, url = %s" ,position, url);
+                log("egg image, position = %s, url = %s", position, url);
                 mFloatView.useExtraMatrix(mFromEdit);
                 //mFloatView.setImageBitmap(null);
                 mFloatView.setImageBitmap(bitmap);
@@ -741,12 +741,13 @@ public class GameActivity extends FragmentActivity {
     }
 
     private String getUrl() {
-        if (CommonConstants.GAME.equals(mFrom)) {
-            return URLConstant.URL_WEBVIEW_GAME + mContentId;
-        } else if (CommonConstants.TOPIC.equals(mFrom)) {
-            return URLConstant.URL_WEBVIEW_TOPIC + mContentId;
-        } else {
-            return URLConstant.URL_WEBVIEW_GAME + mContentId;
+        switch (mFrom) {
+            case CommonConstants.GAME:
+                return URLConstant.URL_WEBVIEW_GAME + mContentId;
+            case CommonConstants.TOPIC:
+                return URLConstant.URL_WEBVIEW_TOPIC + mContentId;
+            default:
+                return URLConstant.URL_WEBVIEW_GAME + mContentId;
         }
     }
 
@@ -817,7 +818,7 @@ public class GameActivity extends FragmentActivity {
                 mFloatView.setImageBitmap(null);
                 mFloatView.setFloatView(bitmap, scale, rotate);
                 mFloatView.setFloatAlpha(alpha);
-                mAlphaBar.setProgress((int) (alpha*100));
+                mAlphaBar.setProgress((int) (alpha * 100));
             }
         });
     }

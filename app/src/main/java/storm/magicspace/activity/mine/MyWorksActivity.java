@@ -54,11 +54,18 @@ public class MyWorksActivity extends BaseActivity {
         listView.setAdapter(adapter);
         GetMyWorksTask task = new GetMyWorksTask();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("album", list.get(position));
                 bundle.putSerializable(FROM, CommonConstants.GAME);
+                bundle.putSerializable(CommonConstants.COME_FROM, CommonConstants.MY_WORKS);
                 goToNext(AlbumInfoActivity.class, bundle);
             }
         });
