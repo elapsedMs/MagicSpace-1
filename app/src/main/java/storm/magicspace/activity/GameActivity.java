@@ -311,7 +311,11 @@ public class GameActivity extends FragmentActivity {
     private void initEggs() {
         updateEggsCountHint(mEggsCount = EGG_INIT_COUNT);
         new GetEggImageListTask().execute();
-        new IssueUGCContentTask().execute();
+        if (CommonConstants.GAME.equals(mFrom)) {
+            new IssueUGCContentWithGameTask().execute();
+        } else {
+            new IssueUGCContentTask().execute();
+        }
     }
 
     private void initGuide() {
@@ -343,27 +347,53 @@ public class GameActivity extends FragmentActivity {
         @Override
         public void onSuccess(IssueUCGContentResponse response) {
             super.onSuccess(response);
-            IssueUCGContent data = response.getData();
-            if (data == null) return;
-            mUCGContent = data;
-            if (mUCGContent == null) return;
-            List<UGCScene> scenes = mUCGContent.getScenes();
-            if (scenes == null) return;
-            mUCGScene = scenes.get(0);
-            mUGCItems = mUCGScene.getItems();
-            if (mUGCItems == null) return;
-            for (UGCItem ugcItem : mUGCItems) {
-                mEggInfos.put(ugcItem.getItemId(), ugcItem);
-            }
+            issueSuccess(response);
         }
 
         @Override
         public void onFailed(IssueUCGContentResponse response) {
             super.onFailed(response);
-            float status = response.getStatus();
-            if (status == 1001) {
-                mCoinError = true;
-            }
+            issueFailed(response);
+        }
+    }
+
+    private class IssueUGCContentWithGameTask extends BaseASyncTask<Void, IssueUCGContentResponse> {
+        @Override
+        public IssueUCGContentResponse doRequest(Void param) {
+            return HTTPManager.issueUCCContent("", "", mContentId, "game");
+        }
+
+        @Override
+        public void onSuccess(IssueUCGContentResponse response) {
+            super.onSuccess(response);
+            issueSuccess(response);
+        }
+
+        @Override
+        public void onFailed(IssueUCGContentResponse response) {
+            super.onFailed(response);
+            issueFailed(response);
+        }
+    }
+
+    private void issueFailed(IssueUCGContentResponse response) {
+        float status = response.getStatus();
+        if (status == 1001) {
+            mCoinError = true;
+        }
+    }
+
+    private void issueSuccess(IssueUCGContentResponse response) {
+        IssueUCGContent data = response.getData();
+        if (data == null) return;
+        mUCGContent = data;
+        List<UGCScene> scenes = mUCGContent.getScenes();
+        if (scenes == null) return;
+        mUCGScene = scenes.get(0);
+        mUGCItems = mUCGScene.getItems();
+        if (mUGCItems == null) return;
+        for (UGCItem ugcItem : mUGCItems) {
+            mEggInfos.put(ugcItem.getItemId(), ugcItem);
         }
     }
 

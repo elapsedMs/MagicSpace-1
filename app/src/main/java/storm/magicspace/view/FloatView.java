@@ -260,7 +260,7 @@ public class FloatView extends ImageView {
                     vals[Matrix.MSCALE_X]) * (180 / Math.PI));
 
             // alpha
-            float alpha = mBitmapPaint.getAlpha() * 100.0f / 255;
+            float alpha = mBitmapPaint.getAlpha() * 1.0f / 255;
 
             Log.d(TAG, "x = " + x + ", y = " + y + ", scale = " + scale + ", rotate = " + degree);
 

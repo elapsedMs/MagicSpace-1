@@ -109,6 +109,25 @@ public class HTTPManager {
                 "sourceId", sourceId
         );
     }
+    /**
+     * 发表UGC主题
+     */
+    public static IssueUCGContentResponse issueUCCContent(String description,
+                                                          String url,
+                                                          String sourceId,
+                                                          String contentTypeId) {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.URL_ISSUE_UGC_CONTENT,
+                EMPTY,
+                IssueUCGContentResponse.class,
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
+                "description", description,
+                "url", url,
+                "sourceId", sourceId,
+                "contentTypeId", contentTypeId
+        );
+    }
 
     /**
      * 更新UGC主题
