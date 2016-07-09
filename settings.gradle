@@ -1,1 +1,1 @@
-include ':app', ':commonlib', ':multhreaddownload2'
+include ':app', ':commonlib', ':multhreaddownload2', ':PushSDK'

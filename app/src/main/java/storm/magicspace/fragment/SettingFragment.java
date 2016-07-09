@@ -5,20 +5,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.umeng.fb.FeedbackAgent;
+import com.umeng.message.PushAgent;
 
 import storm.commonlib.common.base.BaseFragment;
 import storm.commonlib.common.util.ActivityCollector;
 import storm.magicspace.R;
 import storm.magicspace.activity.AboutUsActivity;
-import storm.magicspace.activity.FeedBackActivity;
 import storm.magicspace.activity.LoginActivity;
+
+import static storm.commonlib.common.BaseApplication.getApplication;
 
 /**
  * Created by gdq on 16/6/15.
@@ -45,6 +47,17 @@ public class SettingFragment extends BaseFragment {
         ll_message_notice = this.findEventView(view, R.id.ll_message_notice);
         bt_loginout = this.findEventView(view, R.id.bt_loginout);
         tv_message_notice = this.findView(view, R.id.tv_message_notice);
+        PushAgent.getInstance(getApplication()).onAppStart();
+
+        final PushAgent mPushAgent = PushAgent.getInstance(getApplication());
+//        mPushAgent.enable();
+        tb_isVisible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) mPushAgent.enable();
+                else mPushAgent.disable();
+            }
+        });
     }
 
     @Override

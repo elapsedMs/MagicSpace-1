@@ -52,4 +52,5 @@ dependencies {
     compile files('src/main/jniLibs/libs/SocialSDK_tencentWB_3.jar')
     compile files('src/main/jniLibs/libs/SocialSDK_QQZone_3.jar')
     compile files('src/main/jniLibs/libs/open_sdk_r5509.jar')
+    compile project(':PushSDK')
 }
