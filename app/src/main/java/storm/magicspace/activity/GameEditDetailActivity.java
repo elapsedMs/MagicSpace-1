@@ -131,7 +131,7 @@ public class GameEditDetailActivity extends BaseActivity {
         super.onLocalClicked(resId);
         switch (resId) {
             case R.id.give_up:
-                finish();
+                postAndFinish();
                 break;
             case R.id.publish:
                 publish();
@@ -146,12 +146,16 @@ public class GameEditDetailActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    PublishEvent publishEvent = new PublishEvent();
-                    EventBus.getDefault().post(publishEvent);
-                    finish();
+                    postAndFinish();
                 }
             });
         }
+    }
+
+    private void postAndFinish() {
+        PublishEvent publishEvent = new PublishEvent();
+        EventBus.getDefault().post(publishEvent);
+        finish();
     }
 
     private void publish() {
@@ -261,9 +265,7 @@ public class GameEditDetailActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        PublishEvent publishEvent = new PublishEvent();
-                        EventBus.getDefault().post(publishEvent);
-                        finish();
+                        postAndFinish();
                     }
                 });
             }
