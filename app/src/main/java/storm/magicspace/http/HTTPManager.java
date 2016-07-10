@@ -12,11 +12,13 @@ import storm.magicspace.bean.httpBean.SubmitUGCContentResponse;
 import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
+import storm.magicspace.bean.httpBean.gameEnd;
 import storm.magicspace.http.reponse.AddCollectResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.http.reponse.ConponResponse;
 import storm.magicspace.http.reponse.EggHttpResponse;
 import storm.magicspace.http.reponse.InitResponse;
+import storm.magicspace.http.reponse.ShareUrlResponse;
 import storm.magicspace.util.LocalSPUtil;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
@@ -247,6 +249,36 @@ public class HTTPManager {
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "contentId", contentId,
                 "contentTypeId", type.toLowerCase()
+        );
+    }
+    public static ShareUrlResponse getUrl() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.GETAPPSHARELINK,
+                EMPTY,
+                ShareUrlResponse.class
+        );
+    }
+
+    public static ShareUrlResponse gameEnd(gameEnd mgameEnd) {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.GAMEEND,
+                EMPTY,
+                ShareUrlResponse.class,
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
+                "contentId", mgameEnd.contentId,
+                "duration",  mgameEnd.duration,
+                "isWon",  mgameEnd.isWon
+        );
+    }
+    public static ShareUrlResponse reqInfoCallback() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.REQINFOCALLBACK,
+                EMPTY,
+                ShareUrlResponse.class,
+                "userId", LocalSPUtil.getAccountInfo().getUser_no()
         );
     }
 }
