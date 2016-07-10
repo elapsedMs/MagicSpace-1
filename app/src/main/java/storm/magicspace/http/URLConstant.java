@@ -102,5 +102,7 @@ public class URLConstant {
     public static final String URL_WEBVIEW_PREVIEW_GAME =
             "http://app.stemmind.com/vr/a/preview.php?ua=app&s=ugc&c=";
 
-
+    public static final String GETAPPSHARELINK = "getAppShareLink";
+    public static final String GAMEEND = "gameEnd";
+    public static final String REQINFOCALLBACK = "reqInfoCallback";
 }

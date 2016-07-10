@@ -19,13 +19,18 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.CommonConstants;
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.util.LogUtil;
 import storm.commonlib.common.view.dialog.MedtreeDialog;
 import storm.magicspace.R;
 import storm.magicspace.URLConstants;
 import storm.magicspace.bean.EggInfo;
+import storm.magicspace.bean.httpBean.gameEnd;
+import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.URLConstant;
+import storm.magicspace.http.reponse.ShareUrlResponse;
+import storm.magicspace.util.LocalSPUtil;
 
 import static storm.commonlib.common.view.dialog.MedtreeDialog.DisplayStyle.LOADING;
 
@@ -38,7 +43,8 @@ public class EggGamePreviewActivity extends BaseActivity {
     private MedtreeDialog medtreeDialog;
     private String mFrom;
     private String mContentId;
-
+    private int duration ;
+    private gameEnd mgameEnd;
     public EggGamePreviewActivity() {
         super(R.layout.activity_egg_preview, CommonConstants.ACTIVITY_STYLE_EMPTY);
     }
@@ -73,14 +79,18 @@ public class EggGamePreviewActivity extends BaseActivity {
 
                     case 2:
                         Toast.makeText(EggGamePreviewActivity.this, "过关成功", Toast.LENGTH_SHORT).show();
+                        new GameEnd().execute(mgameEnd);
                         break;
 
                     case 3:
                         Toast.makeText(EggGamePreviewActivity.this, "过关失败", Toast.LENGTH_SHORT).show();
+                        new GameEnd().execute(mgameEnd);
                         break;
 
                     case 4:
                         dismissLoadingDialog();
+//                        new reqInfoCallback().execute();
+                        wv_egg_game_preview.loadUrl("javascript:reqInfoCallback('"+ LocalSPUtil.getAccountInfo().getUser_no()+"'");
                         break;
                 }
             }
@@ -134,15 +144,19 @@ public class EggGamePreviewActivity extends BaseActivity {
         }
 
         @JavascriptInterface
-        public void endGame(boolean bool) {
+        public void endGame(boolean bool,int duration) {
             Log.i("lixiaolu", "game end");
+            mgameEnd = new gameEnd(info.contentId,duration,bool);
             if (bool) {
                 mHandler.sendEmptyMessage(2);
+
             } else {
                 mHandler.sendEmptyMessage(3);
+
             }
 
         }
+
 
         @JavascriptInterface
         public void onLoadComplete() {
@@ -230,13 +244,38 @@ public class EggGamePreviewActivity extends BaseActivity {
         final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
                 {
                         SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA,
-                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,SHARE_MEDIA.DOUBAN
+                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE
                 };
         new ShareAction(this).setDisplayList(displaylist )
                 .withText(getString(R.string.shared_content))
                 .withTitle("魔fun全景挖彩蛋")
                 .withTargetUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId)
                 .open();
+    }
+
+    private class GameEnd extends BaseASyncTask<gameEnd, ShareUrlResponse> {
+        @Override
+        public ShareUrlResponse doRequest(gameEnd param) {
+            return HTTPManager.gameEnd(param);
+        }
+
+        @Override
+        public void onSuccess(ShareUrlResponse response) {
+            super.onSuccess(response);
+
+        }
+    }
+    private class reqInfoCallback extends BaseASyncTask<Void, ShareUrlResponse> {
+        @Override
+        public ShareUrlResponse doRequest(Void param) {
+            return HTTPManager.reqInfoCallback();
+        }
+
+        @Override
+        public void onSuccess(ShareUrlResponse response) {
+            super.onSuccess(response);
+
+        }
     }
 }
 
