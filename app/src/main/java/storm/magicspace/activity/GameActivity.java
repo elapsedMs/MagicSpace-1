@@ -442,6 +442,7 @@ public class GameActivity extends FragmentActivity {
             mEggsCount = mEggsCount + 1;
             updateEggsCountHint(mEggsCount);
         }
+
         @Override
         public void onFailed() {
             super.onFailed();
@@ -741,14 +742,10 @@ public class GameActivity extends FragmentActivity {
     }
 
     private String getUrl() {
-        switch (mFrom) {
-            case CommonConstants.GAME:
-                return URLConstant.URL_WEBVIEW_GAME + mContentId;
-            case CommonConstants.TOPIC:
-                return URLConstant.URL_WEBVIEW_TOPIC + mContentId;
-            default:
-                return URLConstant.URL_WEBVIEW_GAME + mContentId;
-        }
+        if (mFrom.equals(CommonConstants.GAME))
+            return URLConstant.URL_WEBVIEW_GAME + mContentId;
+        else
+            return URLConstant.URL_WEBVIEW_TOPIC + mContentId;
     }
 
     private class ContainerView {
@@ -756,7 +753,7 @@ public class GameActivity extends FragmentActivity {
         @JavascriptInterface
         public void editItem(String contentId, String sceneId, String itemId) {
             log("[JS editItem] >>> contentId = %s, sceneId =  %s, itemId = %s"
-                    ,contentId ,sceneId, itemId);
+                    , contentId, sceneId, itemId);
             mEggsCount = mEggsCount - 1;
             mEggsCount = mEggsCount >= 0 ? mEggsCount : 0;
             UGCItem ugcItem = mEggInfos.get(itemId);

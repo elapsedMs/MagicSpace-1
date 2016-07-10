@@ -84,8 +84,14 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
         wv_egg_info.getSettings().setDefaultTextEncodingName("gb2312");
         if (comFrom.equals(CommonConstants.MY_WORKS)) {
             wv_egg_info.loadUrl(URLConstants.URL_2 + mContentId);
-        } else
-            wv_egg_info.loadUrl(URLConstants.URL_1 + mContentId);
+        } else {
+            if (CommonConstants.GAME.equals(from))
+                wv_egg_info.loadUrl(URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId);
+            else
+                wv_egg_info.loadUrl(URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId);
+
+        }
+
         wv_egg_info.setWebViewClient(new WebViewClient());
     }
 

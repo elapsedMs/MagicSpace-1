@@ -50,6 +50,7 @@ public class BaseASyncTask<T, V extends BaseResponse> extends AsyncTask<T, Void,
             if (v.getData() != null) {
                 onSuccess(v);
             } else {
+                MessageUtil.showMessage(v.status_msg == null || v.status_msg.equals(EMPTY) ? "数据为空" : v.status_msg);
                 onSuccessWithoutResult(v);
             }
         }
