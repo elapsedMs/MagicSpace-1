@@ -36,5 +36,4 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile files('src/main/libs/umeng-analytics-v6.0.1.jar')
-    compile files('src/main/libs/utdid4all-1.0.4.jar')
 }
