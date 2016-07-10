@@ -780,6 +780,18 @@ public class GameActivity extends FragmentActivity {
             mCurrentItem.setY(String.valueOf(y));
             log("floatInfo x =  %s, y = %s", x, y);
         }
+
+        @JavascriptInterface
+        public void reqInfo() {
+            reportUserId();
+        }
+    }
+
+    private void reportUserId() {
+        if (mWebViewInit) {
+            mWebView.loadUrl("javascript:reqInfoCallback('" +
+                    LocalSPUtil.getAccountInfo().getUser_no() + "')");
+        }
     }
 
     private void updateCountHint() {
