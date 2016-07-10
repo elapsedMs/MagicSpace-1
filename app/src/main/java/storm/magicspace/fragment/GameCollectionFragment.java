@@ -24,6 +24,8 @@ import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshBase;
+import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import static storm.commonlib.common.CommonConstants.FROM;
 
@@ -31,10 +33,10 @@ import static storm.commonlib.common.CommonConstants.FROM;
  * Created by lixiaolu on 16/6/20.
  */
 public class GameCollectionFragment extends BaseFragment {
-    private ListView listView;
+    private PullToRefreshListView pullToRefreshListView;
     private WorksAdapter adapter;
     private List<Album> list = new ArrayList<>();
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private int page = 1;
 
     @Nullable
     @Override
@@ -45,26 +47,11 @@ public class GameCollectionFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         super.initView(view);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshlayout);
-        initRefreshView();
-        listView = (ListView) view.findViewById(R.id.listview);
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0)
-                    swipeRefreshLayout.setEnabled(true);
-            }
-        });
-
+        pullToRefreshListView = (PullToRefreshListView) view.findViewById(R.id.pull);
+        pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         adapter = new WorksAdapter(list, getActivity());
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        pullToRefreshListView.setAdapter(adapter);
+        pullToRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
@@ -73,36 +60,57 @@ public class GameCollectionFragment extends BaseFragment {
                 goToNext(AlbumInfoActivity.class, bundle);
             }
         });
-        new GetMyCollectionTask().execute();
-
-    }
-
-    private void initRefreshView() {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
-            public void onRefresh() {
-                new GetMyCollectionTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                page = 1;
+                new GetMyCollectionTask().execute();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                new GetMoreMyCollectionTask().execute();
             }
         });
-        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
-        swipeRefreshLayout.setEnabled(false);
+        new GetMyCollectionTask().execute();
     }
 
     private class GetMyCollectionTask extends BaseASyncTask<String, MyCollectionResponse> {
         @Override
         public MyCollectionResponse doRequest(String param) {
-            return HTTPManager.getMyCollection("game");
+            return HTTPManager.getMyCollection("game", page);
         }
 
         @Override
         protected void onPostExecute(MyCollectionResponse myCollectionResponse) {
             super.onPostExecute(myCollectionResponse);
-            swipeRefreshLayout.setRefreshing(false);
+            page++;
+            pullToRefreshListView.onRefreshComplete();
             if (myCollectionResponse == null || myCollectionResponse.data == null) {
                 Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
                 return;
             }
             list.clear();
+            list.addAll(myCollectionResponse.data);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private class GetMoreMyCollectionTask extends BaseASyncTask<String, MyCollectionResponse> {
+        @Override
+        public MyCollectionResponse doRequest(String param) {
+            return HTTPManager.getMyCollection("game", page);
+        }
+
+        @Override
+        protected void onPostExecute(MyCollectionResponse myCollectionResponse) {
+            super.onPostExecute(myCollectionResponse);
+            page++;
+            pullToRefreshListView.onRefreshComplete();
+            if (myCollectionResponse == null || myCollectionResponse.data == null) {
+                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             list.addAll(myCollectionResponse.data);
             adapter.notifyDataSetChanged();
         }

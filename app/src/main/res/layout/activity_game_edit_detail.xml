@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         style="@style/ScrollviewStyle"
@@ -19,6 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px_88"
                 android:background="#ffffff"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/px_20"
                 android:paddingRight="@dimen/px_20">
 
@@ -29,16 +30,7 @@
                     android:gravity="center"
                     android:text="主题："
                     android:textColor="#000000"
-                    android:textSize="@dimen/px_30"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_88"
-                android:layout_marginTop="@dimen/px_1"
-                android:background="#ffffff"
-                android:paddingLeft="@dimen/px_20"
-                android:paddingRight="@dimen/px_20">
+                    android:textSize="@dimen/px_30" />
 
                 <EditText
                     android:id="@+id/title"
@@ -50,8 +42,9 @@
                     android:singleLine="true"
                     android:text=""
                     android:textColor="#9c9c9c"
-                    android:textSize="@dimen/px_26"/>
+                    android:textSize="@dimen/px_26" />
             </LinearLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -69,7 +62,7 @@
                     android:gravity="center"
                     android:text="彩蛋"
                     android:textColor="#000000"
-                    android:textSize="@dimen/px_30"/>
+                    android:textSize="@dimen/px_30" />
 
                 <TextView
                     android:id="@+id/egg_count"
@@ -81,17 +74,17 @@
                     android:gravity="center"
                     android:text="10"
                     android:textColor="#9c9c9c"
-                    android:textSize="@dimen/px_26"/>
+                    android:textSize="@dimen/px_26" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px_88"
                 android:layout_marginTop="@dimen/px_20"
                 android:background="#ffffff"
                 android:paddingLeft="@dimen/px_20"
-                android:paddingRight="@dimen/px_20">
+                android:paddingRight="@dimen/px_20"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -101,7 +94,7 @@
                     android:gravity="center"
                     android:text="时间"
                     android:textColor="#000000"
-                    android:textSize="@dimen/px_30"/>
+                    android:textSize="@dimen/px_30" />
 
                 <TextView
                     android:id="@+id/time"
@@ -113,7 +106,7 @@
                     android:gravity="center"
                     android:text="12:00"
                     android:textColor="#9c9c9c"
-                    android:textSize="@dimen/px_26"/>
+                    android:textSize="@dimen/px_26" />
             </RelativeLayout>
 
             <LinearLayout
@@ -131,7 +124,7 @@
                     android:gravity="center"
                     android:text="简介"
                     android:textColor="#000000"
-                    android:textSize="@dimen/px_30"/>
+                    android:textSize="@dimen/px_30" />
             </LinearLayout>
 
             <EditText
@@ -146,7 +139,7 @@
                 android:maxEms="15"
                 android:padding="@dimen/px_20"
                 android:textColor="#9c9c9c"
-                android:textSize="@dimen/px_26"/>
+                android:textSize="@dimen/px_26" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -163,7 +156,7 @@
                     android:gravity="center"
                     android:text="我愿意付出"
                     android:textColor="#000000"
-                    android:textSize="@dimen/px_30"/>
+                    android:textSize="@dimen/px_30" />
 
                 <storm.magicspace.view.MyEditText
                     android:id="@+id/et_coin_count"
@@ -174,8 +167,9 @@
                     android:gravity="center"
                     android:maxLength="5"
                     android:numeric="integer"
+                    android:text="5"
                     android:textColor="#000000"
-                    android:textSize="@dimen/px_30"/>
+                    android:textSize="@dimen/px_30" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -184,7 +178,7 @@
                     android:gravity="center"
                     android:text="金币"
                     android:textColor="#000000"
-                    android:textSize="@dimen/px_30"/>
+                    android:textSize="@dimen/px_30" />
             </LinearLayout>
 
             <LinearLayout
@@ -200,7 +194,7 @@
                     android:gravity="center"
                     android:text="最少5个，最多20个"
                     android:textColor="#8876c2"
-                    android:textSize="@dimen/px_26"/>
+                    android:textSize="@dimen/px_26" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -208,7 +202,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="亲，制作游戏需要付出一点点金币， 不过请放心，付出可能会加倍收回来的！ 把游戏分享出去，每个通关的玩家会给你带来1个金币的收入， 最多可以收获你付出的双倍呢！ 你对你的人缘有信心吗？ 付出越多，收益越多，你的人品没问题！  你愿意放几个金币进来？"
                     android:textColor="#9c9c9c"
-                    android:textSize="@dimen/px_26"/>
+                    android:textSize="@dimen/px_26" />
             </LinearLayout>
 
         </LinearLayout>
@@ -240,7 +234,7 @@
                 android:gravity="center"
                 android:text="算了，我放弃"
                 android:textColor="#7b4fca"
-                android:textSize="@dimen/px_26"/>
+                android:textSize="@dimen/px_26" />
         </LinearLayout>
 
         <LinearLayout
@@ -258,7 +252,7 @@
                 android:gravity="center"
                 android:text="确认发布"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/px_26"/>
+                android:textSize="@dimen/px_26" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -20,6 +20,7 @@ import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
+import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.util.JsonUtil;
@@ -70,7 +71,7 @@ public class GameEditDetailActivity extends BaseActivity {
         setRightTvClickable(true);
         setRightText(R.string.share);
         setTitleBarRightTvVisibility(View.INVISIBLE);
-        mContentId = getIntent().getStringExtra("contentId");
+        mContentId = getIntent().getStringExtra(CommonConstants.CONTENT_ID);
         publishTv = findEventView(R.id.publish);
         titleTv = findEventView(R.id.title);
         eggCountTv = findEventView(R.id.egg_count);
@@ -190,6 +191,8 @@ public class GameEditDetailActivity extends BaseActivity {
 
         @Override
         public SubmitUGCContentResponse doRequest(Void param) {
+            mUCGContent.setTitle(titleTv.getText().toString());
+            mUCGContent.setDescription(descEt.getText().toString());
             String data = JsonUtil.convertObjectToJson(mUCGContent);
             return HTTPManager.submitUGCContent(mContentId, data);
         }
@@ -232,7 +235,7 @@ public class GameEditDetailActivity extends BaseActivity {
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle("魔fun全景挖彩蛋");
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl(URLConstant.GAME_SHARED_URL + mContentId);
+        oks.setTitleUrl(URLConstant.SHARED_URL + mContentId);
         // text是分享文本，所有平台都需要这个字段
         oks.setText(getString(R.string.shared_content));
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
@@ -244,7 +247,7 @@ public class GameEditDetailActivity extends BaseActivity {
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl(URLConstant.GAME_SHARED_URL + mContentId);
+        oks.setSiteUrl(URLConstant.SHARED_URL + mContentId);
 
 
         oks.setCallback(new PlatformActionListener() {

@@ -13,11 +13,13 @@ import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
+import storm.magicspace.URLConstants;
 import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.activity.GameActivity;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.URLConstant;
 import storm.magicspace.http.reponse.AddCollectResponse;
 
 import static storm.commonlib.common.CommonConstants.FROM;
@@ -77,8 +79,18 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private void initWebView(String mContentId) {
         wv_egg_info.getSettings().setJavaScriptEnabled(true);
         wv_egg_info.getSettings().setDefaultTextEncodingName("gb2312");
-        wv_egg_info.loadUrl("http://app.stemmind.com/vr/a/preview.php?c=" + mContentId);
+        wv_egg_info.loadUrl(URLConstants.URL_1 + mContentId);
         wv_egg_info.setWebViewClient(new WebViewClient());
+    }
+
+    private String getUrl(String contentId) {
+        if (CommonConstants.GAME.equals(from)) {
+            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + contentId;
+        } else if (CommonConstants.TOPIC.equals(from)) {
+            return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + contentId;
+        } else {
+            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + contentId;
+        }
     }
 
     @Override
@@ -163,3 +175,4 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
         }
     }
 }
+

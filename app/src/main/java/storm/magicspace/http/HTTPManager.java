@@ -3,6 +3,7 @@ package storm.magicspace.http;
 import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
+import storm.magicspace.bean.httpBean.CheckUpdateResponse;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
@@ -52,12 +53,13 @@ public class HTTPManager {
      *
      * @return
      */
-    public static MyWorksResponse getMyWorks() {
+    public static MyWorksResponse getMyWorks(int page) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_MY_WORKS,
                 EMPTY,
                 MyWorksResponse.class,
+                "page", page,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "authorId", LocalSPUtil.getAccountInfo().getUser_no()
         );
@@ -68,14 +70,16 @@ public class HTTPManager {
      *
      * @return
      */
-    public static MyCollectionResponse getMyCollection(String type) {
+    public static MyCollectionResponse getMyCollection(String type, int page) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_MY_COLLECTION,
                 EMPTY,
                 MyCollectionResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
-                "contentTypeId", type
+                "contentTypeId", type,
+                "page", page,
+                "pageSize", 20
         );
     }
 
@@ -84,7 +88,7 @@ public class HTTPManager {
      */
     public static EggImageListResponse getEggImageList() {
         return ServiceUtils.request(
-                RequestTypes.GET,
+                RequestTypes.POST,
                 URLConstant.URL_GET_EGG_IMAGE_LIST,
                 EMPTY,
                 EggImageListResponse.class
@@ -163,7 +167,6 @@ public class HTTPManager {
         );
     }
 
-
     public static ConponResponse GetcouponList() {
         return ServiceUtils.request(
                 RequestTypes.POST,
@@ -174,14 +177,14 @@ public class HTTPManager {
         );
     }
 
-    public static EggHttpResponse getEggList() {
+    public static EggHttpResponse getEggList(int page) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_EGG_LIST,
                 EMPTY,
                 EggHttpResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
-                "page", "1",
+                "page", page,
                 "pageSize", "20"
         );
     }
@@ -209,7 +212,15 @@ public class HTTPManager {
                 "userId", LocalSPUtil.getLoginAccountId());
     }
 
-    public static AddCollectResponse addCollect(String contentId,String type) {
+    public static CheckUpdateResponse checkAppUpdate() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.CHECK_APP_UPDATE,
+                EMPTY,
+                CheckUpdateResponse.class);
+    }
+
+    public static AddCollectResponse addCollect(String contentId, String type) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_ADD_COLLECTION,
@@ -217,7 +228,7 @@ public class HTTPManager {
                 AddCollectResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "contentId", contentId,
-                "contentTypeId",type
+                "contentTypeId", type.toLowerCase()
         );
     }
 }

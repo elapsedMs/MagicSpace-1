@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -19,6 +20,7 @@ import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.util.LogUtil;
 import storm.commonlib.common.view.dialog.MedtreeDialog;
 import storm.magicspace.R;
+import storm.magicspace.URLConstants;
 import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.URLConstant;
 
@@ -41,12 +43,12 @@ public class EggGamePreviewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFrom = configFrom();
     }
 
     private String configFrom() {
         Intent intent = getIntent();
         if (intent == null) return CommonConstants.GAME;
+        mContentId = intent.getStringExtra(CommonConstants.CONTENT_ID);
         return intent.getStringExtra(CommonConstants.FROM);
     }
 
@@ -80,12 +82,11 @@ public class EggGamePreviewActivity extends BaseActivity {
             }
         };
         wv_egg_game_preview = (WebView) findViewById(R.id.wv_egg_game_preview);
+        mFrom = configFrom();
         Intent intent = this.getIntent();
         info = (EggInfo) intent.getSerializableExtra("game_info");
-        mContentId = info.contentId;
         initWebView();
         showloadingeDialog(LOADING, "数据加载中…", "", true, true);
-
         time = new TimeCount(30 * 1000, 1000);
         time.start();
     }
@@ -102,29 +103,35 @@ public class EggGamePreviewActivity extends BaseActivity {
     }
 
     private String getUrl() {
-        if (CommonConstants.GAME.equals(mFrom)) {
-            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId;
-        } else if (CommonConstants.TOPIC.equals(mFrom)) {
-            return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId;
-        } else {
-            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId;
-        }
+        //        if (equals) {
+//            return URLConstants.URL_4 + mContentId;
+//        } else if (mFrom.equals(CommonConstants.TOPIC)) {
+//            return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId;
+//        }
+//        else {
+//            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId;
+//        }
+        if (mFrom.equals(CommonConstants.GAME)) return URLConstants.URL_4 + mContentId;
+        else return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId;
     }
 
     private class ContainerView {
 
         @JavascriptInterface
         public void goBack() {
+            Log.i("lixiaolu", "go back");
             mHandler.sendEmptyMessage(0);
         }
 
         @JavascriptInterface
         public void shareGame() {
+            Log.i("lixiaolu", "game share");
             mHandler.sendEmptyMessage(1);
         }
 
         @JavascriptInterface
         public void endGame(boolean bool) {
+            Log.i("lixiaolu", "game end");
             if (bool) {
                 mHandler.sendEmptyMessage(2);
             } else {
@@ -135,6 +142,7 @@ public class EggGamePreviewActivity extends BaseActivity {
 
         @JavascriptInterface
         public void onLoadComplete() {
+            Log.i("lixiaolu", "onLoadComplete");
             mHandler.sendEmptyMessage(4);
         }
     }

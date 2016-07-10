@@ -62,6 +62,9 @@ public class URLConstant {
     //发布游戏
     public static final String URL_UPDATE_UGC_CONTENT_SCENES = "updateUGCContentScenes";
 
+    //启动时检查版本更新
+    public static final String CHECK_APP_UPDATE = "checkAppUpdate";
+
     //同步账户信息
     public static final String URL_SYNC_ACCOUNT = "syncAccount";
 
@@ -97,7 +100,7 @@ public class URLConstant {
             "http://app.stemmind.com/vr/a/vreditor.php?ua=app&s=ugc&c=";
 
     public static final String URL_WEBVIEW_PREVIEW_TOPIC =
-            "http://app.stemmind.com/vr/a/preview.php?ua=app&s=mat&c";
+            "http://app.stemmind.com/vr/a/preview.php?ua=app&s=mat&c=";
 
     public static final String URL_WEBVIEW_PREVIEW_GAME =
             "http://app.stemmind.com/vr/a/preview.php?ua=app&s=ugc&c=";

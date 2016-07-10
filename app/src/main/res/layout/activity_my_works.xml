@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refreshlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/listview"
+    <storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/pulltor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rl_build_works"
         android:divider="@null"
-        android:dividerHeight="0dp" />
+        android:dividerHeight="0dp"
+        android:visibility="visible" />
 
     <RelativeLayout
         android:id="@+id/rl_build_works"
@@ -19,7 +21,8 @@
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:paddingBottom="@dimen/px_24"
-        android:paddingTop="@dimen/px_24">
+        android:paddingTop="@dimen/px_24"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/bt_works_build_my_works"
@@ -29,54 +32,55 @@
             android:background="@mipmap/btn_bg"
             android:text="制作我的作品"
             android:textColor="@color/white"
-            android:visibility="gone" />
+            android:visibility="visible" />
+
+
+        <FrameLayout
+            android:id="@+id/my_works_no_net_work_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/network_done" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_26"
+                android:text="暂时没有网络"
+                android:textColor="#8f8f8f"
+                android:textSize="@dimen/px_34" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_26"
+                android:text="请检查网络设置"
+                android:textColor="#8f8f8f"
+                android:textSize="@dimen/px_22" />
+
+            <TextView
+                android:id="@+id/refresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_116"
+                android:layout_marginRight="@dimen/px_116"
+                android:layout_marginTop="@dimen/px_96"
+                android:background="@drawable/shape_albun_btn"
+                android:gravity="center"
+                android:paddingBottom="@dimen/px_24"
+                android:paddingTop="@dimen/px_24"
+                android:text="刷新一下"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/px_28" />
+        </FrameLayout>
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/my_works_no_net_work_ll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/network_done" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_26"
-            android:text="暂时没有网络"
-            android:textColor="#8f8f8f"
-            android:textSize="@dimen/px_34" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_26"
-            android:text="请检查网络设置"
-            android:textColor="#8f8f8f"
-            android:textSize="@dimen/px_22" />
-
-        <TextView
-            android:id="@+id/refresh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px_116"
-            android:layout_marginRight="@dimen/px_116"
-            android:layout_marginTop="@dimen/px_96"
-            android:background="@drawable/shape_albun_btn"
-            android:gravity="center"
-            android:paddingBottom="@dimen/px_24"
-            android:paddingTop="@dimen/px_24"
-            android:text="刷新一下"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/px_28" />
-    </LinearLayout>
-
-</android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

@@ -34,6 +34,7 @@
     <string name="des">简介：</string>
     <string name="update_egg_success">彩蛋放置上传成功</string>
     <string name="update_egg_failed">彩蛋放置上传失败</string>
+    <string name="update_egg_failed_no_coin">金币不足，彩蛋放置上传失败</string>
     <string name="egg_count">彩蛋数：</string>
     <string name="call_me">或拨打客服电话</string>
     <string name="give_me_feedback">反馈您的意见或建议</string>

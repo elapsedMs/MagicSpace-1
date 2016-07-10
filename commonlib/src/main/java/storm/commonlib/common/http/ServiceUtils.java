@@ -41,10 +41,6 @@ public abstract class ServiceUtils {
     }
 
 
-    public static <T extends BaseResponse> T accountRequest(RequestTypes requestType, String path, String errorTip, Class<T> tClass, Object... keyValueList) {
-        return baseRequest(true, requestType, path, errorTip, true, tClass, Arrays.asList(keyValueList));
-    }
-
     private static <T extends BaseResponse> T baseRequest(boolean isShowMessage, RequestTypes requestType, String path, String errorTip, boolean checkResult, Class<T> tClass, java.util.List<Object> keyValueList) {
         // 远程同步
         RemotingSyncProvider.remotingSync(path);
@@ -89,9 +85,9 @@ public abstract class ServiceUtils {
 
         T result = null;
         try {
-            if (requestType == RequestTypes.POST)
-                result = HttpUtils.request(requestType, path, paramsMap, tClass);
+//            if (requestType == RequestTypes.POST)
             result = HttpUtils.request(requestType, path, paramsMap, tClass);
+//            result = HttpUtils.request(requestType, path, paramsMap, tClass);
         } catch (Exception e) {
             handleException(errorTip, e, isShowMessage);
         }

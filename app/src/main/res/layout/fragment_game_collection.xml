@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refreshlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg">
 
-    <ListView
-        android:id="@+id/listview"
+    <storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/pull"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
         android:dividerHeight="0dp" />
-</android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

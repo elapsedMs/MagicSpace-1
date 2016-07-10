@@ -1,21 +1,18 @@
 package storm.magicspace.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 
-import com.google.gson.reflect.TypeToken;
 import com.umeng.socialize.PlatformConfig;
 
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
-import storm.commonlib.common.http.baseHttpBean.ListResponse;
-import storm.commonlib.common.http.baseHttpBean.ObjectResponse;
-import storm.commonlib.common.util.JsonUtil;
 import storm.magicspace.R;
-import storm.magicspace.bean.httpBean.MyWorksResponse;
+import storm.magicspace.bean.CheckUpdate;
+import storm.magicspace.bean.httpBean.CheckUpdateResponse;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.util.LocalSPUtil;
+import storm.magicspace.view.UpdateDialog;
 
 import static storm.commonlib.common.CommonConstants.ACTIVITY_STYLE_WITH_LOADING;
 import static storm.commonlib.common.util.StringUtil.EMPTY;
@@ -30,13 +27,6 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        new Object();
-        new ObjectResponse<>();
-        Log.i("lixiaolu", JsonUtil.convertObjectToJson(new MyWorksResponse()));
-        Log.i("lixiaolu", JsonUtil.convertObjectToJson(new ListResponse<Void>()));
-        String text = "{\"date\":0,\"channel\":0,\"data_type\":0,\"status\":0,\"data\":[]}";
-
-        JsonUtil.convertJsonToObject(text, TypeToken.get(MyWorksResponse.class));
         PlatformConfig.setWeixin("wxe1bd4b6f12b6491a", "a454e2ff97ec283009e677a628ebd37d");
 
         //新浪微博
@@ -45,12 +35,10 @@ public class SplashActivity extends BaseActivity {
         //qq
         PlatformConfig.setQQZone("1105505772", "uAaqPPyC1SEVEkly");
 
-        String token = LocalSPUtil.getToken();
-        if (token != null && !token.equalsIgnoreCase(EMPTY)) {
-            LoginByToken();
-        } else {
-            goToNext(LoginActivity.class);
-        }
+
+        new CheckAppUpdate().execute();
+
+
     }
 
     private void LoginByToken() {
@@ -82,6 +70,67 @@ public class SplashActivity extends BaseActivity {
             super.onSuccessWithoutResult(baseResponse);
             dismissBaseDialog();
             goToNext(MainActivity.class);
+        }
+    }
+
+    //启动时检查版本更新
+    private class CheckAppUpdate extends BaseASyncTask<String, CheckUpdateResponse> {
+        @Override
+        public CheckUpdateResponse doRequest(String param) {
+            return HTTPManager.checkAppUpdate();
+        }
+
+        @Override
+        public void onSuccess(CheckUpdateResponse baseResponse) {
+            super.onSuccess(baseResponse);
+            dismissBaseDialog();
+            CheckUpdate checkUpdate = baseResponse.getData();
+            checkUpdate.forceInstall = "0";
+            checkUpdate.apkPath = "http://www.imooc.com/mobile/imooc.apk";
+            if (Integer.parseInt(checkUpdate.forceInstall) < 0) {
+                String token = LocalSPUtil.getToken();
+                if (token != null && !token.equalsIgnoreCase(EMPTY)) {
+                    LoginByToken();
+                } else {
+                    goToNext(LoginActivity.class);
+                }
+            } else {
+                new UpdateDialog(SplashActivity.this, checkUpdate, new UpdateDialog.OnDialogCancelListener() {
+                    @Override
+                    public void onCancel() {
+                        String token = LocalSPUtil.getToken();
+                        if (token != null && !token.equalsIgnoreCase(EMPTY)) {
+                            LoginByToken();
+                        } else {
+                            goToNext(LoginActivity.class);
+                        }
+                    }
+                }).showDialog();
+            }
+        }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+            dismissBaseDialog();
+            String token = LocalSPUtil.getToken();
+            if (token != null && !token.equalsIgnoreCase(EMPTY)) {
+                LoginByToken();
+            } else {
+                goToNext(LoginActivity.class);
+            }
+        }
+
+        @Override
+        public void onSuccessWithoutResult(CheckUpdateResponse baseResponse) {
+            super.onSuccessWithoutResult(baseResponse);
+            dismissBaseDialog();
+            String token = LocalSPUtil.getToken();
+            if (token != null && !token.equalsIgnoreCase(EMPTY)) {
+                LoginByToken();
+            } else {
+                goToNext(LoginActivity.class);
+            }
         }
     }
 
