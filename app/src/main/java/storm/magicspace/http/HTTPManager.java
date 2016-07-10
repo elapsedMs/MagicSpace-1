@@ -16,6 +16,7 @@ import storm.magicspace.http.reponse.AddCollectResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.http.reponse.ConponResponse;
 import storm.magicspace.http.reponse.EggHttpResponse;
+import storm.magicspace.http.reponse.InitResponse;
 import storm.magicspace.util.LocalSPUtil;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
@@ -44,6 +45,15 @@ public class HTTPManager {
                 EMPTY,
                 UserInfoResponse.class,
                 "userId", "1"
+        );
+    }
+
+    public static InitResponse initAppConfig() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                EMPTY,
+                EMPTY,
+                InitResponse.class
         );
     }
 
@@ -109,6 +119,7 @@ public class HTTPManager {
                 "sourceId", sourceId
         );
     }
+
     /**
      * 发表UGC主题
      */

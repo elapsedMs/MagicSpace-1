@@ -11,10 +11,10 @@ public class HttpConstants {
 
     public static String ACCOUNT_HOST_URL = "http://sso.mojing.cn/user/api/";
 
-    public static final String DEBUG_HOST = SERVER_DOMAIN_URL + SERVER_SECOND_URL;
-//    public static final String DEBUG_HOST = "";
+    public static final String API_HOST = SERVER_DOMAIN_URL + SERVER_SECOND_URL;
+//    public static final String API_HOST = "";
 
-    public static final String REAL_HOST = DEBUG_HOST;
+    public static final String INIT_HOST = "http://app.stemmind.com/MFconf/?v=1";
     public static final String X_AUTH_TOKEN = "X-AUTH-TOKEN";
     public static final String CONTENT_TYPE = "Content-Type";
 

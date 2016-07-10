@@ -160,6 +160,6 @@ public class HttpUtils {
     }
 
     public static void setAppModel(boolean isDebug) {
-        setHostUri(isDebug ? HttpConstants.DEBUG_HOST : HttpConstants.REAL_HOST);
+        setHostUri(isDebug ? HttpConstants.API_HOST : HttpConstants.INIT_HOST);
     }
 }

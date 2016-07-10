@@ -40,6 +40,10 @@ public abstract class ServiceUtils {
         return baseRequest(true, requestType, path, errorTip, true, tClass, Arrays.asList(keyValueList));
     }
 
+    public static <T extends BaseResponse> T initRequest(RequestTypes requestType, String path, String errorTip, Class<T> tClass, Object... keyValueList) {
+        return baseRequest(true, requestType, path, errorTip, true, tClass, Arrays.asList(keyValueList));
+    }
+
 
     private static <T extends BaseResponse> T baseRequest(boolean isShowMessage, RequestTypes requestType, String path, String errorTip, boolean checkResult, Class<T> tClass, java.util.List<Object> keyValueList) {
         // 远程同步
