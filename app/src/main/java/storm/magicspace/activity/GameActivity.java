@@ -311,7 +311,11 @@ public class GameActivity extends FragmentActivity {
     private void initEggs() {
         updateEggsCountHint(mEggsCount = EGG_INIT_COUNT);
         new GetEggImageListTask().execute();
-        new IssueUGCContentTask().execute();
+        if (CommonConstants.GAME.equals(mFrom)) {
+            new IssueUGCContentWithGameTask().execute();
+        } else {
+            new IssueUGCContentTask().execute();
+        }
     }
 
     private void initGuide() {
@@ -343,27 +347,53 @@ public class GameActivity extends FragmentActivity {
         @Override
         public void onSuccess(IssueUCGContentResponse response) {
             super.onSuccess(response);
-            IssueUCGContent data = response.getData();
-            if (data == null) return;
-            mUCGContent = data;
-            if (mUCGContent == null) return;
-            List<UGCScene> scenes = mUCGContent.getScenes();
-            if (scenes == null) return;
-            mUCGScene = scenes.get(0);
-            mUGCItems = mUCGScene.getItems();
-            if (mUGCItems == null) return;
-            for (UGCItem ugcItem : mUGCItems) {
-                mEggInfos.put(ugcItem.getItemId(), ugcItem);
-            }
+            issueSuccess(response);
         }
 
         @Override
         public void onFailed(IssueUCGContentResponse response) {
             super.onFailed(response);
-            float status = response.getStatus();
-            if (status == 1001) {
-                mCoinError = true;
-            }
+            issueFailed(response);
+        }
+    }
+
+    private class IssueUGCContentWithGameTask extends BaseASyncTask<Void, IssueUCGContentResponse> {
+        @Override
+        public IssueUCGContentResponse doRequest(Void param) {
+            return HTTPManager.issueUCCContent("", "", mContentId, "game");
+        }
+
+        @Override
+        public void onSuccess(IssueUCGContentResponse response) {
+            super.onSuccess(response);
+            issueSuccess(response);
+        }
+
+        @Override
+        public void onFailed(IssueUCGContentResponse response) {
+            super.onFailed(response);
+            issueFailed(response);
+        }
+    }
+
+    private void issueFailed(IssueUCGContentResponse response) {
+        float status = response.getStatus();
+        if (status == 1001) {
+            mCoinError = true;
+        }
+    }
+
+    private void issueSuccess(IssueUCGContentResponse response) {
+        IssueUCGContent data = response.getData();
+        if (data == null) return;
+        mUCGContent = data;
+        List<UGCScene> scenes = mUCGContent.getScenes();
+        if (scenes == null) return;
+        mUCGScene = scenes.get(0);
+        mUGCItems = mUCGScene.getItems();
+        if (mUGCItems == null) return;
+        for (UGCItem ugcItem : mUGCItems) {
+            mEggInfos.put(ugcItem.getItemId(), ugcItem);
         }
     }
 
@@ -412,6 +442,7 @@ public class GameActivity extends FragmentActivity {
             mEggsCount = mEggsCount + 1;
             updateEggsCountHint(mEggsCount);
         }
+
         @Override
         public void onFailed() {
             super.onFailed();
@@ -473,7 +504,7 @@ public class GameActivity extends FragmentActivity {
         fragment.setOnEggClickListener(new EggsAdapter.ClickInterface() {
             @Override
             public void onClick(int position, String url, Bitmap bitmap) {
-                log("egg image, position = %s, url = %s" ,position, url);
+                log("egg image, position = %s, url = %s", position, url);
                 mFloatView.useExtraMatrix(mFromEdit);
                 //mFloatView.setImageBitmap(null);
                 mFloatView.setImageBitmap(bitmap);
@@ -711,13 +742,10 @@ public class GameActivity extends FragmentActivity {
     }
 
     private String getUrl() {
-        if (CommonConstants.GAME.equals(mFrom)) {
+        if (mFrom.equals(CommonConstants.GAME))
             return URLConstant.URL_WEBVIEW_GAME + mContentId;
-        } else if (CommonConstants.TOPIC.equals(mFrom)) {
+        else
             return URLConstant.URL_WEBVIEW_TOPIC + mContentId;
-        } else {
-            return URLConstant.URL_WEBVIEW_GAME + mContentId;
-        }
     }
 
     private class ContainerView {
@@ -725,7 +753,7 @@ public class GameActivity extends FragmentActivity {
         @JavascriptInterface
         public void editItem(String contentId, String sceneId, String itemId) {
             log("[JS editItem] >>> contentId = %s, sceneId =  %s, itemId = %s"
-                    ,contentId ,sceneId, itemId);
+                    , contentId, sceneId, itemId);
             mEggsCount = mEggsCount - 1;
             mEggsCount = mEggsCount >= 0 ? mEggsCount : 0;
             UGCItem ugcItem = mEggInfos.get(itemId);
@@ -751,6 +779,18 @@ public class GameActivity extends FragmentActivity {
             mCurrentItem.setX(String.valueOf(x));
             mCurrentItem.setY(String.valueOf(y));
             log("floatInfo x =  %s, y = %s", x, y);
+        }
+
+        @JavascriptInterface
+        public void reqInfo() {
+            reportUserId();
+        }
+    }
+
+    private void reportUserId() {
+        if (mWebViewInit) {
+            mWebView.loadUrl("javascript:reqInfoCallback('" +
+                    LocalSPUtil.getAccountInfo().getUser_no() + "')");
         }
     }
 
@@ -787,7 +827,7 @@ public class GameActivity extends FragmentActivity {
                 mFloatView.setImageBitmap(null);
                 mFloatView.setFloatView(bitmap, scale, rotate);
                 mFloatView.setFloatAlpha(alpha);
-                mAlphaBar.setProgress((int) (alpha*100));
+                mAlphaBar.setProgress((int) (alpha * 100));
             }
         });
     }

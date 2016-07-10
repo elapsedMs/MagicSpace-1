@@ -1,5 +1,6 @@
 package storm.magicspace.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.List;
 
@@ -80,7 +83,8 @@ public class WorksAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
 //                    Toast.makeText(context, "跳转开发中", 1).show();
-                    showShare("http://app.stemmind.com/vr/html/gamedetail.php?c=" + album.getContentId());
+//                    showShare("http://app.stemmind.com/vr/html/gamedetail.php?c=" + album.getContentId());
+                    setShare("http://app.stemmind.com/vr/html/gamedetail.php?c=" + album.getContentId());
                 }
             });
         }
@@ -124,5 +128,19 @@ public class WorksAdapter extends BaseAdapter {
 
 // 启动分享GUI
         oks.show(getApplication());
+    }
+
+    public void setShare(String mContentId){
+
+        final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
+                {
+                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA,
+                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE
+                };
+        new ShareAction((Activity) context).setDisplayList(displaylist)
+                .withText( getApplication().getString(R.string.shared_content) )
+                .withTitle("魔fun全景挖彩蛋")
+                .withTargetUrl(URLConstant.SHARED_URL + mContentId)
+                .open();
     }
 }

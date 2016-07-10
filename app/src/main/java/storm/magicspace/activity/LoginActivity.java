@@ -112,7 +112,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void doLogin(String name, String password) {
-        showBaseDialog(MedtreeDialog.DisplayStyle.LOADING, "登录", "登录中，请耐心等候。。。", false, true);
+        showBaseDialog(MedtreeDialog.DisplayStyle.LOADING, "登录", "登录中，请耐心等候。。。", true, true);
         new LoginTask().execute(name, password);
     }
 

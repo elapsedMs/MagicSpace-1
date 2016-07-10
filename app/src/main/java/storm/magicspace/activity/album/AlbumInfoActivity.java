@@ -32,6 +32,7 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private Button leftBT;
     private String from = "";
     private Button rightBt;
+    private String comFrom = "";
 
     public AlbumInfoActivity() {
         super(R.layout.album_info, CommonConstants.ACTIVITY_STYLE_WITH_TITLE_BAR);
@@ -43,6 +44,8 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
         Intent intent = this.getIntent();
         info = (Album) intent.getSerializableExtra("album");
         from = (String) intent.getSerializableExtra(FROM);
+        String serializableExtra = (String) intent.getSerializableExtra(CommonConstants.COME_FROM);
+        comFrom = serializableExtra == null ? "" : serializableExtra;
 
         leftBT = findEventView(R.id.bt_egg_game_info_left);
         rightBt = findEventView(R.id.bt_egg_game_info_right);
@@ -79,7 +82,16 @@ public class AlbumInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private void initWebView(String mContentId) {
         wv_egg_info.getSettings().setJavaScriptEnabled(true);
         wv_egg_info.getSettings().setDefaultTextEncodingName("gb2312");
-        wv_egg_info.loadUrl(URLConstants.URL_1 + mContentId);
+        if (comFrom.equals(CommonConstants.MY_WORKS)) {
+            wv_egg_info.loadUrl(URLConstants.URL_2 + mContentId);
+        } else {
+            if (CommonConstants.GAME.equals(from))
+                wv_egg_info.loadUrl(URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId);
+            else
+                wv_egg_info.loadUrl(URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId);
+
+        }
+
         wv_egg_info.setWebViewClient(new WebViewClient());
     }
 

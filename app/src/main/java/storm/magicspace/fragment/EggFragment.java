@@ -50,9 +50,10 @@ public class EggFragment extends BaseFragment {
         no_net_work_ll_egg = findView(view, R.id.no_net_work_ll_egg);
         pullToRefreshListView = (PullToRefreshListView) view.findViewById(R.id.pulltorefre);
         adapter = new EggAdapter(getActivity(), egginfoList);
-        pullToRefreshListView.setAdapter(adapter);
         pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
-        pullToRefreshListView.setOnItemClickListener(this);
+        ListView listView = pullToRefreshListView.getRefreshableView();
+        listView.setOnItemClickListener(this);
+        listView.setAdapter(adapter);
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -74,7 +75,7 @@ public class EggFragment extends BaseFragment {
         super.onLocalItemClicked(parent, view, position, id);
         Intent intent = new Intent(getActivity(), EggGameInfoActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("game_info", egginfoList.get(position));
+        bundle.putSerializable("game_info", egginfoList.get(position-1));
         intent.putExtras(bundle);
         this.startActivity(intent);
     }

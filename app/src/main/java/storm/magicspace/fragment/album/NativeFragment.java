@@ -82,7 +82,7 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("album", list.get(position));
+                bundle.putSerializable("album", list.get(position-1));
                 bundle.putSerializable(FROM, CommonConstants.TOPIC);
                 goToNext(AlbumInfoActivity.class, bundle);
             }

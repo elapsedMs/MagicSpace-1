@@ -19,4 +19,6 @@ public class CommonConstants {
     public static final String GAME = "GAME";
     public static final String TOPIC = "TOPIC";
     public static final String CONTENT_ID = "contentId";
+    public static final String COME_FROM = "COME_FROM";
+    public static final String MY_WORKS = "MY_WORKS";
 }

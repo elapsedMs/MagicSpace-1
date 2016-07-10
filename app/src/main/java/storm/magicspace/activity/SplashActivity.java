@@ -6,11 +6,13 @@ import com.umeng.socialize.PlatformConfig;
 
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
+import storm.commonlib.common.http.HttpUtils;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
 import storm.magicspace.R;
 import storm.magicspace.bean.CheckUpdate;
 import storm.magicspace.bean.httpBean.CheckUpdateResponse;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.reponse.InitResponse;
 import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.UpdateDialog;
 
@@ -27,6 +29,19 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initURL();
+
+        initYouMeng();
+
+    }
+
+    private void initURL() {
+        HttpUtils.setAppModel(false);
+        new InitTask().execute();
+    }
+
+    private void initYouMeng() {
+        //微信
         PlatformConfig.setWeixin("wxe1bd4b6f12b6491a", "a454e2ff97ec283009e677a628ebd37d");
 
         //新浪微博
@@ -34,15 +49,15 @@ public class SplashActivity extends BaseActivity {
 
         //qq
         PlatformConfig.setQQZone("1105505772", "uAaqPPyC1SEVEkly");
-
-
-        new CheckAppUpdate().execute();
-
-
     }
 
-    private void LoginByToken() {
-        new AutoLoginTask().execute();
+    private void loginByToken() {
+        String token = LocalSPUtil.getToken();
+        if (token != null && !token.equalsIgnoreCase(EMPTY)) {
+            new AutoLoginTask().execute();
+        } else {
+            goToNext(LoginActivity.class);
+        }
     }
 
     private class AutoLoginTask extends BaseASyncTask<String, BaseResponse> {
@@ -88,50 +103,68 @@ public class SplashActivity extends BaseActivity {
             checkUpdate.forceInstall = "0";
             checkUpdate.apkPath = "http://www.imooc.com/mobile/imooc.apk";
             if (Integer.parseInt(checkUpdate.forceInstall) < 0) {
-                String token = LocalSPUtil.getToken();
-                if (token != null && !token.equalsIgnoreCase(EMPTY)) {
-                    LoginByToken();
-                } else {
-                    goToNext(LoginActivity.class);
-                }
+                loginByToken();
             } else {
                 new UpdateDialog(SplashActivity.this, checkUpdate, new UpdateDialog.OnDialogCancelListener() {
                     @Override
                     public void onCancel() {
-                        String token = LocalSPUtil.getToken();
-                        if (token != null && !token.equalsIgnoreCase(EMPTY)) {
-                            LoginByToken();
-                        } else {
-                            goToNext(LoginActivity.class);
-                        }
+                        loginByToken();
                     }
                 }).showDialog();
             }
+
         }
 
         @Override
         public void onFailed() {
             super.onFailed();
             dismissBaseDialog();
-            String token = LocalSPUtil.getToken();
-            if (token != null && !token.equalsIgnoreCase(EMPTY)) {
-                LoginByToken();
-            } else {
-                goToNext(LoginActivity.class);
-            }
+            loginByToken();
         }
 
         @Override
         public void onSuccessWithoutResult(CheckUpdateResponse baseResponse) {
             super.onSuccessWithoutResult(baseResponse);
             dismissBaseDialog();
-            String token = LocalSPUtil.getToken();
-            if (token != null && !token.equalsIgnoreCase(EMPTY)) {
-                LoginByToken();
-            } else {
-                goToNext(LoginActivity.class);
-            }
+            loginByToken();
         }
     }
 
+    private class InitTask extends BaseASyncTask<Void, InitResponse> {
+
+        @Override
+        public InitResponse doRequest(Void param) {
+            return HTTPManager.initAppConfig();
+
+        }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+
+            loginByToken();
+            HttpUtils.setAppModel(true);
+        }
+
+        @Override
+        public void onFailed(InitResponse initResponse) {
+            super.onFailed(initResponse);
+            loginByToken();
+            HttpUtils.setAppModel(true);
+        }
+
+        @Override
+        public void onSuccess(InitResponse initResponse) {
+            super.onSuccess(initResponse);
+            new CheckAppUpdate().execute();
+            HttpUtils.setAppModel(true);
+        }
+
+        @Override
+        public void onSuccessWithoutResult(InitResponse initResponse) {
+            super.onSuccessWithoutResult(initResponse);
+            loginByToken();
+            HttpUtils.setAppModel(true);
+        }
+    }
 }

@@ -8,12 +8,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.CommonConstants;
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
+import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.reponse.EggHttpResponse;
+import storm.magicspace.http.reponse.ShareUrlResponse;
 
 /**
  * Created by py on 2016/6/16.
@@ -36,7 +44,7 @@ public class AboutUsActivity extends BaseActivity {
         rl_share = findEventView(R.id.rl_share);
         setActivityTitle(getResources().getString(R.string.about_us));
         setTitleRightBtVisibility(View.GONE);
-        tv_version.setText(getVersion());
+        tv_version.setText("魔fun version " + getVersion());
     }
 
     public static void startActivity(Context context) {
@@ -49,8 +57,11 @@ public class AboutUsActivity extends BaseActivity {
         super.onLocalClicked(resId);
         switch (resId) {
             case R.id.rl_share:
-                showShare();
+//                showShare();
+//                setShare();
+                new getUrl().execute();
                 break;
+
 
             case R.id.rl_assessment:
 
@@ -104,6 +115,39 @@ public class AboutUsActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
             return "获取版本号失败";
+        }
+    }
+
+    public void setShare(String url) {
+
+        final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
+                {
+                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA,
+                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE
+                };
+        new ShareAction(this).setDisplayList(displaylist)
+                .withText(getString(R.string.shared_content))
+                .withTitle("魔fun全景挖彩蛋")
+//                .withTargetUrl("http://app.stemmind.com/vr/a/tour.html")
+                .withTargetUrl(url)
+                .open();
+    }
+
+    private class getUrl extends BaseASyncTask<Void, ShareUrlResponse> {
+        @Override
+        public ShareUrlResponse doRequest(Void param) {
+            return HTTPManager.getUrl();
+        }
+
+        @Override
+        public void onSuccess(ShareUrlResponse response) {
+            super.onSuccess(response);
+            setShare(response.data.url == null ? "" : response.data.url);
+        }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
         }
     }
 }

@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -128,7 +131,7 @@ public class GameEditDetailActivity extends BaseActivity {
         super.onLocalClicked(resId);
         switch (resId) {
             case R.id.give_up:
-                finish();
+                postAndFinish();
                 break;
             case R.id.publish:
                 publish();
@@ -143,12 +146,16 @@ public class GameEditDetailActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    PublishEvent publishEvent = new PublishEvent();
-                    EventBus.getDefault().post(publishEvent);
-                    finish();
+                    postAndFinish();
                 }
             });
         }
+    }
+
+    private void postAndFinish() {
+        PublishEvent publishEvent = new PublishEvent();
+        EventBus.getDefault().post(publishEvent);
+        finish();
     }
 
     private void publish() {
@@ -201,7 +208,8 @@ public class GameEditDetailActivity extends BaseActivity {
         public void onSuccess(SubmitUGCContentResponse response) {
             super.onSuccess(response);
             Toast.makeText(GameEditDetailActivity.this, "游戏发布成功", Toast.LENGTH_SHORT).show();
-            showShare();
+//            showShare();
+            setShare();
             success = true;
         }
 
@@ -257,9 +265,7 @@ public class GameEditDetailActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        PublishEvent publishEvent = new PublishEvent();
-                        EventBus.getDefault().post(publishEvent);
-                        finish();
+                        postAndFinish();
                     }
                 });
             }
@@ -291,5 +297,18 @@ public class GameEditDetailActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+    public void setShare(){
+
+        final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
+                {
+                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA,
+                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE
+                };
+        new ShareAction(this).setDisplayList(displaylist )
+                .withText( getString(R.string.shared_content) )
+                .withTitle("魔fun全景挖彩蛋")
+                .withTargetUrl(URLConstant.SHARED_URL + mContentId)
+                .open();
     }
 }

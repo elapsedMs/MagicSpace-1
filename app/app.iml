@@ -103,18 +103,17 @@
     <orderEntry type="library" exported="" name="SocialSDK_tencentWB_2" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_tencentWB_1" level="project" />
     <orderEntry type="library" exported="" name="gson-2.6.2" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-SinaWeibo-2.7.3" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Core-2.7.3" level="project" />
     <orderEntry type="library" exported="" name="MobCommons-2016.0623.1641" level="project" />
+    <orderEntry type="library" exported="" name="okio-1.6.0" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.5" level="project" />
     <orderEntry type="library" exported="" name="roboguice-4.0.0" level="project" />
     <orderEntry type="library" exported="" name="umeng-analytics-v6.0.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QQ-2.7.3" level="project" />
-    <orderEntry type="library" exported="" name="eventbus-3.0.0" level="project" />
     <orderEntry type="library" exported="" name="joda-time-2.9.4" level="project" />
+    <orderEntry type="library" exported="" name="eventbus-3.0.0" level="project" />
     <orderEntry type="library" exported="" name="umeng_social_sdk" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-21.0.0" level="project" />
-    <orderEntry type="library" exported="" name="utdid4all-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="support-v4-24.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_QQZone_3" level="project" />
     <orderEntry type="library" exported="" name="retrofit-1.9.0" level="project" />
@@ -124,13 +123,15 @@
     <orderEntry type="library" exported="" name="haha-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-android-1.4-beta2" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-watcher-1.4-beta2" level="project" />
+    <orderEntry type="library" exported="" name="wire-runtime-2.1.2" level="project" />
     <orderEntry type="library" exported="" name="com.umeng.fb.5.4.0" level="project" />
     <orderEntry type="library" exported="" name="open_sdk_r5509" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-24.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="commons-httpclient-3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-24.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.7.3" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Moments-2.7.3" level="project" />
+    <orderEntry type="module" module-name="PushSDK" exported="" />
     <orderEntry type="module" module-name="commonlib" exported="" />
     <orderEntry type="module" module-name="multhreaddownload2" exported="" />
   </component>
