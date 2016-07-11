@@ -2,39 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/Users/medtree/MagicSpace/app/build/intermediates/exploded-aar/MagicSpace/PushSDK/unspecified/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="e204fcd1831ec14b9491954d04a06068d1dbc46e">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-363de648dcd6e5ae281f755a2155a7662dfef9f3.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/okio-1.6.0-825b077f56b1d4e342f3bbc87c4eb92b42f48ee8.jar" />
-    </item>
-    <item
         jar="/Users/medtree/MagicSpace/app/build/intermediates/exploded-aar/MagicSpace/commonlib/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="43bf1536c586dc8cabae5c938f9df1e9c0409226">
+        sha1="64d134c8d776d319cb48a15032ea0337e8a41cb3">
         <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/classes-2cf2f0ceb273e638065b55618980662de19454f5.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/.gradle/caches/modules-2/files-2.1/com.squareup.wire/wire-runtime/2.1.2/fcaa443f7b6ad5f2d9b6a68c55972a366aaac5a/wire-runtime-2.1.2.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="0fcaa443f7b6ad5f2d9b6a68c55972a366aaac5a">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/wire-runtime-2.1.2-2b0ec0fa14b70f68d5a6d20bd0290af91e4ae5f7.jar" />
-    </item>
-    <item
-        jar="/Users/medtree/MagicSpace/app/build/intermediates/exploded-aar/MagicSpace/PushSDK/unspecified/jars/libs/com.umeng.message_v2.8.1.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="55478c4b57698fcd5b42a97aad5996232aa88c0c">
-        <dex dex="/Users/medtree/MagicSpace/app/build/intermediates/pre-dexed/debug/com.umeng.message_v2.8.1-23a8f492505879afa80514aae5ee3a3df8813b6d.jar" />
     </item>
 
 </items>
