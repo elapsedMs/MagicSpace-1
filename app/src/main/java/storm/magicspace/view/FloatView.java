@@ -65,6 +65,7 @@ public class FloatView extends ImageView {
     private Paint mBitmapPaint;
     private float mRealScale;
     private int mTogglePadding = DEFAULT_PADDING;
+    private boolean mRecord;
 
 
     public FloatView(Context context) {
@@ -134,6 +135,7 @@ public class FloatView extends ImageView {
      * @param alpha the range of transparency 0.0 ~ 1.0
      */
     public void setFloatAlpha(float alpha) {
+        mRecord = true;
         mBitmapPaint.setAlpha((int)(255 * (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * alpha)));
         invalidate();
     }
@@ -262,7 +264,8 @@ public class FloatView extends ImageView {
             // alpha
             float alpha = mBitmapPaint.getAlpha() * 1.0f / 255;
 
-            Log.d(TAG, "x = " + x + ", y = " + y + ", scale = " + scale + ", rotate = " + degree);
+            Log.d(TAG, "x = " + x + ", y = " + y + ", scale = " + scale + ", rotate = " + degree
+                    + ", alpha = " + alpha);
 
             FloatInfo floatInfo = new FloatInfo(x, y, alpha, scale, degree);
             mListener.floatInfo(floatInfo);
@@ -431,6 +434,11 @@ public class FloatView extends ImageView {
             canvas.save();
 
             canvas.drawBitmap(mBitmap, matrix, mBitmapPaint);
+
+            if (mRecord) {
+                getLastSnapshot();
+                mRecord = false;
+            }
 
             float val1 = values[2];
             float val2 = values[5];
