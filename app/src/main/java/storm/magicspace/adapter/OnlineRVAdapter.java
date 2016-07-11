@@ -32,53 +32,72 @@ import static storm.commonlib.common.CommonConstants.FROM;
 public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHolder> {
     private static final int TYPE_HEADER = 1;
     private static final int TYPE_NORMAL = 2;
+    private static final int TYPE_FOOTER = 3;
     private List<Album> list;
     private Context context;
     private OnRecyclerViewClickListener onRecyclerViewClickListener;
     private boolean isLimit = false;
-    private View mHeaderView;
+    private View mHeaderView = null;
+    private View mFooterView = null;
+    private int limit;
 
-    public OnlineRVAdapter(List<Album> list, Context context, boolean isLimit) {
+    public OnlineRVAdapter(List<Album> list, Context context) {
         this.list = list;
         this.context = context;
-        this.isLimit = isLimit;
         saveContentIds(list);
     }
 
-    public OnlineRVAdapter(List<Album> list, Context context, boolean isLimit, View header) {
-        if (header == null) {
-            throw new IllegalArgumentException("header may not be null");
-        }
-        this.list = list;
-        this.context = context;
-        this.isLimit = isLimit;
-        saveContentIds(list);
-        mHeaderView = header;
+    public void setLimit(int limit) {
+        isLimit = true;
+        this.limit = limit;
+    }
+
+    public void setHeaderView(View header) {
+        this.mHeaderView = header;
+    }
+
+    public void setFooterView(View footer) {
+        this.mFooterView = footer;
+        hideFooter();
+    }
+
+    public void showFooter() {
+        mFooterView.setVisibility(View.VISIBLE);
+    }
+
+    public void hideFooter() {
+        mFooterView.setVisibility(View.GONE);
     }
 
     public boolean isHeader(int position) {
         return getItemViewType(position) == TYPE_HEADER;
     }
 
+    public boolean isFooter(int position) {
+        return getItemViewType(position) == TYPE_FOOTER;
+    }
+
     @Override
     public int getItemViewType(int position) {
-        if (mHeaderView == null) return TYPE_NORMAL;
-        if (position == 0) return TYPE_HEADER;
-        return TYPE_NORMAL;
+        if (position == 0 && mHeaderView != null) return TYPE_HEADER;
+        else if (position == getItemCount() - 1 && mFooterView != null) return TYPE_FOOTER;
+        else return TYPE_NORMAL;
     }
 
     @Override
     public OnlineRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d("gdq", "onCreateViewHolder");
         if (mHeaderView != null && viewType == TYPE_HEADER) return new ViewHolder(mHeaderView);
+        if (mFooterView != null && viewType == TYPE_FOOTER) return new ViewHolder(mFooterView);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_album_online, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.d("gdq", "onBindViewHolder postion :" + position);
         if (isHeader(position)) {
+            return;
+        }
+        if (isFooter(position)) {
             return;
         }
         final int pos;
@@ -103,7 +122,7 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
                 onRecyclerViewClickListener.onItemClick(pos);
             }
         });
-
+//
         holder.downloadIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,8 +134,26 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-//        return list.size() + 1;
-        return list == null ? 0 : (isLimit ? (mHeaderView == null ? (list.size() <= 6 ? list.size() : 6) : (list.size() <= 6 ? list.size() + 1 : 7)) : (mHeaderView == null ? list.size() : list.size() + 1));
+//        return  20;
+        if (list == null) return 0;
+        if (isLimit) {
+            if (list.size() > limit) {
+                return getItemCountByLimit(limit);
+            } else {
+                return getItemCountByLimit(list.size());
+            }
+        } else {
+            return getItemCountByLimit(list.size());
+        }
+//        return list == null ? 0 : (isLimit ? (mHeaderView == null ? (list.size() <= 6 ? list.size() : 6) : (list.size() <= 6 ? list.size() + 1 : 7)) : (mHeaderView == null ? list.size() : list.size() + 1));
+    }
+
+    private int getItemCountByLimit(int count) {
+        if (mHeaderView == null && mFooterView == null)
+            return count;
+        else if ((mHeaderView == null && mFooterView != null) || (mHeaderView != null && mFooterView == null))
+            return count + 1;
+        else return count + 2;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -129,7 +166,7 @@ public class OnlineRVAdapter extends RecyclerView.Adapter<OnlineRVAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            if (itemView == mHeaderView) return;
+            if (itemView == mHeaderView || itemView == mFooterView) return;
             albumPicView = (AlbumPicView) itemView.findViewById(R.id.picview);
             nameTv = (TextView) itemView.findViewById(R.id.name);
             descTv = (TextView) itemView.findViewById(R.id.desc);

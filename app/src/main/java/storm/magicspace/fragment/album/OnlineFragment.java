@@ -92,7 +92,9 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
         recyclerView.setLayoutManager(layoutManagernew);
         mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header_album, recyclerView, false);
 
-        adapter = new OnlineRVAdapter(albumList, getActivity(), true, mHeaderView);
+        adapter = new OnlineRVAdapter(albumList, getActivity());
+        adapter.setLimit(6);
+        adapter.setHeaderView(mHeaderView);
         recyclerView.setAdapter(adapter);
 
         layoutManagernew.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -171,7 +173,7 @@ public class OnlineFragment extends BaseFragment implements ViewPager.OnPageChan
     private class TestTask extends BaseASyncTask<Void, AlbumResponse> {
         @Override
         public AlbumResponse doRequest(Void param) {
-            return HTTPManager.test("");
+            return HTTPManager.test("", 1);
 
         }
 

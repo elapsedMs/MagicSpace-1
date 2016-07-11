@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.gdq.multhreaddownload.download.bean.FileInfo;
@@ -29,6 +30,8 @@ public class GuessYouLikeActivity extends BaseActivity {
     private OnlineRVAdapter adapter;
     private List<Album> albumList = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
+    private View mFooterView;
+    private int page = 1;
 
     public GuessYouLikeActivity() {
         super(R.layout.activity_guess_you_like);
@@ -39,16 +42,17 @@ public class GuessYouLikeActivity extends BaseActivity {
         setActivityTitle("图库");
         setTitleLeftBtVisibility(View.VISIBLE);
         super.initView();
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshlayout);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshlayout1);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mFooterView = LayoutInflater.from(this).inflate(R.layout.footer_guess_u_like, null);
         initRecyclerView();
         initRefreshView();
         new TestTask().execute();
-
     }
 
     private void initRecyclerView() {
-        adapter = new OnlineRVAdapter(albumList, this, false);
+        adapter = new OnlineRVAdapter(albumList, this);
+        adapter.setFooterView(mFooterView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.addItemDecoration(new GridItemDecoration(this));
@@ -77,6 +81,11 @@ public class GuessYouLikeActivity extends BaseActivity {
                 if (!recyclerView.canScrollVertically(-1)) {
                     swipeRefreshLayout.setEnabled(true);
                 }
+                if (!recyclerView.canScrollVertically(1)) {
+//                    recyclerView.setEnabled(false);
+//                    adapter.showFooter();
+//                    new MoreTestTask().execute();
+                }
             }
         });
     }
@@ -85,6 +94,7 @@ public class GuessYouLikeActivity extends BaseActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                page = 1;
                 new TestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
@@ -96,17 +106,39 @@ public class GuessYouLikeActivity extends BaseActivity {
     private class TestTask extends BaseASyncTask<Void, AlbumResponse> {
         @Override
         public AlbumResponse doRequest(Void param) {
-            return HTTPManager.test("newest");
+            return HTTPManager.test("newest", page);
 
         }
 
         @Override
         public void onSuccess(AlbumResponse albumResponse) {
             super.onSuccess(albumResponse);
+            page++;
             swipeRefreshLayout.setRefreshing(false);
             albumList.clear();
             albumList.addAll(albumResponse.data);
             adapter.notifyDataSetChanged();
         }
+
+    }
+
+
+    private class MoreTestTask extends BaseASyncTask<Void, AlbumResponse> {
+        @Override
+        public AlbumResponse doRequest(Void param) {
+            return HTTPManager.test("newest", page);
+
+        }
+
+        @Override
+        public void onSuccess(AlbumResponse albumResponse) {
+            super.onSuccess(albumResponse);
+            page++;
+            adapter.hideFooter();
+            recyclerView.setEnabled(true);
+            albumList.addAll(albumResponse.data);
+            adapter.notifyDataSetChanged();
+        }
+
     }
 }

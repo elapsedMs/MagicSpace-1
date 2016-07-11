@@ -26,13 +26,14 @@ import static storm.commonlib.common.util.StringUtil.EMPTY;
 
 public class HTTPManager {
 
-    public static AlbumResponse test(String contentListType) {
+    public static AlbumResponse test(String contentListType, int page) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_MATERIAL_LIST,
                 EMPTY,
                 AlbumResponse.class,
-                "contentListType", contentListType
+                "contentListType", contentListType,
+                "page", page
         );
     }
 
@@ -263,6 +264,7 @@ public class HTTPManager {
                 "contentTypeId", type.toLowerCase()
         );
     }
+
     public static ShareUrlResponse getUrl() {
         return ServiceUtils.request(
                 RequestTypes.POST,
@@ -280,10 +282,11 @@ public class HTTPManager {
                 ShareUrlResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "contentId", mgameEnd.contentId,
-                "duration",  mgameEnd.duration,
-                "isWon",  mgameEnd.isWon
+                "duration", mgameEnd.duration,
+                "isWon", mgameEnd.isWon
         );
     }
+
     public static ShareUrlResponse reqInfoCallback() {
         return ServiceUtils.request(
                 RequestTypes.POST,
