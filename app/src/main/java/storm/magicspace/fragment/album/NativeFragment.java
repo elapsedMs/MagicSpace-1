@@ -3,6 +3,7 @@ package storm.magicspace.fragment.album;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.view.AlbumTitleView;
+import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshBase;
+import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import static storm.commonlib.common.CommonConstants.FROM;
 
@@ -41,118 +44,50 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
     private ListView listView;
     private CachedAdapter adapter;
     private List<Album> list = new ArrayList<>();
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private PullToRefreshListView pullToRefreshListView;
 
-    private AlbumTitleView albumTitleView;
-    private AlbumTitleView cachedATV;
-    private ListView cachedListView;
     private LinearLayout noDownloadLl;
     private RelativeLayout contentRl;
     private MainActivity mainActivity;
-    //    private CachedAdapter adapter;
-    private ThreadDAO threadDAO;
-    private List<Album> albumList = new ArrayList<>();
+    private int page = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainActivity = (MainActivity) getActivity();
-        threadDAO = new ThreadDaoImpl(getActivity());
-
         return inflater.inflate(R.layout.fragment_native, null);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        new GetMyCollectionTask().execute();//        if (threadDAO.getAllFinishFile() != null) {
-//            if (threadDAO.getAllFinishFile().size() > 0) {
-//                albumList.clear();
-//                albumList.addAll(LocalSPUtil.getFinishAlbum(MagicApplication.getApplication()));
-//                adapter.notifyDataSetChanged();
-//            } else {
-//                haveNotAnyContent();
-//            }
-//        } else {
-//            haveNotAnyContent();
-//        }
-//
-//        if (threadDAO.getAllUnFinishFile() != null) {
-//            if (threadDAO.getAllUnFinishFile().size() > 0) {
-//                albumTitleView.setCount(threadDAO.getAllUnFinishFile().size() + "");
-//            } else
-//                albumTitleView.setCount(0 + "");
-//        } else
-//            albumTitleView.setCount(0 + "");
-    }
-
-    private void haveNotAnyContent() {
-        noCached();
-        if (threadDAO.getAllUnFinishFile() != null) {
-            if (threadDAO.getAllUnFinishFile().size() > 0) {
-                showNoDownload();
-            }
-        }
     }
 
     @Override
     public void initView(View view) {
         super.initView(view);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshlayout);
-        initRefreshView();
+        pullToRefreshListView = (PullToRefreshListView) view.findViewById(R.id.pull_to_refreshview);
+        pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+        adapter = new CachedAdapter(list, getActivity());
+        pullToRefreshListView.setAdapter(adapter);
+        pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                page = 1;
+                new GetMyCollectionTask().execute();
+                Log.d("gdq", "onPullDownToRefresh");
+            }
 
-//        cachedATV = (AlbumTitleView) view.findViewById(R.id.cachedATV);
-//        albumTitleView = (AlbumTitleView) view.findViewById(R.id.cacheingATV);
-//        albumTitleView.setOnClickListener(this);
-//        albumTitleView.showDot();
-        listView = (ListView) view.findViewById(R.id.cachedLv);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                Log.d("gdq", "onPullUpToRefresh");
+                new GetMoreMyCollectionTask().execute();
+            }
+        });
+        pullToRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("album", list.get(position));
+                bundle.putSerializable("album", list.get(position-1));
                 bundle.putSerializable(FROM, CommonConstants.TOPIC);
                 goToNext(AlbumInfoActivity.class, bundle);
             }
         });
-
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0)
-                    swipeRefreshLayout.setEnabled(true);
-            }
-        });
-
-//        adapter = new CachedAdapter(albumList, getActivity());
-//        adapter = new CachedAdapter(albumList, getActivity());
-//        cachedListView.setAdapter(adapter);
-//        noDownloadLl = (LinearLayout) view.findViewById(R.id.no_download_ll);
-//        contentRl = (RelativeLayout) view.findViewById(R.id.rl_content);
-        adapter = new CachedAdapter(list, getActivity());
-        listView.setAdapter(adapter);
-
-    }
-
-    private void initRefreshView() {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new GetMyCollectionTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-        });
-        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
-        swipeRefreshLayout.setEnabled(false);
-    }
-
-    @Override
-    public void initData() {
-        super.initData();
-//        showRedDot("20");
+        new GetMyCollectionTask().execute();
     }
 
     @Override
@@ -169,11 +104,6 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
         mainActivity.showRedDot(count);
     }
 
-    public void noCached() {
-        cachedATV.setVisibility(View.GONE);
-        cachedListView.setVisibility(View.GONE);
-    }
-
     public void showNoDownload() {
         noDownloadLl.setVisibility(View.VISIBLE);
         contentRl.setVisibility(View.GONE);
@@ -187,18 +117,39 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
     private class GetMyCollectionTask extends BaseASyncTask<String, MyCollectionResponse> {
         @Override
         public MyCollectionResponse doRequest(String param) {
-            return HTTPManager.getMyCollection("game");
+            return HTTPManager.getMyCollection("game", page);
         }
 
         @Override
         protected void onPostExecute(MyCollectionResponse myCollectionResponse) {
             super.onPostExecute(myCollectionResponse);
-            swipeRefreshLayout.setRefreshing(false);
+            page++;
+            pullToRefreshListView.onRefreshComplete();
             if (myCollectionResponse == null || myCollectionResponse.data == null) {
                 Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
                 return;
             }
             list.clear();
+            list.addAll(myCollectionResponse.data);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private class GetMoreMyCollectionTask extends BaseASyncTask<String, MyCollectionResponse> {
+        @Override
+        public MyCollectionResponse doRequest(String param) {
+            return HTTPManager.getMyCollection("game", page);
+        }
+
+        @Override
+        protected void onPostExecute(MyCollectionResponse myCollectionResponse) {
+            super.onPostExecute(myCollectionResponse);
+            page++;
+            pullToRefreshListView.onRefreshComplete();
+            if (myCollectionResponse == null || myCollectionResponse.data == null) {
+                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             list.addAll(myCollectionResponse.data);
             adapter.notifyDataSetChanged();
         }

@@ -19,13 +19,17 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.CommonConstants;
+import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseActivity;
 import storm.commonlib.common.util.LogUtil;
 import storm.commonlib.common.view.dialog.MedtreeDialog;
 import storm.magicspace.R;
-import storm.magicspace.URLConstants;
 import storm.magicspace.bean.EggInfo;
+import storm.magicspace.bean.httpBean.gameEnd;
+import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.URLConstant;
+import storm.magicspace.http.reponse.ShareUrlResponse;
+import storm.magicspace.util.LocalSPUtil;
 
 import static storm.commonlib.common.view.dialog.MedtreeDialog.DisplayStyle.LOADING;
 
@@ -38,7 +42,8 @@ public class EggGamePreviewActivity extends BaseActivity {
     private MedtreeDialog medtreeDialog;
     private String mFrom;
     private String mContentId;
-
+    private int duration ;
+    private gameEnd mgameEnd;
     public EggGamePreviewActivity() {
         super(R.layout.activity_egg_preview, CommonConstants.ACTIVITY_STYLE_EMPTY);
     }
@@ -73,14 +78,20 @@ public class EggGamePreviewActivity extends BaseActivity {
 
                     case 2:
                         Toast.makeText(EggGamePreviewActivity.this, "过关成功", Toast.LENGTH_SHORT).show();
+                        new GameEnd().execute(mgameEnd);
+                        finish();
                         break;
 
                     case 3:
                         Toast.makeText(EggGamePreviewActivity.this, "过关失败", Toast.LENGTH_SHORT).show();
+                        new GameEnd().execute(mgameEnd);
+                        finish();
                         break;
 
                     case 4:
                         dismissLoadingDialog();
+//                        new reqInfoCallback().execute();
+                        wv_egg_game_preview.loadUrl("javascript:reqInfoCallback('"+ LocalSPUtil.getAccountInfo().getUser_no()+"')");
                         break;
                 }
             }
@@ -115,7 +126,7 @@ public class EggGamePreviewActivity extends BaseActivity {
 //        else {
 //            return URLConstant.URL_WEBVIEW_PREVIEW_GAME + mContentId;
 //        }
-        if (mFrom.equals(CommonConstants.GAME)) return URLConstants.URL_4 + mContentId;
+        if (mFrom.equals(CommonConstants.GAME)) return URLConstant.URL_4 + mContentId;
         else return URLConstant.URL_WEBVIEW_PREVIEW_TOPIC + mContentId;
     }
 
@@ -134,15 +145,19 @@ public class EggGamePreviewActivity extends BaseActivity {
         }
 
         @JavascriptInterface
-        public void endGame(boolean bool) {
+        public void endGame(boolean bool,int duration) {
             Log.i("lixiaolu", "game end");
+            mgameEnd = new gameEnd(info.contentId,duration,bool);
             if (bool) {
                 mHandler.sendEmptyMessage(2);
+
             } else {
                 mHandler.sendEmptyMessage(3);
+
             }
 
         }
+
 
         @JavascriptInterface
         public void onLoadComplete() {
@@ -163,21 +178,22 @@ public class EggGamePreviewActivity extends BaseActivity {
         oks.setTitle("魔fun全景挖彩蛋");
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
 //        oks.setTitleUrl(URLConstant.SHARED_URL);
-        oks.setTitleUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId);
+        oks.setTitleUrl(URLConstant.OUT_SHAER_1 + info.contentId);
         // text是分享文本，所有平台都需要这个字段
         oks.setText(getString(R.string.shared_content));
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
 //        oks.setUrl("http://app.stemmind.com/vr/a/tour.html");
-        oks.setUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId);
+        oks.setUrl(URLConstant.EGG_GAME_PRE_SHARE_URL + info.contentId);
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
         //oks.setComment("我是测试评论文本");
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
 //        oks.setSiteUrl(URLConstant.SHARED_URL);
-        oks.setSiteUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId);
+        oks.setSiteUrl(URLConstant.SHARE_OUT_URL + info.contentId);
+
 
 // 启动分享GUI
         oks.show(EggGamePreviewActivity.this);
@@ -230,13 +246,38 @@ public class EggGamePreviewActivity extends BaseActivity {
         final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
                 {
                         SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA,
-                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,SHARE_MEDIA.DOUBAN
+                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE
                 };
         new ShareAction(this).setDisplayList(displaylist )
                 .withText(getString(R.string.shared_content))
                 .withTitle("魔fun全景挖彩蛋")
-                .withTargetUrl("http://app.stemmind.com/vr/html/gamedetail.php?c=" + info.contentId)
+                .withTargetUrl(URLConstant.URL_111 + info.contentId)
                 .open();
+    }
+
+    private class GameEnd extends BaseASyncTask<gameEnd, ShareUrlResponse> {
+        @Override
+        public ShareUrlResponse doRequest(gameEnd param) {
+            return HTTPManager.gameEnd(param);
+        }
+
+        @Override
+        public void onSuccess(ShareUrlResponse response) {
+            super.onSuccess(response);
+
+        }
+    }
+    private class reqInfoCallback extends BaseASyncTask<Void, ShareUrlResponse> {
+        @Override
+        public ShareUrlResponse doRequest(Void param) {
+            return HTTPManager.reqInfoCallback();
+        }
+
+        @Override
+        public void onSuccess(ShareUrlResponse response) {
+            super.onSuccess(response);
+
+        }
     }
 }
 

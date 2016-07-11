@@ -26,15 +26,18 @@ import storm.magicspace.adapter.EggAdapter;
 import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.EggHttpResponse;
+import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshBase;
+import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
  * Created by gdq on 16/6/15.
  */
 public class EggFragment extends BaseFragment {
-    private ListView lv_egg;
     private LinearLayout no_net_work_ll_egg;
     private List<EggInfo> egginfoList = new ArrayList<>();
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private PullToRefreshListView pullToRefreshListView;
+    private int page = 1;
+    private EggAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,50 +47,35 @@ public class EggFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         super.initView(view);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshlayout);
-        initRefreshView();  lv_egg = this.findItemEventView(view, R.id.lv_egg);
-        lv_egg.setOnScrollListener(new AbsListView.OnScrollListener() {
+        no_net_work_ll_egg = findView(view, R.id.no_net_work_ll_egg);
+        pullToRefreshListView = (PullToRefreshListView) view.findViewById(R.id.pulltorefre);
+        adapter = new EggAdapter(getActivity(), egginfoList);
+        pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+        ListView listView = pullToRefreshListView.getRefreshableView();
+        listView.setOnItemClickListener(this);
+        listView.setAdapter(adapter);
+        pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                page = 1;
+                new getEggTask().execute();
             }
 
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0)
-                    swipeRefreshLayout.setEnabled(true);
-            }
-        });
-
-        no_net_work_ll_egg = findView(view,R.id.no_net_work_ll_egg);
-
-    }
-
-    private void initRefreshView() {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new getEggTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                new getMoreEggTask().execute();
             }
         });
-        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
-        swipeRefreshLayout.setEnabled(false);
-    }
-
-
-    @Override
-    public void initData() {
-        super.initData();
+        showContent();
         new getEggTask().execute();
     }
 
     @Override
     public void onLocalItemClicked(AdapterView<?> parent, View view, int position, long id) {
         super.onLocalItemClicked(parent, view, position, id);
-//        goToNext(EggGameInfoActivity.class);
-        Intent intent = new Intent(getActivity(),EggGameInfoActivity.class);
+        Intent intent = new Intent(getActivity(), EggGameInfoActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("game_info", egginfoList.get(position));
+        bundle.putSerializable("game_info", egginfoList.get(position-1));
         intent.putExtras(bundle);
         this.startActivity(intent);
     }
@@ -95,34 +83,72 @@ public class EggFragment extends BaseFragment {
     private class getEggTask extends BaseASyncTask<Void, EggHttpResponse> {
         @Override
         public EggHttpResponse doRequest(Void param) {
-            return HTTPManager.getEggList();
+            return HTTPManager.getEggList(page);
         }
 
         @Override
         public void onSuccess(EggHttpResponse response) {
             super.onSuccess(response);
-            swipeRefreshLayout.setRefreshing(false);
+            page++;
+            pullToRefreshListView.onRefreshComplete();
             showContent();
             egginfoList.clear();
             egginfoList.addAll(response.data);
-            EggAdapter adapter = new EggAdapter(getActivity(), egginfoList);
-            lv_egg.setAdapter(adapter);
+            adapter.notifyDataSetInvalidated();
+        }
+
+        @Override
+        public void onSuccessWithoutResult(EggHttpResponse eggHttpResponse) {
+            super.onSuccessWithoutResult(eggHttpResponse);
+            pullToRefreshListView.onRefreshComplete();
         }
 
         @Override
         public void onFailed() {
             super.onFailed();
+            pullToRefreshListView.onRefreshComplete();
             showNoNet();
+        }
+    }
+
+
+    private class getMoreEggTask extends BaseASyncTask<Void, EggHttpResponse> {
+        @Override
+        public EggHttpResponse doRequest(Void param) {
+            return HTTPManager.getEggList(page);
+        }
+
+        @Override
+        public void onSuccess(EggHttpResponse response) {
+            super.onSuccess(response);
+            page++;
+            pullToRefreshListView.onRefreshComplete();
+            showContent();
+            egginfoList.addAll(response.data);
+            adapter.notifyDataSetInvalidated();
+        }
+
+        @Override
+        public void onSuccessWithoutResult(EggHttpResponse eggHttpResponse) {
+            super.onSuccessWithoutResult(eggHttpResponse);
+            pullToRefreshListView.onRefreshComplete();
+        }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+            pullToRefreshListView.onRefreshComplete();
         }
     }
 
     private void showNoNet() {
         no_net_work_ll_egg.setVisibility(View.VISIBLE);
-        lv_egg.setVisibility(View.GONE);
+        pullToRefreshListView.setVisibility(View.GONE);
     }
+
     private void showContent() {
         no_net_work_ll_egg.setVisibility(View.GONE);
-        lv_egg.setVisibility(View.VISIBLE);
+        pullToRefreshListView.setVisibility(View.VISIBLE);
     }
 
 }

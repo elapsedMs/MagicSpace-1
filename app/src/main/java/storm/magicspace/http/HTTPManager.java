@@ -3,6 +3,7 @@ package storm.magicspace.http;
 import storm.commonlib.common.http.RequestTypes;
 import storm.commonlib.common.http.ServiceUtils;
 import storm.commonlib.common.http.baseHttpBean.BaseResponse;
+import storm.magicspace.bean.httpBean.CheckUpdateResponse;
 import storm.magicspace.bean.httpBean.CirclePicResponse;
 import storm.magicspace.bean.httpBean.EggImageListResponse;
 import storm.magicspace.bean.httpBean.IssueUCGContentResponse;
@@ -12,10 +13,13 @@ import storm.magicspace.bean.httpBean.SubmitUGCContentResponse;
 import storm.magicspace.bean.httpBean.SyncAccountResponse;
 import storm.magicspace.bean.httpBean.UpdateUGCContentScenesResponse;
 import storm.magicspace.bean.httpBean.UserInfoResponse;
+import storm.magicspace.bean.httpBean.gameEnd;
 import storm.magicspace.http.reponse.AddCollectResponse;
 import storm.magicspace.http.reponse.AlbumResponse;
 import storm.magicspace.http.reponse.ConponResponse;
 import storm.magicspace.http.reponse.EggHttpResponse;
+import storm.magicspace.http.reponse.InitResponse;
+import storm.magicspace.http.reponse.ShareUrlResponse;
 import storm.magicspace.util.LocalSPUtil;
 
 import static storm.commonlib.common.util.StringUtil.EMPTY;
@@ -47,17 +51,27 @@ public class HTTPManager {
         );
     }
 
+    public static InitResponse initAppConfig() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                EMPTY,
+                EMPTY,
+                InitResponse.class
+        );
+    }
+
     /**
      * 获取我的作品
      *
      * @return
      */
-    public static MyWorksResponse getMyWorks() {
+    public static MyWorksResponse getMyWorks(int page) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_MY_WORKS,
                 EMPTY,
                 MyWorksResponse.class,
+                "page", page,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "authorId", LocalSPUtil.getAccountInfo().getUser_no()
         );
@@ -68,14 +82,16 @@ public class HTTPManager {
      *
      * @return
      */
-    public static MyCollectionResponse getMyCollection(String type) {
+    public static MyCollectionResponse getMyCollection(String type, int page) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_MY_COLLECTION,
                 EMPTY,
                 MyCollectionResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
-                "contentTypeId", type
+                "contentTypeId", type,
+                "page", page,
+                "pageSize", 20
         );
     }
 
@@ -109,6 +125,7 @@ public class HTTPManager {
                 "sourceId", sourceId
         );
     }
+
     /**
      * 发表UGC主题
      */
@@ -192,14 +209,14 @@ public class HTTPManager {
         );
     }
 
-    public static EggHttpResponse getEggList() {
+    public static EggHttpResponse getEggList(int page) {
         return ServiceUtils.request(
                 RequestTypes.POST,
                 URLConstant.URL_GET_EGG_LIST,
                 EMPTY,
                 EggHttpResponse.class,
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
-                "page", "1",
+                "page", page,
                 "pageSize", "20"
         );
     }
@@ -227,6 +244,14 @@ public class HTTPManager {
                 "userId", LocalSPUtil.getLoginAccountId());
     }
 
+    public static CheckUpdateResponse checkAppUpdate() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.CHECK_APP_UPDATE,
+                EMPTY,
+                CheckUpdateResponse.class);
+    }
+
     public static AddCollectResponse addCollect(String contentId, String type) {
         return ServiceUtils.request(
                 RequestTypes.POST,
@@ -236,6 +261,36 @@ public class HTTPManager {
                 "userId", LocalSPUtil.getAccountInfo().getUser_no(),
                 "contentId", contentId,
                 "contentTypeId", type.toLowerCase()
+        );
+    }
+    public static ShareUrlResponse getUrl() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.GETAPPSHARELINK,
+                EMPTY,
+                ShareUrlResponse.class
+        );
+    }
+
+    public static ShareUrlResponse gameEnd(gameEnd mgameEnd) {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.GAMEEND,
+                EMPTY,
+                ShareUrlResponse.class,
+                "userId", LocalSPUtil.getAccountInfo().getUser_no(),
+                "contentId", mgameEnd.contentId,
+                "duration",  mgameEnd.duration,
+                "isWon",  mgameEnd.isWon
+        );
+    }
+    public static ShareUrlResponse reqInfoCallback() {
+        return ServiceUtils.request(
+                RequestTypes.POST,
+                URLConstant.REQINFOCALLBACK,
+                EMPTY,
+                ShareUrlResponse.class,
+                "userId", LocalSPUtil.getAccountInfo().getUser_no()
         );
     }
 }

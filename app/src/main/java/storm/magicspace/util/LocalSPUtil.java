@@ -16,6 +16,7 @@ import storm.commonlib.common.util.JsonUtil;
 import storm.commonlib.common.util.SharedPreferencesUtil;
 import storm.magicspace.base.MagicApplication;
 import storm.magicspace.bean.Album;
+import storm.magicspace.bean.httpBean.InitResult;
 import storm.magicspace.http.reponse.LoginResponse;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -200,5 +201,14 @@ public class LocalSPUtil extends SharedPreferencesUtil {
     public static String getTUserNo() {
         SharedPreferences preferences = getPreferences(getApplication(), TOKEN);
         return preferences.getString(USER_NO, "");
+    }
+
+    public static void saveAppConfig(InitResult initResult) {
+        saveObject(BaseApplication.getApplication(), initResult);
+    }
+
+    public static InitResult getAppConfig() {
+        InitResult result = getObject(BaseApplication.getApplication(), InitResult.class);
+        return result == null ? new InitResult() : result;
     }
 }

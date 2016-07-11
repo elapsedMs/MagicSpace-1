@@ -424,7 +424,7 @@ public class GameActivity extends FragmentActivity {
         mWebView.getSettings().setDefaultTextEncodingName("gb2312");
         String webUrl = getUrl();
         if (USE_TEST_URL) {
-            webUrl = "http://app.stemmind.com/vr/a/test.php?ua=app&c=" + mContentId;
+            webUrl = URLConstant.URL_112 + mContentId;
         }
         mWebView.loadUrl(webUrl);
         ContainerView containerView = new ContainerView();

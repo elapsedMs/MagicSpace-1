@@ -23,17 +23,19 @@ import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyWorksResponse;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshBase;
+import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import static storm.commonlib.common.CommonConstants.FROM;
 
 public class MyWorksActivity extends BaseActivity {
-    private ListView listView;
     private WorksAdapter adapter;
     private List<Album> list = new ArrayList<>();
     private FrameLayout nodata;
     private RelativeLayout btView;
     private TextView refresh;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private PullToRefreshListView pullToRefreshListView;
+    private int page = 1;
 
     public MyWorksActivity() {
         super(R.layout.activity_my_works);
@@ -44,59 +46,39 @@ public class MyWorksActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setActivityTitle("我的作品");
         setTitleLeftBtVisibility(View.VISIBLE);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshlayout);
-        initRefreshView();
-        listView = (ListView) findViewById(R.id.listview);
-        adapter = new WorksAdapter(list, this);
         nodata = findView(R.id.my_works_no_net_work_ll);
         btView = findView(R.id.rl_build_works);
         refresh = findEventView(R.id.refresh);
-        listView.setAdapter(adapter);
-        GetMyWorksTask task = new GetMyWorksTask();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            /**
-             * @param parent
-             * @param view
-             * @param position
-             * @param id
-             */
+        pullToRefreshListView = (PullToRefreshListView) findViewById(R.id.pulltor);
+        adapter = new WorksAdapter(list, this);
+        pullToRefreshListView.setAdapter(adapter);
+        pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+        pullToRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("album", list.get(position));
+                bundle.putSerializable("album", list.get(position-1));
                 bundle.putSerializable(FROM, CommonConstants.GAME);
                 bundle.putSerializable(CommonConstants.COME_FROM, CommonConstants.MY_WORKS);
                 goToNext(AlbumInfoActivity.class, bundle);
             }
         });
-
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                page = 1;
+                new GetMyWorksTask().execute();
             }
 
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0)
-                    swipeRefreshLayout.setEnabled(true);
-            }
-        });
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                new GetMoreMyWorksTask().execute();
 
-        task.execute();
-    }
-
-    private void initRefreshView() {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new GetMyWorksTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
-        swipeRefreshLayout.setEnabled(false);
-    }
 
+        new GetMyWorksTask().execute();
+    }
 
     @Override
     public void onLocalClicked(int resId) {
@@ -104,6 +86,7 @@ public class MyWorksActivity extends BaseActivity {
         switch (resId) {
             case R.id.refresh:
                 refresh.setClickable(false);
+                page = 1;
                 new GetMyWorksTask().execute();
                 break;
         }
@@ -112,13 +95,14 @@ public class MyWorksActivity extends BaseActivity {
     private class GetMyWorksTask extends BaseASyncTask<String, MyWorksResponse> {
         @Override
         public MyWorksResponse doRequest(String param) {
-            return HTTPManager.getMyWorks();
+            return HTTPManager.getMyWorks(page);
         }
 
         @Override
         public void onSuccess(MyWorksResponse myWorksResponse) {
             super.onSuccess(myWorksResponse);
-            swipeRefreshLayout.setRefreshing(false);
+            page++;
+            pullToRefreshListView.onRefreshComplete();
             resetView(View.GONE);
             refresh.setClickable(true);
             list.clear();
@@ -129,6 +113,8 @@ public class MyWorksActivity extends BaseActivity {
         @Override
         public void onSuccessWithoutResult(MyWorksResponse myWorksResponse) {
             super.onSuccessWithoutResult(myWorksResponse);
+            page++;
+            pullToRefreshListView.onRefreshComplete();
             resetView(View.GONE);
             refresh.setClickable(true);
             list.clear();
@@ -144,8 +130,43 @@ public class MyWorksActivity extends BaseActivity {
         }
     }
 
+    private class GetMoreMyWorksTask extends BaseASyncTask<String, MyWorksResponse> {
+        @Override
+        public MyWorksResponse doRequest(String param) {
+            return HTTPManager.getMyWorks(page);
+        }
+
+        @Override
+        public void onSuccess(MyWorksResponse myWorksResponse) {
+            super.onSuccess(myWorksResponse);
+            page++;
+            pullToRefreshListView.onRefreshComplete();
+            resetView(View.GONE);
+            refresh.setClickable(true);
+            list.addAll(myWorksResponse.data);
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onSuccessWithoutResult(MyWorksResponse myWorksResponse) {
+            super.onSuccessWithoutResult(myWorksResponse);
+            page++;
+            pullToRefreshListView.onRefreshComplete();
+            resetView(View.GONE);
+            refresh.setClickable(true);
+            list.addAll(myWorksResponse.data);
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+            pullToRefreshListView.onRefreshComplete();
+        }
+    }
+
     private void resetView(int visibility) {
         nodata.setVisibility(visibility);
-        listView.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
+        pullToRefreshListView.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 }
