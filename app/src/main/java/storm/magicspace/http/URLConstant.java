@@ -1,5 +1,8 @@
 package storm.magicspace.http;
 
+import static storm.commonlib.common.util.StringUtil.EMPTY;
+import static storm.magicspace.util.LocalSPUtil.getAppConfig;
+
 /**
  * Created by lixiaolu on 16/6/22.
  */
@@ -58,27 +61,30 @@ public class URLConstant {
     //获取验证码
     public static final String GET_VERIFY_CODE = "sendsmscode";
 
-    // TYPE_TWO = "/vr/a/"+"" 对应的
-    // TYPE_THREE = "/vr/html/"+"" 对应的
+    public static final String INIT_HOST = "http://app.stemmind.com/MFconf/?v=1";
 
-    public static final String TYPE_TWO = "http://app.stemmind.com";
-    public static final String TYPE_TWO_TWO = "/vr/a/";
+    //API HOST
+    private static final String SERVER_DOMAIN_URL = getAppConfig().apidomain == null || getAppConfig().apidomain.equals(EMPTY) ? "http://app.stemmind.com/" : getAppConfig().apidomain;
+    private static final String SERVER_SECOND_URL = getAppConfig().apipath == null || getAppConfig().apipath.equals(EMPTY) ? "3d/api/tp/index.php/" : getAppConfig().apipath;
+    public static final String API_HOST = SERVER_DOMAIN_URL + SERVER_SECOND_URL;
 
-    public static final String TYPE_THREE = "http://app.stemmind.com";
-    public static final String TYPE_THREE_THEE = "/vr/html/";
+    //VR
+    public static final String TYPE_TWO = getAppConfig().vrdomain == null || getAppConfig().vrdomain.equals(EMPTY) ? "http://app.stemmind.com" : getAppConfig().vrdomain;
+    public static final String TYPE_TWO_TWO = getAppConfig().vrpath == null || getAppConfig().vrpath.equals(EMPTY) ? "/vr/a/" : getAppConfig().vrpath;
+
+    //HTML
+    public static final String TYPE_THREE = getAppConfig().htmldomain == null || getAppConfig().htmldomain.equals(EMPTY) ? "http://app.stemmind.com" : getAppConfig().htmldomain;
+    public static final String TYPE_THREE_THEE = getAppConfig().htmlpath == null || getAppConfig().htmlpath.equals(EMPTY) ? "/vr/html/" : getAppConfig().htmlpath;
 
     //我的作品嵌入URL
     public static final String URL_2 = TYPE_TWO + TYPE_TWO_TWO + "preview.php?ua=app&s=ugc&c=";
 
-    //
     public static final String URL_4 = TYPE_TWO + TYPE_TWO_TWO + "player.php?ua=app&s=ugc&c=";
     public static final String URL_110 = TYPE_TWO + TYPE_TWO_TWO + "preview.php?ua=app&s=ugc&c=";
-
 
     public static final String URL_112 = TYPE_TWO + TYPE_TWO_TWO + "test.php?ua=app&c=";
     public static final String SHARE_US_URL = TYPE_THREE + TYPE_THREE_THEE + "download.php";
     public static final String SHARE_OUT_URL = TYPE_THREE + TYPE_THREE_THEE + "gamedetail.php?c=";
-
 
     public static final String EGG_GAME_PRE_SHARE_URL = TYPE_THREE + TYPE_THREE_THEE + "gamedetail.php?c=";
     public static final String OUT_SHAER_1 = TYPE_THREE + TYPE_THREE_THEE + "gamedetail.php?c=";
@@ -87,17 +93,13 @@ public class URLConstant {
     public static final String URL_113 = TYPE_THREE + TYPE_THREE_THEE + "gamedetail.php?c=";
 
 
-    public static final String URL_WEBVIEW_TOPIC =
-            TYPE_TWO + TYPE_TWO_TWO + "vreditor.php?ua=app&s=mat&c=";
+    public static final String URL_WEBVIEW_TOPIC = TYPE_TWO + TYPE_TWO_TWO + "vreditor.php?ua=app&s=mat&c=";
 
-    public static final String URL_WEBVIEW_GAME =
-            TYPE_TWO + TYPE_TWO_TWO + "vreditor.php?ua=app&s=ugc&c=";
+    public static final String URL_WEBVIEW_GAME = TYPE_TWO + TYPE_TWO_TWO + "vreditor.php?ua=app&s=ugc&c=";
 
-    public static final String URL_WEBVIEW_PREVIEW_TOPIC =
-            TYPE_TWO + TYPE_TWO_TWO + "preview.php?ua=app&s=mat&c=";
+    public static final String URL_WEBVIEW_PREVIEW_TOPIC = TYPE_TWO + TYPE_TWO_TWO + "preview.php?ua=app&s=mat&c=";
 
-    public static final String URL_WEBVIEW_PREVIEW_GAME =
-            TYPE_TWO + TYPE_TWO_TWO + "" + "preview.php?ua=app&s=ugc&c=";
+    public static final String URL_WEBVIEW_PREVIEW_GAME = TYPE_TWO + TYPE_TWO_TWO + "" + "preview.php?ua=app&s=ugc&c=";
 
     //魔镜API的Key
     public static String MJ_KEY = "Bf@)(*$s1&2^3XVF#Mj";

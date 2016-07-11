@@ -12,6 +12,7 @@ import storm.magicspace.R;
 import storm.magicspace.bean.CheckUpdate;
 import storm.magicspace.bean.httpBean.CheckUpdateResponse;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.http.URLConstant;
 import storm.magicspace.http.reponse.InitResponse;
 import storm.magicspace.util.LocalSPUtil;
 import storm.magicspace.view.UpdateDialog;
@@ -36,7 +37,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initURL() {
-        HttpUtils.setAppModel(false);
+        HttpUtils.setHostUri(URLConstant.INIT_HOST);
         new InitTask().execute();
     }
 
@@ -143,28 +144,29 @@ public class SplashActivity extends BaseActivity {
             super.onFailed();
 
             loginByToken();
-            HttpUtils.setAppModel(true);
+            HttpUtils.setHostUri(URLConstant.API_HOST);
         }
 
         @Override
         public void onFailed(InitResponse initResponse) {
             super.onFailed(initResponse);
             loginByToken();
-            HttpUtils.setAppModel(true);
+            LocalSPUtil.saveAppConfig(initResponse.data);
+            HttpUtils.setHostUri(URLConstant.API_HOST);
         }
 
         @Override
         public void onSuccess(InitResponse initResponse) {
             super.onSuccess(initResponse);
             new CheckAppUpdate().execute();
-            HttpUtils.setAppModel(true);
+            HttpUtils.setHostUri(URLConstant.API_HOST);
         }
 
         @Override
         public void onSuccessWithoutResult(InitResponse initResponse) {
             super.onSuccessWithoutResult(initResponse);
             loginByToken();
-            HttpUtils.setAppModel(true);
+            HttpUtils.setHostUri(URLConstant.API_HOST);
         }
     }
 }
