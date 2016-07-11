@@ -56,16 +56,10 @@
             android:name=".activity.album.CacheingActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.album.ClassifyRecommendActivity"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".activity.album.WebActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.album.GuessYouLikeActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".activity.album.HeatActivity"
             android:screenOrientation="portrait"/>
 
         <activity

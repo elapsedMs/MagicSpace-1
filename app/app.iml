@@ -110,8 +110,8 @@
     <orderEntry type="library" exported="" name="roboguice-4.0.0" level="project" />
     <orderEntry type="library" exported="" name="umeng-analytics-v6.0.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QQ-2.7.3" level="project" />
-    <orderEntry type="library" exported="" name="joda-time-2.9.4" level="project" />
     <orderEntry type="library" exported="" name="eventbus-3.0.0" level="project" />
+    <orderEntry type="library" exported="" name="joda-time-2.9.4" level="project" />
     <orderEntry type="library" exported="" name="umeng_social_sdk" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-24.0.0-alpha1" level="project" />
