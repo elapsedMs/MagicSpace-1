@@ -80,17 +80,19 @@ public class EggGamePreviewActivity extends BaseActivity {
                     case 2:
                         Toast.makeText(EggGamePreviewActivity.this, "过关成功", Toast.LENGTH_SHORT).show();
                         new GameEnd().execute(mgameEnd);
+                        finish();
                         break;
 
                     case 3:
                         Toast.makeText(EggGamePreviewActivity.this, "过关失败", Toast.LENGTH_SHORT).show();
                         new GameEnd().execute(mgameEnd);
+                        finish();
                         break;
 
                     case 4:
                         dismissLoadingDialog();
 //                        new reqInfoCallback().execute();
-                        wv_egg_game_preview.loadUrl("javascript:reqInfoCallback('"+ LocalSPUtil.getAccountInfo().getUser_no()+"'");
+                        wv_egg_game_preview.loadUrl("javascript:reqInfoCallback('"+ LocalSPUtil.getAccountInfo().getUser_no()+"')");
                         break;
                 }
             }
