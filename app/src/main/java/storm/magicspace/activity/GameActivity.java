@@ -120,10 +120,11 @@ public class GameActivity extends FragmentActivity {
     private int mCurrentState = 1;
     private boolean mWebViewInit = false;
     private String mEggKey;
-    private boolean mFromEdit;
+    private boolean mFromEdit = false;
     private IssueUCGContent mUCGContent;
     private String mFrom;
     private boolean mCoinError;
+    private boolean mNeedUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +159,175 @@ public class GameActivity extends FragmentActivity {
         handleShowEggEvent();
         handleBackEvent();
         handleDeleteEvent();
+    }
+
+    private void initAlphaController() {
+        positionAlphaController(RULE_ABOVE_EGG);
+        mAlphaBar.setProgress(100);
+        mAlphaBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mAlphaVal = progress * 1f / 100;
+                mFloatView.setFloatAlpha(mAlphaVal);
+                float alpha = (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * mAlphaVal);
+                //mCurrentItem.setTransparency(String.valueOf(alpha));
+                log("alpha = %s", alpha);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    private void handleConfirmEvent() {
+        mConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(mUrl)) {
+                    toastHint(R.string.add_egg_hint);
+                    return;
+                }
+                if (mEggsCount >= EGG_MAX_COUNT) {
+                    toastHint(R.string.add_egg_over_hint);
+                    return;
+                }
+                //new UpdateUGCContentTask(GameActivity.this, true).execute();
+
+                if (!mFromEdit) {
+                    mEggKey = String.valueOf(System.currentTimeMillis());
+                }
+
+                createEgg();
+            }
+        });
+    }
+
+    private void createEgg() {
+        // dropItem('contentId', 'itemId', 'url', 'alpha', 'scale', 'rotate')
+        String itemId = mEggKey;
+        float alpha = Float.parseFloat(mCurrentItem.getTransparency());
+        float scale = Float.parseFloat(mCurrentItem.getScalex());
+        float rotate = -Float.parseFloat(mCurrentItem.getRotatez());
+        log("[JS dropItem] >>> contentId = %s, itemId = %s, url = %s, alpha = %s, scale = %s, " +
+                "rotate = %s", mContentId, itemId, mUrl, alpha, scale, rotate);
+        mWebView.loadUrl("javascript:dropItem('"
+                + mContentId + "' ,'"
+                + itemId + "' ,'"
+                + mUrl + "' ,'"
+                + alpha + "' ,'"
+                + scale + "' ,'"
+                + rotate + "')");
+    }
+
+    private class ContainerView {
+
+        @JavascriptInterface
+        public void dropItemCallBack(String msg) {
+            log("[JS dropItemCallBack] >>> msg = %s ", msg);
+            FloatInfo floatInfo = JsonUtil.fromJson(msg, FloatInfo.class);
+            if (floatInfo == null) return;
+            float x = floatInfo.getX();
+            float y = floatInfo.getY();
+            mCurrentItem.setX(String.valueOf(x));
+            mCurrentItem.setY(String.valueOf(y));
+            log("floatInfo x =  %s, y = %s", x, y);
+            if (mUCGScene == null) return;
+            // if key exist, should't generate new key
+            if (mFromEdit) {
+                for (UGCItem ugcItem : mUGCItems) {
+                    if (ugcItem != null && ugcItem.getItemId() != null
+                            && ugcItem.getItemId().equals(mEggKey)) {
+                        // sometime item dismiss ?
+                        mUGCItems.remove(ugcItem);
+                        break;
+                    }
+                }
+                mFromEdit = false;
+            } else {
+                //mEggKey = String.valueOf(System.currentTimeMillis());
+            }
+            mCurrentItem.setItemId(mEggKey);
+            mUGCItems.add(mCurrentItem);
+            mUCGScene.setItems(mUGCItems);
+            mUCGScene.setItemsCount(String.valueOf(mEggsCount + 1));
+            mEggInfos.put(mEggKey, mCurrentItem);
+
+            new UpdateUGCContentTask(GameActivity.this, true).execute();
+        }
+
+        @JavascriptInterface
+        public void editItem(String contentId, String sceneId, String itemId) {
+            log("[JS editItem] >>> contentId = %s, sceneId =  %s, itemId = %s"
+                    , contentId, sceneId, itemId);
+            mEggsCount = mEggsCount - 1;
+            mEggsCount = mEggsCount >= 0 ? mEggsCount : 0;
+            UGCItem ugcItem = mEggInfos.get(itemId);
+            if (ugcItem == null) return;
+            mCurrentItem = ugcItem;
+            mEggKey = ugcItem.getItemId();
+            mFromEdit = true;
+            mUrl = ugcItem.getItemMediaUrl();
+            float rotate = Float.parseFloat(ugcItem.getRotatez());
+            float scale = Float.parseFloat(ugcItem.getScalex());
+            float alpha = Float.parseFloat(ugcItem.getTransparency());
+            createAndShowBitmap(mUrl, scale, rotate, alpha);
+            updateCountHint();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // update request
+    ///////////////////////////////////////////////////////////////////////////
+    private class UpdateUGCContentTask extends BaseASyncTask<Void, UpdateUGCContentScenesResponse> {
+        public UpdateUGCContentTask(Context context, boolean hasLoadingDialog) {
+            super(context, hasLoadingDialog);
+        }
+
+        @Override
+        public UpdateUGCContentScenesResponse doRequest(Void param) {
+            super.doRequest(param);
+
+            return HTTPManager.updateUGCContentScenes(mUCGContent.getContentId(),
+                    JsonUtil.toJson(mUCGScene));
+        }
+
+        @Override
+        public void onSuccess(UpdateUGCContentScenesResponse response) {
+            super.onSuccess(response);
+            toastHint(R.string.update_egg_success);
+            //createEgg();
+            resetFloatView();
+            resetAlphaController();
+            mEggsCount = mEggsCount + 1;
+            updateEggsCountHint(mEggsCount);
+        }
+
+        @Override
+        public void onFailed() {
+            super.onFailed();
+            if (mCoinError) {
+                toastHint(R.string.update_egg_failed_no_coin);
+            } else {
+                toastHint(R.string.update_egg_failed);
+            }
+            if (mUGCItems != null) {
+                mUGCItems.remove(mCurrentItem);
+            }
+            mEggInfos.remove(mEggKey);
+        }
+    }
+
+    private void resetAlphaController() {
+        mAlphaBar.setProgress(100);
+        mAlphaBar.setVisibility(View.INVISIBLE);
+        mAlphaVal = 1.0f;
     }
 
     private String getRandomContentId() {
@@ -233,8 +403,6 @@ public class GameActivity extends FragmentActivity {
                 if (mCurrentItem == null) {
                     mCurrentItem = new UGCItem();
                 }
-                mCurrentItem.setX("0");
-                mCurrentItem.setY("0");
                 mCurrentItem.setScalex(String.valueOf(floatInfo.getScale()));
                 mCurrentItem.setRotatez(String.valueOf(floatInfo.getRotate()));
                 mCurrentItem.setTransparency(String.valueOf(floatInfo.getAlpha()));
@@ -281,31 +449,6 @@ public class GameActivity extends FragmentActivity {
             mSharedBtn.setVisibility(View.VISIBLE);
         }
         reportEditorState();
-    }
-
-    private void initAlphaController() {
-        positionAlphaController(RULE_ABOVE_EGG);
-        mAlphaBar.setProgress(100);
-        mAlphaBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mAlphaVal = progress * 1f / 100;
-                mFloatView.setFloatAlpha(mAlphaVal);
-                float alpha = (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * mAlphaVal);
-                mCurrentItem.setTransparency(String.valueOf(alpha));
-                log("alpha = %s", alpha);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
     }
 
     private void initEggs() {
@@ -398,73 +541,6 @@ public class GameActivity extends FragmentActivity {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // update request
-    ///////////////////////////////////////////////////////////////////////////
-    private class UpdateUGCContentTask extends BaseASyncTask<Void, UpdateUGCContentScenesResponse> {
-        public UpdateUGCContentTask(Context context, boolean hasLoadingDialog) {
-            super(context, hasLoadingDialog);
-        }
-
-        @Override
-        public UpdateUGCContentScenesResponse doRequest(Void param) {
-            super.doRequest(param);
-            if (mUCGScene == null) return null;
-            // if key exist, should't generate new key
-            if (mFromEdit) {
-                for (UGCItem ugcItem : mUGCItems) {
-                    if (ugcItem != null && ugcItem.getItemId() != null
-                            && ugcItem.getItemId().equals(mEggKey)) {
-                        // sometime item dismiss ?
-                        mUGCItems.remove(ugcItem);
-                        break;
-                    }
-                }
-                mFromEdit = false;
-            } else {
-                mEggKey = String.valueOf(System.currentTimeMillis());
-            }
-            mCurrentItem.setItemId(mEggKey);
-            mUGCItems.add(mCurrentItem);
-            mUCGScene.setItems(mUGCItems);
-            mUCGScene.setItemsCount(String.valueOf(mEggsCount + 1));
-            mEggInfos.put(mEggKey, mCurrentItem);
-            return HTTPManager.updateUGCContentScenes(mUCGContent.getContentId(),
-                    JsonUtil.toJson(mUCGScene));
-        }
-
-        @Override
-        public void onSuccess(UpdateUGCContentScenesResponse response) {
-            super.onSuccess(response);
-            toastHint(R.string.update_egg_success);
-            createEgg();
-            resetFloatView();
-            resetAlphaController();
-            mEggsCount = mEggsCount + 1;
-            updateEggsCountHint(mEggsCount);
-        }
-
-        @Override
-        public void onFailed() {
-            super.onFailed();
-            if (mCoinError) {
-                toastHint(R.string.update_egg_failed_no_coin);
-            } else {
-                toastHint(R.string.update_egg_failed);
-            }
-            if (mUGCItems != null) {
-                mUGCItems.remove(mCurrentItem);
-            }
-            mEggInfos.remove(mEggKey);
-        }
-    }
-
-    private void resetAlphaController() {
-        mAlphaBar.setProgress(100);
-        mAlphaBar.setVisibility(View.INVISIBLE);
-        mAlphaVal = 1.0f;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     // egg image request
     ///////////////////////////////////////////////////////////////////////////
     private class GetEggImageListTask extends BaseASyncTask<Void, EggImageListResponse> {
@@ -508,7 +584,7 @@ public class GameActivity extends FragmentActivity {
                 mFloatView.useExtraMatrix(mFromEdit);
                 //mFloatView.setImageBitmap(null);
                 mFloatView.setImageBitmap(bitmap);
-                if (!mFromEdit) {
+                if (!mFromEdit | mNeedUpdate) {
                     mCurrentItem = new UGCItem();
                     mCurrentItem.setX("0");
                     mCurrentItem.setY("0");
@@ -520,7 +596,8 @@ public class GameActivity extends FragmentActivity {
                 mCurrentItem.setItemMediaUrl(url);
                 //mCurrentItem.setItemId(mEggsCount + "");
                 mUrl = url;
-                initFloatView();
+                //initFloatView();
+                mFloatView.setVisibility(View.VISIBLE);
                 syncFloatView(true);
             }
         });
@@ -593,23 +670,6 @@ public class GameActivity extends FragmentActivity {
         return mEggImageList;
     }
 
-    private void createEgg() {
-        // dropItem('contentId', 'itemId', 'url', 'alpha', 'scale', 'rotate')
-        String itemId = mEggKey;
-        float alpha = Float.parseFloat(mCurrentItem.getTransparency());
-        float scale = Float.parseFloat(mCurrentItem.getScalex());
-        float rotate = -Float.parseFloat(mCurrentItem.getRotatez());
-        log("[JS dropItem] >>> contentId = %s, itemId = %s, url = %s, alpha = %s, scale = %s, " +
-                "rotate = %s", mContentId, itemId, mUrl, alpha, scale, rotate);
-        mWebView.loadUrl("javascript:dropItem('"
-                + mContentId + "' ,'"
-                + itemId + "' ,'"
-                + mUrl + "' ,'"
-                + alpha + "' ,'"
-                + scale + "' ,'"
-                + rotate + "')");
-    }
-
     private void handleDeleteEvent() {
         mDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -652,23 +712,6 @@ public class GameActivity extends FragmentActivity {
             public void onClick(View v) {
                 mEggsContainer.setVisibility(View.VISIBLE);
                 positionAlphaController(RULE_ABOVE_EGG);
-            }
-        });
-    }
-
-    private void handleConfirmEvent() {
-        mConfirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(mUrl)) {
-                    toastHint(R.string.add_egg_hint);
-                    return;
-                }
-                if (mEggsCount >= EGG_MAX_COUNT) {
-                    toastHint(R.string.add_egg_over_hint);
-                    return;
-                }
-                new UpdateUGCContentTask(GameActivity.this, true).execute();
             }
         });
     }
@@ -748,52 +791,6 @@ public class GameActivity extends FragmentActivity {
             return URLConstant.URL_WEBVIEW_TOPIC + mContentId;
     }
 
-    private class ContainerView {
-
-        @JavascriptInterface
-        public void editItem(String contentId, String sceneId, String itemId) {
-            log("[JS editItem] >>> contentId = %s, sceneId =  %s, itemId = %s"
-                    , contentId, sceneId, itemId);
-            mEggsCount = mEggsCount - 1;
-            mEggsCount = mEggsCount >= 0 ? mEggsCount : 0;
-            UGCItem ugcItem = mEggInfos.get(itemId);
-            if (ugcItem == null) return;
-            mCurrentItem = ugcItem;
-            mEggKey = ugcItem.getItemId();
-            mFromEdit = true;
-            mUrl = ugcItem.getItemMediaUrl();
-            float rotate = Float.parseFloat(ugcItem.getRotatez());
-            float scale = Float.parseFloat(ugcItem.getScalex());
-            float alpha = Float.parseFloat(ugcItem.getTransparency());
-            createAndShowBitmap(mUrl, scale, rotate, alpha);
-            updateCountHint();
-        }
-
-        @JavascriptInterface
-        public void dropItemCallBack(String msg) {
-            log("[JS dropItemCallBack] >>> msg = %s ", msg);
-            FloatInfo floatInfo = JsonUtil.fromJson(msg, FloatInfo.class);
-            if (floatInfo == null) return;
-            float x = floatInfo.getX();
-            float y = floatInfo.getY();
-            mCurrentItem.setX(String.valueOf(x));
-            mCurrentItem.setY(String.valueOf(y));
-            log("floatInfo x =  %s, y = %s", x, y);
-        }
-
-        @JavascriptInterface
-        public void reqInfo() {
-            reportUserId();
-        }
-    }
-
-    private void reportUserId() {
-        if (mWebViewInit) {
-            mWebView.loadUrl("javascript:reqInfoCallback('" +
-                    LocalSPUtil.getAccountInfo().getUser_no() + "')");
-        }
-    }
-
     private void updateCountHint() {
         runOnUiThread(new Runnable() {
             @Override
@@ -827,7 +824,7 @@ public class GameActivity extends FragmentActivity {
                 mFloatView.setImageBitmap(null);
                 mFloatView.setFloatView(bitmap, scale, rotate);
                 mFloatView.setFloatAlpha(alpha);
-                mAlphaBar.setProgress((int) (alpha * 100));
+                mAlphaBar.setProgress((int) ( alpha * 100));
             }
         });
     }
