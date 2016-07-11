@@ -12,6 +12,7 @@ import storm.commonlib.common.CommonConstants;
 import storm.commonlib.common.base.BaseActivity;
 import storm.magicspace.R;
 import storm.magicspace.bean.EggInfo;
+import storm.magicspace.http.URLConstant;
 
 public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     private EggInfo info;
@@ -61,7 +62,7 @@ public class EggGameInfoActivity extends BaseActivity implements ViewPager.OnPag
     private void initWebView(String mContentId) {
         wv_egg_info.getSettings().setJavaScriptEnabled(true);
         wv_egg_info.getSettings().setDefaultTextEncodingName("gb2312");
-        wv_egg_info.loadUrl("http://app.stemmind.com/vr/a/preview.php?ua=app&s=ugc&c=" + mContentId);
+        wv_egg_info.loadUrl(URLConstant.URL_110 + mContentId);
         wv_egg_info.setWebViewClient(new WebViewClient());
     }
 

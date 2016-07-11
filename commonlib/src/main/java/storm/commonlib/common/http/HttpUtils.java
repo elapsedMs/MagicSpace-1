@@ -159,7 +159,4 @@ public class HttpUtils {
         HttpUtils.token = token;
     }
 
-    public static void setAppModel(boolean isDebug) {
-        setHostUri(isDebug ? HttpConstants.API_HOST : HttpConstants.INIT_HOST);
-    }
 }
