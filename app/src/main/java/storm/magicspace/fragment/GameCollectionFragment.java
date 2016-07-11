@@ -1,16 +1,12 @@
 package storm.magicspace.fragment;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +83,7 @@ public class GameCollectionFragment extends BaseFragment {
             page++;
             pullToRefreshListView.onRefreshComplete();
             if (myCollectionResponse == null || myCollectionResponse.data == null) {
-                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
                 return;
             }
             list.clear();
@@ -108,7 +104,7 @@ public class GameCollectionFragment extends BaseFragment {
             page++;
             pullToRefreshListView.onRefreshComplete();
             if (myCollectionResponse == null || myCollectionResponse.data == null) {
-                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
                 return;
             }
             list.addAll(myCollectionResponse.data);

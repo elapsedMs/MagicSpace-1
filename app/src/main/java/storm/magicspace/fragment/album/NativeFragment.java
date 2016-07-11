@@ -1,21 +1,14 @@
 package storm.magicspace.fragment.album;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import com.gdq.multhreaddownload.download.db.ThreadDAO;
-import com.gdq.multhreaddownload.download.db.ThreadDaoImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +24,6 @@ import storm.magicspace.adapter.CachedAdapter;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.http.HTTPManager;
-import storm.magicspace.view.AlbumTitleView;
 import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshBase;
 import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -126,7 +118,7 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
             page++;
             pullToRefreshListView.onRefreshComplete();
             if (myCollectionResponse == null || myCollectionResponse.data == null) {
-                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
                 return;
             }
             list.clear();
@@ -147,7 +139,7 @@ public class NativeFragment extends BaseFragment implements View.OnClickListener
             page++;
             pullToRefreshListView.onRefreshComplete();
             if (myCollectionResponse == null || myCollectionResponse.data == null) {
-                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "网络数据下载错误，请稍后再试!", Toast.LENGTH_SHORT).show();
                 return;
             }
             list.addAll(myCollectionResponse.data);
