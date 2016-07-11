@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -278,6 +279,16 @@ public class EggGamePreviewActivity extends BaseActivity {
             super.onSuccess(response);
 
         }
+    }
+    // 改写物理按键——返回的逻辑
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+           finish();
+            gameEnd gameEndinfo = new gameEnd(info.contentId,999,false);
+            new GameEnd().execute(gameEndinfo);
+        }
+        return false;
     }
 }
 

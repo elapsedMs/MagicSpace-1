@@ -1,13 +1,10 @@
 package storm.magicspace.fragment;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -15,17 +12,15 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
 import storm.commonlib.common.base.BaseASyncTask;
 import storm.commonlib.common.base.BaseFragment;
 import storm.magicspace.R;
 import storm.magicspace.activity.EggGameInfoActivity;
-import storm.magicspace.activity.EggGamePreviewActivity;
 import storm.magicspace.adapter.EggAdapter;
 import storm.magicspace.bean.EggInfo;
 import storm.magicspace.http.HTTPManager;
 import storm.magicspace.http.reponse.EggHttpResponse;
+import storm.magicspace.view.handmark.pulltorefresh.library.ILoadingLayout;
 import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshBase;
 import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -67,6 +62,8 @@ public class EggFragment extends BaseFragment {
             }
         });
         showContent();
+
+        init();
         new getEggTask().execute();
     }
 
@@ -150,5 +147,17 @@ public class EggFragment extends BaseFragment {
         no_net_work_ll_egg.setVisibility(View.GONE);
         pullToRefreshListView.setVisibility(View.VISIBLE);
     }
+    private void init() {
+        ILoadingLayout startLabels = pullToRefreshListView
+                .getLoadingLayoutProxy(true, false);
+        startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
+        startLabels.setRefreshingLabel("正在载入...");// 刷新时
+        startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
 
+        ILoadingLayout endLabels = pullToRefreshListView.getLoadingLayoutProxy(
+                false, true);
+        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
+        endLabels.setRefreshingLabel("正在载入...");// 刷新时
+        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+    }
 }

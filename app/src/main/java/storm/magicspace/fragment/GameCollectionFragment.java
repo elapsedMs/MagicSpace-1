@@ -20,6 +20,7 @@ import storm.magicspace.adapter.WorksAdapter;
 import storm.magicspace.bean.Album;
 import storm.magicspace.bean.httpBean.MyCollectionResponse;
 import storm.magicspace.http.HTTPManager;
+import storm.magicspace.view.handmark.pulltorefresh.library.ILoadingLayout;
 import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshBase;
 import storm.magicspace.view.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -68,6 +69,7 @@ public class GameCollectionFragment extends BaseFragment {
                 new GetMoreMyCollectionTask().execute();
             }
         });
+        init();
         new GetMyCollectionTask().execute();
     }
 
@@ -110,5 +112,18 @@ public class GameCollectionFragment extends BaseFragment {
             list.addAll(myCollectionResponse.data);
             adapter.notifyDataSetChanged();
         }
+    }
+    private void init() {
+        ILoadingLayout startLabels = pullToRefreshListView
+                .getLoadingLayoutProxy(true, false);
+        startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
+        startLabels.setRefreshingLabel("正在载入...");// 刷新时
+        startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+
+        ILoadingLayout endLabels = pullToRefreshListView.getLoadingLayoutProxy(
+                false, true);
+        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
+        endLabels.setRefreshingLabel("正在载入...");// 刷新时
+        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
     }
 }

@@ -77,6 +77,7 @@ public class GameEditDetailActivity extends BaseActivity {
         mContentId = getIntent().getStringExtra(CommonConstants.CONTENT_ID);
         publishTv = findEventView(R.id.publish);
         titleTv = findEventView(R.id.title);
+        titleTv.setText("VR空间挖彩蛋");
         eggCountTv = findEventView(R.id.egg_count);
         timeTv = findEventView(R.id.time);
         giveUpTv = findEventView(R.id.give_up);
@@ -298,15 +299,16 @@ public class GameEditDetailActivity extends BaseActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-    public void setShare(){
+
+    public void setShare() {
 
         final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
                 {
-                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA,
+                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA,
                         SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE
                 };
-        new ShareAction(this).setDisplayList(displaylist )
-                .withText( getString(R.string.shared_content) )
+        new ShareAction(this).setDisplayList(displaylist)
+                .withText(getString(R.string.shared_content))
                 .withTitle("魔fun全景挖彩蛋")
                 .withTargetUrl(URLConstant.SHARED_URL + mContentId)
                 .open();
