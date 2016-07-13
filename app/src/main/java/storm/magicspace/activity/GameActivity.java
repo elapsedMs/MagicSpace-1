@@ -36,6 +36,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -214,9 +215,12 @@ public class GameActivity extends FragmentActivity {
         String itemId = mEggKey;
         float alpha = Float.parseFloat(mCurrentItem.getTransparency());
         float scale = Float.parseFloat(mCurrentItem.getScalex());
+        BigDecimal testScale = BigDecimal.valueOf(Double.valueOf(mCurrentItem.getScalex()));
         float rotate = -Float.parseFloat(mCurrentItem.getRotatez());
+
         log("[JS dropItem] >>> contentId = %s, itemId = %s, url = %s, alpha = %s, scale = %s, " +
                 "rotate = %s", mContentId, itemId, mUrl, alpha, scale, rotate);
+
         mWebView.loadUrl("javascript:dropItem('"
                 + mContentId + "' ,'"
                 + itemId + "' ,'"
@@ -237,6 +241,9 @@ public class GameActivity extends FragmentActivity {
             float y = floatInfo.getY();
             mCurrentItem.setX(String.valueOf(x));
             mCurrentItem.setY(String.valueOf(y));
+
+            float scale = floatInfo.getScale();
+            mCurrentItem.setScalex(String.valueOf(scale));
             log("floatInfo x =  %s, y = %s", x, y);
             if (mUCGScene == null) return;
             // if key exist, should't generate new key
@@ -269,7 +276,11 @@ public class GameActivity extends FragmentActivity {
             mEggsCount = mEggsCount - 1;
             mEggsCount = mEggsCount >= 0 ? mEggsCount : 0;
             UGCItem ugcItem = mEggInfos.get(itemId);
+
+
             if (ugcItem == null) return;
+
+            ugcItem.setScalex("1.0");
             mCurrentItem = ugcItem;
             mEggKey = ugcItem.getItemId();
             mFromEdit = true;
@@ -824,7 +835,7 @@ public class GameActivity extends FragmentActivity {
                 mFloatView.setImageBitmap(null);
                 mFloatView.setFloatView(bitmap, scale, rotate);
                 mFloatView.setFloatAlpha(alpha);
-                mAlphaBar.setProgress((int) ( alpha * 100));
+                mAlphaBar.setProgress((int) (alpha * 100));
             }
         });
     }

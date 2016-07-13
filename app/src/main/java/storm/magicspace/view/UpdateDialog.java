@@ -2,13 +2,16 @@ package storm.magicspace.view;
 
 import android.app.AlertDialog;
 import android.app.DownloadManager;
-import android.content.*;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -120,9 +123,9 @@ public class UpdateDialog {
 //        }
         String url = checkUpdate.apkPath;
         LogUtil.d(TAG, "url = " + url);
-        String title = "magicspace";// = appInfo.getName();
-        String description = title + ".apk";
-        String apkName = title + ".apk";
+        String title = "魔Fun下载";// = appInfo.getName();
+        String description = checkUpdate.versionMessage;
+        String apkName = checkUpdate.apkPath;
 
         File fileDownloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         if (!fileDownloads.exists()) fileDownloads.mkdirs();

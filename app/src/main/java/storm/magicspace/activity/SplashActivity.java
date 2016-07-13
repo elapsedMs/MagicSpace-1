@@ -101,8 +101,11 @@ public class SplashActivity extends BaseActivity {
             super.onSuccess(baseResponse);
             dismissBaseDialog();
             CheckUpdate checkUpdate = baseResponse.getData();
-            checkUpdate.forceInstall = "0";
-            checkUpdate.apkPath = "http://www.imooc.com/mobile/imooc.apk";
+            if (checkUpdate == null || checkUpdate.forceInstall == null) {
+                loginByToken();
+                return;
+            }
+
             if (Integer.parseInt(checkUpdate.forceInstall) < 0) {
                 loginByToken();
             } else {
@@ -136,37 +139,36 @@ public class SplashActivity extends BaseActivity {
         @Override
         public InitResponse doRequest(Void param) {
             return HTTPManager.initAppConfig();
-
         }
 
         @Override
         public void onFailed() {
             super.onFailed();
 
-            loginByToken();
             HttpUtils.setHostUri(URLConstant.API_HOST);
+            loginByToken();
         }
 
         @Override
         public void onFailed(InitResponse initResponse) {
             super.onFailed(initResponse);
-            loginByToken();
-            LocalSPUtil.saveAppConfig(initResponse.data);
             HttpUtils.setHostUri(URLConstant.API_HOST);
+            loginByToken();
         }
 
         @Override
         public void onSuccess(InitResponse initResponse) {
             super.onSuccess(initResponse);
-            new CheckAppUpdate().execute();
+            LocalSPUtil.saveAppConfig(initResponse.data);
             HttpUtils.setHostUri(URLConstant.API_HOST);
+            new CheckAppUpdate().execute();
         }
 
         @Override
         public void onSuccessWithoutResult(InitResponse initResponse) {
             super.onSuccessWithoutResult(initResponse);
-            loginByToken();
             HttpUtils.setHostUri(URLConstant.API_HOST);
+            loginByToken();
         }
     }
 }

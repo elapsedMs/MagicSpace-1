@@ -132,11 +132,12 @@ public class FloatView extends ImageView {
 
     /**
      * set transparency
+     *
      * @param alpha the range of transparency 0.0 ~ 1.0
      */
     public void setFloatAlpha(float alpha) {
         mRecord = true;
-        mBitmapPaint.setAlpha((int)(255 * (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * alpha)));
+        mBitmapPaint.setAlpha((int) (255 * (DEFAULT_ALPHA + (1 - DEFAULT_ALPHA) * alpha)));
         invalidate();
     }
 
@@ -148,7 +149,7 @@ public class FloatView extends ImageView {
         if (mBitmap != null) {
             int bitmapWidth = mBitmap.getWidth();
             int bitmapHeight = mBitmap.getHeight();
-            float scaleVal =  width / 4.0f / bitmapWidth;
+            float scaleVal = width / 4.0f / bitmapWidth;
             mBitmapDiagonalLen = Math.hypot(bitmapWidth, bitmapHeight);
             matrix.postTranslate((width - bitmapWidth) / 2, (height - bitmapHeight) / 2);
             matrix.postScale(scaleVal, scaleVal, width / 2, height / 2);
@@ -256,7 +257,7 @@ public class FloatView extends ImageView {
 
             // scale
             float scale = (float) Math.hypot(vals[Matrix.MSCALE_X], vals[Matrix.MSKEW_Y]) / mDensity;
-
+            scale = scale / 0.9f;
             // rotate
             float degree = Math.round(Math.atan2(vals[Matrix.MSKEW_X],
                     vals[Matrix.MSCALE_X]) * (180 / Math.PI));
@@ -285,9 +286,9 @@ public class FloatView extends ImageView {
     private void executeScale(MotionEvent event) {
         float scale = getDiagonalLen(event) / mToCenterDistance;
         float scaleDiagonalLen = getDiagonalLen(event);
-        boolean max = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) >= mRealScale*SCALE_MAX_FACTOR)
+        boolean max = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) >= mRealScale * SCALE_MAX_FACTOR)
                 && scale > 1;
-        boolean min = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) <= mRealScale*SCALE_MIN_FACTOR)
+        boolean min = (scaleDiagonalLen / (mBitmapDiagonalLen / 2) <= mRealScale * SCALE_MIN_FACTOR)
                 && scale < 1;
         if (min || max) {
             scale = 1;
